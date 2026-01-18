@@ -66,6 +66,33 @@ bool Prompt::fromJson(const QJsonObject& json)
     return isValid();
 }
 
+QString Prompt::formatSystemPrompt(const QString& clipboardContent) const
+{
+    QString result = m_systemPrompt;
+
+    // Replace {clipboard} placeholder
+    result.replace(QStringLiteral("{clipboard}"), clipboardContent);
+
+    // Replace {clipboard:length} placeholder (e.g., {clipboard:1000})
+    static QRegularExpression lengthRe(QStringLiteral(R"(\{clipboard:(\d+)\})"));
+    QRegularExpressionMatchIterator i = lengthRe.globalMatch(result);
+    while (i.hasNext()) {
+        QRegularExpressionMatch match = i.next();
+        int maxLength = match.captured(1).toInt();
+        QString truncated = clipboardContent.left(maxLength);
+        if (clipboardContent.length() > maxLength) {
+            truncated += QStringLiteral("...");
+        }
+        result.replace(match.captured(0), truncated);
+    }
+
+    // Replace {language} placeholder with user's language
+    QString userLanguage = QLocale::system().nativeLanguageName();
+    result.replace(QStringLiteral("{language}"), userLanguage);
+
+    return result;
+}
+
 QString Prompt::formatUserPrompt(const QString& clipboardContent) const
 {
     QString result = m_userPromptTemplate;

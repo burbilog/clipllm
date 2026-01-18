@@ -119,7 +119,7 @@ QString PromptPreviewDialog::buildJsonPreview()
     if (!m_prompt.systemPrompt().isEmpty()) {
         Core::LLMMessage sysMsg;
         sysMsg.role = QStringLiteral("system");
-        sysMsg.content = m_prompt.systemPrompt();
+        sysMsg.content = m_prompt.formatSystemPrompt(m_clipboardContent);
         request.messages.append(sysMsg);
     }
 

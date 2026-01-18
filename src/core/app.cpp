@@ -441,7 +441,7 @@ void App::onPromptSelected(const QString& promptId)
     m_resultDialog->activateWindow();
 
     // Send request to LLM
-    QString systemPrompt = prompt.systemPrompt();
+    QString systemPrompt = prompt.formatSystemPrompt(clipboardText);
 
     // Determine temperature to use
     double temperature = -1.0;  // -1 means use config default

@@ -242,19 +242,29 @@ QStringList PromptManager::getValidationErrors(const Models::Prompt& prompt) con
         errors.append(tr("Name is required"));
     }
 
-    // Check for valid placeholder syntax
+    // Check for valid placeholder syntax in both prompts
     QString templateStr = prompt.userPromptTemplate();
-    QRegularExpression placeholderRe(QStringLiteral(R"(\{(?:clipboard|clipboard:\d+)\})"));
-    QRegularExpressionMatchIterator i = placeholderRe.globalMatch(templateStr);
+    QString systemStr = prompt.systemPrompt();
+    QRegularExpression placeholderRe(QStringLiteral(R"(\{(?:clipboard|clipboard:\d+|language)\})"));
 
-    // All placeholders should be valid
+    // All placeholders should be valid in user prompt template
     QRegularExpression allBracesRe(QStringLiteral(R"(\{[^}]+\})"));
     QRegularExpressionMatchIterator allIt = allBracesRe.globalMatch(templateStr);
     while (allIt.hasNext()) {
         QRegularExpressionMatch match = allIt.next();
         QString captured = match.captured(0);
         if (!placeholderRe.match(captured).hasMatch()) {
-            errors.append(tr("Invalid placeholder: %1").arg(captured));
+            errors.append(tr("Invalid placeholder in user template: %1").arg(captured));
+        }
+    }
+
+    // All placeholders should be valid in system prompt
+    allIt = allBracesRe.globalMatch(systemStr);
+    while (allIt.hasNext()) {
+        QRegularExpressionMatch match = allIt.next();
+        QString captured = match.captured(0);
+        if (!placeholderRe.match(captured).hasMatch()) {
+            errors.append(tr("Invalid placeholder in system prompt: %1").arg(captured));
         }
     }
 

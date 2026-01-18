@@ -341,19 +341,29 @@ void PromptEditorDialog::validateInput()
         errors.append(tr("ID is required"));
     }
 
-    // Check for valid placeholder syntax
+    // Check for valid placeholder syntax in both prompts
     QString templateStr = m_userTemplateEdit->toPlainText();
+    QString systemStr = m_systemPromptEdit->toPlainText();
     QRegularExpression placeholderRe(QStringLiteral(R"(\{(?:clipboard|clipboard:\d+|language)\})"));
-    QRegularExpressionMatchIterator i = placeholderRe.globalMatch(templateStr);
 
-    // Check for invalid placeholders (anything in braces that's not {clipboard}, {clipboard:N}, or {language})
+    // Check for invalid placeholders in user template
     QRegularExpression allBracesRe(QStringLiteral(R"(\{[^}]+\})"));
     QRegularExpressionMatchIterator allIt = allBracesRe.globalMatch(templateStr);
     while (allIt.hasNext()) {
         QRegularExpressionMatch match = allIt.next();
         QString captured = match.captured(0);
         if (!placeholderRe.match(captured).hasMatch()) {
-            errors.append(tr("Invalid placeholder: %1").arg(captured));
+            errors.append(tr("Invalid placeholder in user template: %1").arg(captured));
+        }
+    }
+
+    // Check for invalid placeholders in system prompt
+    allIt = allBracesRe.globalMatch(systemStr);
+    while (allIt.hasNext()) {
+        QRegularExpressionMatch match = allIt.next();
+        QString captured = match.captured(0);
+        if (!placeholderRe.match(captured).hasMatch()) {
+            errors.append(tr("Invalid placeholder in system prompt: %1").arg(captured));
         }
     }
 

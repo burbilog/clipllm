@@ -298,7 +298,7 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         p.setSystemPrompt(tr("You are a professional analyst. Create a clear, structured summary."));
         p.setUserPromptTemplate(tr("Please provide a comprehensive summary of the following text:\n\n{clipboard}"));
         p.setContentType(Models::ContentType::Text);
-        p.setModel(QStringLiteral("openai/gpt-4"));
+        p.setModel(QString());  // Use default from settings
         p.setEnabled(true);
         prompts.append(p);
     }
@@ -313,7 +313,7 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         p.setSystemPrompt(tr("Ты — профессиональный переводчик. Переведи текст на русский язык, сохраняя стиль и смысл."));
         p.setUserPromptTemplate(tr("{clipboard}"));
         p.setContentType(Models::ContentType::Text);
-        p.setModel(QStringLiteral("openai/gpt-4"));
+        p.setModel(QString());  // Use default from settings
         p.setEnabled(true);
         prompts.append(p);
     }
@@ -328,7 +328,7 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         p.setSystemPrompt(tr("You are a professional translator. Translate the text to English, preserving style and meaning."));
         p.setUserPromptTemplate(tr("{clipboard}"));
         p.setContentType(Models::ContentType::Text);
-        p.setModel(QStringLiteral("openai/gpt-4"));
+        p.setModel(QString());  // Use default from settings
         p.setEnabled(true);
         prompts.append(p);
     }
@@ -343,7 +343,7 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         p.setSystemPrompt(tr("You are an expert programmer. Explain the code clearly and concisely."));
         p.setUserPromptTemplate(tr("Explain the following code:\n\n{clipboard}"));
         p.setContentType(Models::ContentType::Text);
-        p.setModel(QStringLiteral("openai/gpt-4"));
+        p.setModel(QString());  // Use default from settings
         p.setEnabled(true);
         prompts.append(p);
     }
@@ -358,7 +358,7 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         p.setSystemPrompt(tr("You are a code reviewer. Analyze the code for bugs, security issues, and suggest improvements."));
         p.setUserPromptTemplate(tr("Review the following code:\n\n{clipboard}"));
         p.setContentType(Models::ContentType::Text);
-        p.setModel(QStringLiteral("openai/gpt-4"));
+        p.setModel(QString());  // Use default from settings
         p.setEnabled(true);
         prompts.append(p);
     }
@@ -373,7 +373,7 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         p.setSystemPrompt(tr("You are a code optimization expert. Suggest refactoring to improve readability, maintainability, and performance."));
         p.setUserPromptTemplate(tr("Refactor the following code:\n\n{clipboard}"));
         p.setContentType(Models::ContentType::Text);
-        p.setModel(QStringLiteral("openai/gpt-4"));
+        p.setModel(QString());  // Use default from settings
         p.setEnabled(true);
         prompts.append(p);
     }
@@ -388,7 +388,7 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         p.setSystemPrompt(tr("You are a visual analyst. Provide a detailed description of the image."));
         p.setUserPromptTemplate(tr("Describe this image in detail."));
         p.setContentType(Models::ContentType::Image);
-        p.setModel(QStringLiteral("openai/gpt-4-vision-preview"));
+        p.setModel(QString());  // Use default from settings
         p.setEnabled(true);
         prompts.append(p);
     }
@@ -403,7 +403,7 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         p.setSystemPrompt(tr("Extract all text from the image, preserving formatting where possible."));
         p.setUserPromptTemplate(tr("Extract all text from this image."));
         p.setContentType(Models::ContentType::Image);
-        p.setModel(QStringLiteral("openai/gpt-4-vision-preview"));
+        p.setModel(QString());  // Use default from settings
         p.setEnabled(true);
         prompts.append(p);
     }

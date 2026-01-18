@@ -442,11 +442,18 @@ void App::onPromptSelected(const QString& promptId)
 
     // Send request to LLM
     QString systemPrompt = prompt.systemPrompt();
+
+    // Determine temperature to use
+    double temperature = -1.0;  // -1 means use config default
+    if (prompt.overrideTemperature()) {
+        temperature = prompt.temperature();
+    }
+
     if (!systemPrompt.isEmpty()) {
-        m_llmClient->sendPrompt(systemPrompt, userPrompt, imageData);
+        m_llmClient->sendPrompt(systemPrompt, userPrompt, imageData, temperature);
     } else {
         // If no system prompt, send user prompt only
-        m_llmClient->sendPrompt(QString(), userPrompt, imageData);
+        m_llmClient->sendPrompt(QString(), userPrompt, imageData, temperature);
     }
 }
 

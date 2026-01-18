@@ -34,6 +34,8 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager, QWidg
     m_iconCombo->setCurrentIndex(0); // None
     m_modelUseDefaultCheck->setChecked(true);
     updateModelFieldState();
+    m_temperatureUseDefaultCheck->setChecked(true);
+    updateTemperatureFieldState();
 
     validateInput();
 }
@@ -148,6 +150,12 @@ void PromptEditorDialog::setupUi()
     m_modelEdit->setPlaceholderText(tr("e.g., openai/gpt-4, anthropic/claude-3-opus"));
     settingsLayout->addRow(tr("Model:"), m_modelEdit);
 
+    // Temperature field with checkbox
+    m_temperatureUseDefaultCheck = new QCheckBox(tr("Use default temperature from settings"));
+    connect(m_temperatureUseDefaultCheck, &QCheckBox::checkStateChanged,
+            this, &PromptEditorDialog::onTemperatureUseDefaultChanged);
+    settingsLayout->addRow(m_temperatureUseDefaultCheck);
+
     m_temperatureSpin = new QDoubleSpinBox();
     m_temperatureSpin->setRange(0.0, 2.0);
     m_temperatureSpin->setSingleStep(0.1);
@@ -219,6 +227,9 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
     updateModelFieldState();
 
     m_temperatureSpin->setValue(prompt.temperature());
+    m_temperatureUseDefaultCheck->setChecked(!prompt.overrideTemperature());
+    updateTemperatureFieldState();
+
     m_maxTokensSpin->setValue(prompt.maxTokens());
     m_enabledCheck->setChecked(prompt.enabled());
 }
@@ -252,6 +263,7 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
     }
 
     prompt.setTemperature(m_temperatureSpin->value());
+    prompt.setOverrideTemperature(!m_temperatureUseDefaultCheck->isChecked());
     prompt.setMaxTokens(m_maxTokensSpin->value());
     prompt.setEnabled(m_enabledCheck->isChecked());
 
@@ -266,6 +278,15 @@ void PromptEditorDialog::updateModelFieldState()
     } else {
         m_modelEdit->setEnabled(true);
         m_modelEdit->setPlaceholderText(tr("e.g., openai/gpt-4, anthropic/claude-3-opus"));
+    }
+}
+
+void PromptEditorDialog::updateTemperatureFieldState()
+{
+    if (m_temperatureUseDefaultCheck->isChecked()) {
+        m_temperatureSpin->setEnabled(false);
+    } else {
+        m_temperatureSpin->setEnabled(true);
     }
 }
 
@@ -294,6 +315,12 @@ void PromptEditorDialog::onModelUseDefaultChanged(int state)
 {
     Q_UNUSED(state)
     updateModelFieldState();
+}
+
+void PromptEditorDialog::onTemperatureUseDefaultChanged(int state)
+{
+    Q_UNUSED(state)
+    updateTemperatureFieldState();
 }
 
 void PromptEditorDialog::validateInput()

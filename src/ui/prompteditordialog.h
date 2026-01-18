@@ -31,6 +31,7 @@ public:
 private slots:
     void onOkClicked();
     void onModelUseDefaultChanged(int state);
+    void onTemperatureUseDefaultChanged(int state);
     void validateInput();
 
 private:
@@ -38,6 +39,7 @@ private:
     void loadPrompt(const Models::Prompt& prompt);
     Models::Prompt buildPrompt() const;
     void updateModelFieldState();
+    void updateTemperatureFieldState();
     QString generateUniqueId() const;
 
     Core::PromptManager* m_promptManager = nullptr;
@@ -58,6 +60,7 @@ private:
     QComboBox* m_iconCombo = nullptr;
     QCheckBox* m_modelUseDefaultCheck = nullptr;
     QLineEdit* m_modelEdit = nullptr;
+    QCheckBox* m_temperatureUseDefaultCheck = nullptr;
     QDoubleSpinBox* m_temperatureSpin = nullptr;
     QSpinBox* m_maxTokensSpin = nullptr;
     QCheckBox* m_enabledCheck = nullptr;

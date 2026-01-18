@@ -184,11 +184,16 @@ void LLMClient::sendRequest(const LLMRequest& request)
 }
 
 void LLMClient::sendPrompt(const QString& systemPrompt, const QString& userPrompt,
-                          const QByteArray& imageData)
+                          const QByteArray& imageData, double temperature)
 {
     LLMRequest request;
     request.model = m_config.model();
-    request.temperature = m_config.overrideTemperature() ? m_config.temperature() : -1;
+    // Use provided temperature if >= 0, otherwise use config
+    if (temperature >= 0) {
+        request.temperature = temperature;
+    } else {
+        request.temperature = m_config.overrideTemperature() ? m_config.temperature() : -1;
+    }
     request.maxTokens = m_config.maxTokens();
     request.stream = m_streamEnabled;
 

@@ -84,7 +84,8 @@ public:
     // Send request
     void sendRequest(const LLMRequest& request);
     void sendPrompt(const QString& systemPrompt, const QString& userPrompt,
-                   const QByteArray& imageData = QByteArray());
+                   const QByteArray& imageData = QByteArray(),
+                   double temperature = -1.0);  // -1 means use config default
 
     // Cancel current request
     void cancel();

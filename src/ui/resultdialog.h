@@ -53,6 +53,10 @@ private slots:
     void onCloseClicked();
     void onThinkingStateChanged(bool isThinking);
     void onBytesReceivedChanged(qint64 bytesReceived);
+    void performClose();
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 private:
     void setupUi();
@@ -84,6 +88,7 @@ private:
     bool m_isStreaming = false;
     bool m_isThinking = false;
     bool m_wasSaved = false;
+    bool m_closing = false;
     QElapsedTimer m_timer;
     qint64 m_bytesReceived = 0;
 

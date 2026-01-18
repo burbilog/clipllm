@@ -218,8 +218,10 @@ void LLMClient::sendPrompt(const QString& systemPrompt, const QString& userPromp
 void LLMClient::cancel()
 {
     if (m_currentReply) {
+        // Disconnect all signals from the reply to prevent crashes during abort
+        disconnect(m_currentReply, nullptr, this, nullptr);
         m_currentReply->abort();
-        m_currentReply->deleteLater();
+        // Don't call deleteLater() - abort() will trigger proper cleanup via finished signal
         m_currentReply = nullptr;
     }
 

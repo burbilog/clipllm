@@ -3,6 +3,7 @@
 #include "core/historymanager.h"
 #include <QApplication>
 #include <QClipboard>
+#include <QCloseEvent>
 #include <QMessageBox>
 #include <QSplitter>
 #include <QGroupBox>
@@ -287,7 +288,8 @@ void ResultDialog::closeDialog()
         onSaveClicked();
     }
 
-    accept();
+    // Use close() instead of accept() to trigger closeEvent
+    close();
 }
 
 void ResultDialog::updateState()
@@ -298,6 +300,62 @@ void ResultDialog::updateState()
     } else {
         m_outputText->setReadOnly(true);
     }
+}
+
+void ResultDialog::closeEvent(QCloseEvent* event)
+{
+    // Prevent re-entry
+    if (m_closing) {
+        event->ignore();
+        return;
+    }
+
+    // If streaming is in progress, ask for confirmation
+    if (m_isStreaming) {
+        m_closing = true;
+        auto reply = QMessageBox::question(
+            this,
+            tr("Close During Generation"),
+            tr("A response is still being generated. Close and cancel the request?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::No
+        );
+
+        if (reply == QMessageBox::Yes) {
+            // User confirmed - show cancel status
+            if (m_statusLabel) {
+                m_statusLabel->setText(tr("Cancelling..."));
+                m_statusLabel->setStyleSheet("color: orange;");
+            }
+
+            // Disconnect signals and cancel
+            if (m_llmClient) {
+                disconnect(m_llmClient, nullptr, this, nullptr);
+                m_llmClient->cancel();
+            }
+            // Don't accept the event yet - close after cancel is done
+            event->ignore();
+            // Schedule actual close after returning from closeEvent
+            QTimer::singleShot(0, this, &ResultDialog::performClose);
+        } else {
+            // User cancelled - don't close
+            m_closing = false;
+            event->ignore();
+        }
+    } else {
+        // Not streaming - auto-save and allow close
+        if (!m_output.isEmpty() && !m_wasSaved && m_historyManager) {
+            onSaveClicked();
+        }
+        event->accept();
+    }
+}
+
+void ResultDialog::performClose()
+{
+    // Direct accept without going through closeEvent again
+    // Auto-save was already done in closeEvent if needed
+    accept();
 }
 
 void ResultDialog::onThinkingStateChanged(bool isThinking)

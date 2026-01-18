@@ -2,6 +2,7 @@
 #include <QJsonDocument>
 #include <QRegularExpression>
 #include <QLocale>
+#include <QMap>
 #include <QDebug>
 
 namespace ClipAI {
@@ -66,7 +67,7 @@ bool Prompt::fromJson(const QJsonObject& json)
     return isValid();
 }
 
-QString Prompt::formatSystemPrompt(const QString& clipboardContent) const
+QString Prompt::formatSystemPrompt(const QString& clipboardContent, const QString& userLanguage) const
 {
     QString result = m_systemPrompt;
 
@@ -87,13 +88,13 @@ QString Prompt::formatSystemPrompt(const QString& clipboardContent) const
     }
 
     // Replace {language} placeholder with user's language
-    QString userLanguage = QLocale::system().nativeLanguageName();
-    result.replace(QStringLiteral("{language}"), userLanguage);
+    QString langName = userLanguage.isEmpty() ? languageCodeToName(QLocale::system().name().left(2)) : languageCodeToName(userLanguage);
+    result.replace(QStringLiteral("{language}"), langName);
 
     return result;
 }
 
-QString Prompt::formatUserPrompt(const QString& clipboardContent) const
+QString Prompt::formatUserPrompt(const QString& clipboardContent, const QString& userLanguage) const
 {
     QString result = m_userPromptTemplate;
 
@@ -114,10 +115,30 @@ QString Prompt::formatUserPrompt(const QString& clipboardContent) const
     }
 
     // Replace {language} placeholder with user's language
-    QString userLanguage = QLocale::system().nativeLanguageName();
-    result.replace(QStringLiteral("{language}"), userLanguage);
+    QString langName = userLanguage.isEmpty() ? languageCodeToName(QLocale::system().name().left(2)) : languageCodeToName(userLanguage);
+    result.replace(QStringLiteral("{language}"), langName);
 
     return result;
+}
+
+QString Prompt::languageCodeToName(const QString& code)
+{
+    static const QMap<QString, QString> languageNames = {
+        {QStringLiteral("en"), QStringLiteral("English")},
+        {QStringLiteral("ru"), QStringLiteral("Русский")},
+        {QStringLiteral("de"), QStringLiteral("Deutsch")},
+        {QStringLiteral("fr"), QStringLiteral("Français")},
+        {QStringLiteral("es"), QStringLiteral("Español")},
+        {QStringLiteral("it"), QStringLiteral("Italiano")},
+        {QStringLiteral("pt"), QStringLiteral("Português")},
+        {QStringLiteral("zh"), QStringLiteral("中文")},
+        {QStringLiteral("ja"), QStringLiteral("日本語")},
+        {QStringLiteral("ko"), QStringLiteral("한국어")},
+        {QStringLiteral("ar"), QStringLiteral("العربية")},
+        {QStringLiteral("hi"), QStringLiteral("हिन्दी")}
+    };
+
+    return languageNames.value(code, QLocale::system().nativeLanguageName());
 }
 
 QString Prompt::getIconName() const

@@ -1,6 +1,8 @@
 #include "promptpreviewdialog.h"
 #include "imageviewdialog.h"
 #include "core/llmclient.h"
+#include "core/app.h"
+#include "core/configmanager.h"
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
@@ -119,14 +121,14 @@ QString PromptPreviewDialog::buildJsonPreview()
     if (!m_prompt.systemPrompt().isEmpty()) {
         Core::LLMMessage sysMsg;
         sysMsg.role = QStringLiteral("system");
-        sysMsg.content = m_prompt.formatSystemPrompt(m_clipboardContent);
+        sysMsg.content = m_prompt.formatSystemPrompt(m_clipboardContent, getUserLanguage());
         request.messages.append(sysMsg);
     }
 
     // User message
     Core::LLMMessage userMsg;
     userMsg.role = QStringLiteral("user");
-    userMsg.content = m_prompt.formatUserPrompt(m_clipboardContent);
+    userMsg.content = m_prompt.formatUserPrompt(m_clipboardContent, getUserLanguage());
 
     // Check for image in clipboard
     if (!m_clipboardImage.isNull()) {
@@ -178,6 +180,15 @@ void PromptPreviewDialog::onImageLinkClicked()
         // Restore the preview content after dialog closes
         m_requestView->setHtml(buildJsonPreview());
     }
+}
+
+QString PromptPreviewDialog::getUserLanguage() const
+{
+    App* app = static_cast<App*>(QApplication::instance());
+    if (app && app->configManager()) {
+        return app->configManager()->language();
+    }
+    return QString();
 }
 
 void PromptPreviewDialog::setupUi()

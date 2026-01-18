@@ -28,6 +28,7 @@ private:
     void setupUi();
     QString buildJsonPreview();
     bool validateContentType();
+    QString getUserLanguage() const;
 
     Models::Prompt m_prompt;
     QString m_clipboardContent;

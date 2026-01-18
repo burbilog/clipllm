@@ -407,7 +407,7 @@ void App::onPromptSelected(const QString& promptId)
     } else if (content.isHtml()) {
         clipboardText = content.text; // Html content also has plain text
     }
-    QString userPrompt = prompt.formatUserPrompt(clipboardText);
+    QString userPrompt = prompt.formatUserPrompt(clipboardText, m_configManager->language());
 
     // Get image data if present
     QByteArray imageData;
@@ -441,7 +441,7 @@ void App::onPromptSelected(const QString& promptId)
     m_resultDialog->activateWindow();
 
     // Send request to LLM
-    QString systemPrompt = prompt.formatSystemPrompt(clipboardText);
+    QString systemPrompt = prompt.formatSystemPrompt(clipboardText, m_configManager->language());
 
     // Determine temperature to use
     double temperature = -1.0;  // -1 means use config default

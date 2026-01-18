@@ -67,9 +67,10 @@ public:
     bool fromJson(const QJsonObject& json);
 
     // Utility
-    QString formatSystemPrompt(const QString& clipboardContent = QString()) const;
-    QString formatUserPrompt(const QString& clipboardContent) const;
+    QString formatSystemPrompt(const QString& clipboardContent = QString(), const QString& userLanguage = QString()) const;
+    QString formatUserPrompt(const QString& clipboardContent, const QString& userLanguage = QString()) const;
     QString getIconName() const;
+    static QString languageCodeToName(const QString& code);
     static ContentType contentTypeFromString(const QString& str);
     static QString contentTypeToString(ContentType type);
     static PromptIcon iconFromString(const QString& str);

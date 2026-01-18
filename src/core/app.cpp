@@ -383,7 +383,8 @@ void App::onPromptSelected(const QString& promptId)
     // Check content type compatibility
     if (prompt.contentType() != Models::ContentType::Any) {
         bool compatible = false;
-        if (prompt.contentType() == Models::ContentType::Text && content.isText()) {
+        // Html content is also compatible with Text prompts (it contains plain text)
+        if (prompt.contentType() == Models::ContentType::Text && (content.isText() || content.isHtml())) {
             compatible = true;
         } else if (prompt.contentType() == Models::ContentType::Image && content.isImage()) {
             compatible = true;
@@ -398,7 +399,12 @@ void App::onPromptSelected(const QString& promptId)
     }
 
     // Format the user prompt with clipboard content
-    QString clipboardText = content.isText() ? content.text : QString();
+    QString clipboardText;
+    if (content.isText()) {
+        clipboardText = content.text;
+    } else if (content.isHtml()) {
+        clipboardText = content.text; // Html content also has plain text
+    }
     QString userPrompt = prompt.formatUserPrompt(clipboardText);
 
     // Get image data if present

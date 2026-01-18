@@ -148,6 +148,12 @@ The `App` class (inherits `QApplication`) is the central controller that:
 4. Add to `TS_FILES` in CMakeLists.txt
 5. Update Settings language dropdown
 
+
+## Reference implementation
+
+Directory ai-reader/ contains old reference implementation of this program. Read it
+only if I reference previous, python incarnation of this program.
+
 ## Known Limitations
 
 - **QHotkey Integration**: The `3rdparty/qhotkey/` directory is currently empty; global hotkey support needs implementation

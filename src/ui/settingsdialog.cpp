@@ -98,10 +98,11 @@ void SettingsDialog::setupGeneralTab()
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout(widget);
 
-    QGroupBox* languageGroup = new QGroupBox(tr("Language"));
-    QVBoxLayout* languageLayout = new QVBoxLayout(languageGroup);
+    m_languageGroupBox = new QGroupBox(tr("Language"));
+    QVBoxLayout* languageLayout = new QVBoxLayout(m_languageGroupBox);
 
-    languageLayout->addWidget(new QLabel(tr("Interface Language:")));
+    m_interfaceLanguageLabel = new QLabel(tr("Interface Language:"));
+    languageLayout->addWidget(m_interfaceLanguageLabel);
 
     m_languageCombo = new QComboBox();
     connect(m_languageCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -110,16 +111,16 @@ void SettingsDialog::setupGeneralTab()
     languageLayout->addWidget(m_languageCombo);
     languageLayout->addStretch();
 
-    layout->addWidget(languageGroup);
+    layout->addWidget(m_languageGroupBox);
 
-    QGroupBox* historyGroup = new QGroupBox(tr("History"));
-    QVBoxLayout* historyLayout = new QVBoxLayout(historyGroup);
+    m_historyGroupBox = new QGroupBox(tr("History"));
+    QVBoxLayout* historyLayout = new QVBoxLayout(m_historyGroupBox);
 
     m_autoSaveHistoryCheck = new QCheckBox(tr("Automatically save to history after generation"));
     historyLayout->addWidget(m_autoSaveHistoryCheck);
     historyLayout->addStretch();
 
-    layout->addWidget(historyGroup);
+    layout->addWidget(m_historyGroupBox);
     layout->addStretch();
 
     m_tabWidget->addTab(widget, tr("General"));
@@ -130,8 +131,8 @@ void SettingsDialog::setupLLMTab()
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout(widget);
 
-    QGroupBox* providerGroup = new QGroupBox(tr("LLM Provider"));
-    QFormLayout* providerLayout = new QFormLayout(providerGroup);
+    m_llmProviderGroupBox = new QGroupBox(tr("LLM Provider"));
+    QFormLayout* providerLayout = new QFormLayout(m_llmProviderGroupBox);
 
     m_providerCombo = new QComboBox();
     connect(m_providerCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -162,10 +163,10 @@ void SettingsDialog::setupLLMTab()
     m_proxyEdit = new QLineEdit();
     providerLayout->addRow(tr("Proxy (optional):"), m_proxyEdit);
 
-    layout->addWidget(providerGroup);
+    layout->addWidget(m_llmProviderGroupBox);
 
-    QGroupBox* optionsGroup = new QGroupBox(tr("Options"));
-    QFormLayout* optionsLayout = new QFormLayout(optionsGroup);
+    m_llmOptionsGroupBox = new QGroupBox(tr("Options"));
+    QFormLayout* optionsLayout = new QFormLayout(m_llmOptionsGroupBox);
 
     m_temperatureSpin = new QDoubleSpinBox();
     m_temperatureSpin->setRange(0.0, 2.0);
@@ -191,7 +192,7 @@ void SettingsDialog::setupLLMTab()
     m_streamCheck->setChecked(true);
     optionsLayout->addRow(m_streamCheck);
 
-    layout->addWidget(optionsGroup);
+    layout->addWidget(m_llmOptionsGroupBox);
 
     // Test connection button
     QHBoxLayout* testLayout = new QHBoxLayout();
@@ -214,8 +215,8 @@ void SettingsDialog::setupHotkeysTab()
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout(widget);
 
-    QGroupBox* hotkeyGroup = new QGroupBox(tr("Global Hotkey"));
-    QFormLayout* hotkeyLayout = new QFormLayout(hotkeyGroup);
+    m_hotkeyGroupBox = new QGroupBox(tr("Global Hotkey"));
+    QFormLayout* hotkeyLayout = new QFormLayout(m_hotkeyGroupBox);
 
     m_hotkeyEdit = new HotkeyEdit();
     connect(m_hotkeyEdit, &HotkeyEdit::keySequenceChanged,
@@ -231,7 +232,7 @@ void SettingsDialog::setupHotkeysTab()
     infoLabel->setWordWrap(true);
     hotkeyLayout->addRow(infoLabel);
 
-    layout->addWidget(hotkeyGroup);
+    layout->addWidget(m_hotkeyGroupBox);
     layout->addStretch();
 
     m_tabWidget->addTab(widget, tr("Hotkeys"));
@@ -311,8 +312,8 @@ void SettingsDialog::setupHistoryTab()
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout(widget);
 
-    QGroupBox* settingsGroup = new QGroupBox(tr("History Settings"));
-    QFormLayout* settingsLayout = new QFormLayout(settingsGroup);
+    m_historySettingsGroupBox = new QGroupBox(tr("History Settings"));
+    QFormLayout* settingsLayout = new QFormLayout(m_historySettingsGroupBox);
 
     m_historyLimitSpin = new QSpinBox();
     m_historyLimitSpin->setRange(0, 10000);
@@ -334,10 +335,10 @@ void SettingsDialog::setupHistoryTab()
             this, &SettingsDialog::onDaysToKeepChanged);
     settingsLayout->addRow(tr("Days to keep:"), m_daysToKeepSpin);
 
-    layout->addWidget(settingsGroup);
+    layout->addWidget(m_historySettingsGroupBox);
 
-    QGroupBox* actionGroup = new QGroupBox(tr("Actions"));
-    QVBoxLayout* actionLayout = new QVBoxLayout(actionGroup);
+    m_historyActionsGroupBox = new QGroupBox(tr("Actions"));
+    QVBoxLayout* actionLayout = new QVBoxLayout(m_historyActionsGroupBox);
 
     m_clearHistoryButton = new QPushButton(tr("Clear All History"));
     m_clearHistoryButton->setIcon(style()->standardIcon(QStyle::SP_TrashIcon));
@@ -348,7 +349,7 @@ void SettingsDialog::setupHistoryTab()
     m_historyStatusLabel = new QLabel();
     actionLayout->addWidget(m_historyStatusLabel);
 
-    layout->addWidget(actionGroup);
+    layout->addWidget(m_historyActionsGroupBox);
     layout->addStretch();
 
     m_tabWidget->addTab(widget, tr("History"));
@@ -987,6 +988,20 @@ void SettingsDialog::retranslateUi()
     m_tabWidget->setTabText(3, tr("Prompts"));
     m_tabWidget->setTabText(4, tr("History"));
 
+    // General tab - update group boxes and labels
+    if (m_languageGroupBox) {
+        m_languageGroupBox->setTitle(tr("Language"));
+    }
+    if (m_interfaceLanguageLabel) {
+        m_interfaceLanguageLabel->setText(tr("Interface Language:"));
+    }
+    if (m_historyGroupBox) {
+        m_historyGroupBox->setTitle(tr("History"));
+    }
+    if (m_autoSaveHistoryCheck) {
+        m_autoSaveHistoryCheck->setText(tr("Automatically save to history after generation"));
+    }
+
     // General tab - reload language combo box items
     loadLanguages();
 
@@ -999,9 +1014,26 @@ void SettingsDialog::retranslateUi()
         }
     }
 
-    // LLM tab
-    // Note: Group box titles would need to be stored as member variables to update them here
-    // For now, the language change will take effect on next dialog open
+    // LLM tab - update group box titles
+    if (m_llmProviderGroupBox) {
+        m_llmProviderGroupBox->setTitle(tr("LLM Provider"));
+    }
+    if (m_llmOptionsGroupBox) {
+        m_llmOptionsGroupBox->setTitle(tr("Options"));
+    }
+
+    // Hotkeys tab
+    if (m_hotkeyGroupBox) {
+        m_hotkeyGroupBox->setTitle(tr("Global Hotkey"));
+    }
+
+    // History tab - update group box titles
+    if (m_historySettingsGroupBox) {
+        m_historySettingsGroupBox->setTitle(tr("History Settings"));
+    }
+    if (m_historyActionsGroupBox) {
+        m_historyActionsGroupBox->setTitle(tr("Actions"));
+    }
 
     // Prompts table headers
     m_promptsTable->setHorizontalHeaderLabels({

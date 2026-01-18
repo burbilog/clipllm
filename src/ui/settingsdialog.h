@@ -11,6 +11,7 @@
 #include <QTextEdit>
 #include <QTableWidget>
 #include <QLabel>
+#include <QGroupBox>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include "core/promptmanager.h"
@@ -105,10 +106,15 @@ private:
     QTabWidget* m_tabWidget = nullptr;
 
     // General tab
+    QGroupBox* m_languageGroupBox = nullptr;
+    QLabel* m_interfaceLanguageLabel = nullptr;
     QComboBox* m_languageCombo = nullptr;
+    QGroupBox* m_historyGroupBox = nullptr;
     QCheckBox* m_autoSaveHistoryCheck = nullptr;
 
     // LLM tab
+    QGroupBox* m_llmProviderGroupBox = nullptr;
+    QGroupBox* m_llmOptionsGroupBox = nullptr;
     QComboBox* m_providerCombo = nullptr;
     QComboBox* m_modelCombo = nullptr;
     QLineEdit* m_apiKeyEdit = nullptr;
@@ -124,6 +130,7 @@ private:
     QNetworkAccessManager* m_networkManager = nullptr;
 
     // Hotkeys tab
+    QGroupBox* m_hotkeyGroupBox = nullptr;
     HotkeyEdit* m_hotkeyEdit = nullptr;
 
     // Prompts tab
@@ -136,6 +143,8 @@ private:
     QPushButton* m_resetPromptsButton = nullptr;
 
     // History tab
+    QGroupBox* m_historySettingsGroupBox = nullptr;
+    QGroupBox* m_historyActionsGroupBox = nullptr;
     QSpinBox* m_historyLimitSpin = nullptr;
     QCheckBox* m_autoCleanupCheck = nullptr;
     QSpinBox* m_daysToKeepSpin = nullptr;

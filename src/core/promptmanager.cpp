@@ -135,6 +135,7 @@ bool PromptManager::addPrompt(const Models::Prompt& prompt)
 
     m_prompts.append(prompt);
     emit promptAdded(prompt.id());
+    savePrompts();
     return true;
 }
 
@@ -144,6 +145,7 @@ bool PromptManager::updatePrompt(const QString& id, const Models::Prompt& prompt
         if (m_prompts[i].id() == id) {
             m_prompts[i] = prompt;
             emit promptUpdated(id);
+            savePrompts();
             return true;
         }
     }
@@ -156,6 +158,7 @@ bool PromptManager::removePrompt(const QString& id)
         if (m_prompts[i].id() == id) {
             m_prompts.removeAt(i);
             emit promptRemoved(id);
+            savePrompts();
             return true;
         }
     }

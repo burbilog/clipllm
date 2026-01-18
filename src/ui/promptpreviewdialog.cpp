@@ -34,6 +34,50 @@ void PromptPreviewDialog::setClipboardContent(const QString& content)
     refreshPreview();
 }
 
+bool PromptPreviewDialog::validateContentType()
+{
+    bool hasImage = !m_clipboardImage.isNull();
+    bool hasText = !m_clipboardContent.trimmed().isEmpty();
+
+    bool valid = true;
+    QString message;
+
+    switch (m_prompt.contentType()) {
+        case Models::ContentType::Text:
+            if (hasImage) {
+                valid = false;
+                message = tr("⚠ This prompt is configured for Text content only, but there is an image in the clipboard. "
+                            "The image will be ignored.");
+            }
+            break;
+
+        case Models::ContentType::Image:
+            if (!hasImage) {
+                valid = false;
+                if (hasText) {
+                    message = tr("⚠ This prompt is configured for Image content only, but there is text in the clipboard. "
+                                "Only the image will be sent to the model.");
+                } else {
+                    message = tr("⚠ This prompt is configured for Image content only, but the clipboard is empty or doesn't contain an image.");
+                }
+            }
+            break;
+
+        case Models::ContentType::Any:
+            // Always valid
+            break;
+    }
+
+    if (message.isEmpty()) {
+        m_warningLabel->hide();
+    } else {
+        m_warningLabel->setText(message);
+        m_warningLabel->show();
+    }
+
+    return valid;
+}
+
 void PromptPreviewDialog::refreshPreview()
 {
     // Get clipboard content if not set
@@ -48,6 +92,9 @@ void PromptPreviewDialog::refreshPreview()
     if (clipboard->mimeData()->hasImage()) {
         m_clipboardImage = clipboard->image();
     }
+
+    // Validate content type
+    validateContentType();
 
     QString preview = buildJsonPreview();
 
@@ -139,6 +186,13 @@ void PromptPreviewDialog::setupUi()
     setWindowTitle(tr("Prompt Preview"));
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
+
+    // Warning label (hidden by default)
+    m_warningLabel = new QLabel();
+    m_warningLabel->setWordWrap(true);
+    m_warningLabel->setStyleSheet("color: #d4a017; background-color: #2d2d2d; padding: 10px; border-radius: 4px; font-size: 12px;");
+    m_warningLabel->hide();
+    mainLayout->addWidget(m_warningLabel);
 
     // Request JSON section
     QGroupBox* requestGroup = new QGroupBox(tr("Request that will be sent to the API"));

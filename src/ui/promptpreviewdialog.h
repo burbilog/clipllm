@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTextBrowser>
 #include <QImage>
+#include <QLabel>
 #include "models/prompt.h"
 
 namespace ClipAI {
@@ -26,12 +27,14 @@ private slots:
 private:
     void setupUi();
     QString buildJsonPreview();
+    bool validateContentType();
 
     Models::Prompt m_prompt;
     QString m_clipboardContent;
     QImage m_clipboardImage;
 
     QTextBrowser* m_requestView = nullptr;
+    QLabel* m_warningLabel = nullptr;
 };
 
 } // namespace UI

@@ -113,6 +113,15 @@ void SettingsDialog::setupGeneralTab()
     languageLayout->addStretch();
 
     layout->addWidget(languageGroup);
+
+    QGroupBox* historyGroup = new QGroupBox(tr("History"));
+    QVBoxLayout* historyLayout = new QVBoxLayout(historyGroup);
+
+    m_autoSaveHistoryCheck = new QCheckBox(tr("Automatically save to history after generation"));
+    historyLayout->addWidget(m_autoSaveHistoryCheck);
+    historyLayout->addStretch();
+
+    layout->addWidget(historyGroup);
     layout->addStretch();
 
     m_tabWidget->addTab(widget, tr("General"));
@@ -364,6 +373,8 @@ void SettingsDialog::loadSettings()
         m_languageCombo->setCurrentIndex(langIndex);
     }
 
+    m_autoSaveHistoryCheck->setChecked(m_configManager->historyAutoSave());
+
     // LLM
     QString provider = m_configManager->llmProvider();
     int providerIndex = m_providerCombo->findData(provider);
@@ -412,6 +423,7 @@ void SettingsDialog::saveSettings()
 
     // General
     m_configManager->setLanguage(m_languageCombo->currentData().toString());
+    m_configManager->setHistoryAutoSave(m_autoSaveHistoryCheck->isChecked());
 
     // LLM
     m_configManager->setLlmProvider(m_providerCombo->currentData().toString());

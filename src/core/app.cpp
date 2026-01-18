@@ -415,7 +415,8 @@ void App::onPromptSelected(const QString& promptId)
 
     // Create or reuse result dialog
     if (!m_resultDialog) {
-        m_resultDialog = new UI::ResultDialog(m_llmClient.get(), m_historyManager.get());
+        m_resultDialog = new UI::ResultDialog(m_llmClient.get(), m_historyManager.get(),
+                                              m_configManager.get());
         m_resultDialog->setAttribute(Qt::WA_DeleteOnClose);
         connect(m_resultDialog, &QObject::destroyed, [this]() {
             m_resultDialog = nullptr;

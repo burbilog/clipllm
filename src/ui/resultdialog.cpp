@@ -1,6 +1,7 @@
 #include "resultdialog.h"
 #include "core/llmclient.h"
 #include "core/historymanager.h"
+#include "core/configmanager.h"
 #include <QApplication>
 #include <QClipboard>
 #include <QCloseEvent>
@@ -13,14 +14,21 @@
 namespace ClipAI {
 namespace UI {
 
-ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* historyManager, QWidget* parent)
+ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* historyManager,
+                             Core::ConfigManager* configManager, QWidget* parent)
     : QDialog(parent)
     , m_llmClient(llmClient)
     , m_historyManager(historyManager)
+    , m_configManager(configManager)
 {
     setupUi();
     setWindowTitle(tr("ClipAI - Result"));
     resize(800, 600);
+
+    // Hide save button if auto-save is enabled
+    if (m_configManager && m_configManager->historyAutoSave()) {
+        m_saveButton->hide();
+    }
 
     // Connect LLM client signals
     if (m_llmClient) {
@@ -203,7 +211,10 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
                               .arg(response.outputTokens));
 
         m_copyButton->setEnabled(true);
-        m_saveButton->setEnabled(true);
+        // Only enable save button if auto-save is disabled
+        if (!m_configManager || !m_configManager->historyAutoSave()) {
+            m_saveButton->setEnabled(true);
+        }
         m_retryButton->setEnabled(true);
 
         emit responseReceived(response.content);
@@ -283,8 +294,9 @@ void ResultDialog::onCloseClicked()
 
 void ResultDialog::closeDialog()
 {
-    // Auto-save if output exists and not already saved
-    if (!m_output.isEmpty() && !m_wasSaved && m_historyManager) {
+    // Auto-save if enabled, output exists and not already saved
+    bool autoSaveEnabled = m_configManager && m_configManager->historyAutoSave();
+    if (autoSaveEnabled && !m_output.isEmpty() && !m_wasSaved && m_historyManager) {
         onSaveClicked();
     }
 
@@ -343,8 +355,9 @@ void ResultDialog::closeEvent(QCloseEvent* event)
             event->ignore();
         }
     } else {
-        // Not streaming - auto-save and allow close
-        if (!m_output.isEmpty() && !m_wasSaved && m_historyManager) {
+        // Not streaming - auto-save if enabled and allow close
+        bool autoSaveEnabled = m_configManager && m_configManager->historyAutoSave();
+        if (autoSaveEnabled && !m_output.isEmpty() && !m_wasSaved && m_historyManager) {
             onSaveClicked();
         }
         event->accept();

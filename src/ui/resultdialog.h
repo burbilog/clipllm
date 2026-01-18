@@ -14,6 +14,7 @@ namespace ClipAI {
 namespace Core {
 class LLMClient;
 class HistoryManager;
+class ConfigManager;
 struct LLMResponse;
 }
 }
@@ -26,7 +27,8 @@ class ResultDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* historyManager, QWidget* parent = nullptr);
+    explicit ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* historyManager,
+                         Core::ConfigManager* configManager, QWidget* parent = nullptr);
     ~ResultDialog();
 
     void setPrompt(const QString& promptId, const QString& promptName);
@@ -64,6 +66,7 @@ private:
 
     Core::LLMClient* m_llmClient = nullptr;
     Core::HistoryManager* m_historyManager = nullptr;
+    Core::ConfigManager* m_configManager = nullptr;
 
     // UI components
     QTextEdit* m_outputText = nullptr;

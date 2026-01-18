@@ -49,6 +49,7 @@ public:
     static const QString HISTORY_LIMIT_KEY;
     static const QString HISTORY_AUTO_CLEANUP_KEY;
     static const QString HISTORY_DAYS_TO_KEEP_KEY;
+    static const QString HISTORY_AUTO_SAVE_KEY;
     static const QString PROMPTS_FILE_KEY;
     static const QString CACHED_MODELS_KEY;
 
@@ -99,6 +100,9 @@ public:
 
     int historyDaysToKeep() const;
     void setHistoryDaysToKeep(int days);
+
+    bool historyAutoSave() const;
+    void setHistoryAutoSave(bool enabled);
 
     // Prompts settings
     QString promptsFile() const;

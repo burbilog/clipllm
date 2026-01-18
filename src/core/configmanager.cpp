@@ -23,6 +23,7 @@ const QString ConfigManager::FIRST_RUN_KEY = QStringLiteral("first_run");
 const QString ConfigManager::HISTORY_LIMIT_KEY = QStringLiteral("history/limit");
 const QString ConfigManager::HISTORY_AUTO_CLEANUP_KEY = QStringLiteral("history/auto_cleanup");
 const QString ConfigManager::HISTORY_DAYS_TO_KEEP_KEY = QStringLiteral("history/days_to_keep");
+const QString ConfigManager::HISTORY_AUTO_SAVE_KEY = QStringLiteral("history/auto_save");
 const QString ConfigManager::PROMPTS_FILE_KEY = QStringLiteral("prompts/file");
 const QString ConfigManager::CACHED_MODELS_KEY = QStringLiteral("llm/cached_models/%1");
 
@@ -247,6 +248,16 @@ int ConfigManager::historyDaysToKeep() const
 void ConfigManager::setHistoryDaysToKeep(int days)
 {
     setValue(HISTORY_DAYS_TO_KEEP_KEY, days);
+}
+
+bool ConfigManager::historyAutoSave() const
+{
+    return value(HISTORY_AUTO_SAVE_KEY, false).toBool();
+}
+
+void ConfigManager::setHistoryAutoSave(bool enabled)
+{
+    setValue(HISTORY_AUTO_SAVE_KEY, enabled);
 }
 
 QString ConfigManager::promptsFile() const

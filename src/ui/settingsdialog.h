@@ -103,6 +103,7 @@ private:
 
     // General tab
     QComboBox* m_languageCombo = nullptr;
+    QCheckBox* m_autoSaveHistoryCheck = nullptr;
 
     // LLM tab
     QComboBox* m_providerCombo = nullptr;

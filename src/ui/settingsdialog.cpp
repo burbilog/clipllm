@@ -18,6 +18,13 @@
 #include <QPushButton>
 #include <QHeaderView>
 #include <QInputDialog>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QUrlQuery>
 
 namespace ClipAI {
 namespace UI {
@@ -31,6 +38,11 @@ SettingsDialog::SettingsDialog(QWidget* parent)
         m_configManager = app->configManager();
         m_keychainStore = app->keychainStore();
     }
+
+    // Create network manager for fetching models
+    m_networkManager = new QNetworkAccessManager(this);
+    connect(m_networkManager, &QNetworkAccessManager::finished,
+            this, &SettingsDialog::onModelsFetchFinished);
 
     setupUi();
     loadSettings();
@@ -119,8 +131,16 @@ void SettingsDialog::setupLLMTab()
             this, &SettingsDialog::onProviderChanged);
     providerLayout->addRow(tr("Provider:"), m_providerCombo);
 
+    // Model combo with refresh button
+    QHBoxLayout* modelLayout = new QHBoxLayout();
     m_modelCombo = new QComboBox();
-    providerLayout->addRow(tr("Model:"), m_modelCombo);
+    m_refreshModelsButton = new QPushButton(tr("Refresh"));
+    m_refreshModelsButton->setEnabled(false);
+    connect(m_refreshModelsButton, &QPushButton::clicked,
+            this, &SettingsDialog::onRefreshModelsClicked);
+    modelLayout->addWidget(m_modelCombo, 1);
+    modelLayout->addWidget(m_refreshModelsButton);
+    providerLayout->addRow(tr("Model:"), modelLayout);
 
     m_apiKeyEdit = new QLineEdit();
     m_apiKeyEdit->setEchoMode(QLineEdit::Password);
@@ -432,6 +452,9 @@ void SettingsDialog::loadModels()
     Models::LLMProvider providerEnum = Models::LLMConfig::providerFromString(provider);
     QStringList models = Models::LLMConfig::availableModels(providerEnum);
 
+    // Sort models alphabetically
+    models.sort(Qt::CaseInsensitive);
+
     m_modelCombo->clear();
     m_modelCombo->addItem(tr("Auto"), QString());
 
@@ -524,6 +547,13 @@ void SettingsDialog::onProviderChanged(int index)
 {
     Q_UNUSED(index)
     loadModels();
+
+    // Enable refresh button only for providers with model API
+    QString provider = getCurrentProvider();
+    m_refreshModelsButton->setEnabled(
+        provider == QStringLiteral("openrouter") ||
+        provider == QStringLiteral("openai")
+    );
 }
 
 void SettingsDialog::onModelChanged(int index)
@@ -706,6 +736,129 @@ void SettingsDialog::onAutoCleanupChanged(int state)
 void SettingsDialog::onDaysToKeepChanged(int value)
 {
     Q_UNUSED(value)
+}
+
+void SettingsDialog::onRefreshModelsClicked()
+{
+    QString provider = getCurrentProvider();
+    if (provider.isEmpty()) {
+        return;
+    }
+
+    fetchModelsFromAPI();
+}
+
+void SettingsDialog::fetchModelsFromAPI()
+{
+    QString provider = getCurrentProvider();
+    QString apiKey = m_apiKeyEdit->text();
+
+    QUrl url;
+    QString authHeader;
+
+    if (provider == QStringLiteral("openrouter")) {
+        url = QUrl(QStringLiteral("https://openrouter.ai/api/v1/models"));
+        if (!apiKey.isEmpty()) {
+            authHeader = QStringLiteral("Bearer ") + apiKey;
+        }
+    } else if (provider == QStringLiteral("openai")) {
+        url = QUrl(QStringLiteral("https://api.openai.com/v1/models"));
+        if (!apiKey.isEmpty()) {
+            authHeader = QStringLiteral("Bearer ") + apiKey;
+        }
+    } else {
+        m_connectionStatusLabel->setText(tr("Fetch not supported for this provider"));
+        return;
+    }
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("application/json"));
+    if (!authHeader.isEmpty()) {
+        request.setRawHeader("Authorization", authHeader.toUtf8());
+    }
+
+    m_connectionStatusLabel->setText(tr("Fetching models..."));
+    m_refreshModelsButton->setEnabled(false);
+
+    m_networkManager->get(request);
+}
+
+void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
+{
+    m_refreshModelsButton->setEnabled(true);
+
+    if (reply->error() != QNetworkReply::NoError) {
+        m_connectionStatusLabel->setText(tr("Error: %1").arg(reply->errorString()));
+        m_connectionStatusLabel->setStyleSheet("color: red;");
+        reply->deleteLater();
+        return;
+    }
+
+    QByteArray data = reply->readAll();
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+
+    if (doc.isNull() || !doc.isObject()) {
+        m_connectionStatusLabel->setText(tr("Error: Invalid response"));
+        m_connectionStatusLabel->setStyleSheet("color: red;");
+        reply->deleteLater();
+        return;
+    }
+
+    QJsonObject root = doc.object();
+    QStringList models;
+
+    QString provider = getCurrentProvider();
+
+    if (provider == QStringLiteral("openrouter")) {
+        // OpenRouter format: { "data": [ { "id": "model/name", ... }, ... ] }
+        QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
+        for (const QJsonValue& value : modelArray) {
+            QJsonObject modelObj = value.toObject();
+            QString id = modelObj.value(QStringLiteral("id")).toString();
+            if (!id.isEmpty()) {
+                models.append(id);
+            }
+        }
+    } else if (provider == QStringLiteral("openai")) {
+        // OpenAI format: { "data": [ { "id": "model-name", ... }, ... ] }
+        QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
+        for (const QJsonValue& value : modelArray) {
+            QJsonObject modelObj = value.toObject();
+            QString id = modelObj.value(QStringLiteral("id")).toString();
+            // Filter out legacy models (containing dot like gpt-3.5-turbo)
+            if (!id.isEmpty() && !id.contains(QLatin1Char('.'))) {
+                models.append(id);
+            }
+        }
+    }
+
+    if (models.isEmpty()) {
+        m_connectionStatusLabel->setText(tr("No models found"));
+    } else {
+        // Sort models alphabetically
+        models.sort(Qt::CaseInsensitive);
+
+        // Save current selection
+        QString currentModel = m_modelCombo->currentData().toString();
+
+        // Update combo box
+        m_modelCombo->clear();
+        m_modelCombo->addItem(tr("Auto"), QString());
+        for (const QString& model : models) {
+            m_modelCombo->addItem(model, model);
+        }
+
+        // Restore selection if possible
+        int index = m_modelCombo->findData(currentModel);
+        if (index >= 0) {
+            m_modelCombo->setCurrentIndex(index);
+        }
+
+        m_connectionStatusLabel->setText(tr("Loaded %1 models").arg(models.size()));
+        m_connectionStatusLabel->setStyleSheet("color: green;");
+    }
+
+    reply->deleteLater();
 }
 
 } // namespace UI

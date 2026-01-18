@@ -1,0 +1,74 @@
+#ifndef CLIPAI_CORE_PROMPTMANAGER_H
+#define CLIPAI_CORE_PROMPTMANAGER_H
+
+#include <QObject>
+#include <QString>
+#include <QVector>
+#include <QJsonObject>
+#include <optional>
+#include "models/prompt.h"
+
+namespace ClipAI {
+namespace Core {
+
+class PromptManager : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit PromptManager(QObject* parent = nullptr);
+    ~PromptManager();
+
+    // Load prompts from configuration
+    bool loadPrompts();
+    bool loadPromptsFromFile(const QString& filePath);
+    bool loadPromptsFromJson(const QJsonObject& json);
+
+    // Save prompts
+    bool savePrompts();
+    bool savePromptsToFile(const QString& filePath);
+
+    // CRUD operations
+    bool addPrompt(const Models::Prompt& prompt);
+    bool updatePrompt(const QString& id, const Models::Prompt& prompt);
+    bool removePrompt(const QString& id);
+    std::optional<Models::Prompt> getPrompt(const QString& id) const;
+
+    // Query operations
+    QVector<Models::Prompt> getAllPrompts() const;
+    QVector<Models::Prompt> getEnabledPrompts() const;
+    QVector<Models::Prompt> getPromptsByContentType(Models::ContentType type) const;
+    QVector<Models::Prompt> searchPrompts(const QString& query) const;
+
+    // Prompt execution
+    QString formatPrompt(const QString& promptId, const QString& clipboardContent) const;
+
+    // Validation
+    bool validatePrompt(const Models::Prompt& prompt) const;
+    QStringList getValidationErrors(const Models::Prompt& prompt) const;
+
+    // File paths
+    QString getCustomPromptsFilePath() const;
+
+    // Default prompts
+    static QVector<Models::Prompt> getDefaultPrompts();
+    static QJsonObject getDefaultPromptsJson();
+
+signals:
+    void promptAdded(const QString& id);
+    void promptUpdated(const QString& id);
+    void promptRemoved(const QString& id);
+    void promptsLoaded();
+    void promptsLoadFailed(const QString& error);
+
+private:
+    QString getPromptsFilePath() const;
+    bool ensurePromptsFileExists();
+
+    QVector<Models::Prompt> m_prompts;
+};
+
+} // namespace Core
+} // namespace ClipAI
+
+#endif // CLIPAI_CORE_PROMPTMANAGER_H

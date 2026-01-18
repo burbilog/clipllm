@@ -1,0 +1,280 @@
+#include "resultdialog.h"
+#include "core/llmclient.h"
+#include "core/historymanager.h"
+#include <QApplication>
+#include <QClipboard>
+#include <QMessageBox>
+#include <QSplitter>
+#include <QGroupBox>
+#include <QStyle>
+#include <QTimer>
+
+namespace ClipAI {
+namespace UI {
+
+ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* historyManager, QWidget* parent)
+    : QDialog(parent)
+    , m_llmClient(llmClient)
+    , m_historyManager(historyManager)
+{
+    setupUi();
+    setWindowTitle(tr("ClipAI - Result"));
+    resize(800, 600);
+
+    // Connect LLM client signals
+    if (m_llmClient) {
+        connect(m_llmClient, &Core::LLMClient::streaming,
+                this, &ResultDialog::onStreaming);
+        connect(m_llmClient, &Core::LLMClient::completed,
+                this, &ResultDialog::onCompleted);
+        connect(m_llmClient, &Core::LLMClient::error,
+                this, &ResultDialog::onError);
+    }
+}
+
+ResultDialog::~ResultDialog() = default;
+
+void ResultDialog::setupUi()
+{
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+
+    // Header with model info
+    QHBoxLayout* headerLayout = new QHBoxLayout();
+    m_modelLabel = new QLabel(tr("Model: -"));
+    m_modelLabel->setStyleSheet("font-weight: bold;");
+    m_tokensLabel = new QLabel(tr("Tokens: 0 / 0"));
+    headerLayout->addWidget(m_modelLabel);
+    headerLayout->addStretch();
+    headerLayout->addWidget(m_tokensLabel);
+    mainLayout->addLayout(headerLayout);
+
+    // Progress bar
+    m_progressBar = new QProgressBar();
+    m_progressBar->setRange(0, 0); // Indeterminate progress
+    m_progressBar->setVisible(false);
+    m_progressBar->setTextVisible(false);
+    m_progressBar->setMaximumHeight(3);
+    mainLayout->addWidget(m_progressBar);
+
+    // Status label
+    m_statusLabel = new QLabel(tr("Ready"));
+    m_statusLabel->setWordWrap(true);
+    mainLayout->addWidget(m_statusLabel);
+
+    // Splitter for input/output
+    QSplitter* splitter = new QSplitter(Qt::Vertical);
+
+    // Input group
+    QGroupBox* inputGroup = new QGroupBox(tr("Input"));
+    QVBoxLayout* inputLayout = new QVBoxLayout(inputGroup);
+    m_inputText = new QTextEdit();
+    m_inputText->setReadOnly(true);
+    m_inputText->setMaximumHeight(150);
+    inputLayout->addWidget(m_inputText);
+    splitter->addWidget(inputGroup);
+
+    // Output group
+    QGroupBox* outputGroup = new QGroupBox(tr("Output"));
+    QVBoxLayout* outputLayout = new QVBoxLayout(outputGroup);
+    m_outputText = new QTextEdit();
+    m_outputText->setReadOnly(true);
+    outputLayout->addWidget(m_outputText);
+    splitter->addWidget(outputGroup);
+
+    splitter->setStretchFactor(0, 1);
+    splitter->setStretchFactor(1, 3);
+    mainLayout->addWidget(splitter, 1);
+
+    // Button row
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+
+    m_copyButton = new QPushButton(tr("Copy"));
+    m_copyButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogSaveButton));
+    m_copyButton->setEnabled(false);
+    connect(m_copyButton, &QPushButton::clicked, this, &ResultDialog::onCopyClicked);
+
+    m_saveButton = new QPushButton(tr("Save to History"));
+    m_saveButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogSaveButton));
+    m_saveButton->setEnabled(false);
+    connect(m_saveButton, &QPushButton::clicked, this, &ResultDialog::onSaveClicked);
+
+    m_retryButton = new QPushButton(tr("Retry"));
+    m_retryButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_BrowserReload));
+    m_retryButton->setEnabled(false);
+    connect(m_retryButton, &QPushButton::clicked, this, &ResultDialog::onRetryClicked);
+
+    m_closeButton = new QPushButton(tr("Close"));
+    m_closeButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCloseButton));
+    connect(m_closeButton, &QPushButton::clicked, this, &ResultDialog::onCloseClicked);
+
+    buttonLayout->addWidget(m_copyButton);
+    buttonLayout->addWidget(m_saveButton);
+    buttonLayout->addStretch();
+    buttonLayout->addWidget(m_retryButton);
+    buttonLayout->addWidget(m_closeButton);
+
+    mainLayout->addLayout(buttonLayout);
+}
+
+void ResultDialog::setPrompt(const QString& promptId, const QString& promptName)
+{
+    m_promptId = promptId;
+    m_promptName = promptName;
+
+    if (!m_promptName.isEmpty()) {
+        setWindowTitle(tr("ClipAI - %1").arg(m_promptName));
+    }
+}
+
+void ResultDialog::setInput(const QString& input)
+{
+    m_input = input;
+    m_inputText->setPlainText(input);
+}
+
+void ResultDialog::startRequest()
+{
+    m_output.clear();
+    m_outputText->clear();
+    m_isStreaming = true;
+    m_wasSaved = false;
+    m_timer.start();
+
+    updateState();
+
+    m_progressBar->setVisible(true);
+    m_statusLabel->setText(tr("Processing..."));
+    m_copyButton->setEnabled(false);
+    m_saveButton->setEnabled(false);
+    m_retryButton->setEnabled(false);
+}
+
+void ResultDialog::appendResponse(const QString& text)
+{
+    m_outputText->insertPlainText(text);
+    m_outputText->moveCursor(QTextCursor::End);
+}
+
+void ResultDialog::onStreaming(const QString& content)
+{
+    m_output.append(content);
+    appendResponse(content);
+
+    // Update token estimate (rough approximation: 4 chars per token)
+    int estimatedTokens = m_output.length() / 4;
+    m_tokensLabel->setText(tr("Tokens: ~%1").arg(estimatedTokens));
+}
+
+void ResultDialog::onCompleted(const Core::LLMResponse& response)
+{
+    m_isStreaming = false;
+    m_progressBar->setVisible(false);
+
+    double elapsed = m_timer.elapsed() / 1000.0;
+
+    if (response.isSuccess()) {
+        m_statusLabel->setText(tr("Completed in %1 seconds").arg(elapsed, 0, 'f', 2));
+        m_modelLabel->setText(tr("Model: %1").arg(response.model));
+        m_tokensLabel->setText(tr("Tokens: %1 input / %2 output")
+                              .arg(response.inputTokens)
+                              .arg(response.outputTokens));
+
+        m_copyButton->setEnabled(true);
+        m_saveButton->setEnabled(true);
+        m_retryButton->setEnabled(true);
+
+        emit responseReceived(response.content);
+    } else if (!response.error.isEmpty()) {
+        m_statusLabel->setText(tr("Error: %1").arg(response.error));
+        m_statusLabel->setStyleSheet("color: red;");
+        m_retryButton->setEnabled(true);
+    }
+
+    updateState();
+}
+
+void ResultDialog::onError(const QString& error)
+{
+    m_isStreaming = false;
+    m_progressBar->setVisible(false);
+
+    m_statusLabel->setText(tr("Error: %1").arg(error));
+    m_statusLabel->setStyleSheet("color: red;");
+    m_retryButton->setEnabled(true);
+
+    updateState();
+}
+
+void ResultDialog::onCopyClicked()
+{
+    QApplication::clipboard()->setText(m_output);
+
+    m_statusLabel->setText(tr("Copied to clipboard"));
+    m_statusLabel->setStyleSheet("color: green;");
+
+    // Reset style after a delay
+    QTimer::singleShot(2000, this, [this]() {
+        m_statusLabel->setStyleSheet("");
+        if (!m_isStreaming) {
+            m_statusLabel->setText(tr("Completed"));
+        }
+    });
+}
+
+void ResultDialog::onSaveClicked()
+{
+    if (m_historyManager && !m_wasSaved) {
+        Core::HistoryEntry entry;
+        entry.promptId = m_promptId;
+        entry.promptName = m_promptName;
+        entry.model = m_llmClient ? m_llmClient->model() : QString();
+        entry.inputText = m_input;
+        entry.outputText = m_output;
+        entry.inputTokens = m_llmClient ? m_llmClient->lastInputTokens() : 0;
+        entry.outputTokens = m_llmClient ? m_llmClient->lastOutputTokens() : 0;
+        entry.durationMs = m_timer.elapsed();
+        entry.favorite = false;
+
+        m_historyManager->addEntry(entry);
+        m_wasSaved = true;
+
+        m_saveButton->setEnabled(false);
+        m_saveButton->setText(tr("Saved"));
+
+        emit saveToHistoryRequested(m_promptId, m_promptName, m_input, m_output);
+    }
+}
+
+void ResultDialog::onRetryClicked()
+{
+    m_retryButton->setEnabled(false);
+    emit responseReceived(m_output); // Signal to retry
+}
+
+void ResultDialog::onCloseClicked()
+{
+    closeDialog();
+}
+
+void ResultDialog::closeDialog()
+{
+    // Auto-save if output exists and not already saved
+    if (!m_output.isEmpty() && !m_wasSaved && m_historyManager) {
+        onSaveClicked();
+    }
+
+    accept();
+}
+
+void ResultDialog::updateState()
+{
+    if (m_isStreaming) {
+        m_outputText->setReadOnly(false);
+        m_outputText->setFocus();
+    } else {
+        m_outputText->setReadOnly(true);
+    }
+}
+
+} // namespace UI
+} // namespace ClipAI

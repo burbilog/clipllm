@@ -1,0 +1,68 @@
+#ifndef CLIPAI_UI_HOTKEYEDIT_H
+#define CLIPAI_UI_HOTKEYEDIT_H
+
+#include <QWidget>
+#include <QKeySequence>
+#include <QPushButton>
+#include <QLabel>
+#include <QHBoxLayout>
+
+namespace ClipAI {
+namespace UI {
+
+class HotkeyEdit : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit HotkeyEdit(QWidget* parent = nullptr);
+    ~HotkeyEdit();
+
+    QKeySequence keySequence() const;
+    void setKeySequence(const QKeySequence& sequence);
+
+    QString hotkeyText() const;
+    void setHotkeyText(const QString& text);
+
+    void setPlaceholderText(const QString& text);
+
+    bool isRecording() const { return m_isRecording; }
+
+signals:
+    void keySequenceChanged(const QKeySequence& sequence);
+    void recordingStarted();
+    void recordingFinished();
+
+protected:
+    void keyPressEvent(QKeyEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
+    void focusOutEvent(QFocusEvent* event) override;
+    bool event(QEvent* event) override;
+
+private slots:
+    void onRecordButtonClicked();
+    void onClearButtonClicked();
+    void stopRecording();
+
+private:
+    QString formatKeySequence(const QKeySequence& sequence) const;
+    void updateDisplay();
+    bool isValidKey(int key) const;
+    bool isModifierKey(int key) const;
+
+    QPushButton* m_recordButton = nullptr;
+    QPushButton* m_clearButton = nullptr;
+    QLabel* m_displayLabel = nullptr;
+    QHBoxLayout* m_layout = nullptr;
+
+    QKeySequence m_keySequence;
+    QString m_placeholderText;
+    bool m_isRecording = false;
+    int m_currentKey = 0;
+    Qt::KeyboardModifiers m_currentModifiers = Qt::NoModifier;
+};
+
+} // namespace UI
+} // namespace ClipAI
+
+#endif // CLIPAI_UI_HOTKEYEDIT_H

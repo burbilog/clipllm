@@ -11,6 +11,8 @@
 #include <QTextEdit>
 #include <QTableWidget>
 #include <QLabel>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include "core/promptmanager.h"
 
 namespace ClipAI {
@@ -55,6 +57,8 @@ private slots:
     void onModelChanged(int index);
     void onApiKeyChanged();
     void onTestConnectionClicked();
+    void onRefreshModelsClicked();
+    void onModelsFetchFinished(QNetworkReply* reply);
 
     // Hotkeys tab
     void onHotkeyChanged(const QKeySequence& sequence);
@@ -86,6 +90,7 @@ private:
     void loadModels();
     void loadLanguages();
     void loadPrompts();
+    void fetchModelsFromAPI();
 
     QString getCurrentProvider() const;
     QString getCurrentModel() const;
@@ -109,7 +114,9 @@ private:
     QSpinBox* m_maxTokensSpin = nullptr;
     QCheckBox* m_streamCheck = nullptr;
     QPushButton* m_testConnectionButton = nullptr;
+    QPushButton* m_refreshModelsButton = nullptr;
     QLabel* m_connectionStatusLabel = nullptr;
+    QNetworkAccessManager* m_networkManager = nullptr;
 
     // Hotkeys tab
     HotkeyEdit* m_hotkeyEdit = nullptr;

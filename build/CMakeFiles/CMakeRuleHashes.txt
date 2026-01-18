@@ -1,0 +1,5 @@
+# Hashes of file build rules.
+f8af6aca1fa1b44efe1d70887bf5b015 .qt/rcc/qrc_resources.cpp
+4a6543cc5e51e9ec0de6c8e20319b8a7 CMakeFiles/ClipAI_autogen
+23604bf5adbfc9522b45ece178e46c5d CMakeFiles/translations-copy
+92b86d7ac27d95caed675395a509fe14 ClipAI_autogen/timestamp

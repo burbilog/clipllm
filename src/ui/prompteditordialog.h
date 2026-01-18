@@ -30,6 +30,7 @@ public:
 
 private slots:
     void onOkClicked();
+    void onPreviewClicked();
     void onModelUseDefaultChanged(int state);
     void onTemperatureUseDefaultChanged(int state);
     void validateInput();

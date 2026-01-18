@@ -1,4 +1,5 @@
 #include "prompteditordialog.h"
+#include "promptpreviewdialog.h"
 #include "core/promptmanager.h"
 #include "core/app.h"
 #include <QApplication>
@@ -181,6 +182,10 @@ void PromptEditorDialog::setupUi()
     // Buttons
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->addStretch();
+
+    QPushButton* previewButton = new QPushButton(tr("Prompt Preview"));
+    connect(previewButton, &QPushButton::clicked, this, &PromptEditorDialog::onPreviewClicked);
+    buttonLayout->addWidget(previewButton);
 
     m_okButton = new QPushButton(tr("OK"));
     m_okButton->setDefault(true);
@@ -387,6 +392,15 @@ void PromptEditorDialog::onOkClicked()
     }
 
     accept();
+}
+
+void PromptEditorDialog::onPreviewClicked()
+{
+    Models::Prompt prompt = buildPrompt();
+
+    PromptPreviewDialog* previewDialog = new PromptPreviewDialog(prompt, this);
+    previewDialog->setAttribute(Qt::WA_DeleteOnClose);
+    previewDialog->exec();
 }
 
 } // namespace UI

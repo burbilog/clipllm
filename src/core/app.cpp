@@ -24,7 +24,6 @@ namespace ClipAI {
 // Static namespace for constants
 namespace {
     const QString APPLICATION_NAME = QStringLiteral("ClipAI");
-    const QString ORGANIZATION_NAME = QStringLiteral("ClipAI");
     const QString ORGANIZATION_DOMAIN = QStringLiteral("clipai.org");
 
     // Single instance management
@@ -54,7 +53,6 @@ App::App(int &argc, char **argv)
     , m_instanceId(QByteArray::number(QRandomGenerator::global()->generate()))
 {
     setApplicationName(APPLICATION_NAME);
-    setOrganizationName(ORGANIZATION_NAME);
     setOrganizationDomain(ORGANIZATION_DOMAIN);
     setApplicationVersion(QStringLiteral("1.0.0"));
 

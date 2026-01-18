@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/">
-    <file alias="resources/resources.qrc">/home/rm/clipai/resources/resources.qrc</file>
-  </qresource>
-</RCC>
-

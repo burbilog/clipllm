@@ -23,6 +23,7 @@ const QString ConfigManager::HISTORY_LIMIT_KEY = QStringLiteral("history/limit")
 const QString ConfigManager::HISTORY_AUTO_CLEANUP_KEY = QStringLiteral("history/auto_cleanup");
 const QString ConfigManager::HISTORY_DAYS_TO_KEEP_KEY = QStringLiteral("history/days_to_keep");
 const QString ConfigManager::PROMPTS_FILE_KEY = QStringLiteral("prompts/file");
+const QString ConfigManager::CACHED_MODELS_KEY = QStringLiteral("llm/cached_models/%1");
 
 ConfigManager::ConfigManager()
 {
@@ -245,6 +246,18 @@ QString ConfigManager::promptsFile() const
 void ConfigManager::setPromptsFile(const QString& path)
 {
     setValue(PROMPTS_FILE_KEY, path);
+}
+
+QStringList ConfigManager::cachedModels(const QString& provider) const
+{
+    QString key = CACHED_MODELS_KEY.arg(provider);
+    return value(key, QStringList()).toStringList();
+}
+
+void ConfigManager::setCachedModels(const QString& provider, const QStringList& models)
+{
+    QString key = CACHED_MODELS_KEY.arg(provider);
+    setValue(key, models);
 }
 
 } // namespace Core

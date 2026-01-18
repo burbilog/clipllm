@@ -361,6 +361,9 @@ void SettingsDialog::loadSettings()
         m_providerCombo->setCurrentIndex(providerIndex);
     }
 
+    // Load models for the current provider before restoring model selection
+    loadModels();
+
     QString model = m_configManager->llmModel();
     int modelIndex = m_modelCombo->findData(model);
     if (modelIndex >= 0) {
@@ -451,6 +454,14 @@ void SettingsDialog::loadModels()
     QString provider = getCurrentProvider();
     Models::LLMProvider providerEnum = Models::LLMConfig::providerFromString(provider);
     QStringList models = Models::LLMConfig::availableModels(providerEnum);
+
+    // Check if we have cached models from API
+    if (m_configManager) {
+        QStringList cached = m_configManager->cachedModels(provider);
+        if (!cached.isEmpty()) {
+            models = cached;
+        }
+    }
 
     // Sort models alphabetically
     models.sort(Qt::CaseInsensitive);
@@ -852,6 +863,11 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
         int index = m_modelCombo->findData(currentModel);
         if (index >= 0) {
             m_modelCombo->setCurrentIndex(index);
+        }
+
+        // Cache models for future use
+        if (m_configManager) {
+            m_configManager->setCachedModels(provider, models);
         }
 
         m_connectionStatusLabel->setText(tr("Loaded %1 models").arg(models.size()));

@@ -4852,7 +4852,6 @@
  mdp:/usr/lib/linux/uapi/x86/asm/types.h
 /home/rm/clipai/src/core/llmclient.cpp
 /home/rm/clipai/src/models/prompt.h
-/home/rm/clipai/src/core/historymanager.cpp
 /home/rm/clipai/src/ui/resultdialog.h
  mmc:Q_OBJECT
  mdp:/home/rm/clipai/build/ClipAI_autogen/moc_predefs.h
@@ -5307,3 +5306,4 @@
  mdp:/usr/lib/linux/uapi/x86/asm/posix_types.h
  mdp:/usr/lib/linux/uapi/x86/asm/posix_types_64.h
  mdp:/usr/lib/linux/uapi/x86/asm/types.h
+/home/rm/clipai/src/core/historymanager.cpp

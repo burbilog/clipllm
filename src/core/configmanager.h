@@ -49,6 +49,7 @@ public:
     static const QString HISTORY_AUTO_CLEANUP_KEY;
     static const QString HISTORY_DAYS_TO_KEEP_KEY;
     static const QString PROMPTS_FILE_KEY;
+    static const QString CACHED_MODELS_KEY;
 
     // Convenience methods for common settings
     QString language() const;
@@ -98,6 +99,10 @@ public:
     // Prompts settings
     QString promptsFile() const;
     void setPromptsFile(const QString& path);
+
+    // Cached models for providers
+    QStringList cachedModels(const QString& provider) const;
+    void setCachedModels(const QString& provider, const QStringList& models);
 
 private:
     std::unique_ptr<QSettings> m_settings;

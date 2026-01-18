@@ -42,6 +42,7 @@ signals:
 public slots:
     void showTrayMessage(const QString& title, const QString& message,
                         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::Information, int millisecondsTimeoutHint = 3000);
+    void onLanguageChanged(const QString& languageCode);
 
 private slots:
     void onActivated(QSystemTrayIcon::ActivationReason reason);
@@ -55,6 +56,7 @@ private slots:
 private:
     void createMenu();
     void createActions();
+    void retranslateUi();
     void updateIcon();
     void rebuildPromptsMenu();
 

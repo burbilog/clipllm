@@ -77,8 +77,12 @@ private slots:
     void onAutoCleanupChanged(int state);
     void onDaysToKeepChanged(int value);
 
+protected:
+    void changeEvent(QEvent* event) override;
+
 private:
     void setupUi();
+    void retranslateUi();
     void setupGeneralTab();
     void setupLLMTab();
     void setupHotkeysTab();

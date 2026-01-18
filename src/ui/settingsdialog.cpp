@@ -26,6 +26,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QUrlQuery>
+#include <QEvent>
 
 namespace ClipAI {
 namespace UI {
@@ -957,6 +958,72 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
     }
 
     reply->deleteLater();
+}
+
+void SettingsDialog::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        retranslateUi();
+    }
+    QDialog::changeEvent(event);
+}
+
+void SettingsDialog::retranslateUi()
+{
+    // Block signals to prevent recursive language change
+    m_languageCombo->blockSignals(true);
+
+    setWindowTitle(tr("ClipAI - Settings"));
+
+    // Dialog buttons
+    m_okButton->setText(tr("OK"));
+    m_cancelButton->setText(tr("Cancel"));
+    m_resetButton->setText(tr("Reset to Defaults"));
+
+    // Tab labels
+    m_tabWidget->setTabText(0, tr("General"));
+    m_tabWidget->setTabText(1, tr("LLM"));
+    m_tabWidget->setTabText(2, tr("Hotkeys"));
+    m_tabWidget->setTabText(3, tr("Prompts"));
+    m_tabWidget->setTabText(4, tr("History"));
+
+    // General tab - reload language combo box items
+    loadLanguages();
+
+    // Restore current language selection
+    if (m_configManager) {
+        QString language = m_configManager->language();
+        int langIndex = m_languageCombo->findData(language);
+        if (langIndex >= 0) {
+            m_languageCombo->setCurrentIndex(langIndex);
+        }
+    }
+
+    // LLM tab
+    // Note: Group box titles would need to be stored as member variables to update them here
+    // For now, the language change will take effect on next dialog open
+
+    // Prompts table headers
+    m_promptsTable->setHorizontalHeaderLabels({
+        tr("Name"), tr("Description"), tr("Content Type"), tr("Model")
+    });
+
+    // Prompts tab buttons
+    m_addPromptButton->setText(tr("Add"));
+    m_editPromptButton->setText(tr("Edit"));
+    m_deletePromptButton->setText(tr("Delete"));
+    m_importPromptsButton->setText(tr("Import"));
+    m_exportPromptsButton->setText(tr("Export"));
+    m_resetPromptsButton->setText(tr("Reset to Defaults"));
+
+    // History tab
+    m_clearHistoryButton->setText(tr("Clear All History"));
+
+    // Reload prompts to update descriptions
+    loadPrompts();
+
+    // Re-enable signals
+    m_languageCombo->blockSignals(false);
 }
 
 } // namespace UI

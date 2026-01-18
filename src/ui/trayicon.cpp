@@ -45,6 +45,10 @@ TrayIcon::TrayIcon(App* app)
     connect(this, &QSystemTrayIcon::activated,
             this, &TrayIcon::onActivated);
 
+    // Connect to language change signal
+    connect(m_app, &App::languageChanged,
+            this, &TrayIcon::onLanguageChanged);
+
     // Update prompts menu
     if (m_app && m_app->promptManager()) {
         connect(m_app->promptManager(), &Core::PromptManager::promptsLoaded,
@@ -245,6 +249,39 @@ void TrayIcon::onQuitTriggered()
 
 void TrayIcon::onPromptsUpdated()
 {
+    rebuildPromptsMenu();
+}
+
+void TrayIcon::onLanguageChanged(const QString& languageCode)
+{
+    Q_UNUSED(languageCode)
+    retranslateUi();
+}
+
+void TrayIcon::retranslateUi()
+{
+    setToolTip(tr("ClipAI - LLM Clipboard Utility"));
+
+    // Update action texts
+    if (m_settingsAction) {
+        m_settingsAction->setText(tr("&Settings"));
+    }
+    if (m_historyAction) {
+        m_historyAction->setText(tr("&History"));
+    }
+    if (m_aboutAction) {
+        m_aboutAction->setText(tr("&About"));
+    }
+    if (m_quitAction) {
+        m_quitAction->setText(tr("&Quit"));
+    }
+
+    // Update prompts menu title
+    if (m_promptsMenu) {
+        m_promptsMenu->setTitle(tr("&Prompts"));
+    }
+
+    // Rebuild prompts menu to update prompt descriptions
     rebuildPromptsMenu();
 }
 

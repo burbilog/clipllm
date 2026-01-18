@@ -311,6 +311,11 @@ void App::showSettings()
             qDebug() << "LLM config updated: provider=" << Models::LLMConfig::providerToString(provider)
                      << "model=" << model;
         });
+
+        // Apply language change immediately when selected in settings
+        connect(m_settingsDialog, &UI::SettingsDialog::languageChanged, [this](const QString& languageCode) {
+            setLanguage(languageCode);
+        });
     }
 
     m_settingsDialog->show();

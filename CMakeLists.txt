@@ -16,6 +16,14 @@ if(Qt6Concurrent_FOUND)
     message(STATUS "Qt6::Concurrent found - async operations enabled")
 endif()
 
+# Find ImageMagick for icon generation
+find_program(CONVERT_EXECUTABLE convert)
+if(CONVERT_EXECUTABLE)
+    message(STATUS "ImageMagick convert found at ${CONVERT_EXECUTABLE}")
+else()
+    message(WARNING "ImageMagick convert not found - icon generation disabled")
+endif()
+
 # Source files
 set(SOURCES
     src/main.cpp
@@ -77,11 +85,101 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-# Resources
-qt_add_resources(${PROJECT_NAME} "resources"
-    FILES
+# Generate tray icons from high-resolution source
+if(CONVERT_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png")
+    message(STATUS "Enabling icon generation from art/clipai_hires.png")
+    
+    # Create output directory
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons)
+    
+    # Generate PNG icons for Linux/macOS
+    add_custom_command(
+        OUTPUT
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-16.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-22.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-24.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-32.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-48.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-64.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon.ico
+        COMMAND ${CONVERT_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            -resize 16x16 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-16.png
+        COMMAND ${CONVERT_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            -resize 22x22 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-22.png
+        COMMAND ${CONVERT_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            -resize 24x24 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-24.png
+        COMMAND ${CONVERT_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            -resize 32x32 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-32.png
+        COMMAND ${CONVERT_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            -resize 48x48 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-48.png
+        COMMAND ${CONVERT_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            -resize 64x64 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-64.png
+        COMMAND ${CONVERT_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            \( -clone 0 -resize 16x16 \)
+            \( -clone 0 -resize 32x32 \)
+            \( -clone 0 -resize 48x48 \)
+            \( -clone 0 -resize 64x64 \)
+            \( -clone 0 -resize 128x128 \)
+            \( -clone 0 -resize 256x256 \)
+            -delete 0 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon.ico
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+        COMMENT "Generating tray icons from art/clipai_hires.png"
+        VERBATIM
+    )
+    
+    add_custom_target(generate_tray_icons
+        DEPENDS
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-16.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-22.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-24.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-32.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-48.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-64.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon.ico
+        COMMENT "Icon generation target"
+    )
+    
+    # Make resources depend on icon generation
+    # Also add JSON config to ensure it's included in resources
+    set_property(SOURCE resources/resources.qrc
+        PROPERTY OBJECT_DEPENDS
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-16.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-22.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-24.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-32.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-48.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-64.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon.ico
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/config/prompts-default.json
+    )
+    
+    # Ensure icon generation runs when needed by making it a dependency
+    # of the main target - this is more reliable than OBJECT_DEPENDS alone
+    add_dependencies(${PROJECT_NAME} generate_tray_icons)
+else()
+    message(STATUS "Icon generation skipped (ImageMagick or source file not found)")
+endif()
+
+# Resources - use target_sources with CMAKE_AUTORCC=ON
+# qt_add_resources() syntax was embedding the .qrc XML file instead of actual resources
+# This ensures proper resource embedding for all platforms
+if(CMAKE_AUTORCC)
+    message(STATUS "Using CMAKE_AUTORCC for resource compilation")
+    target_sources(${PROJECT_NAME} PRIVATE resources/resources.qrc)
+else()
+    # Fallback for older CMake versions
+    message(STATUS "Using qt_add_resources for resource compilation")
+    qt_add_resources(${PROJECT_NAME}
         resources/resources.qrc
-)
+    )
+endif()
 
 # Translations
 set(TS_FILES

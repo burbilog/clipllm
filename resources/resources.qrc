@@ -4,7 +4,13 @@
         <file>config/prompts-default.json</file>
     </qresource>
     <qresource prefix="/icons">
-        <file>icons/tray-icon.png</file>
+        <file alias="tray-icon-16.png">icons/tray-icon-16.png</file>
+        <file alias="tray-icon-22.png">icons/tray-icon-22.png</file>
+        <file alias="tray-icon-24.png">icons/tray-icon-24.png</file>
+        <file alias="tray-icon-32.png">icons/tray-icon-32.png</file>
+        <file alias="tray-icon-48.png">icons/tray-icon-48.png</file>
+        <file alias="tray-icon-64.png">icons/tray-icon-64.png</file>
+        <file alias="tray-icon.ico">icons/tray-icon.ico</file>
         <file>icons/app-icon.svg</file>
     </qresource>
 </RCC>

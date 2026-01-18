@@ -2,8 +2,11 @@
 #include "core/app.h"
 #include "core/promptmanager.h"
 #include <QApplication>
+#include <QFile>
 #include <QMessageBox>
+#include <QSize>
 #include <QStyle>
+#include <QDebug>
 
 namespace ClipAI {
 namespace UI {
@@ -12,13 +15,23 @@ TrayIcon::TrayIcon(App* app)
     : QSystemTrayIcon(app)
     , m_app(app)
 {
-    // Load icons
-    m_normalIcon = QIcon(QStringLiteral(":/icons/tray-icon.png"));
-    m_activeIcon = QIcon(QStringLiteral(":/icons/tray-icon-active.png"));
+    // Load icons with multiple resolutions for better DPI scaling
+    m_normalIcon = QIcon();
+    m_normalIcon.addFile(QStringLiteral(":/icons/tray-icon-16.png"));
+    m_normalIcon.addFile(QStringLiteral(":/icons/tray-icon-22.png"));
+    m_normalIcon.addFile(QStringLiteral(":/icons/tray-icon-24.png"));
+    m_normalIcon.addFile(QStringLiteral(":/icons/tray-icon-32.png"));
+    m_normalIcon.addFile(QStringLiteral(":/icons/tray-icon-48.png"));
+    m_normalIcon.addFile(QStringLiteral(":/icons/tray-icon-64.png"));
+    m_activeIcon = m_normalIcon;
+
+    qDebug() << "TrayIcon: Loaded" << m_normalIcon.availableSizes().size() << "sizes, isNull:" << m_normalIcon.isNull();
 
     // Fallback icon if resource not found
     if (m_normalIcon.isNull()) {
+        qWarning() << "TrayIcon: Icon resources not found, using fallback";
         m_normalIcon = QApplication::style()->standardIcon(QStyle::SP_ComputerIcon);
+        m_activeIcon = m_normalIcon;
     }
 
     setIcon(m_normalIcon);

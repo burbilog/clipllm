@@ -304,6 +304,10 @@ void App::showSettings()
             config.setMaxTokens(m_configManager->maxTokens());
             config.setStream(m_configManager->streamResponses());
             m_llmClient->setConfig(config);
+            // Explicitly set API key since setConfig doesn't do it
+            if (!apiKey.isEmpty()) {
+                m_llmClient->setApiKey(apiKey);
+            }
             qDebug() << "LLM config updated: provider=" << Models::LLMConfig::providerToString(provider)
                      << "model=" << model;
         });

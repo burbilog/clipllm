@@ -121,6 +121,11 @@ bool App::initialize(bool startMinimized)
     m_clipboardManager = std::make_unique<ClipboardManager>();
     m_llmClient = std::make_unique<LLMClient>();
 
+    // Initialize history manager
+    if (!m_historyManager->initialize()) {
+        qWarning() << "Failed to initialize history manager";
+    }
+
     // Load configuration
     QString language = m_configManager->value(QStringLiteral("language")).toString();
     if (language.isEmpty()) {

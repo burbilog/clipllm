@@ -93,8 +93,7 @@ void HistoryDialog::setupUi()
     m_tableView->setSortingEnabled(true);
     m_tableView->setWordWrap(false);
     m_tableView->horizontalHeader()->setStretchLastSection(true);
-    connect(m_tableView->selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, &HistoryDialog::onItemSelectionChanged);
+    // Note: selectionModel() connects will be set in setupModel() after model is set
     connect(m_tableView, &QTableView::doubleClicked,
             this, &HistoryDialog::onItemDoubleClicked);
 
@@ -179,6 +178,10 @@ void HistoryDialog::setupModel()
     });
 
     m_tableView->setModel(m_model);
+
+    // Connect selection model after model is set (selectionModel is created now)
+    connect(m_tableView->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &HistoryDialog::onItemSelectionChanged);
 
     // Hide the ID column
     m_tableView->setColumnHidden(6, true);

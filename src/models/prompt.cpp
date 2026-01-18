@@ -1,6 +1,7 @@
 #include "prompt.h"
 #include <QJsonDocument>
 #include <QRegularExpression>
+#include <QLocale>
 #include <QDebug>
 
 namespace ClipAI {
@@ -84,6 +85,10 @@ QString Prompt::formatUserPrompt(const QString& clipboardContent) const
         }
         result.replace(match.captured(0), truncated);
     }
+
+    // Replace {language} placeholder with user's language
+    QString userLanguage = QLocale::system().nativeLanguageName();
+    result.replace(QStringLiteral("{language}"), userLanguage);
 
     return result;
 }

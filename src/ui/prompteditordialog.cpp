@@ -114,7 +114,7 @@ void PromptEditorDialog::setupUi()
     promptsLayout->addWidget(m_userTemplateEdit);
 
     QLabel* placeholderHint = new QLabel(
-        tr("Use {clipboard} to insert clipboard content, {clipboard:1000} for truncated content.")
+        tr("Use {clipboard} to insert clipboard content, {clipboard:1000} for truncated content, {language} for user's language.")
     );
     placeholderHint->setStyleSheet("color: gray; font-size: 10px;");
     promptsLayout->addWidget(placeholderHint);
@@ -343,10 +343,10 @@ void PromptEditorDialog::validateInput()
 
     // Check for valid placeholder syntax
     QString templateStr = m_userTemplateEdit->toPlainText();
-    QRegularExpression placeholderRe(QStringLiteral(R"(\{(?:clipboard|clipboard:\d+)\})"));
+    QRegularExpression placeholderRe(QStringLiteral(R"(\{(?:clipboard|clipboard:\d+|language)\})"));
     QRegularExpressionMatchIterator i = placeholderRe.globalMatch(templateStr);
 
-    // Check for invalid placeholders (anything in braces that's not {clipboard} or {clipboard:N})
+    // Check for invalid placeholders (anything in braces that's not {clipboard}, {clipboard:N}, or {language})
     QRegularExpression allBracesRe(QStringLiteral(R"(\{[^}]+\})"));
     QRegularExpressionMatchIterator allIt = allBracesRe.globalMatch(templateStr);
     while (allIt.hasNext()) {

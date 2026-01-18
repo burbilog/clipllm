@@ -41,6 +41,7 @@ public:
     static const QString PROXY_URL_KEY;
     static const QString STREAM_RESPONSES_KEY;
     static const QString TEMPERATURE_KEY;
+    static const QString OVERRIDE_TEMPERATURE_KEY;
     static const QString MAX_TOKENS_KEY;
     static const QString WINDOW_SIZE_KEY;
     static const QString WINDOW_POSITION_KEY;
@@ -75,6 +76,9 @@ public:
 
     double temperature() const;
     void setTemperature(double temp);
+
+    bool overrideTemperature() const;
+    void setOverrideTemperature(bool override);
 
     int maxTokens() const;
     void setMaxTokens(int tokens);

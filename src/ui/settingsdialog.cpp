@@ -164,7 +164,15 @@ void SettingsDialog::setupLLMTab()
     m_temperatureSpin->setRange(0.0, 2.0);
     m_temperatureSpin->setSingleStep(0.1);
     m_temperatureSpin->setValue(0.7);
+    m_temperatureSpin->setEnabled(false);
     optionsLayout->addRow(tr("Temperature:"), m_temperatureSpin);
+
+    m_overrideTemperatureCheck = new QCheckBox(tr("Override temperature"));
+    connect(m_overrideTemperatureCheck, &QCheckBox::checkStateChanged,
+            this, [this](int state) {
+                m_temperatureSpin->setEnabled(state == Qt::Checked);
+            });
+    optionsLayout->addRow(m_overrideTemperatureCheck);
 
     m_maxTokensSpin = new QSpinBox();
     m_maxTokensSpin->setRange(1, 128000);
@@ -375,6 +383,8 @@ void SettingsDialog::loadSettings()
     m_customUrlEdit->setText(m_configManager->proxyUrl());
     m_proxyEdit->setText(m_configManager->proxyUrl());
     m_temperatureSpin->setValue(m_configManager->temperature());
+    m_overrideTemperatureCheck->setChecked(m_configManager->overrideTemperature());
+    m_temperatureSpin->setEnabled(m_configManager->overrideTemperature());
     m_maxTokensSpin->setValue(m_configManager->maxTokens());
     m_streamCheck->setChecked(m_configManager->streamResponses());
 
@@ -413,6 +423,7 @@ void SettingsDialog::saveSettings()
     m_configManager->setLlmModel(model);
     m_configManager->setProxyUrl(m_proxyEdit->text());
     m_configManager->setTemperature(m_temperatureSpin->value());
+    m_configManager->setOverrideTemperature(m_overrideTemperatureCheck->isChecked());
     m_configManager->setMaxTokens(m_maxTokensSpin->value());
     m_configManager->setStreamResponses(m_streamCheck->isChecked());
 

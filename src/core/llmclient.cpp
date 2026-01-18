@@ -50,7 +50,9 @@ QJsonObject LLMRequest::toJson() const
 {
     QJsonObject obj;
     obj[QStringLiteral("model")] = model;
-    obj[QStringLiteral("temperature")] = temperature;
+    if (temperature >= 0) {
+        obj[QStringLiteral("temperature")] = temperature;
+    }
     obj[QStringLiteral("max_tokens")] = maxTokens;
     obj[QStringLiteral("stream")] = stream;
 
@@ -186,7 +188,7 @@ void LLMClient::sendPrompt(const QString& systemPrompt, const QString& userPromp
 {
     LLMRequest request;
     request.model = m_config.model();
-    request.temperature = m_config.temperature();
+    request.temperature = m_config.overrideTemperature() ? m_config.temperature() : -1;
     request.maxTokens = m_config.maxTokens();
     request.stream = m_streamEnabled;
 

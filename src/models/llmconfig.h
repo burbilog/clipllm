@@ -37,6 +37,7 @@ public:
     int maxTokens() const { return m_maxTokens; }
     int topP() const { return m_topP; }
     bool stream() const { return m_stream; }
+    bool overrideTemperature() const { return m_overrideTemperature; }
     QString proxyUrl() const { return m_proxyUrl; }
     int timeoutSeconds() const { return m_timeoutSeconds; }
 
@@ -51,6 +52,7 @@ public:
     void setMaxTokens(int tokens) { m_maxTokens = tokens; }
     void setTopP(int topP) { m_topP = topP; }
     void setStream(bool stream) { m_stream = stream; }
+    void setOverrideTemperature(bool override) { m_overrideTemperature = override; }
     void setProxyUrl(const QString& proxy) { m_proxyUrl = proxy; }
     void setTimeoutSeconds(int seconds) { m_timeoutSeconds = seconds; }
 
@@ -85,6 +87,7 @@ private:
     int m_maxTokens = 131072;
     int m_topP = 100; // Stored as 0-100
     bool m_stream = true;
+    bool m_overrideTemperature = false;
     QString m_proxyUrl;
     int m_timeoutSeconds = 120;
 };

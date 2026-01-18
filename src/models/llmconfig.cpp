@@ -16,6 +16,7 @@ QJsonObject LLMConfig::toJson() const
     obj[QStringLiteral("max_tokens")] = m_maxTokens;
     obj[QStringLiteral("top_p")] = m_topP;
     obj[QStringLiteral("stream")] = m_stream;
+    obj[QStringLiteral("override_temperature")] = m_overrideTemperature;
     obj[QStringLiteral("proxy_url")] = m_proxyUrl;
     obj[QStringLiteral("timeout_seconds")] = m_timeoutSeconds;
     return obj;
@@ -34,6 +35,7 @@ bool LLMConfig::fromJson(const QJsonObject& json)
     m_maxTokens = json.value(QStringLiteral("max_tokens")).toInt(131072);
     m_topP = json.value(QStringLiteral("top_p")).toInt(100);
     m_stream = json.value(QStringLiteral("stream")).toBool(true);
+    m_overrideTemperature = json.value(QStringLiteral("override_temperature")).toBool(false);
     m_proxyUrl = json.value(QStringLiteral("proxy_url")).toString();
     m_timeoutSeconds = json.value(QStringLiteral("timeout_seconds")).toInt(120);
 

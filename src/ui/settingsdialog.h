@@ -111,6 +111,7 @@ private:
     QLineEdit* m_customUrlEdit = nullptr;
     QLineEdit* m_proxyEdit = nullptr;
     QDoubleSpinBox* m_temperatureSpin = nullptr;
+    QCheckBox* m_overrideTemperatureCheck = nullptr;
     QSpinBox* m_maxTokensSpin = nullptr;
     QCheckBox* m_streamCheck = nullptr;
     QPushButton* m_testConnectionButton = nullptr;

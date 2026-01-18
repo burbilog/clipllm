@@ -154,6 +154,10 @@ bool App::initialize(bool startMinimized)
     }
     config.setModel(model);
     config.setApiKey(apiKey);
+    config.setTemperature(m_configManager->temperature());
+    config.setOverrideTemperature(m_configManager->overrideTemperature());
+    config.setMaxTokens(m_configManager->maxTokens());
+    config.setStream(m_configManager->streamResponses());
     m_llmClient->setConfig(config);
 
     qDebug() << "LLM initialized: provider=" << Models::LLMConfig::providerToString(provider)
@@ -297,6 +301,10 @@ void App::showSettings()
             if (!apiKey.isEmpty()) {
                 config.setApiKey(apiKey);
             }
+            config.setTemperature(m_configManager->temperature());
+            config.setOverrideTemperature(m_configManager->overrideTemperature());
+            config.setMaxTokens(m_configManager->maxTokens());
+            config.setStream(m_configManager->streamResponses());
             m_llmClient->setConfig(config);
             qDebug() << "LLM config updated: provider=" << Models::LLMConfig::providerToString(provider)
                      << "model=" << model;

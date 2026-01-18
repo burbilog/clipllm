@@ -15,6 +15,7 @@ const QString ConfigManager::PROVIDER_KEY = QStringLiteral("llm/provider");
 const QString ConfigManager::PROXY_URL_KEY = QStringLiteral("llm/proxy_url");
 const QString ConfigManager::STREAM_RESPONSES_KEY = QStringLiteral("llm/stream");
 const QString ConfigManager::TEMPERATURE_KEY = QStringLiteral("llm/temperature");
+const QString ConfigManager::OVERRIDE_TEMPERATURE_KEY = QStringLiteral("llm/override_temperature");
 const QString ConfigManager::MAX_TOKENS_KEY = QStringLiteral("llm/max_tokens");
 const QString ConfigManager::WINDOW_SIZE_KEY = QStringLiteral("windows/%1/size");
 const QString ConfigManager::WINDOW_POSITION_KEY = QStringLiteral("windows/%1/position");
@@ -172,6 +173,16 @@ double ConfigManager::temperature() const
 void ConfigManager::setTemperature(double temp)
 {
     setValue(TEMPERATURE_KEY, temp);
+}
+
+bool ConfigManager::overrideTemperature() const
+{
+    return value(OVERRIDE_TEMPERATURE_KEY, false).toBool();
+}
+
+void ConfigManager::setOverrideTemperature(bool override)
+{
+    setValue(OVERRIDE_TEMPERATURE_KEY, override);
 }
 
 int ConfigManager::maxTokens() const

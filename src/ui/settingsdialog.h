@@ -45,7 +45,6 @@ signals:
 
 private slots:
     void onTabChanged(int index);
-    void onApplyClicked();
     void onOkClicked();
     void onResetClicked();
 
@@ -140,7 +139,6 @@ private:
     QLabel* m_historyStatusLabel = nullptr;
 
     // Dialog buttons
-    QPushButton* m_applyButton = nullptr;
     QPushButton* m_okButton = nullptr;
     QPushButton* m_cancelButton = nullptr;
     QPushButton* m_resetButton = nullptr;

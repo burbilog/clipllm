@@ -71,9 +71,6 @@ void SettingsDialog::setupUi()
     // Dialog buttons
     QHBoxLayout* buttonLayout = new QHBoxLayout();
 
-    m_applyButton = new QPushButton(tr("Apply"));
-    connect(m_applyButton, &QPushButton::clicked, this, &SettingsDialog::onApplyClicked);
-
     m_okButton = new QPushButton(tr("OK"));
     m_okButton->setDefault(true);
     connect(m_okButton, &QPushButton::clicked, this, &SettingsDialog::onOkClicked);
@@ -86,7 +83,6 @@ void SettingsDialog::setupUi()
 
     buttonLayout->addWidget(m_resetButton);
     buttonLayout->addStretch();
-    buttonLayout->addWidget(m_applyButton);
     buttonLayout->addWidget(m_okButton);
     buttonLayout->addWidget(m_cancelButton);
 
@@ -561,11 +557,6 @@ void SettingsDialog::onTabChanged(int index)
     if (m_tabWidget->currentWidget() != m_promptsTable->parentWidget()) {
         loadPrompts();
     }
-}
-
-void SettingsDialog::onApplyClicked()
-{
-    saveSettings();
 }
 
 void SettingsDialog::onOkClicked()

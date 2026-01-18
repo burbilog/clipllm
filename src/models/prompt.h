@@ -85,7 +85,7 @@ private:
     QString m_model = QStringLiteral("openai/gpt-4");
     PromptIcon m_icon = PromptIcon::None;
     double m_temperature = 0.7;
-    int m_maxTokens = 4096;
+    int m_maxTokens = 131072;
     bool m_enabled = true;
     QVariantMap m_metadata;
 };

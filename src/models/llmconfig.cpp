@@ -31,7 +31,7 @@ bool LLMConfig::fromJson(const QJsonObject& json)
     m_responseFormat = responseFormatFromString(
         json.value(QStringLiteral("response_format")).toString());
     m_temperature = json.value(QStringLiteral("temperature")).toDouble(0.7);
-    m_maxTokens = json.value(QStringLiteral("max_tokens")).toInt(4096);
+    m_maxTokens = json.value(QStringLiteral("max_tokens")).toInt(131072);
     m_topP = json.value(QStringLiteral("top_p")).toInt(100);
     m_stream = json.value(QStringLiteral("stream")).toBool(true);
     m_proxyUrl = json.value(QStringLiteral("proxy_url")).toString();

@@ -176,7 +176,7 @@ void ConfigManager::setTemperature(double temp)
 
 int ConfigManager::maxTokens() const
 {
-    return value(MAX_TOKENS_KEY, 4096).toInt();
+    return value(MAX_TOKENS_KEY, 131072).toInt();
 }
 
 void ConfigManager::setMaxTokens(int tokens)

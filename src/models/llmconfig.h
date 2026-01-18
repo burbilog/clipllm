@@ -82,7 +82,7 @@ private:
     QString m_organizationId;
     ResponseFormat m_responseFormat = ResponseFormat::Text;
     double m_temperature = 0.7;
-    int m_maxTokens = 4096;
+    int m_maxTokens = 131072;
     int m_topP = 100; // Stored as 0-100
     bool m_stream = true;
     QString m_proxyUrl;

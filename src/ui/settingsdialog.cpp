@@ -168,7 +168,7 @@ void SettingsDialog::setupLLMTab()
 
     m_maxTokensSpin = new QSpinBox();
     m_maxTokensSpin->setRange(1, 128000);
-    m_maxTokensSpin->setValue(4096);
+    m_maxTokensSpin->setValue(131072);
     m_maxTokensSpin->setSingleStep(512);
     optionsLayout->addRow(tr("Max Tokens:"), m_maxTokensSpin);
 
@@ -308,7 +308,7 @@ void SettingsDialog::setupHistoryTab()
     settingsLayout->addRow(tr("Maximum entries:"), m_historyLimitSpin);
 
     m_autoCleanupCheck = new QCheckBox(tr("Automatically clean up old entries"));
-    connect(m_autoCleanupCheck, &QCheckBox::stateChanged,
+    connect(m_autoCleanupCheck, &QCheckBox::checkStateChanged,
             this, &SettingsDialog::onAutoCleanupChanged);
     settingsLayout->addRow(m_autoCleanupCheck);
 

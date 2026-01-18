@@ -50,7 +50,7 @@ bool Prompt::fromJson(const QJsonObject& json)
     m_model = json.value(QStringLiteral("model")).toString(QStringLiteral("openai/gpt-4"));
     m_icon = iconFromString(json.value(QStringLiteral("icon")).toString());
     m_temperature = json.value(QStringLiteral("temperature")).toDouble(0.7);
-    m_maxTokens = json.value(QStringLiteral("max_tokens")).toInt(4096);
+    m_maxTokens = json.value(QStringLiteral("max_tokens")).toInt(131072);
     m_enabled = json.value(QStringLiteral("enabled")).toBool(true);
 
     // Load metadata

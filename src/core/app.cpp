@@ -411,6 +411,11 @@ void App::onPromptSelected(const QString& promptId)
     // Configure dialog
     m_resultDialog->setPrompt(promptId, prompt.name());
     m_resultDialog->setInput(clipboardText.isEmpty() ? tr("[Image content]") : clipboardText);
+
+    // Set model - always use the model from LLM client (settings)
+    // Prompt models are obsolete and should not override user settings
+    m_resultDialog->setModel(m_llmClient->model());
+
     m_resultDialog->startRequest();
 
     // Show dialog

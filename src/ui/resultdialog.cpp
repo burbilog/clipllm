@@ -132,6 +132,11 @@ void ResultDialog::setInput(const QString& input)
     m_inputText->setPlainText(input);
 }
 
+void ResultDialog::setModel(const QString& model)
+{
+    m_modelLabel->setText(tr("Model: %1").arg(model));
+}
+
 void ResultDialog::startRequest()
 {
     m_output.clear();
@@ -174,7 +179,10 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
 
     if (response.isSuccess()) {
         m_statusLabel->setText(tr("Completed in %1 seconds").arg(elapsed, 0, 'f', 2));
-        m_modelLabel->setText(tr("Model: %1").arg(response.model));
+        // Model is already set via setModel(), but update if response has different one
+        if (!response.model.isEmpty()) {
+            m_modelLabel->setText(tr("Model: %1").arg(response.model));
+        }
         m_tokensLabel->setText(tr("Tokens: %1 input / %2 output")
                               .arg(response.inputTokens)
                               .arg(response.outputTokens));

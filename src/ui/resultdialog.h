@@ -31,6 +31,7 @@ public:
 
     void setPrompt(const QString& promptId, const QString& promptName);
     void setInput(const QString& input);
+    void setModel(const QString& model);
     void startRequest();
     void appendResponse(const QString& text);
 

@@ -23,6 +23,7 @@ namespace UI {
 class TrayIcon;
 class SettingsDialog;
 class HistoryDialog;
+class ResultDialog;
 }
 
 class App : public QApplication
@@ -62,6 +63,7 @@ signals:
 
 private slots:
     void onHotkeyTriggered();
+    void onPromptSelected(const QString& promptId);
     void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onAboutToQuit();
 
@@ -84,6 +86,7 @@ private:
     // Dialogs (created on demand)
     UI::SettingsDialog* m_settingsDialog = nullptr;
     UI::HistoryDialog* m_historyDialog = nullptr;
+    UI::ResultDialog* m_resultDialog = nullptr;
 
     // Translators
     std::vector<QTranslator*> m_translators;

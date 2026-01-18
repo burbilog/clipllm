@@ -8,6 +8,7 @@
 #include "ui/trayicon.h"
 #include "ui/settingsdialog.h"
 #include "ui/historydialog.h"
+#include "ui/resultdialog.h"
 #include <QStandardPaths>
 #include <QDir>
 #include <QDebug>
@@ -33,6 +34,7 @@ namespace {
 
 // Using declarations for Core classes
 using Core::ClipboardManager;
+using Core::ClipboardContent;
 using Core::LLMClient;
 using Core::PromptManager;
 using Core::ConfigManager;
@@ -151,6 +153,8 @@ bool App::initialize(bool startMinimized)
             this, &QCoreApplication::quit);
     connect(m_trayIcon.get(), &UI::TrayIcon::hotkeyTriggered,
             this, &App::onHotkeyTriggered);
+    connect(m_trayIcon.get(), &UI::TrayIcon::promptSelected,
+            this, &App::onPromptSelected);
 
     // Show tray icon
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
@@ -304,6 +308,86 @@ void App::onHotkeyTriggered()
     // Show prompt menu
     // This will be implemented when PromptMenu is created
     emit hotkeyTriggered();
+}
+
+void App::onPromptSelected(const QString& promptId)
+{
+    qDebug() << "Prompt selected:" << promptId;
+
+    // Get prompt
+    auto promptOpt = m_promptManager->getPrompt(promptId);
+    if (!promptOpt.has_value()) {
+        showTrayMessage(tr("Error"),
+                       tr("Prompt not found: %1").arg(promptId));
+        return;
+    }
+
+    const Models::Prompt& prompt = promptOpt.value();
+
+    // Get clipboard content
+    auto clipboardContent = m_clipboardManager->getContent();
+    if (!clipboardContent.has_value()) {
+        showTrayMessage(tr("Clipboard Empty"),
+                       tr("No content found in clipboard."));
+        return;
+    }
+
+    const ClipboardContent& content = clipboardContent.value();
+
+    // Check content type compatibility
+    if (prompt.contentType() != Models::ContentType::Any) {
+        bool compatible = false;
+        if (prompt.contentType() == Models::ContentType::Text && content.isText()) {
+            compatible = true;
+        } else if (prompt.contentType() == Models::ContentType::Image && content.isImage()) {
+            compatible = true;
+        }
+
+        if (!compatible) {
+            showTrayMessage(tr("Incompatible Content"),
+                           tr("This prompt requires %1 content.")
+                           .arg(Models::Prompt::contentTypeToString(prompt.contentType())));
+            return;
+        }
+    }
+
+    // Format the user prompt with clipboard content
+    QString clipboardText = content.isText() ? content.text : QString();
+    QString userPrompt = prompt.formatUserPrompt(clipboardText);
+
+    // Get image data if present
+    QByteArray imageData;
+    if (content.isImage()) {
+        imageData = content.imageData;
+    }
+
+    // Create or reuse result dialog
+    if (!m_resultDialog) {
+        m_resultDialog = new UI::ResultDialog(m_llmClient.get(), m_historyManager.get());
+        m_resultDialog->setAttribute(Qt::WA_DeleteOnClose);
+        connect(m_resultDialog, &QObject::destroyed, [this]() {
+            m_resultDialog = nullptr;
+        });
+    }
+
+    // Configure dialog
+    m_resultDialog->setPrompt(promptId, prompt.name());
+    m_resultDialog->setInput(clipboardText.isEmpty() ? tr("[Image content]") : clipboardText);
+    m_resultDialog->startRequest();
+
+    // Show dialog
+    m_resultDialog->show();
+    m_resultDialog->raise();
+    m_resultDialog->activateWindow();
+
+    // Send request to LLM
+    QString systemPrompt = prompt.systemPrompt();
+    if (!systemPrompt.isEmpty()) {
+        m_llmClient->sendPrompt(systemPrompt, userPrompt, imageData);
+    } else {
+        // If no system prompt, send user prompt only
+        m_llmClient->sendPrompt(QString(), userPrompt, imageData);
+    }
 }
 
 void App::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason)

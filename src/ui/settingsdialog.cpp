@@ -405,7 +405,12 @@ void SettingsDialog::saveSettings()
 
     // LLM
     m_configManager->setLlmProvider(m_providerCombo->currentData().toString());
-    m_configManager->setLlmModel(m_modelCombo->currentText().trimmed());
+    QString model = m_modelCombo->currentText().trimmed();
+    // Don't save placeholder text
+    if (model.isEmpty() || model == tr("Select or enter model name...")) {
+        model.clear();  // Clear to use default
+    }
+    m_configManager->setLlmModel(model);
     m_configManager->setProxyUrl(m_proxyEdit->text());
     m_configManager->setTemperature(m_temperatureSpin->value());
     m_configManager->setMaxTokens(m_maxTokensSpin->value());

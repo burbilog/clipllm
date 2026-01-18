@@ -137,6 +137,9 @@ private:
 
     // For tracking streaming response
     QString m_currentModel;
+
+    // Buffer for incomplete SSE chunks
+    QByteArray m_sseBuffer;
 };
 
 } // namespace Core

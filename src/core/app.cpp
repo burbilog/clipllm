@@ -144,6 +144,21 @@ bool App::initialize(bool startMinimized)
         m_llmClient->setApiKey(apiKey);
     }
 
+    // Load LLM configuration
+    auto provider = Models::LLMConfig::providerFromString(m_configManager->llmProvider());
+    auto config = Models::LLMConfig::createDefault(provider);
+    QString model = m_configManager->llmModel();
+    if (model.isEmpty()) {
+        qWarning() << "No model configured, using default for provider";
+        model = config.model();  // Use default from createDefault
+    }
+    config.setModel(model);
+    config.setApiKey(apiKey);
+    m_llmClient->setConfig(config);
+
+    qDebug() << "LLM initialized: provider=" << Models::LLMConfig::providerToString(provider)
+             << "model=" << model;
+
     // Setup UI components
     m_trayIcon = std::make_unique<UI::TrayIcon>(this);
 
@@ -267,6 +282,24 @@ void App::showSettings()
         m_settingsDialog->setAttribute(Qt::WA_DeleteOnClose);
         connect(m_settingsDialog, &QObject::destroyed, [this]() {
             m_settingsDialog = nullptr;
+        });
+        // Update LLM config when settings are applied
+        connect(m_settingsDialog, &UI::SettingsDialog::settingsChanged, [this]() {
+            auto provider = Models::LLMConfig::providerFromString(m_configManager->llmProvider());
+            auto config = Models::LLMConfig::createDefault(provider);
+            QString model = m_configManager->llmModel();
+            if (model.isEmpty()) {
+                qWarning() << "No model in settings, using default for provider";
+                model = config.model();
+            }
+            config.setModel(model);
+            QString apiKey = m_keychainStore->readApiKey();
+            if (!apiKey.isEmpty()) {
+                config.setApiKey(apiKey);
+            }
+            m_llmClient->setConfig(config);
+            qDebug() << "LLM config updated: provider=" << Models::LLMConfig::providerToString(provider)
+                     << "model=" << model;
         });
     }
 

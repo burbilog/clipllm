@@ -219,6 +219,7 @@ void LLMClient::cancel()
 
     setState(LLMClientState::Idle);
     m_accumulatedContent.clear();
+    m_sseBuffer.clear();
 }
 
 void LLMClient::onReadyRead()
@@ -284,6 +285,7 @@ void LLMClient::onFinished()
     setState(LLMClientState::Completed);
     emit completed(response);
 
+    m_sseBuffer.clear();
     m_currentReply->deleteLater();
     m_currentReply = nullptr;
 }
@@ -297,6 +299,7 @@ void LLMClient::onErrorOccurred(QNetworkReply::NetworkError code)
         errorMsg = m_currentReply->errorString();
     }
 
+    m_sseBuffer.clear();
     setState(LLMClientState::Error);
     emit error(errorMsg);
 }
@@ -349,14 +352,24 @@ QByteArray LLMClient::createRequestBody(const LLMRequest& llmRequest) const
 
 void LLMClient::processStreamingChunk(const QByteArray& chunk)
 {
-    QString chunkStr = QString::fromUtf8(chunk);
+    // Append new data to buffer
+    m_sseBuffer.append(chunk);
 
-    // SSE format: "data: {...}\n\n"
-    QStringList lines = chunkStr.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+    // Process complete SSE messages (format: "data: {...}\n\n")
+    int pos = 0;
+    while ((pos = m_sseBuffer.indexOf('\n')) >= 0) {
+        QByteArray line = m_sseBuffer.left(pos);
+        m_sseBuffer = m_sseBuffer.mid(pos + 1);
 
-    for (const QString& line : lines) {
-        if (line.startsWith(QStringLiteral("data: "))) {
-            QString data = line.mid(6); // Remove "data: " prefix
+        // Skip empty lines
+        if (line.trimmed().isEmpty()) {
+            continue;
+        }
+
+        QString lineStr = QString::fromUtf8(line);
+
+        if (lineStr.startsWith(QStringLiteral("data: "))) {
+            QString data = lineStr.mid(6); // Remove "data: " prefix
 
             // Check for done signal
             if (data == QStringLiteral("[DONE]")) {

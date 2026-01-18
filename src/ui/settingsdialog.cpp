@@ -1,4 +1,5 @@
 #include "settingsdialog.h"
+#include "prompteditordialog.h"
 #include "hotkeyedit.h"
 #include "core/configmanager.h"
 #include "core/keychainstore.h"
@@ -528,7 +529,9 @@ void SettingsDialog::loadPrompts()
     for (int i = 0; i < prompts.size(); ++i) {
         const auto& prompt = prompts[i];
 
-        m_promptsTable->setItem(i, 0, new QTableWidgetItem(prompt.name()));
+        QTableWidgetItem* nameItem = new QTableWidgetItem(prompt.name());
+        nameItem->setData(Qt::UserRole, prompt.id());
+        m_promptsTable->setItem(i, 0, nameItem);
         m_promptsTable->setItem(i, 1, new QTableWidgetItem(prompt.description()));
         m_promptsTable->setItem(i, 2, new QTableWidgetItem(
             Models::Prompt::contentTypeToString(prompt.contentType())
@@ -636,16 +639,58 @@ void SettingsDialog::onHotkeyChanged(const QKeySequence& sequence)
 
 void SettingsDialog::onAddPromptClicked()
 {
-    // TODO: Implement prompt editor dialog
-    QMessageBox::information(this, tr("Add Prompt"),
-                           tr("Prompt editor will be implemented in a future version."));
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (!app || !app->promptManager()) {
+        return;
+    }
+
+    PromptEditorDialog dialog(app->promptManager(), this);
+    if (dialog.exec() == QDialog::Accepted) {
+        Models::Prompt prompt = dialog.getPrompt();
+        if (app->promptManager()->addPrompt(prompt)) {
+            loadPrompts();
+            emit settingsChanged();
+        } else {
+            QMessageBox::warning(this, tr("Error"),
+                               tr("Failed to add prompt. ID may already exist."));
+        }
+    }
 }
 
 void SettingsDialog::onEditPromptClicked()
 {
-    // TODO: Implement prompt editor dialog
-    QMessageBox::information(this, tr("Edit Prompt"),
-                           tr("Prompt editor will be implemented in a future version."));
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (!app || !app->promptManager()) {
+        return;
+    }
+
+    int row = m_promptsTable->currentRow();
+    if (row < 0) {
+        return;
+    }
+
+    QTableWidgetItem* nameItem = m_promptsTable->item(row, 0);
+    if (!nameItem) {
+        return;
+    }
+
+    QString promptId = nameItem->data(Qt::UserRole).toString();
+    auto promptOpt = app->promptManager()->getPrompt(promptId);
+    if (!promptOpt) {
+        return;
+    }
+
+    PromptEditorDialog dialog(app->promptManager(), promptOpt.value(), this);
+    if (dialog.exec() == QDialog::Accepted) {
+        Models::Prompt updatedPrompt = dialog.getPrompt();
+        if (app->promptManager()->updatePrompt(promptId, updatedPrompt)) {
+            loadPrompts();
+            emit settingsChanged();
+        } else {
+            QMessageBox::warning(this, tr("Error"),
+                               tr("Failed to update prompt."));
+        }
+    }
 }
 
 void SettingsDialog::onDeletePromptClicked()

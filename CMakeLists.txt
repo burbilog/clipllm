@@ -40,6 +40,7 @@ set(SOURCES
     src/ui/resultdialog.cpp
     src/ui/hotkeyedit.cpp
     src/ui/historydialog.cpp
+    src/ui/prompteditordialog.cpp
     src/models/prompt.cpp
     src/models/llmconfig.cpp
 )
@@ -59,6 +60,7 @@ set(HEADERS
     src/ui/resultdialog.h
     src/ui/hotkeyedit.h
     src/ui/historydialog.h
+    src/ui/prompteditordialog.h
     src/models/prompt.h
     src/models/llmconfig.h
 )

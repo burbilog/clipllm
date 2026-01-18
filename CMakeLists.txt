@@ -94,9 +94,30 @@ set(TS_FILES
 
 set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/translations)
 
-# Add translation target
-qt_add_lupdate(${PROJECT_NAME} ${TS_FILES})
-qt_add_lrelease(${PROJECT_NAME} ${TS_FILES})
+# Custom target to generate .qm files (built by default with ALL)
+add_custom_target(translations ALL
+    COMMENT "Building translations..."
+)
+
+# Generate .qm files for each language
+foreach(ts_file ${TS_FILES})
+    get_filename_component(lang_name ${ts_file} NAME_WE)
+    add_custom_command(
+        TARGET translations
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/translations
+        COMMAND Qt6::lrelease ${CMAKE_CURRENT_SOURCE_DIR}/${ts_file} -qm ${CMAKE_CURRENT_BINARY_DIR}/translations/${lang_name}.qm
+        COMMENT "Generating ${lang_name}.qm..."
+        VERBATIM
+    )
+endforeach()
+
+# Development helper: copy .qm files to source directory (for running from build dir)
+add_custom_target(translations-copy
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/translations ${CMAKE_CURRENT_SOURCE_DIR}/translations
+    COMMENT "Copying .qm files to source directory for development..."
+    DEPENDS translations
+)
 
 # Install translations
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/translations/*.qm

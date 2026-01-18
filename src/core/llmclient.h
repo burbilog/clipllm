@@ -99,6 +99,8 @@ public:
     // Statistics
     int lastInputTokens() const { return m_lastInputTokens; }
     int lastOutputTokens() const { return m_lastOutputTokens; }
+    bool isThinking() const { return m_isThinking; }
+    qint64 bytesReceived() const { return m_bytesReceived; }
 
 signals:
     void started();
@@ -107,6 +109,8 @@ signals:
     void error(const QString& error);
     void progress(int bytesReceived, int bytesTotal);
     void stateChanged(LLMClientState state);
+    void thinkingStateChanged(bool isThinking);
+    void bytesReceivedChanged(qint64 bytesReceived);
 
 private slots:
     void onReadyRead();
@@ -140,6 +144,10 @@ private:
 
     // Buffer for incomplete SSE chunks
     QByteArray m_sseBuffer;
+
+    // Thinking state (for reasoning models)
+    bool m_isThinking = false;
+    qint64 m_bytesReceived = 0;
 };
 
 } // namespace Core

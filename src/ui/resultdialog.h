@@ -51,6 +51,8 @@ private slots:
     void onSaveClicked();
     void onRetryClicked();
     void onCloseClicked();
+    void onThinkingStateChanged(bool isThinking);
+    void onBytesReceivedChanged(qint64 bytesReceived);
 
 private:
     void setupUi();
@@ -65,6 +67,7 @@ private:
     QLabel* m_statusLabel = nullptr;
     QLabel* m_modelLabel = nullptr;
     QLabel* m_tokensLabel = nullptr;
+    QLabel* m_trafficLabel = nullptr;
     QProgressBar* m_progressBar = nullptr;
     QPushButton* m_copyButton = nullptr;
     QPushButton* m_saveButton = nullptr;
@@ -79,8 +82,13 @@ private:
 
     // State
     bool m_isStreaming = false;
+    bool m_isThinking = false;
     bool m_wasSaved = false;
     QElapsedTimer m_timer;
+    qint64 m_bytesReceived = 0;
+
+    // Helper for traffic formatting
+    static QString formatBytes(qint64 bytes);
 };
 
 } // namespace UI

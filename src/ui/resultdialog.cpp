@@ -29,6 +29,10 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
                 this, &ResultDialog::onCompleted);
         connect(m_llmClient, &Core::LLMClient::error,
                 this, &ResultDialog::onError);
+        connect(m_llmClient, &Core::LLMClient::thinkingStateChanged,
+                this, &ResultDialog::onThinkingStateChanged);
+        connect(m_llmClient, &Core::LLMClient::bytesReceivedChanged,
+                this, &ResultDialog::onBytesReceivedChanged);
     }
 }
 
@@ -43,9 +47,12 @@ void ResultDialog::setupUi()
     m_modelLabel = new QLabel(tr("Model: -"));
     m_modelLabel->setStyleSheet("font-weight: bold;");
     m_tokensLabel = new QLabel(tr("Tokens: 0 / 0"));
+    m_trafficLabel = new QLabel(tr("Traffic: 0 B"));
+    m_trafficLabel->setStyleSheet("color: gray; font-size: 10px;");
     headerLayout->addWidget(m_modelLabel);
     headerLayout->addStretch();
     headerLayout->addWidget(m_tokensLabel);
+    headerLayout->addWidget(m_trafficLabel);
     mainLayout->addLayout(headerLayout);
 
     // Progress bar
@@ -142,13 +149,18 @@ void ResultDialog::startRequest()
     m_output.clear();
     m_outputText->clear();
     m_isStreaming = true;
+    m_isThinking = false;
     m_wasSaved = false;
+    m_bytesReceived = 0;
     m_timer.start();
 
     updateState();
 
     m_progressBar->setVisible(true);
-    m_statusLabel->setText(tr("Processing..."));
+    m_trafficLabel->setVisible(true);
+    m_trafficLabel->setText(tr("Traffic: 0 B"));
+    m_statusLabel->setText(tr("Connecting..."));
+    m_statusLabel->setStyleSheet("");
     m_copyButton->setEnabled(false);
     m_saveButton->setEnabled(false);
     m_retryButton->setEnabled(false);
@@ -173,7 +185,9 @@ void ResultDialog::onStreaming(const QString& content)
 void ResultDialog::onCompleted(const Core::LLMResponse& response)
 {
     m_isStreaming = false;
+    m_isThinking = false;
     m_progressBar->setVisible(false);
+    m_trafficLabel->setVisible(false);
 
     double elapsed = m_timer.elapsed() / 1000.0;
 
@@ -204,7 +218,9 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
 void ResultDialog::onError(const QString& error)
 {
     m_isStreaming = false;
+    m_isThinking = false;
     m_progressBar->setVisible(false);
+    m_trafficLabel->setVisible(false);
 
     m_statusLabel->setText(tr("Error: %1").arg(error));
     m_statusLabel->setStyleSheet("color: red;");
@@ -282,6 +298,46 @@ void ResultDialog::updateState()
     } else {
         m_outputText->setReadOnly(true);
     }
+}
+
+void ResultDialog::onThinkingStateChanged(bool isThinking)
+{
+    m_isThinking = isThinking;
+
+    if (m_isStreaming) {
+        if (isThinking) {
+            m_statusLabel->setText(tr("Model is thinking..."));
+            m_statusLabel->setStyleSheet("color: blue;");
+        } else {
+            m_statusLabel->setText(tr("Generating response..."));
+            m_statusLabel->setStyleSheet("color: black;");
+        }
+    }
+}
+
+void ResultDialog::onBytesReceivedChanged(qint64 bytesReceived)
+{
+    m_bytesReceived = bytesReceived;
+    m_trafficLabel->setText(tr("Traffic: %1").arg(formatBytes(bytesReceived)));
+}
+
+QString ResultDialog::formatBytes(qint64 bytes)
+{
+    if (bytes == 0) {
+        return QStringLiteral("0 B");
+    }
+
+    const QString units[] = {QStringLiteral("B"), QStringLiteral("KB"),
+                             QStringLiteral("MB"), QStringLiteral("GB")};
+    int unitIndex = 0;
+    double size = bytes;
+
+    while (size >= 1024.0 && unitIndex < 3) {
+        size /= 1024.0;
+        unitIndex++;
+    }
+
+    return QStringLiteral("%1 %2").arg(size, 0, 'f', 2).arg(units[unitIndex]);
 }
 
 } // namespace UI

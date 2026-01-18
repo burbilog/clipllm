@@ -153,6 +153,10 @@ void LLMClient::sendRequest(const LLMRequest& request)
     m_lastInputTokens = 0;
     m_lastOutputTokens = 0;
     m_currentModel = request.model;
+    m_isThinking = false;
+    m_bytesReceived = 0;
+    emit thinkingStateChanged(false);
+    emit bytesReceivedChanged(0);
 
     QNetworkRequest netRequest = createRequest(request);
     QByteArray body = createRequestBody(request);
@@ -231,6 +235,8 @@ void LLMClient::onReadyRead()
     setState(LLMClientState::Streaming);
 
     QByteArray data = m_currentReply->readAll();
+    m_bytesReceived += data.size();
+    emit bytesReceivedChanged(m_bytesReceived);
     processStreamingChunk(data);
 }
 
@@ -406,10 +412,26 @@ void LLMClient::processOpenRouterChunk(const QString& data)
     QJsonObject choice = choices.first().toObject();
     QJsonObject delta = choice.value(QStringLiteral("delta")).toObject();
 
+    // Check for reasoning content (for thinking models)
+    QString reasoning = delta.value(QStringLiteral("reasoning")).toString();
+    QString reasoningContent = delta.value(QStringLiteral("reasoning_content")).toString();
     QString content = delta.value(QStringLiteral("content")).toString();
+
+    bool wasThinking = m_isThinking;
+
+    if (!reasoning.isEmpty() || !reasoningContent.isEmpty()) {
+        m_isThinking = true;
+    }
+
     if (!content.isEmpty()) {
+        m_isThinking = false;
         m_accumulatedContent.append(content);
         emit streaming(content);
+    }
+
+    // Emit signal if thinking state changed
+    if (wasThinking != m_isThinking) {
+        emit thinkingStateChanged(m_isThinking);
     }
 
     // Update usage info if available

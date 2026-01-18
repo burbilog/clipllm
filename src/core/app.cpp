@@ -56,6 +56,9 @@ App::App(int &argc, char **argv)
     setOrganizationDomain(ORGANIZATION_DOMAIN);
     setApplicationVersion(QStringLiteral("1.0.0"));
 
+    // Don't quit when last window is closed (important for tray apps)
+    setQuitOnLastWindowClosed(false);
+
     // Setup quit handler
     connect(this, &QCoreApplication::aboutToQuit, this, &App::onAboutToQuit);
 }

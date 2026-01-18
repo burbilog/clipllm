@@ -104,7 +104,7 @@ void ResultDialog::setupUi()
     // Button row
     QHBoxLayout* buttonLayout = new QHBoxLayout();
 
-    m_copyButton = new QPushButton(tr("Copy"));
+    m_copyButton = new QPushButton(tr("Copy && close"));
     m_copyButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogSaveButton));
     m_copyButton->setEnabled(false);
     connect(m_copyButton, &QPushButton::clicked, this, &ResultDialog::onCopyClicked);
@@ -244,17 +244,7 @@ void ResultDialog::onError(const QString& error)
 void ResultDialog::onCopyClicked()
 {
     QApplication::clipboard()->setText(m_output);
-
-    m_statusLabel->setText(tr("Copied to clipboard"));
-    m_statusLabel->setStyleSheet("color: green;");
-
-    // Reset style after a delay
-    QTimer::singleShot(2000, this, [this]() {
-        m_statusLabel->setStyleSheet("");
-        if (!m_isStreaming) {
-            m_statusLabel->setText(tr("Completed"));
-        }
-    });
+    closeDialog();
 }
 
 void ResultDialog::onSaveClicked()

@@ -131,9 +131,11 @@ void SettingsDialog::setupLLMTab()
             this, &SettingsDialog::onProviderChanged);
     providerLayout->addRow(tr("Provider:"), m_providerCombo);
 
-    // Model combo with refresh button
+    // Model combo with refresh button and editable field
     QHBoxLayout* modelLayout = new QHBoxLayout();
     m_modelCombo = new QComboBox();
+    m_modelCombo->setEditable(true);  // Allow manual entry
+    m_modelCombo->setPlaceholderText(tr("Select or enter model name..."));
     m_refreshModelsButton = new QPushButton(tr("Refresh"));
     m_refreshModelsButton->setEnabled(false);
     connect(m_refreshModelsButton, &QPushButton::clicked,
@@ -365,9 +367,9 @@ void SettingsDialog::loadSettings()
     loadModels();
 
     QString model = m_configManager->llmModel();
-    int modelIndex = m_modelCombo->findData(model);
-    if (modelIndex >= 0) {
-        m_modelCombo->setCurrentIndex(modelIndex);
+    // Use setCurrentText for editable combo box (finds match or sets as manual entry)
+    if (!model.isEmpty()) {
+        m_modelCombo->setCurrentText(model);
     }
 
     m_customUrlEdit->setText(m_configManager->proxyUrl());
@@ -403,7 +405,7 @@ void SettingsDialog::saveSettings()
 
     // LLM
     m_configManager->setLlmProvider(m_providerCombo->currentData().toString());
-    m_configManager->setLlmModel(m_modelCombo->currentData().toString());
+    m_configManager->setLlmModel(m_modelCombo->currentText().trimmed());
     m_configManager->setProxyUrl(m_proxyEdit->text());
     m_configManager->setTemperature(m_temperatureSpin->value());
     m_configManager->setMaxTokens(m_maxTokensSpin->value());
@@ -466,11 +468,23 @@ void SettingsDialog::loadModels()
     // Sort models alphabetically
     models.sort(Qt::CaseInsensitive);
 
-    m_modelCombo->clear();
-    m_modelCombo->addItem(tr("Auto"), QString());
+    // Save current text before clearing
+    QString currentText = m_modelCombo->currentText();
 
+    m_modelCombo->clear();
     for (const QString& model : models) {
         m_modelCombo->addItem(model, model);
+    }
+
+    // Restore current text if it existed (handles manual entries)
+    if (!currentText.isEmpty()) {
+        int index = m_modelCombo->findText(currentText);
+        if (index >= 0) {
+            m_modelCombo->setCurrentIndex(index);
+        } else {
+            // Manual entry not in list, set it as text
+            m_modelCombo->setCurrentText(currentText);
+        }
     }
 }
 
@@ -508,7 +522,8 @@ QString SettingsDialog::getCurrentProvider() const
 
 QString SettingsDialog::getCurrentModel() const
 {
-    return m_modelCombo->currentData().toString();
+    // Use currentText() for editable combo box to get manual entries
+    return m_modelCombo->currentText().trimmed();
 }
 
 void SettingsDialog::onTabChanged(int index)
@@ -849,20 +864,23 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
         // Sort models alphabetically
         models.sort(Qt::CaseInsensitive);
 
-        // Save current selection
-        QString currentModel = m_modelCombo->currentData().toString();
+        // Save current selection (use text for editable combo box)
+        QString currentModel = m_modelCombo->currentText().trimmed();
 
-        // Update combo box
+        // Update combo box (no "Auto" entry, user can type manually)
         m_modelCombo->clear();
-        m_modelCombo->addItem(tr("Auto"), QString());
         for (const QString& model : models) {
             m_modelCombo->addItem(model, model);
         }
 
-        // Restore selection if possible
-        int index = m_modelCombo->findData(currentModel);
-        if (index >= 0) {
-            m_modelCombo->setCurrentIndex(index);
+        // Restore selection (use setText for editable combo box)
+        if (!currentModel.isEmpty()) {
+            int index = m_modelCombo->findText(currentModel);
+            if (index >= 0) {
+                m_modelCombo->setCurrentIndex(index);
+            } else {
+                m_modelCombo->setCurrentText(currentModel);
+            }
         }
 
         // Cache models for future use

@@ -53,6 +53,7 @@ App::App(int &argc, char **argv)
     , m_instanceId(QByteArray::number(QRandomGenerator::global()->generate()))
 {
     setApplicationName(APPLICATION_NAME);
+    setOrganizationName(APPLICATION_NAME);
     setOrganizationDomain(ORGANIZATION_DOMAIN);
     setApplicationVersion(QStringLiteral("1.0.0"));
 
@@ -225,9 +226,11 @@ void App::setLanguage(const QString& languageCode)
 
     // Fallback paths for development
     if (!QDir(translationsPath).exists()) {
-        translationsPath = QCoreApplication::applicationDirPath() + QStringLiteral("/../translations");
+        // Try executable directory first (build directory)
+        translationsPath = QCoreApplication::applicationDirPath() + QStringLiteral("/translations");
         if (!QDir(translationsPath).exists()) {
-            translationsPath = QCoreApplication::applicationDirPath() + QStringLiteral("/translations");
+            // Try parent directory (source directory when running from build/subdir)
+            translationsPath = QCoreApplication::applicationDirPath() + QStringLiteral("/../translations");
         }
     }
 

@@ -11,8 +11,11 @@ ClipAI is a cross-platform LLM clipboard utility written in C++ using Qt6. It ru
 ## Build Commands
 
 ### Standard Build
+
+**Build directory:** `/home/rm/clipai/build` (or `$HOME/clipai/build`)
+
 ```bash
-mkdir build && cd build
+cd /home/rm/clipai/build
 cmake ..
 make -j$(nproc)
 ```
@@ -31,6 +34,7 @@ lrelease translations/*.ts            # Compile .qm files for distribution
 
 ### Clean Build
 ```bash
+cd /home/rm/clipai
 rm -rf build
 mkdir build && cd build && cmake .. && make -j$(nproc)
 ```

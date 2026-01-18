@@ -214,13 +214,28 @@ void TrayIcon::onHistoryTriggered()
 
 void TrayIcon::onAboutTriggered()
 {
-    QMessageBox::about(nullptr,
-        tr("About ClipAI"),
-        tr("<h3>ClipAI</h3>"
-           "<p>Version 1.0.0</p>"
-           "<p>Cross-platform LLM clipboard utility</p>"
-           "<p>Process your clipboard content with AI prompts.</p>"
-           "<p>Copyright © 2024</p>"));
+    QString aboutText = tr(
+        "<table border='0' cellpadding='8' cellspacing='0'>"
+        "<tr>"
+        "<td align='center' width='150'>"
+        "<img src=':/icons/tray-icon-128.png' width='128' height='128'/>"
+        "</td>"
+        "<td>"
+        "<h2 style='margin-top:0;'>ClipAI</h2>"
+        "<p><b>Version 1.0.0</b></p>"
+        "</td>"
+        "</tr>"
+        "</table>"
+        "<p><b>ClipAI</b> is a cross-platform clipboard utility that integrates Large Language Models (LLMs) "
+        "directly into your workflow. Running as a system tray service, it allows you to process clipboard "
+        "content (both text and images) with customizable AI prompts using global hotkeys.</p>"
+        "<p>Whether you need to summarize text, translate content, rewrite code, extract information from images, "
+        "or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single "
+        "keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.</p>"
+        "<p><small>Copyright © 2026 Roman V. Isaev &lt;<a href='mailto:rm@isaeff.net'>rm@isaeff.net</a>&gt;</small></p>"
+    );
+
+    QMessageBox::about(nullptr, tr("About ClipAI"), aboutText);
 }
 
 void TrayIcon::onQuitTriggered()

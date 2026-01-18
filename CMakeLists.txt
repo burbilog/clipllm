@@ -101,6 +101,7 @@ if(CONVERT_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.p
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-32.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-48.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-64.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-128.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon.ico
         COMMAND ${CONVERT_EXECUTABLE}
             ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
@@ -120,6 +121,9 @@ if(CONVERT_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.p
         COMMAND ${CONVERT_EXECUTABLE}
             ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
             -resize 64x64 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-64.png
+        COMMAND ${CONVERT_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            -resize 128x128 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-128.png
         COMMAND ${CONVERT_EXECUTABLE}
             ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
             \( -clone 0 -resize 16x16 \)
@@ -142,6 +146,7 @@ if(CONVERT_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.p
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-32.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-48.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-64.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-128.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon.ico
         COMMENT "Icon generation target"
     )
@@ -156,6 +161,7 @@ if(CONVERT_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.p
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-32.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-48.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-64.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-128.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon.ico
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/config/prompts-default.json
     )

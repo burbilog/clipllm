@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ClipAI is a cross-platform LLM clipboard utility written in C++ using Qt6. It runs as a system tray service and allows users to process clipboard content (text and images) with AI prompts using global hotkeys.
 
-**Key Statistics:** ~6,374 lines of C++17 code, 31 source/header files across 3 modules (core, ui, models).
+**Key Statistics:** ~7,000+ lines of C++17 code across 3 modules (core, ui, models).
 
 ## Build Commands
 
@@ -106,7 +106,7 @@ The `App` class (inherits `QApplication`) is the central controller that:
 
 ### Data Models (src/models/)
 
-- **Prompt**: `id`, `name`, `systemPrompt`, `userPromptTemplate`, `contentType` (Text/Image/Any), `model`, `icon`, `temperature`, `maxTokens`, `enabled`, `metadata`
+- **Prompt**: `id`, `name`, `systemPrompt`, `userPromptTemplate`, `contentType` (Text/Image/Any), `model`, `icon`, `temperature`, `maxTokens`, `enabled`, `priority`, `overrideTemperature`, `metadata`
 - **LLMConfig**: `provider` (enum), `apiKey`, `model`, `apiUrl`, `temperature`, `maxTokens`, `topP`, `stream`, `proxyUrl`, `timeoutSeconds`
 - **HistoryEntry**: `id`, `promptId`, `timestamp`, `contentType`, input/output text, base64 images, token counts, duration, favorite, tags
 
@@ -114,13 +114,14 @@ The `App` class (inherits `QApplication`) is the central controller that:
 
 - **TrayIcon**: System tray with context menu, dynamic prompt generation
 - **SettingsDialog**: 5-tab interface (General, LLM, Hotkeys, Prompts, History)
-- **ResultDialog**: Real-time streaming display with progress bar
+- **ResultDialog**: Real-time streaming display with Markdown/Raw toggle
 - **HotkeyEdit**: Custom widget for hotkey capture
-- **HistoryDialog**: Searchable history viewer with export
+- **HistoryDialog**: Searchable history viewer with Markdown/Raw preview and export
+- **PromptEditorDialog**: Full UI for creating and editing prompts
 
 ## Configuration Files
 
-- **Default Prompts**: `resources/config/prompts-default.json` (13 built-in prompts)
+- **Default Prompts**: `resources/config/prompts-default.json` (16 built-in prompts)
 - **Qt Resources**: `resources/resources.qrc` - bundles prompts and icons into executable
 - **Desktop Entry**: `resources/clipai.desktop.in` - Linux application launcher
 
@@ -149,8 +150,9 @@ The `App` class (inherits `QApplication`) is the central controller that:
 
 ### Adding a New Prompt
 1. Edit `~/.config/ClipAI/prompts.json` directly, or
-2. Use the Settings → Prompts tab
+2. Use the Settings → Prompts tab with full prompt editor UI
 3. Required fields: `id`, `name`, `system_prompt`, `user_prompt_template`, `content_type`, `enabled`
+4. Optional: `priority` (higher = appears first in menu), `description`, `icon`
 
 ### Adding a New Language
 1. Create `translations/clipai_xx.ts`
@@ -167,7 +169,6 @@ only if I reference previous, python incarnation of this program.
 
 ## Known Limitations
 
-- **QHotkey Integration**: The `3rdparty/qhotkey/` directory is currently empty; global hotkey support needs implementation
 - **No Unit Tests**: No test framework configured yet
 - **No CI/CD**: No GitHub Actions or other CI configuration
 

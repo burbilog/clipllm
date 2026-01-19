@@ -9,8 +9,11 @@ Cross-platform LLM clipboard utility - Process your clipboard content with AI pr
 - **Text and Images** - Process both text content and images from clipboard
 - **Configurable Prompts** - Built-in prompts with support for custom prompts
 - **Multiple LLM Providers** - Support for OpenRouter, OpenAI, Anthropic, and custom endpoints
-- **Streaming Responses** - Real-time display of AI responses
+- **Streaming Responses** - Real-time display of AI responses with Markdown rendering
 - **History Management** - View, search, and export your request history
+- **Priority System** - Set priority for prompts to control menu order
+- **Prompt Limits** - Configure maximum number of prompts in menu
+- **Prompt Editor** - Full UI for creating and editing custom prompts
 - **Multi-language** - Available in English, Russian, German, French, and Spanish
 - **Cross-platform** - Works on Linux (X11/Wayland), Windows, and macOS
 
@@ -87,7 +90,7 @@ ClipAI supports multiple LLM providers:
 ## Usage
 
 1. Copy text or an image to your clipboard
-2. Press the global hotkey (default: Ctrl+Shift+C)
+2. Press the global hotkey (default: Ctrl+Alt+Shift+X)
 3. Select a prompt from the menu
 4. View the streaming response in the result window
 5. Copy or save the result to history
@@ -135,11 +138,11 @@ clipai/
 
 ### Adding Custom Prompts
 
-Prompts are stored in `~/.config/ClipAI/prompts.json`. You can:
+You can create and edit prompts in several ways:
 
-1. Edit the file directly
-2. Use the Settings dialog (Prompt editor coming soon)
-3. Export/import prompts
+1. **Settings Dialog** - Use the Prompts tab with full prompt editor UI
+2. **Direct File Edit** - Edit `~/.config/ClipAI/prompts.json` directly
+3. **Import/Export** - Share prompts via JSON export/import
 
 Prompt format:
 ```json
@@ -152,7 +155,8 @@ Prompt format:
   "user_prompt_template": "Process this: {clipboard}",
   "content_type": "text",
   "model": "openai/gpt-4",
-  "enabled": true
+  "enabled": true,
+  "priority": 0
 }
 ```
 
@@ -181,7 +185,6 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 
 ## Roadmap
 
-- [ ] Prompt editor UI
 - [ ] More built-in prompts
 - [ ] Plugin system for custom integrations
 - [ ] Voice input support

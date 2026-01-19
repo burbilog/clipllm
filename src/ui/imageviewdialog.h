@@ -2,6 +2,7 @@
 #define CLIPAI_UI_IMAGEVIEWDIALOG_H
 
 #include <QDialog>
+#include <QCloseEvent>
 #include <QLabel>
 
 namespace ClipAI {
@@ -14,6 +15,9 @@ class ImageViewDialog : public QDialog
 public:
     explicit ImageViewDialog(const QImage& image, QWidget* parent = nullptr);
     ~ImageViewDialog();
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 private:
     void setupUi();

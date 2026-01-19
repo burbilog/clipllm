@@ -16,6 +16,7 @@
 #include <QImage>
 #include <QFontDatabase>
 #include <QTextDocument>
+#include <QSettings>
 
 namespace ClipAI {
 namespace UI {
@@ -25,6 +26,13 @@ PromptPreviewDialog::PromptPreviewDialog(const Models::Prompt& prompt, QWidget* 
     , m_prompt(prompt)
 {
     setupUi();
+
+    // Restore window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    restoreGeometry(settings.value("promptPreviewDialog").toByteArray());
+    settings.endGroup();
+
     refreshPreview();
 }
 
@@ -240,6 +248,18 @@ void PromptPreviewDialog::setupUi()
     buttonLayout->addWidget(closeButton);
 
     mainLayout->addLayout(buttonLayout);
+}
+
+void PromptPreviewDialog::closeEvent(QCloseEvent* event)
+{
+    // Save window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    settings.setValue("promptPreviewDialog", saveGeometry());
+    settings.endGroup();
+    settings.sync();
+
+    QDialog::closeEvent(event);
 }
 
 } // namespace UI

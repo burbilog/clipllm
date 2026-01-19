@@ -3,6 +3,7 @@
 #include <QScrollArea>
 #include <QPushButton>
 #include <QPixmap>
+#include <QSettings>
 
 namespace ClipAI {
 namespace UI {
@@ -12,6 +13,12 @@ ImageViewDialog::ImageViewDialog(const QImage& image, QWidget* parent)
     , m_image(image)
 {
     setupUi();
+
+    // Restore window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    restoreGeometry(settings.value("imageViewDialog").toByteArray());
+    settings.endGroup();
 }
 
 ImageViewDialog::~ImageViewDialog() = default;
@@ -51,6 +58,18 @@ void ImageViewDialog::setupUi()
     buttonLayout->addWidget(closeButton);
 
     mainLayout->addLayout(buttonLayout);
+}
+
+void ImageViewDialog::closeEvent(QCloseEvent* event)
+{
+    // Save window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    settings.setValue("imageViewDialog", saveGeometry());
+    settings.endGroup();
+    settings.sync();
+
+    QDialog::closeEvent(event);
 }
 
 } // namespace UI

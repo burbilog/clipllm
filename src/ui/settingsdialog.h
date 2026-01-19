@@ -2,6 +2,7 @@
 #define CLIPAI_UI_SETTINGSDIALOG_H
 
 #include <QDialog>
+#include <QCloseEvent>
 #include <QTabWidget>
 #include <QLineEdit>
 #include <QComboBox>
@@ -77,6 +78,9 @@ private slots:
     void onHistoryLimitChanged(int value);
     void onAutoCleanupChanged(int state);
     void onDaysToKeepChanged(int value);
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 private:
     void setupUi();

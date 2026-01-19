@@ -2,6 +2,7 @@
 #define CLIPAI_UI_PROMPTPREVIEWDIALOG_H
 
 #include <QDialog>
+#include <QCloseEvent>
 #include <QTextBrowser>
 #include <QImage>
 #include <QLabel>
@@ -20,6 +21,9 @@ public:
 
     void setClipboardContent(const QString& content);
     void refreshPreview();
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 private slots:
     void onImageLinkClicked();

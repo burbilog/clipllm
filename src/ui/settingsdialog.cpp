@@ -26,6 +26,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QUrlQuery>
+#include <QSettings>
 
 namespace ClipAI {
 namespace UI {
@@ -47,6 +48,12 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     setupUi();
     loadSettings();
+
+    // Restore window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    restoreGeometry(settings.value("settingsDialog").toByteArray());
+    settings.endGroup();
 }
 
 SettingsDialog::~SettingsDialog() = default;
@@ -999,6 +1006,18 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
     }
 
     reply->deleteLater();
+}
+
+void SettingsDialog::closeEvent(QCloseEvent* event)
+{
+    // Save window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    settings.setValue("settingsDialog", saveGeometry());
+    settings.endGroup();
+    settings.sync();
+
+    QDialog::closeEvent(event);
 }
 
 } // namespace UI

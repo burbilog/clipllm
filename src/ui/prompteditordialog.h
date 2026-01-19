@@ -2,6 +2,7 @@
 #define CLIPAI_UI_PROMPTEDITORDIALOG_H
 
 #include <QDialog>
+#include <QCloseEvent>
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QComboBox>
@@ -27,6 +28,9 @@ public:
     ~PromptEditorDialog();
 
     Models::Prompt getPrompt() const;
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 private slots:
     void onOkClicked();

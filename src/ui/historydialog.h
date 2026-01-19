@@ -2,6 +2,7 @@
 #define CLIPAI_UI_HISTORYDIALOG_H
 
 #include <QDialog>
+#include <QCloseEvent>
 #include <QTableView>
 #include <QStandardItemModel>
 #include <QLineEdit>
@@ -32,6 +33,9 @@ public:
 
     void refreshHistory();
     void clearHistory();
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 private slots:
     void onSearchTextChanged(const QString& text);

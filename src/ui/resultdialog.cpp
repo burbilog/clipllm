@@ -10,6 +10,7 @@
 #include <QGroupBox>
 #include <QStyle>
 #include <QTimer>
+#include <QSettings>
 
 namespace ClipAI {
 namespace UI {
@@ -24,6 +25,12 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
     setupUi();
     setWindowTitle(tr("ClipAI - Result"));
     resize(800, 600);
+
+    // Restore window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    restoreGeometry(settings.value("resultDialog").toByteArray());
+    settings.endGroup();
 
     // Hide save button if auto-save is enabled
     if (m_configManager && m_configManager->historyAutoSave()) {
@@ -325,6 +332,13 @@ void ResultDialog::updateState()
 
 void ResultDialog::closeEvent(QCloseEvent* event)
 {
+    // Save window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    settings.setValue("resultDialog", saveGeometry());
+    settings.endGroup();
+    settings.sync();
+
     // Prevent re-entry
     if (m_closing) {
         event->ignore();

@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QSettings>
 
 namespace ClipAI {
 namespace UI {
@@ -21,6 +22,12 @@ HistoryDialog::HistoryDialog(Core::HistoryManager* historyManager, QWidget* pare
     setupUi();
     setupModel();
     refreshHistory();
+
+    // Restore window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    restoreGeometry(settings.value("historyDialog").toByteArray());
+    settings.endGroup();
 }
 
 HistoryDialog::~HistoryDialog() = default;
@@ -554,6 +561,18 @@ void HistoryDialog::onMarkdownToggleClicked()
             updatePreviewDisplay(*entry);
         }
     }
+}
+
+void HistoryDialog::closeEvent(QCloseEvent* event)
+{
+    // Save window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    settings.setValue("historyDialog", saveGeometry());
+    settings.endGroup();
+    settings.sync();
+
+    QDialog::closeEvent(event);
 }
 
 } // namespace UI

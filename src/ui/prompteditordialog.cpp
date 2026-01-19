@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QRegularExpression>
 #include <QSet>
+#include <QSettings>
 
 namespace ClipAI {
 namespace UI {
@@ -39,6 +40,12 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager, QWidg
     updateTemperatureFieldState();
 
     validateInput();
+
+    // Restore window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    restoreGeometry(settings.value("promptEditorDialog").toByteArray());
+    settings.endGroup();
 }
 
 PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
@@ -57,6 +64,12 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
     m_idEdit->setReadOnly(true);
 
     validateInput();
+
+    // Restore window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    restoreGeometry(settings.value("promptEditorDialog").toByteArray());
+    settings.endGroup();
 }
 
 PromptEditorDialog::~PromptEditorDialog() = default;
@@ -420,6 +433,18 @@ void PromptEditorDialog::onPreviewClicked()
     PromptPreviewDialog* previewDialog = new PromptPreviewDialog(prompt, this);
     previewDialog->setAttribute(Qt::WA_DeleteOnClose);
     previewDialog->exec();
+}
+
+void PromptEditorDialog::closeEvent(QCloseEvent* event)
+{
+    // Save window geometry
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    settings.setValue("promptEditorDialog", saveGeometry());
+    settings.endGroup();
+    settings.sync();
+
+    QDialog::closeEvent(event);
 }
 
 } // namespace UI

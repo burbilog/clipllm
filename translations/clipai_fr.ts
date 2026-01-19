@@ -1205,7 +1205,7 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="166"/>
         <source>http://localhost:11434/v1/chat/completions</source>
-        <translation type="unfinished"></translation>
+        <translation>http://localhost:11434/v1/chat/completions</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="167"/>
@@ -1215,7 +1215,12 @@ Examples:
 • Ollama: http://localhost:11434/v1/chat/completions
 • LM Studio: http://localhost:1234/v1/chat/completions
 • LocalAI: http://localhost:8080/v1/chat/completions</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisé uniquement lorsque le fournisseur est défini sur Personnalisé.
+
+Exemples :
+• Ollama : http://localhost:11434/v1/chat/completions
+• LM Studio : http://localhost:1234/v1/chat/completions
+• LocalAI : http://localhost:8080/v1/chat/completions</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="172"/>
@@ -1225,7 +1230,7 @@ Examples:
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="175"/>
         <source>http://host:port or socks5://host:port</source>
-        <translation type="unfinished"></translation>
+        <translation>http://host:port or socks5://host:port</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="176"/>

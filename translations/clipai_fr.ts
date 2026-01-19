@@ -368,7 +368,7 @@
     </message>
     <message>
         <location filename="../src/ui/groupsdialog.cpp" line="216"/>
-        <location filename="../src/ui/groupsdialog.cpp" line="251"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="253"/>
         <source>Duplicate Group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -378,59 +378,59 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="240"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="242"/>
         <source>New Subgroup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="241"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="243"/>
         <source>Enter subgroup name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="252"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="254"/>
         <source>A subgroup with this name already exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="289"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="293"/>
         <source>(root)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="301"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="305"/>
         <source>Delete group &apos;%1&apos;?
 
 %2 prompt(s) in this group will be moved to root.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="304"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="308"/>
         <source>Delete group &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="308"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="312"/>
         <source>Delete Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="352"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="356"/>
         <source>Invalid Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="353"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="357"/>
         <source>Group name cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="373"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="377"/>
         <source>Duplicate Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/groupsdialog.cpp" line="374"/>
+        <location filename="../src/ui/groupsdialog.cpp" line="378"/>
         <source>A group with this name already exists in this location.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1750,89 +1750,59 @@ Exemples :
     <name>ClipAI::UI::TrayIcon</name>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="39"/>
-        <location filename="../src/ui/trayicon.cpp" line="258"/>
-        <location filename="../src/ui/trayicon.cpp" line="363"/>
+        <location filename="../src/ui/trayicon.cpp" line="241"/>
+        <location filename="../src/ui/trayicon.cpp" line="346"/>
         <source>ClipAI - LLM Clipboard Utility</source>
         <translation>ClipAI - Utilitaire de presse-papiers LLM</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="70"/>
-        <location filename="../src/ui/trayicon.cpp" line="367"/>
+        <location filename="../src/ui/trayicon.cpp" line="350"/>
         <source>&amp;Settings</source>
         <translation>&amp;Paramètres</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="74"/>
-        <location filename="../src/ui/trayicon.cpp" line="370"/>
+        <location filename="../src/ui/trayicon.cpp" line="353"/>
         <source>&amp;History</source>
         <translation>&amp;Historique</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="78"/>
-        <location filename="../src/ui/trayicon.cpp" line="373"/>
+        <location filename="../src/ui/trayicon.cpp" line="356"/>
         <source>&amp;About</source>
         <translation>&amp;À propos</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="88"/>
-        <location filename="../src/ui/trayicon.cpp" line="376"/>
+        <location filename="../src/ui/trayicon.cpp" line="359"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="96"/>
-        <location filename="../src/ui/trayicon.cpp" line="381"/>
+        <location filename="../src/ui/trayicon.cpp" line="364"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="100"/>
-        <source>Test Submenu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/trayicon.cpp" line="101"/>
-        <source>Test Item 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/trayicon.cpp" line="102"/>
-        <source>Test Item 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/trayicon.cpp" line="124"/>
-        <source>Test Inside Prompts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/trayicon.cpp" line="125"/>
-        <source>Test Action 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../src/ui/trayicon.cpp" line="118"/>
         <location filename="../src/ui/trayicon.cpp" line="126"/>
-        <source>Test Action 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/trayicon.cpp" line="130"/>
-        <location filename="../src/ui/trayicon.cpp" line="138"/>
         <source>No prompts available</source>
         <translation>Aucun prompt disponible</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="260"/>
+        <location filename="../src/ui/trayicon.cpp" line="243"/>
         <source>Hotkey: </source>
         <translation>Raccourci : </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="321"/>
+        <location filename="../src/ui/trayicon.cpp" line="304"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; est un utilitaire de presse-papiers multiplateforme qui intègre les grands modèles de langage (LLM) directement dans votre flux de travail. Fonctionnant comme un service de zone de notification, il vous permet de traiter le contenu du presse-papiers (texte et images) avec des prompts IA personnalisables à l&apos;aide de raccourcis globaux.&lt;/p&gt;&lt;p&gt;Que vous ayez besoin de résumer du texte, de traduire du contenu, de réécrire du code, d&apos;extraire des informations d&apos;images ou d&apos;effectuer toute autre transformation alimentée par l&apos;IA, ClipAI rend cela instantanément accessible avec une seule pression de touche. Copiez le contenu, appuyez sur votre raccourci et obtenez des résultats générés par l&apos;IA dans votre presse-papiers.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="342"/>
+        <location filename="../src/ui/trayicon.cpp" line="325"/>
         <source>About ClipAI</source>
         <translation>À propos de ClipAI</translation>
     </message>

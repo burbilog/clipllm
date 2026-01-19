@@ -219,10 +219,12 @@ void GroupsDialog::onNewGroup()
             }
         }
 
+        m_updating = true;
         QTreeWidgetItem* newItem = new QTreeWidgetItem(m_rootItem);
         newItem->setText(0, name);
         newItem->setData(0, Qt::UserRole, name);
         newItem->setFlags(newItem->flags() | Qt::ItemIsEditable);
+        m_updating = false;
 
         saveTree();
     }
@@ -257,10 +259,12 @@ void GroupsDialog::onNewSubgroup()
         QString parentPath = getPathFromItem(item);
         QString newPath = parentPath.isEmpty() ? name : parentPath + QLatin1Char('/') + name;
 
+        m_updating = true;
         QTreeWidgetItem* newItem = new QTreeWidgetItem(item);
         newItem->setText(0, name);
         newItem->setData(0, Qt::UserRole, newPath);
         newItem->setFlags(newItem->flags() | Qt::ItemIsEditable);
+        m_updating = false;
 
         item->setExpanded(true);
 

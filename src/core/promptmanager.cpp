@@ -297,6 +297,34 @@ bool PromptManager::ensurePromptsFileExists()
     return savePromptsToFile(customPath);
 }
 
+void PromptManager::updatePromptGroup(const QString& oldGroup, const QString& newGroup)
+{
+    bool modified = false;
+    for (auto& prompt : m_prompts) {
+        if (prompt.group() == oldGroup) {
+            prompt.setGroup(newGroup);
+            modified = true;
+        }
+    }
+    if (modified) {
+        savePrompts();
+    }
+}
+
+void PromptManager::movePromptsToGroup(const QString& fromGroup, const QString& toGroup)
+{
+    bool modified = false;
+    for (auto& prompt : m_prompts) {
+        if (prompt.group() == fromGroup) {
+            prompt.setGroup(toGroup);
+            modified = true;
+        }
+    }
+    if (modified) {
+        savePrompts();
+    }
+}
+
 QVector<Models::Prompt> PromptManager::getDefaultPrompts()
 {
     QVector<Models::Prompt> prompts;

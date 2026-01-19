@@ -72,6 +72,7 @@ private slots:
     void onExportPromptsClicked();
     void onResetPromptsClicked();
     void onPromptSelectionChanged();
+    void onManageGroupsClicked();
 
     // History tab
     void onClearHistoryClicked();
@@ -133,6 +134,7 @@ private:
     QPushButton* m_addPromptButton = nullptr;
     QPushButton* m_editPromptButton = nullptr;
     QPushButton* m_deletePromptButton = nullptr;
+    QPushButton* m_manageGroupsButton = nullptr;
     QPushButton* m_importPromptsButton = nullptr;
     QPushButton* m_exportPromptsButton = nullptr;
     QPushButton* m_resetPromptsButton = nullptr;

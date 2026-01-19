@@ -5,6 +5,7 @@
 #include "configmanager.h"
 #include "keychainstore.h"
 #include "historymanager.h"
+#include "groupsmanager.h"
 #include "ui/trayicon.h"
 #include "ui/settingsdialog.h"
 #include "ui/historydialog.h"
@@ -50,6 +51,7 @@ Core::PromptManager* App::promptManager() const { return m_promptManager.get(); 
 Core::ConfigManager* App::configManager() const { return m_configManager.get(); }
 Core::KeychainStore* App::keychainStore() const { return m_keychainStore.get(); }
 Core::HistoryManager* App::historyManager() const { return m_historyManager.get(); }
+Core::GroupsManager* App::groupsManager() const { return m_groupsManager.get(); }
 
 App::App(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -132,6 +134,7 @@ bool App::initialize(bool startMinimized)
     m_keychainStore = std::make_unique<KeychainStore>();
     m_historyManager = std::make_unique<HistoryManager>();
     m_promptManager = std::make_unique<PromptManager>();
+    m_groupsManager = std::make_unique<Core::GroupsManager>();
     m_clipboardManager = std::make_unique<ClipboardManager>();
     m_llmClient = std::make_unique<LLMClient>();
 

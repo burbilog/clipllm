@@ -1,9 +1,11 @@
 #include "settingsdialog.h"
 #include "prompteditordialog.h"
+#include "groupsdialog.h"
 #include "hotkeyedit.h"
 #include "core/configmanager.h"
 #include "core/keychainstore.h"
 #include "core/promptmanager.h"
+#include "core/groupsmanager.h"
 #include "core/historymanager.h"
 #include "core/app.h"
 #include "models/llmconfig.h"
@@ -300,9 +302,13 @@ void SettingsDialog::setupPromptsTab()
     m_deletePromptButton->setEnabled(false);
     connect(m_deletePromptButton, &QPushButton::clicked, this, &SettingsDialog::onDeletePromptClicked);
 
+    m_manageGroupsButton = new QPushButton(tr("Manage Groups..."));
+    connect(m_manageGroupsButton, &QPushButton::clicked, this, &SettingsDialog::onManageGroupsClicked);
+
     buttonLayout->addWidget(m_addPromptButton);
     buttonLayout->addWidget(m_editPromptButton);
     buttonLayout->addWidget(m_deletePromptButton);
+    buttonLayout->addWidget(m_manageGroupsButton);
     buttonLayout->addStretch();
 
     layout->addLayout(buttonLayout);
@@ -701,7 +707,7 @@ void SettingsDialog::onAddPromptClicked()
         return;
     }
 
-    PromptEditorDialog dialog(app->promptManager(), this);
+    PromptEditorDialog dialog(app->promptManager(), app->groupsManager(), this);
     if (dialog.exec() == QDialog::Accepted) {
         Models::Prompt prompt = dialog.getPrompt();
         if (app->promptManager()->addPrompt(prompt)) {
@@ -737,7 +743,7 @@ void SettingsDialog::onEditPromptClicked()
         return;
     }
 
-    PromptEditorDialog dialog(app->promptManager(), promptOpt.value(), this);
+    PromptEditorDialog dialog(app->promptManager(), app->groupsManager(), promptOpt.value(), this);
     if (dialog.exec() == QDialog::Accepted) {
         Models::Prompt updatedPrompt = dialog.getPrompt();
         if (app->promptManager()->updatePrompt(promptId, updatedPrompt)) {
@@ -778,6 +784,20 @@ void SettingsDialog::onDeletePromptClicked()
         app->promptManager()->removePrompt(promptId);
         loadPrompts();
     }
+}
+
+void SettingsDialog::onManageGroupsClicked()
+{
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (!app || !app->groupsManager()) {
+        return;
+    }
+
+    GroupsDialog dialog(app->groupsManager(), app->promptManager(), this);
+    dialog.exec();
+
+    // Reload prompts as groups may have changed
+    loadPrompts();
 }
 
 void SettingsDialog::onImportPromptsClicked()

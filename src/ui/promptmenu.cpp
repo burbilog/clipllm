@@ -1,6 +1,7 @@
 #include "promptmenu.h"
 #include "core/clipboardmanager.h"
 #include "core/configmanager.h"
+#include "core/groupsmanager.h"
 #include <QKeyEvent>
 #include <QTimer>
 #include <QApplication>
@@ -121,21 +122,79 @@ void PromptMenu::rebuildMenu()
         return;
     }
 
-    // Sort by priority (descending), then by name (ascending)
-    std::sort(filteredPrompts.begin(), filteredPrompts.end(),
-        [](const Models::Prompt& a, const Models::Prompt& b) {
-            if (a.priority() != b.priority()) {
-                return a.priority() > b.priority();
-            }
-            return a.name() < b.name();
-        });
-
-    // Add all prompt actions (QMenu handles scrolling automatically)
+    // Group prompts by their group path
+    QMap<QString, QVector<Models::Prompt>> grouped;
     for (const auto& prompt : filteredPrompts) {
-        QAction* action = createPromptAction(prompt);
-        addAction(action);
-        m_promptActions.append(action);
-        m_promptIds.append(prompt.id());
+        QString group = prompt.group();
+        if (group.isEmpty()) {
+            group = QStringLiteral(""); // Root
+        }
+        grouped[group].append(prompt);
+    }
+
+    // Sort groups alphabetically
+    QStringList groups = grouped.keys();
+    groups.sort(Qt::CaseInsensitive);
+
+    // Helper function to sort prompts by priority
+    auto sortByPriority = [](QVector<Models::Prompt>& prompts) {
+        std::sort(prompts.begin(), prompts.end(),
+            [](const Models::Prompt& a, const Models::Prompt& b) {
+                if (a.priority() != b.priority()) {
+                    return a.priority() > b.priority();
+                }
+                return a.name() < b.name();
+            });
+    };
+
+    // Add root prompts first (at top level)
+    if (groups.contains(QString())) {
+        groups.removeAll(QString());
+        QVector<Models::Prompt> rootPrompts = grouped.value(QString());
+        sortByPriority(rootPrompts);
+
+        for (const auto& prompt : rootPrompts) {
+            QAction* action = createPromptAction(prompt);
+            addAction(action);
+            m_promptActions.append(action);
+            m_promptIds.append(prompt.id());
+        }
+    }
+
+    // Add groups as submenus
+    for (const QString& group : groups) {
+        // Build submenu path
+        QStringList parts = group.split(QLatin1Char('/'));
+
+        QMenu* currentMenu = this;
+
+        // Navigate/create nested menus
+        for (int i = 0; i < parts.size(); ++i) {
+            // Look for existing submenu
+            bool found = false;
+            for (QAction* action : currentMenu->actions()) {
+                if (action->menu() && action->text() == parts[i]) {
+                    currentMenu = action->menu();
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                currentMenu = currentMenu->addMenu(parts[i]);
+            }
+        }
+
+        // Add prompts to the final submenu
+        QVector<Models::Prompt> groupPrompts = grouped.value(group);
+        sortByPriority(groupPrompts);
+
+        for (const auto& prompt : groupPrompts) {
+            QAction* action = createPromptAction(prompt);
+            currentMenu->addAction(action);
+            m_promptActions.append(action);
+            m_promptIds.append(prompt.id());
+        }
     }
 
     m_selectedIndex = m_promptActions.isEmpty() ? -1 : 0;

@@ -1,6 +1,7 @@
 #include "prompteditordialog.h"
 #include "promptpreviewdialog.h"
 #include "core/promptmanager.h"
+#include "core/groupsmanager.h"
 #include "core/app.h"
 #include <QApplication>
 #include <QGroupBox>
@@ -16,9 +17,12 @@
 namespace ClipAI {
 namespace UI {
 
-PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager, QWidget* parent)
+PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
+                                        Core::GroupsManager* groupsManager,
+                                        QWidget* parent)
     : QDialog(parent)
     , m_promptManager(promptManager)
+    , m_groupsManager(groupsManager)
     , m_editMode(false)
 {
     setupUi();
@@ -48,9 +52,11 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager, QWidg
 }
 
 PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
-                                       const Models::Prompt& prompt, QWidget* parent)
+                                        Core::GroupsManager* groupsManager,
+                                        const Models::Prompt& prompt, QWidget* parent)
     : QDialog(parent)
     , m_promptManager(promptManager)
+    , m_groupsManager(groupsManager)
     , m_originalPrompt(prompt)
     , m_editMode(true)
 {
@@ -101,6 +107,30 @@ void PromptEditorDialog::setupUi()
     m_descriptionEdit = new QLineEdit();
     m_descriptionEdit->setPlaceholderText(tr("e.g., Does something useful"));
     basicLayout->addRow(tr("Description:"), m_descriptionEdit);
+
+    m_groupCombo = new QComboBox();
+    m_groupCombo->addItem(tr("(root)"), QString());
+
+    // Load groups from GroupsManager
+    if (m_groupsManager) {
+        QStringList groups = m_groupsManager->loadGroups();
+        groups.sort(Qt::CaseInsensitive);
+
+        for (const QString& group : groups) {
+            // Add indentation for nested groups
+            int depth = group.count(QLatin1Char('/'));
+            QString indent = QString(depth * 2, QLatin1Char(' '));
+            QString display = group;
+            display.replace(QLatin1Char('/'), QStringLiteral(" → "));
+            m_groupCombo->addItem(indent + display, group);
+        }
+    }
+
+    // IMPORTANT: Set default selection to root (index 0) for new prompts
+    // This prevents the last added group from being auto-selected
+    m_groupCombo->setCurrentIndex(0);
+
+    basicLayout->addRow(tr("Group:"), m_groupCombo);
 
     mainLayout->addWidget(basicGroup);
 
@@ -213,6 +243,25 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
     m_idEdit->setText(prompt.id());
     m_nameEdit->setText(prompt.name());
     m_descriptionEdit->setText(prompt.description());
+
+    // Set group - explicitly handle empty group (root)
+    QString group = prompt.group();
+    qDebug() << "Loading prompt with group:" << group << "(isEmpty:" << group.isEmpty() << ")";
+
+    if (group.isEmpty()) {
+        m_groupCombo->setCurrentIndex(0); // root is always at index 0
+        qDebug() << "Set group combo to index 0 (root)";
+    } else {
+        int groupIndex = m_groupCombo->findData(group);
+        qDebug() << "Looking for group:" << group << "found at index:" << groupIndex;
+        if (groupIndex >= 0) {
+            m_groupCombo->setCurrentIndex(groupIndex);
+        } else {
+            m_groupCombo->setCurrentIndex(0); // fallback to root
+            qDebug() << "Group not found, setting to root";
+        }
+    }
+
     m_systemPromptEdit->setPlainText(prompt.systemPrompt());
     m_userTemplateEdit->setPlainText(prompt.userPromptTemplate());
 
@@ -249,6 +298,19 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
     prompt.setId(m_idEdit->text().trimmed());
     prompt.setName(m_nameEdit->text().trimmed());
     prompt.setDescription(m_descriptionEdit->text().trimmed());
+
+    // Get group from combo - handle empty group case
+    int comboIndex = m_groupCombo->currentIndex();
+    QString group = m_groupCombo->currentData().toString();
+    qDebug() << "buildPrompt: comboIndex=" << comboIndex << "currentData=" << group;
+
+    // If index is 0 (root), ensure group is empty string
+    if (comboIndex == 0) {
+        group.clear();
+    }
+    prompt.setGroup(group);
+    qDebug() << "buildPrompt: setting group to:" << group;
+
     prompt.setSystemPrompt(m_systemPromptEdit->toPlainText());
     prompt.setUserPromptTemplate(m_userTemplateEdit->toPlainText());
 

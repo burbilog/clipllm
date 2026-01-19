@@ -21,6 +21,7 @@ class PromptManager;
 class ConfigManager;
 class KeychainStore;
 class HistoryManager;
+class GroupsManager;
 }
 
 namespace UI {
@@ -52,6 +53,7 @@ public:
     Core::ConfigManager* configManager() const;
     Core::KeychainStore* keychainStore() const;
     Core::HistoryManager* historyManager() const;
+    Core::GroupsManager* groupsManager() const;
 
     // Language management
     void setLanguage(const QString& languageCode);
@@ -87,6 +89,7 @@ private:
     std::unique_ptr<Core::ConfigManager> m_configManager;
     std::unique_ptr<Core::KeychainStore> m_keychainStore;
     std::unique_ptr<Core::HistoryManager> m_historyManager;
+    std::unique_ptr<Core::GroupsManager> m_groupsManager;
 
     // UI components
     std::unique_ptr<UI::TrayIcon> m_trayIcon;

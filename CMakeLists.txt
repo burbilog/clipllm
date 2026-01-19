@@ -53,6 +53,7 @@ set(SOURCES
     src/core/configmanager.cpp
     src/core/keychainstore.cpp
     src/core/historymanager.cpp
+    src/core/groupsmanager.cpp
     src/ui/trayicon.cpp
     src/ui/promptmenu.cpp
     src/ui/settingsdialog.cpp
@@ -62,6 +63,7 @@ set(SOURCES
     src/ui/prompteditordialog.cpp
     src/ui/promptpreviewdialog.cpp
     src/ui/imageviewdialog.cpp
+    src/ui/groupsdialog.cpp
     src/models/prompt.cpp
     src/models/llmconfig.cpp
     ${QHOTKEY_SOURCES}
@@ -76,6 +78,7 @@ set(HEADERS
     src/core/configmanager.h
     src/core/keychainstore.h
     src/core/historymanager.h
+    src/core/groupsmanager.h
     src/ui/trayicon.h
     src/ui/promptmenu.h
     src/ui/settingsdialog.h
@@ -85,6 +88,7 @@ set(HEADERS
     src/ui/prompteditordialog.h
     src/ui/promptpreviewdialog.h
     src/ui/imageviewdialog.h
+    src/ui/groupsdialog.h
     src/models/prompt.h
     src/models/llmconfig.h
     3rdparty/qhotkey/qhotkey.h

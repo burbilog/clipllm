@@ -14,7 +14,10 @@
 #include "models/prompt.h"
 
 namespace ClipAI {
-namespace Core { class PromptManager; }
+namespace Core {
+class PromptManager;
+class GroupsManager;
+}
 namespace UI {
 
 class PromptEditorDialog : public QDialog
@@ -22,8 +25,11 @@ class PromptEditorDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PromptEditorDialog(Core::PromptManager* promptManager, QWidget* parent = nullptr);
     explicit PromptEditorDialog(Core::PromptManager* promptManager,
+                                Core::GroupsManager* groupsManager,
+                                QWidget* parent = nullptr);
+    explicit PromptEditorDialog(Core::PromptManager* promptManager,
+                                Core::GroupsManager* groupsManager,
                                 const Models::Prompt& prompt, QWidget* parent = nullptr);
     ~PromptEditorDialog();
 
@@ -48,6 +54,7 @@ private:
     QString generateUniqueId() const;
 
     Core::PromptManager* m_promptManager = nullptr;
+    Core::GroupsManager* m_groupsManager = nullptr;
     Models::Prompt m_originalPrompt;
     bool m_editMode = false;
 
@@ -55,6 +62,7 @@ private:
     QLineEdit* m_idEdit = nullptr;
     QLineEdit* m_nameEdit = nullptr;
     QLineEdit* m_descriptionEdit = nullptr;
+    QComboBox* m_groupCombo = nullptr;
 
     // Prompt fields
     QTextEdit* m_systemPromptEdit = nullptr;

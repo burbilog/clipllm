@@ -50,6 +50,10 @@ public:
     // File paths
     QString getCustomPromptsFilePath() const;
 
+    // Group operations
+    void updatePromptGroup(const QString& oldGroup, const QString& newGroup);
+    void movePromptsToGroup(const QString& fromGroup, const QString& toGroup);
+
     // Default prompts
     static QVector<Models::Prompt> getDefaultPrompts();
     static QJsonObject getDefaultPromptsJson();

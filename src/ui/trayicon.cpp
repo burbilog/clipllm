@@ -1,6 +1,7 @@
 #include "trayicon.h"
 #include "core/app.h"
 #include "core/promptmanager.h"
+#include "core/groupsmanager.h"
 #include <QApplication>
 #include <QFile>
 #include <QMessageBox>
@@ -127,16 +128,98 @@ void TrayIcon::rebuildPromptsMenu()
         return;
     }
 
+    // Group prompts by their group path
+    QMap<QString, QVector<Models::Prompt>> grouped;
     for (const auto& prompt : prompts) {
-        QString text = prompt.name();
-        if (!prompt.description().isEmpty()) {
-            text += QStringLiteral(" - ") + prompt.description();
+        QString group = prompt.group();
+        if (group.isEmpty()) {
+            group = QStringLiteral(""); // Root
+        }
+        grouped[group].append(prompt);
+    }
+
+    // Sort groups alphabetically
+    QStringList groups = grouped.keys();
+    groups.sort(Qt::CaseInsensitive);
+
+    // Add root prompts first (at top level)
+    if (groups.contains(QString())) {
+        groups.removeAll(QString());
+        QVector<Models::Prompt> rootPrompts = grouped.value(QString());
+
+        // Sort root prompts by priority
+        std::sort(rootPrompts.begin(), rootPrompts.end(),
+            [](const Models::Prompt& a, const Models::Prompt& b) {
+                if (a.priority() != b.priority()) {
+                    return a.priority() > b.priority();
+                }
+                return a.name() < b.name();
+            });
+
+        for (const auto& prompt : rootPrompts) {
+            QString text = prompt.name();
+            if (!prompt.description().isEmpty()) {
+                text += QStringLiteral(" - ") + prompt.description();
+            }
+
+            QAction* action = m_promptsMenu->addAction(text);
+            action->setData(prompt.id());
+
+            connect(action, &QAction::triggered, this, &TrayIcon::onPromptTriggered);
+        }
+    }
+
+    // Add groups as submenus
+    for (const QString& group : groups) {
+        // Build submenu path (e.g., "Text Processing" -> "Summarization")
+        QStringList parts = group.split(QLatin1Char('/'));
+
+        QMenu* currentMenu = m_promptsMenu;
+
+        // Navigate/create nested menus
+        QString currentPath;
+        for (int i = 0; i < parts.size(); ++i) {
+            currentPath = currentPath.isEmpty() ? parts[i] : currentPath + QLatin1Char('/') + parts[i];
+
+            // Look for existing submenu
+            bool found = false;
+            for (QAction* action : currentMenu->actions()) {
+                if (action->menu() && action->text() == parts[i]) {
+                    currentMenu = action->menu();
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                QMenu* newMenu = currentMenu->addMenu(parts[i]);
+                currentMenu = newMenu;
+            }
         }
 
-        QAction* action = m_promptsMenu->addAction(text);
-        action->setData(prompt.id());
+        // Add prompts to the final submenu
+        QVector<Models::Prompt> groupPrompts = grouped.value(group);
 
-        connect(action, &QAction::triggered, this, &TrayIcon::onPromptTriggered);
+        // Sort by priority
+        std::sort(groupPrompts.begin(), groupPrompts.end(),
+            [](const Models::Prompt& a, const Models::Prompt& b) {
+                if (a.priority() != b.priority()) {
+                    return a.priority() > b.priority();
+                }
+                return a.name() < b.name();
+            });
+
+        for (const auto& prompt : groupPrompts) {
+            QString text = prompt.name();
+            if (!prompt.description().isEmpty()) {
+                text += QStringLiteral(" - ") + prompt.description();
+            }
+
+            QAction* action = currentMenu->addAction(text);
+            action->setData(prompt.id());
+
+            connect(action, &QAction::triggered, this, &TrayIcon::onPromptTriggered);
+        }
     }
 }
 

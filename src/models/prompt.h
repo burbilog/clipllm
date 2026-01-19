@@ -48,6 +48,7 @@ public:
     int priority() const { return m_priority; }
     bool overrideTemperature() const { return m_overrideTemperature; }
     QVariantMap metadata() const { return m_metadata; }
+    QString group() const { return m_group; }
 
     // Setters
     void setId(const QString& id) { m_id = id; }
@@ -64,6 +65,7 @@ public:
     void setPriority(int priority) { m_priority = priority; }
     void setOverrideTemperature(bool override) { m_overrideTemperature = override; }
     void setMetadata(const QVariantMap& metadata) { m_metadata = metadata; }
+    void setGroup(const QString& group) { m_group = group; }
 
     // Serialization
     QJsonObject toJson() const;
@@ -99,6 +101,7 @@ private:
     int m_priority = 0;
     bool m_overrideTemperature = false;
     QVariantMap m_metadata;
+    QString m_group;
 };
 
 } // namespace Models

@@ -200,7 +200,7 @@ bool App::initialize(bool startMinimized)
     registerHotkey(hotkeySeq);
 
     // Create prompt menu
-    m_promptMenu = new UI::PromptMenu(m_promptManager.get(), m_clipboardManager.get());
+    m_promptMenu = new UI::PromptMenu(m_promptManager.get(), m_clipboardManager.get(), m_configManager.get());
     connect(m_promptMenu, &UI::PromptMenu::promptSelected, this, &App::onPromptSelected);
     connect(m_promptMenu, &UI::PromptMenu::cancelled, []() {
         qDebug() << "Prompt menu cancelled";

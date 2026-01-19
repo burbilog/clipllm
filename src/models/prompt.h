@@ -44,6 +44,7 @@ public:
     double temperature() const { return m_temperature; }
     int maxTokens() const { return m_maxTokens; }
     bool enabled() const { return m_enabled; }
+    int priority() const { return m_priority; }
     bool overrideTemperature() const { return m_overrideTemperature; }
     QVariantMap metadata() const { return m_metadata; }
 
@@ -59,6 +60,7 @@ public:
     void setTemperature(double temp) { m_temperature = temp; }
     void setMaxTokens(int tokens) { m_maxTokens = tokens; }
     void setEnabled(bool enabled) { m_enabled = enabled; }
+    void setPriority(int priority) { m_priority = priority; }
     void setOverrideTemperature(bool override) { m_overrideTemperature = override; }
     void setMetadata(const QVariantMap& metadata) { m_metadata = metadata; }
 
@@ -91,6 +93,7 @@ private:
     double m_temperature = 0.7;
     int m_maxTokens = 131072;
     bool m_enabled = true;
+    int m_priority = 0;
     bool m_overrideTemperature = false;
     QVariantMap m_metadata;
 };

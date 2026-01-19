@@ -65,6 +65,7 @@ private:
     QDoubleSpinBox* m_temperatureSpin = nullptr;
     QSpinBox* m_maxTokensSpin = nullptr;
     QCheckBox* m_enabledCheck = nullptr;
+    QSpinBox* m_prioritySpin = nullptr;
 
     // Validation
     QLabel* m_validationLabel = nullptr;

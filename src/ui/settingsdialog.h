@@ -124,6 +124,7 @@ private:
     HotkeyEdit* m_hotkeyEdit = nullptr;
 
     // Prompts tab
+    QSpinBox* m_maxPromptsSpin = nullptr;
     QTableWidget* m_promptsTable = nullptr;
     QPushButton* m_addPromptButton = nullptr;
     QPushButton* m_editPromptButton = nullptr;

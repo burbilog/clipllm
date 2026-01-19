@@ -1,20 +1,24 @@
 #include "promptmenu.h"
 #include "core/clipboardmanager.h"
+#include "core/configmanager.h"
 #include <QKeyEvent>
 #include <QTimer>
 #include <QApplication>
 #include <QStyle>
 #include <QDebug>
+#include <algorithm>
 
 namespace ClipAI {
 namespace UI {
 
 PromptMenu::PromptMenu(Core::PromptManager* promptManager,
                       Core::ClipboardManager* clipboardManager,
+                      Core::ConfigManager* configManager,
                       QWidget* parent)
     : QMenu(parent)
     , m_promptManager(promptManager)
     , m_clipboardManager(clipboardManager)
+    , m_configManager(configManager)
 {
     setupUi();
 }
@@ -109,6 +113,21 @@ void PromptMenu::rebuildMenu()
         QAction* noPromptsAction = addAction(tr("No prompts available for this content type"));
         noPromptsAction->setEnabled(false);
         return;
+    }
+
+    // Sort by priority (descending), then by name (ascending)
+    std::sort(filteredPrompts.begin(), filteredPrompts.end(),
+        [](const Models::Prompt& a, const Models::Prompt& b) {
+            if (a.priority() != b.priority()) {
+                return a.priority() > b.priority();
+            }
+            return a.name() < b.name();
+        });
+
+    // Apply max prompts limit
+    int maxPrompts = m_configManager ? m_configManager->maxPrompts() : 10;
+    if (maxPrompts > 0 && filteredPrompts.size() > maxPrompts) {
+        filteredPrompts = filteredPrompts.mid(0, maxPrompts);
     }
 
     // Add prompt actions

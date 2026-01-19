@@ -241,6 +241,18 @@ void SettingsDialog::setupPromptsTab()
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout(widget);
 
+    // Max prompts setting
+    QGroupBox* limitGroup = new QGroupBox(tr("Menu Settings"));
+    QFormLayout* limitLayout = new QFormLayout(limitGroup);
+
+    m_maxPromptsSpin = new QSpinBox();
+    m_maxPromptsSpin->setRange(1, 100);
+    m_maxPromptsSpin->setValue(10);
+    m_maxPromptsSpin->setToolTip(tr("Maximum number of prompts to show in the menu"));
+    limitLayout->addRow(tr("Max Prompts in Menu:"), m_maxPromptsSpin);
+
+    layout->addWidget(limitGroup);
+
     // Prompts table
     m_promptsTable = new QTableWidget();
     m_promptsTable->setColumnCount(4);
@@ -415,6 +427,9 @@ void SettingsDialog::loadSettings()
     m_historyLimitSpin->setValue(m_configManager->historyLimit());
     m_autoCleanupCheck->setChecked(m_configManager->historyAutoCleanup());
     m_daysToKeepSpin->setValue(m_configManager->historyDaysToKeep());
+
+    // Prompts
+    m_maxPromptsSpin->setValue(m_configManager->maxPrompts());
 }
 
 void SettingsDialog::saveSettings()
@@ -458,6 +473,9 @@ void SettingsDialog::saveSettings()
     m_configManager->setHistoryLimit(m_historyLimitSpin->value());
     m_configManager->setHistoryAutoCleanup(m_autoCleanupCheck->isChecked());
     m_configManager->setHistoryDaysToKeep(m_daysToKeepSpin->value());
+
+    // Prompts
+    m_configManager->setMaxPrompts(m_maxPromptsSpin->value());
 
     m_configManager->sync();
 

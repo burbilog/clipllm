@@ -11,6 +11,7 @@
 namespace ClipAI {
 namespace Core {
 class ClipboardManager;
+class ConfigManager;
 }
 }
 
@@ -24,6 +25,7 @@ class PromptMenu : public QMenu
 public:
     explicit PromptMenu(Core::PromptManager* promptManager,
                        Core::ClipboardManager* clipboardManager,
+                       Core::ConfigManager* configManager,
                        QWidget* parent = nullptr);
     ~PromptMenu();
 
@@ -55,6 +57,7 @@ private:
 
     Core::PromptManager* m_promptManager = nullptr;
     Core::ClipboardManager* m_clipboardManager = nullptr;
+    Core::ConfigManager* m_configManager = nullptr;
 
     QLineEdit* m_searchEdit = nullptr;
     QWidgetAction* m_searchAction = nullptr;

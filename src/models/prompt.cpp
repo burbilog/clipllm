@@ -27,6 +27,7 @@ QJsonObject Prompt::toJson() const
     obj[QStringLiteral("temperature")] = m_temperature;
     obj[QStringLiteral("max_tokens")] = m_maxTokens;
     obj[QStringLiteral("enabled")] = m_enabled;
+    obj[QStringLiteral("priority")] = m_priority;
     obj[QStringLiteral("override_temperature")] = m_overrideTemperature;
 
     // Convert metadata to JSON object
@@ -55,6 +56,7 @@ bool Prompt::fromJson(const QJsonObject& json)
     m_temperature = json.value(QStringLiteral("temperature")).toDouble(0.7);
     m_maxTokens = json.value(QStringLiteral("max_tokens")).toInt(131072);
     m_enabled = json.value(QStringLiteral("enabled")).toBool(true);
+    m_priority = json.value(QStringLiteral("priority")).toInt(0);
     m_overrideTemperature = json.value(QStringLiteral("override_temperature")).toBool(false);
 
     // Load metadata

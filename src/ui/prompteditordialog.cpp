@@ -171,6 +171,13 @@ void PromptEditorDialog::setupUi()
     m_enabledCheck->setChecked(true);
     settingsLayout->addRow(m_enabledCheck);
 
+    m_prioritySpin = new QSpinBox();
+    m_prioritySpin->setRange(0, 1000);
+    m_prioritySpin->setSingleStep(10);
+    m_prioritySpin->setValue(0);
+    m_prioritySpin->setToolTip(tr("Higher priority prompts appear first in the menu"));
+    settingsLayout->addRow(tr("Priority:"), m_prioritySpin);
+
     mainLayout->addWidget(settingsGroup);
 
     // Validation label
@@ -237,6 +244,7 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
 
     m_maxTokensSpin->setValue(prompt.maxTokens());
     m_enabledCheck->setChecked(prompt.enabled());
+    m_prioritySpin->setValue(prompt.priority());
 }
 
 Models::Prompt PromptEditorDialog::buildPrompt() const
@@ -271,6 +279,7 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
     prompt.setOverrideTemperature(!m_temperatureUseDefaultCheck->isChecked());
     prompt.setMaxTokens(m_maxTokensSpin->value());
     prompt.setEnabled(m_enabledCheck->isChecked());
+    prompt.setPriority(m_prioritySpin->value());
 
     return prompt;
 }

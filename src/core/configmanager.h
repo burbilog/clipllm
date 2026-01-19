@@ -51,6 +51,7 @@ public:
     static const QString HISTORY_DAYS_TO_KEEP_KEY;
     static const QString HISTORY_AUTO_SAVE_KEY;
     static const QString PROMPTS_FILE_KEY;
+    static const QString MAX_PROMPTS_KEY;
     static const QString CACHED_MODELS_KEY;
 
     // Convenience methods for common settings
@@ -107,6 +108,9 @@ public:
     // Prompts settings
     QString promptsFile() const;
     void setPromptsFile(const QString& path);
+
+    int maxPrompts() const;
+    void setMaxPrompts(int max);
 
     // Cached models for providers
     QStringList cachedModels(const QString& provider) const;

@@ -278,7 +278,8 @@ void PromptMenu::onPromptTriggered()
 
     QString promptId = action->data().toString();
     emit promptSelected(promptId);
-    close();
+    // Close menu immediately when triggered by mouse click
+    hide();
 }
 
 void PromptMenu::onSearchTextChanged(const QString& text)
@@ -328,6 +329,8 @@ void PromptMenu::selectCurrentItem()
         QAction* action = m_promptActions[m_selectedIndex];
         if (action->isVisible() && action->isEnabled()) {
             action->trigger();
+            // Close menu immediately after triggering the action
+            hide();
         }
     }
 }

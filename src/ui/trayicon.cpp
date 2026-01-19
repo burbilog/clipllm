@@ -202,7 +202,6 @@ void TrayIcon::onPromptTriggered()
     QString promptId = action->data().toString();
     if (!promptId.isEmpty()) {
         emit promptSelected(promptId);
-        emit hotkeyTriggered();
     }
 }
 

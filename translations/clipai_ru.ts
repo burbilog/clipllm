@@ -1610,37 +1610,37 @@
     <message>
         <location filename="../src/ui/trayicon.cpp" line="38"/>
         <location filename="../src/ui/trayicon.cpp" line="157"/>
-        <location filename="../src/ui/trayicon.cpp" line="263"/>
+        <location filename="../src/ui/trayicon.cpp" line="262"/>
         <source>ClipAI - LLM Clipboard Utility</source>
         <translation>ClipAI — Утилита для буфера обмена LLM</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="69"/>
-        <location filename="../src/ui/trayicon.cpp" line="267"/>
+        <location filename="../src/ui/trayicon.cpp" line="266"/>
         <source>&amp;Settings</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="73"/>
-        <location filename="../src/ui/trayicon.cpp" line="270"/>
+        <location filename="../src/ui/trayicon.cpp" line="269"/>
         <source>&amp;History</source>
         <translation>&amp;История</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="95"/>
-        <location filename="../src/ui/trayicon.cpp" line="281"/>
+        <location filename="../src/ui/trayicon.cpp" line="280"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Промпты</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="77"/>
-        <location filename="../src/ui/trayicon.cpp" line="273"/>
+        <location filename="../src/ui/trayicon.cpp" line="272"/>
         <source>&amp;About</source>
         <translation>&amp;О программе</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="87"/>
-        <location filename="../src/ui/trayicon.cpp" line="276"/>
+        <location filename="../src/ui/trayicon.cpp" line="275"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
@@ -1656,12 +1656,12 @@
         <translation>Горячая клавиша: </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="221"/>
+        <location filename="../src/ui/trayicon.cpp" line="220"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Версия 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; — это кроссплатформенная утилита для работы с буфером обмена, которая интегрирует большие языковые модели (LLM) непосредственно в ваш рабочий процесс. Работая как служба в системном трее, она позволяет обрабатывать содержимое буфера обмена (текст и изображения) с помощью настраиваемых AI промптов, используя глобальные горячие клавиши.&lt;/p&gt;&lt;p&gt;Нужно ли вам резюмировать текст, переводить содержимое, переписывать код, извлекать информацию из изображений или выполнять любое другое AI-преобразование, ClipAI делает это мгновенно доступным с помощью нажатия одной клавиши. Скопируйте содержимое, нажмите горячую клавишу и получите AI-результат обратно в буфере обмена.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="242"/>
+        <location filename="../src/ui/trayicon.cpp" line="241"/>
         <source>About ClipAI</source>
         <translation>О ClipAI</translation>
     </message>

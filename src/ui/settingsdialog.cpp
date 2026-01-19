@@ -410,7 +410,6 @@ void SettingsDialog::loadSettings()
         m_modelCombo->setCurrentText(model);
     }
 
-    m_customUrlEdit->setText(m_configManager->proxyUrl());
     m_proxyEdit->setText(m_configManager->proxyUrl());
     m_temperatureSpin->setValue(m_configManager->temperature());
     m_overrideTemperatureCheck->setChecked(m_configManager->overrideTemperature());

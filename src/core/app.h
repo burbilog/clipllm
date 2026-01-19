@@ -28,6 +28,7 @@ class TrayIcon;
 class SettingsDialog;
 class HistoryDialog;
 class ResultDialog;
+class PromptMenu;
 }
 
 class App : public QApplication
@@ -94,6 +95,7 @@ private:
     UI::SettingsDialog* m_settingsDialog = nullptr;
     UI::HistoryDialog* m_historyDialog = nullptr;
     UI::ResultDialog* m_resultDialog = nullptr;
+    UI::PromptMenu* m_promptMenu = nullptr;
 
     // Translators
     std::vector<QTranslator*> m_translators;

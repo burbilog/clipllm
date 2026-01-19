@@ -9,6 +9,7 @@
 #include "ui/settingsdialog.h"
 #include "ui/historydialog.h"
 #include "ui/resultdialog.h"
+#include "ui/promptmenu.h"
 #include "qhotkey.h"
 #include <QStandardPaths>
 #include <QDir>
@@ -19,6 +20,7 @@
 #include <QMessageBox>
 #include <QRandomGenerator>
 #include <QLibraryInfo>
+#include <QCursor>
 
 namespace ClipAI {
 
@@ -67,6 +69,12 @@ App::App(int &argc, char **argv)
 
 App::~App()
 {
+    // Cleanup prompt menu
+    if (m_promptMenu) {
+        delete m_promptMenu;
+        m_promptMenu = nullptr;
+    }
+
     // Cleanup global hotkey
     if (m_globalHotkey) {
         delete m_globalHotkey;
@@ -190,6 +198,13 @@ bool App::initialize(bool startMinimized)
     QString hotkeyString = m_configManager->hotkey();
     QKeySequence hotkeySeq = QKeySequence::fromString(hotkeyString);
     registerHotkey(hotkeySeq);
+
+    // Create prompt menu
+    m_promptMenu = new UI::PromptMenu(m_promptManager.get(), m_clipboardManager.get());
+    connect(m_promptMenu, &UI::PromptMenu::promptSelected, this, &App::onPromptSelected);
+    connect(m_promptMenu, &UI::PromptMenu::cancelled, []() {
+        qDebug() << "Prompt menu cancelled";
+    });
 
     // Show tray icon
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
@@ -426,9 +441,12 @@ void App::onHotkeyTriggered()
         return;
     }
 
-    // Show prompt menu
-    // This will be implemented when PromptMenu is created
-    emit hotkeyTriggered();
+    // Show prompt menu at cursor position
+    if (m_promptMenu) {
+        m_promptMenu->showMenu(QCursor::pos());
+    } else {
+        qWarning() << "PromptMenu not created!";
+    }
 }
 
 void App::onPromptSelected(const QString& promptId)

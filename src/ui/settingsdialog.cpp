@@ -411,6 +411,7 @@ void SettingsDialog::loadSettings()
     }
 
     m_proxyEdit->setText(m_configManager->proxyUrl());
+    m_customUrlEdit->setText(m_configManager->customApiUrl());
     m_temperatureSpin->setValue(m_configManager->temperature());
     m_overrideTemperatureCheck->setChecked(m_configManager->overrideTemperature());
     m_temperatureSpin->setEnabled(m_configManager->overrideTemperature());
@@ -457,6 +458,7 @@ void SettingsDialog::saveSettings()
         model.clear();  // Clear to use default
     }
     m_configManager->setLlmModel(model);
+    m_configManager->setCustomApiUrl(m_customUrlEdit->text());
     m_configManager->setProxyUrl(m_proxyEdit->text());
     m_configManager->setTemperature(m_temperatureSpin->value());
     m_configManager->setOverrideTemperature(m_overrideTemperatureCheck->isChecked());

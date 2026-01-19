@@ -38,6 +38,7 @@ public:
     static const QString HOTKEY_MODIFIERS_KEY;
     static const QString MODEL_KEY;
     static const QString PROVIDER_KEY;
+    static const QString CUSTOM_API_URL_KEY;
     static const QString PROXY_URL_KEY;
     static const QString STREAM_RESPONSES_KEY;
     static const QString TEMPERATURE_KEY;
@@ -69,6 +70,9 @@ public:
 
     QString llmProvider() const;
     void setLlmProvider(const QString& provider);
+
+    QString customApiUrl() const;
+    void setCustomApiUrl(const QString& url);
 
     QString proxyUrl() const;
     void setProxyUrl(const QString& url);

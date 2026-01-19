@@ -12,6 +12,7 @@ const QString ConfigManager::HOTKEY_KEY = QStringLiteral("hotkey");
 const QString ConfigManager::HOTKEY_MODIFIERS_KEY = QStringLiteral("hotkey_modifiers");
 const QString ConfigManager::MODEL_KEY = QStringLiteral("llm/model");
 const QString ConfigManager::PROVIDER_KEY = QStringLiteral("llm/provider");
+const QString ConfigManager::CUSTOM_API_URL_KEY = QStringLiteral("llm/custom_api_url");
 const QString ConfigManager::PROXY_URL_KEY = QStringLiteral("llm/proxy_url");
 const QString ConfigManager::STREAM_RESPONSES_KEY = QStringLiteral("llm/stream");
 const QString ConfigManager::TEMPERATURE_KEY = QStringLiteral("llm/temperature");
@@ -148,6 +149,16 @@ QString ConfigManager::llmProvider() const
 void ConfigManager::setLlmProvider(const QString& provider)
 {
     setValue(PROVIDER_KEY, provider);
+}
+
+QString ConfigManager::customApiUrl() const
+{
+    return value(CUSTOM_API_URL_KEY).toString();
+}
+
+void ConfigManager::setCustomApiUrl(const QString& url)
+{
+    setValue(CUSTOM_API_URL_KEY, url);
 }
 
 QString ConfigManager::proxyUrl() const

@@ -173,6 +173,15 @@ bool App::initialize(bool startMinimized)
     config.setMaxTokens(m_configManager->maxTokens());
     config.setStream(m_configManager->streamResponses());
     config.setProxyUrl(m_configManager->proxyUrl());
+
+    // For Custom provider, use the custom API URL from settings
+    if (provider == Models::LLMProvider::Custom) {
+        QString customUrl = m_configManager->customApiUrl();
+        if (!customUrl.isEmpty()) {
+            config.setApiUrl(QUrl(customUrl));
+        }
+    }
+
     m_llmClient->setConfig(config);
     m_llmClient->setProxy(m_configManager->proxyUrl());
 
@@ -383,6 +392,15 @@ void App::showSettings()
             config.setMaxTokens(m_configManager->maxTokens());
             config.setStream(m_configManager->streamResponses());
             config.setProxyUrl(m_configManager->proxyUrl());
+
+            // For Custom provider, use the custom API URL from settings
+            if (provider == Models::LLMProvider::Custom) {
+                QString customUrl = m_configManager->customApiUrl();
+                if (!customUrl.isEmpty()) {
+                    config.setApiUrl(QUrl(customUrl));
+                }
+            }
+
             m_llmClient->setConfig(config);
             m_llmClient->setProxy(m_configManager->proxyUrl());
             // Explicitly set API key since setConfig doesn't do it

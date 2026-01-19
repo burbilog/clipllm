@@ -4,79 +4,79 @@
 <context>
     <name>ClipAI::App</name>
     <message>
-        <location filename="../src/core/app.cpp" line="213"/>
+        <location filename="../src/core/app.cpp" line="222"/>
         <source>System Tray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="214"/>
+        <location filename="../src/core/app.cpp" line="223"/>
         <source>Couldn&apos;t detect any system tray on this system.</source>
         <translation>Не удалось обнаружить системный трей.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="224"/>
+        <location filename="../src/core/app.cpp" line="233"/>
         <source>Welcome to ClipAI</source>
         <translation>Добро пожаловать в ClipAI</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="225"/>
+        <location filename="../src/core/app.cpp" line="234"/>
         <source>ClipAI is running in the system tray. Press the global hotkey to start.</source>
         <translation>ClipAI запущен в системном трее. Нажмите глобальную горячую клавишу для начала работы.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="317"/>
+        <location filename="../src/core/app.cpp" line="326"/>
         <source>Hotkey Not Supported</source>
         <translation>Горячие клавиши не поддерживаются</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="318"/>
+        <location filename="../src/core/app.cpp" line="327"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
         <translation>Глобальные горячие клавиши не поддерживаются на этой платформе (Wayland?).</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="343"/>
+        <location filename="../src/core/app.cpp" line="352"/>
         <source>Hotkey Registration Failed</source>
         <translation>Не удалось зарегистрировать горячую клавишу</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="344"/>
+        <location filename="../src/core/app.cpp" line="353"/>
         <source>Could not register global hotkey: %1</source>
         <translation>Не удалось зарегистрировать глобальную горячую клавишу: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="443"/>
-        <location filename="../src/core/app.cpp" line="473"/>
+        <location filename="../src/core/app.cpp" line="461"/>
+        <location filename="../src/core/app.cpp" line="491"/>
         <source>Clipboard Empty</source>
         <translation>Буфер обмена пуст</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="444"/>
-        <location filename="../src/core/app.cpp" line="474"/>
+        <location filename="../src/core/app.cpp" line="462"/>
+        <location filename="../src/core/app.cpp" line="492"/>
         <source>No content found in clipboard.</source>
         <translation>В буфере обмена нет содержимого.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="463"/>
+        <location filename="../src/core/app.cpp" line="481"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="464"/>
+        <location filename="../src/core/app.cpp" line="482"/>
         <source>Prompt not found: %1</source>
         <translation>Промпт не найден: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="491"/>
+        <location filename="../src/core/app.cpp" line="509"/>
         <source>Incompatible Content</source>
         <translation>Несовместимое содержимое</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="492"/>
+        <location filename="../src/core/app.cpp" line="510"/>
         <source>This prompt requires %1 content.</source>
         <translation>Этот промпт требует содержимое типа %1.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="525"/>
+        <location filename="../src/core/app.cpp" line="543"/>
         <source>[Image content]</source>
         <translation>[Изображение]</translation>
     </message>
@@ -1222,7 +1222,7 @@
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="151"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="456"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="457"/>
         <source>Select or enter model name...</source>
         <translation>Выберите или введите имя модели...</translation>
     </message>
@@ -1402,196 +1402,196 @@
         <translation>Очистить всю историю</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="496"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="498"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="497"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="499"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="498"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="500"/>
         <source>German</source>
         <translation>Немецкий</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="499"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="501"/>
         <source>French</source>
         <translation>Французский</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="500"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="502"/>
         <source>Spanish</source>
         <translation>Испанский</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="507"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="509"/>
         <source>OpenRouter</source>
         <translation>OpenRouter</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="508"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="510"/>
         <source>OpenAI</source>
         <translation>OpenAI</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="509"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="511"/>
         <source>Anthropic</source>
         <translation>Anthropic</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="510"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="512"/>
         <source>Custom</source>
         <translation>Пользовательский</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="612"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="614"/>
         <source>Reset Settings</source>
         <translation>Сбросить настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="613"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="615"/>
         <source>Are you sure you want to reset all settings to defaults?</source>
         <translation>Вы уверены, что хотите сбросить все настройки к значениям по умолчанию?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="638"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="640"/>
         <source>Language Changed</source>
         <translation>Язык изменён</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="639"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="641"/>
         <source>The language will be changed after you restart the application.</source>
         <translation>Язык будет изменён после перезапуска приложения.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="665"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="667"/>
         <source>API key set</source>
         <translation>API ключ установлен</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="665"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="667"/>
         <source>No API key</source>
         <translation>Нет API ключа</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="671"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="673"/>
         <source>Testing...</source>
         <translation>Проверка...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="675"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="677"/>
         <source>Error: No API key</source>
         <translation>Ошибка: Нет API ключа</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="680"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="682"/>
         <source>Connected</source>
         <translation>Подключено</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="703"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="739"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="705"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="741"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="704"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="706"/>
         <source>Failed to add prompt. ID may already exist.</source>
         <translation>Не удалось добавить промпт. ID может уже существовать.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="740"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="742"/>
         <source>Failed to update prompt.</source>
         <translation>Не удалось обновить промпт.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="764"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="766"/>
         <source>Delete Prompt</source>
         <translation>Удалить промпт</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="765"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="767"/>
         <source>Are you sure you want to delete this prompt?</source>
         <translation>Вы уверены, что хотите удалить этот промпт?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="779"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="794"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="781"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="796"/>
         <source>Import Prompts</source>
         <translation>Импорт промптов</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="781"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="804"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="783"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="806"/>
         <source>JSON Files (*.json)</source>
         <translation>JSON файлы (*.json)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="795"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="797"/>
         <source>Import will be implemented in a future version.</source>
         <translation>Импорт будет реализован в будущей версии.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="802"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="818"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="804"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="820"/>
         <source>Export Prompts</source>
         <translation>Экспорт промптов</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="819"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="821"/>
         <source>Prompts exported to %1</source>
         <translation>Промпты экспортированы в %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="826"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="828"/>
         <source>Reset Prompts</source>
         <translation>Сбросить промпты</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="827"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="829"/>
         <source>Are you sure you want to reset prompts to defaults? All custom prompts will be lost.</source>
         <translation>Вы уверены, что хотите сбросить промпты к значениям по умолчанию? Все пользовательские промпты будут потеряны.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="852"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="854"/>
         <source>Clear History</source>
         <translation>Очистить историю</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="853"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="855"/>
         <source>Are you sure you want to delete all history entries? This cannot be undone.</source>
         <translation>Вы уверены, что хотите удалить все записи истории? Это действие нельзя отменить.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="909"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="911"/>
         <source>Fetch not supported for this provider</source>
         <translation>Получение не поддерживается для этого провайдера</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="919"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="921"/>
         <source>Fetching models...</source>
         <translation>Получение моделей...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="930"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="932"/>
         <source>Error: %1</source>
         <translation>Ошибка: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="940"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="942"/>
         <source>Error: Invalid response</source>
         <translation>Ошибка: Неверный ответ</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="975"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="977"/>
         <source>No models found</source>
         <translation>Модели не найдены</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1004"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1006"/>
         <source>Loaded %1 models</source>
         <translation>Загружено моделей: %1</translation>
     </message>

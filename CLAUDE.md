@@ -10,7 +10,15 @@ ClipAI is a cross-platform LLM clipboard utility written in C++ using Qt6. It ru
 
 ## Build Commands
 
-### Standard Build
+### Quick Build (from project root)
+
+```bash
+make build          # Build the project (creates build/, runs cmake, compiles)
+make translations   # Update translation files using update-translations.sh
+make clean          # Remove build directory
+```
+
+### Standard Build (manual)
 
 **Build directory:** `/home/rm/clipai/build` (or `$HOME/clipai/build`)
 
@@ -27,16 +35,15 @@ sudo make install
 
 ### Translation Management
 ```bash
-lupdate src/ -ts translations/*.ts    # Extract translatable strings
-linguist translations/*.ts            # Edit translations in Qt Linguist
-lrelease translations/*.ts            # Compile .qm files for distribution
+make translations   # Update all translations from source code
+./update-translations.sh    # Same as make translations
+linguist translations/*.ts  # Edit translations in Qt Linguist
 ```
 
 ### Clean Build
 ```bash
-cd /home/rm/clipai
-rm -rf build
-mkdir build && cd build && cmake .. && make -j$(nproc)
+make clean          # Remove build directory
+# Then run: make build
 ```
 
 ## Architecture

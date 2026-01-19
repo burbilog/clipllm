@@ -12,6 +12,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QShowEvent>
 #include <QGroupBox>
 #include <QFormLayout>
 #include <QVBoxLayout>
@@ -50,12 +51,6 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     setupUi();
     loadSettings();
-
-    // Restore window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("settingsDialog").toByteArray());
-    settings.endGroup();
 }
 
 SettingsDialog::~SettingsDialog() = default;
@@ -86,7 +81,15 @@ void SettingsDialog::setupUi()
     connect(m_okButton, &QPushButton::clicked, this, &SettingsDialog::onOkClicked);
 
     m_cancelButton = new QPushButton(tr("Cancel"));
-    connect(m_cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    connect(m_cancelButton, &QPushButton::clicked, this, [this]() {
+        // Save window geometry before closing
+        QSettings settings;
+        settings.beginGroup("WindowGeometry");
+        settings.setValue("settingsDialog", saveGeometry());
+        settings.endGroup();
+        settings.sync();
+        reject();
+    });
 
     m_resetButton = new QPushButton(tr("Reset to Defaults"));
     connect(m_resetButton, &QPushButton::clicked, this, &SettingsDialog::onResetClicked);
@@ -619,6 +622,12 @@ void SettingsDialog::onTabChanged(int index)
 void SettingsDialog::onOkClicked()
 {
     saveSettings();
+    // Save window geometry before closing
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    settings.setValue("settingsDialog", saveGeometry());
+    settings.endGroup();
+    settings.sync();
     accept();
 }
 
@@ -1037,6 +1046,18 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
     }
 
     reply->deleteLater();
+}
+
+void SettingsDialog::showEvent(QShowEvent* event)
+{
+    // Restore window geometry when dialog is shown
+    // This works more reliably than restoring in constructor
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    restoreGeometry(settings.value("settingsDialog").toByteArray());
+    settings.endGroup();
+
+    QDialog::showEvent(event);
 }
 
 void SettingsDialog::closeEvent(QCloseEvent* event)

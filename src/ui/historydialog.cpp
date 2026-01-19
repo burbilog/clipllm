@@ -2,6 +2,7 @@
 #include "core/historymanager.h"
 #include <QApplication>
 #include <QClipboard>
+#include <QShowEvent>
 #include <QHeaderView>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -22,12 +23,6 @@ HistoryDialog::HistoryDialog(Core::HistoryManager* historyManager, QWidget* pare
     setupUi();
     setupModel();
     refreshHistory();
-
-    // Restore window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("historyDialog").toByteArray());
-    settings.endGroup();
 }
 
 HistoryDialog::~HistoryDialog() = default;
@@ -164,7 +159,15 @@ void HistoryDialog::setupUi()
 
     m_closeButton = new QPushButton(tr("Close"));
     m_closeButton->setIcon(style()->standardIcon(QStyle::SP_DialogCloseButton));
-    connect(m_closeButton, &QPushButton::clicked, this, &QDialog::accept);
+    connect(m_closeButton, &QPushButton::clicked, this, [this]() {
+        // Save window geometry before closing
+        QSettings settings;
+        settings.beginGroup("WindowGeometry");
+        settings.setValue("historyDialog", saveGeometry());
+        settings.endGroup();
+        settings.sync();
+        accept();
+    });
 
     buttonLayout->addWidget(m_viewDetailsButton);
     buttonLayout->addWidget(m_copyButton);
@@ -561,6 +564,18 @@ void HistoryDialog::onMarkdownToggleClicked()
             updatePreviewDisplay(*entry);
         }
     }
+}
+
+void HistoryDialog::showEvent(QShowEvent* event)
+{
+    // Restore window geometry when dialog is shown
+    // This works more reliably than restoring in constructor
+    QSettings settings;
+    settings.beginGroup("WindowGeometry");
+    restoreGeometry(settings.value("historyDialog").toByteArray());
+    settings.endGroup();
+
+    QDialog::showEvent(event);
 }
 
 void HistoryDialog::closeEvent(QCloseEvent* event)

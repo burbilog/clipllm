@@ -406,7 +406,10 @@ void SettingsDialog::loadSettings()
 
     // Hotkeys
     QString hotkey = m_configManager->hotkey();
+    qDebug() << "SettingsDialog: loading hotkey from config:" << hotkey;
     m_hotkeyEdit->setHotkeyText(hotkey);
+    qDebug() << "SettingsDialog: hotkeyEdit after load:" << m_hotkeyEdit->hotkeyText()
+             << "sequence:" << m_hotkeyEdit->keySequence().toString();
 
     // History
     m_historyLimitSpin->setValue(m_configManager->historyLimit());
@@ -447,7 +450,9 @@ void SettingsDialog::saveSettings()
     }
 
     // Hotkeys
-    m_configManager->setHotkey(m_hotkeyEdit->hotkeyText());
+    QString hotkeyText = m_hotkeyEdit->hotkeyText();
+    qDebug() << "SettingsDialog: saving hotkey:" << hotkeyText;
+    m_configManager->setHotkey(hotkeyText);
 
     // History
     m_configManager->setHistoryLimit(m_historyLimitSpin->value());

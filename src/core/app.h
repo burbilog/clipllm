@@ -5,6 +5,10 @@
 #include <QSystemTrayIcon>
 #include <QTranslator>
 #include <memory>
+#include <QKeySequence>
+
+// Forward declarations
+class QHotkey;
 
 namespace ClipAI {
 
@@ -52,6 +56,9 @@ public:
     void setLanguage(const QString& languageCode);
     QString currentLanguage() const { return m_currentLanguage; }
 
+    // Hotkey management
+    void registerHotkey(const QKeySequence& sequence);
+
     // UI management
     void showSettings();
     void showHistory();
@@ -91,6 +98,9 @@ private:
     // Translators
     std::vector<QTranslator*> m_translators;
     QString m_currentLanguage;
+
+    // Global hotkey
+    QHotkey* m_globalHotkey = nullptr;
 
     // Single instance
     QByteArray m_instanceId;

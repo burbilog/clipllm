@@ -9,6 +9,7 @@
 #include "ui/settingsdialog.h"
 #include "ui/historydialog.h"
 #include "ui/resultdialog.h"
+#include "qhotkey.h"
 #include <QStandardPaths>
 #include <QDir>
 #include <QDebug>
@@ -66,6 +67,12 @@ App::App(int &argc, char **argv)
 
 App::~App()
 {
+    // Cleanup global hotkey
+    if (m_globalHotkey) {
+        delete m_globalHotkey;
+        m_globalHotkey = nullptr;
+    }
+
     cleanupTranslations();
 
     if (g_sharedMemory) {
@@ -179,6 +186,11 @@ bool App::initialize(bool startMinimized)
     connect(m_trayIcon.get(), &UI::TrayIcon::promptSelected,
             this, &App::onPromptSelected);
 
+    // Register global hotkey
+    QString hotkeyString = m_configManager->hotkey();
+    QKeySequence hotkeySeq = QKeySequence::fromString(hotkeyString);
+    registerHotkey(hotkeySeq);
+
     // Show tray icon
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
         QMessageBox::critical(nullptr, tr("System Tray"),
@@ -280,6 +292,53 @@ QString App::getDefaultLanguage() const
     return QStringLiteral("en");
 }
 
+void App::registerHotkey(const QKeySequence& sequence)
+{
+    // Check if platform supports global hotkeys
+    if (!QHotkey::isPlatformSupported()) {
+        qWarning() << "Global hotkeys are not supported on this platform";
+        showTrayMessage(tr("Hotkey Not Supported"),
+                       tr("Global hotkeys are not supported on this platform (Wayland?)."));
+        return;
+    }
+
+    // Remove old hotkey if exists
+    if (m_globalHotkey) {
+        if (m_globalHotkey->isRegistered()) {
+            m_globalHotkey->setRegistered(false);
+        }
+        delete m_globalHotkey;
+        m_globalHotkey = nullptr;
+    }
+
+    // Don't register empty hotkey
+    if (sequence.isEmpty()) {
+        qDebug() << "Hotkey is empty, skipping registration";
+        return;
+    }
+
+    // Create new hotkey
+    m_globalHotkey = new QHotkey(sequence, true, this);
+
+    // Check if registration succeeded
+    if (!m_globalHotkey->isRegistered()) {
+        qWarning() << "Failed to register global hotkey:" << sequence.toString();
+        showTrayMessage(tr("Hotkey Registration Failed"),
+                       tr("Could not register global hotkey: %1").arg(sequence.toString()));
+        delete m_globalHotkey;
+        m_globalHotkey = nullptr;
+        return;
+    }
+
+    qDebug() << "Global hotkey registered:" << sequence.toString();
+
+    // Connect hotkey signal
+    connect(m_globalHotkey, &QHotkey::activated, this, [this]() {
+        qDebug() << "Global hotkey activated!";
+        onHotkeyTriggered();
+    });
+}
+
 void App::showSettings()
 {
     if (!m_settingsDialog) {
@@ -318,6 +377,12 @@ void App::showSettings()
         // Apply language change immediately when selected in settings
         connect(m_settingsDialog, &UI::SettingsDialog::languageChanged, [this](const QString& languageCode) {
             setLanguage(languageCode);
+        });
+
+        // Re-register hotkey when changed
+        connect(m_settingsDialog, &UI::SettingsDialog::hotkeyChanged, [this](const QKeySequence& sequence) {
+            qDebug() << "Hotkey changed in settings, re-registering:" << sequence.toString();
+            registerHotkey(sequence);
         });
     }
 

@@ -60,12 +60,14 @@ void HotkeyEdit::setKeySequence(const QKeySequence& sequence)
 
 QString HotkeyEdit::hotkeyText() const
 {
-    return m_keySequence.toString(QKeySequence::NativeText);
+    // Use PortableText for consistent storage/restore across platforms
+    return m_keySequence.toString(QKeySequence::PortableText);
 }
 
 void HotkeyEdit::setHotkeyText(const QString& text)
 {
-    setKeySequence(QKeySequence::fromString(text));
+    // Use PortableText to match what hotkeyText() returns
+    setKeySequence(QKeySequence::fromString(text, QKeySequence::PortableText));
 }
 
 void HotkeyEdit::setPlaceholderText(const QString& text)
@@ -108,15 +110,22 @@ void HotkeyEdit::keyPressEvent(QKeyEvent* event)
         return;
     }
 
-    // Build the key sequence
+    // Build the key sequence properly by combining key with modifiers
     m_currentKey = key;
     m_currentModifiers = modifiers;
 
-    QString seqText = QKeySequence(key, modifiers, 0, 0).toString(QKeySequence::NativeText);
+    // Combine key and modifiers into a single int value
+    // This is the correct way to create a QKeySequence with modifiers
+    int keyWithModifiers = key | modifiers;
+    QKeySequence newSeq(keyWithModifiers);
+
+    QString seqText = newSeq.toString(QKeySequence::NativeText);
     m_displayLabel->setText(seqText);
 
+    qDebug() << "HotkeyEdit: captured key=" << key << "modifiers=" << modifiers
+             << "combined=" << keyWithModifiers << "sequence=" << seqText;
+
     // Complete the recording
-    QKeySequence newSeq(key, modifiers, 0, 0);
     setKeySequence(newSeq);
     stopRecording();
 }

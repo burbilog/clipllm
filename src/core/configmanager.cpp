@@ -106,7 +106,8 @@ void ConfigManager::setLanguage(const QString& language)
 
 QString ConfigManager::hotkey() const
 {
-    return value(HOTKEY_KEY, QStringLiteral("C")).toString();
+    // Default hotkey: Ctrl+Shift+C
+    return value(HOTKEY_KEY, QStringLiteral("Ctrl+Shift+C")).toString();
 }
 
 void ConfigManager::setHotkey(const QString& hotkey)
@@ -116,6 +117,7 @@ void ConfigManager::setHotkey(const QString& hotkey)
 
 Qt::Modifiers ConfigManager::hotkeyModifiers() const
 {
+    // Legacy method - kept for compatibility but not used anymore
     int defaultModifiers = static_cast<int>(Qt::ControlModifier | Qt::ShiftModifier);
     int modifiers = value(HOTKEY_MODIFIERS_KEY, defaultModifiers).toInt();
     return static_cast<Qt::Modifiers>(modifiers);
@@ -123,6 +125,7 @@ Qt::Modifiers ConfigManager::hotkeyModifiers() const
 
 void ConfigManager::setHotkeyModifiers(Qt::Modifiers modifiers)
 {
+    // Legacy method - kept for compatibility but not used anymore
     setValue(HOTKEY_MODIFIERS_KEY, static_cast<int>(modifiers));
 }
 

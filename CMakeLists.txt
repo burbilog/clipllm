@@ -24,6 +24,25 @@ else()
     message(WARNING "ImageMagick convert not found - icon generation disabled")
 endif()
 
+# QHotkey library sources (global hotkey support)
+set(QHOTKEY_SOURCES
+    3rdparty/qhotkey/qhotkey.cpp
+)
+
+# Platform-specific QHotkey sources
+if(UNIX AND NOT APPLE)
+    # Linux/X11
+    find_package(X11 REQUIRED)
+    list(APPEND QHOTKEY_SOURCES 3rdparty/qhotkey/qhotkey_x11.cpp)
+elseif(APPLE)
+    # macOS
+    list(APPEND QHOTKEY_SOURCES 3rdparty/qhotkey/qhotkey_mac.cpp)
+    find_library(CARBON_LIBRARY Carbon)
+elseif(WIN32)
+    # Windows
+    list(APPEND QHOTKEY_SOURCES 3rdparty/qhotkey/qhotkey_win.cpp)
+endif()
+
 # Source files
 set(SOURCES
     src/main.cpp
@@ -45,6 +64,7 @@ set(SOURCES
     src/ui/imageviewdialog.cpp
     src/models/prompt.cpp
     src/models/llmconfig.cpp
+    ${QHOTKEY_SOURCES}
 )
 
 # Header files
@@ -67,6 +87,8 @@ set(HEADERS
     src/ui/imageviewdialog.h
     src/models/prompt.h
     src/models/llmconfig.h
+    3rdparty/qhotkey/qhotkey.h
+    3rdparty/qhotkey/qhotkey_p.h
 )
 
 # Create executable
@@ -86,9 +108,18 @@ if(Qt6Concurrent_FOUND)
     target_compile_definitions(${PROJECT_NAME} PRIVATE QT_CONCURRENT_LIB)
 endif()
 
+# Link X11 on Linux for QHotkey
+if(UNIX AND NOT APPLE)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${X11_LIBRARIES})
+    target_include_directories(${PROJECT_NAME} PRIVATE ${X11_INCLUDE_DIR})
+elseif(APPLE)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${CARBON_LIBRARY})
+endif()
+
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/qhotkey
 )
 
 # Generate tray icons from high-resolution source

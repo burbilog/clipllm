@@ -96,7 +96,25 @@ void TrayIcon::createMenu()
     m_promptsMenu = new QMenu(tr("&Prompts"), m_menu);
     m_promptsMenu->setIcon(QIcon::fromTheme(QStringLiteral("document-new")));
 
+    // DEBUG: Test if submenu works at all in tray - with nested levels
+    QMenu* testSubmenu = new QMenu(tr("Test Submenu"), m_menu);
+    testSubmenu->addAction(tr("Test Item 1"));
+    testSubmenu->addAction(tr("Test Item 2"));
+    
+    // Add nested submenu (Level 2)
+    QMenu* testLevel2 = new QMenu(tr("Level 2"), testSubmenu);
+    testLevel2->addAction(tr("Level 2 Item 1"));
+    testLevel2->addAction(tr("Level 2 Item 2"));
+    testSubmenu->addMenu(testLevel2);
+    
+    // Add deeply nested submenu (Level 3)
+    QMenu* testLevel3 = new QMenu(tr("Level 3"), testLevel2);
+    testLevel3->addAction(tr("Level 3 Item 1"));
+    testLevel3->addAction(tr("Level 3 Item 2"));
+    testLevel2->addMenu(testLevel3);
+
     m_menu->addMenu(m_promptsMenu);
+    m_menu->addMenu(testSubmenu);
     m_menu->addAction(m_historyAction);
     m_menu->addAction(m_settingsAction);
     m_menu->addAction(m_separator1);
@@ -104,15 +122,21 @@ void TrayIcon::createMenu()
     m_menu->addAction(m_separator2);
     m_menu->addAction(m_quitAction);
 
-    setContextMenu(m_menu);
-
-    // Initial prompts menu build
+    // Build prompts menu BEFORE setContextMenu
     rebuildPromptsMenu();
+
+    setContextMenu(m_menu);
 }
 
 void TrayIcon::rebuildPromptsMenu()
 {
     m_promptsMenu->clear();
+
+    // DEBUG: Add test submenu inside Prompts menu - WITH PARENT
+    QMenu* testPromptsSubmenu = new QMenu(tr("Test Inside Prompts"), m_promptsMenu);
+    testPromptsSubmenu->addAction(tr("Test Action 1"));
+    testPromptsSubmenu->addAction(tr("Test Action 2"));
+    m_promptsMenu->addMenu(testPromptsSubmenu);
 
     if (!m_app || !m_app->promptManager()) {
         QAction* noPromptsAction = m_promptsMenu->addAction(tr("No prompts available"));
@@ -138,41 +162,27 @@ void TrayIcon::rebuildPromptsMenu()
         grouped[group].append(prompt);
     }
 
-    // Sort groups alphabetically
-    QStringList groups = grouped.keys();
-    groups.sort(Qt::CaseInsensitive);
-
-    // Add root prompts first (at top level)
-    if (groups.contains(QString())) {
-        groups.removeAll(QString());
-        QVector<Models::Prompt> rootPrompts = grouped.value(QString());
-
-        // Sort root prompts by priority
-        std::sort(rootPrompts.begin(), rootPrompts.end(),
-            [](const Models::Prompt& a, const Models::Prompt& b) {
-                if (a.priority() != b.priority()) {
-                    return a.priority() > b.priority();
-                }
-                return a.name() < b.name();
-            });
-
-        for (const auto& prompt : rootPrompts) {
-            QString text = prompt.name();
-            if (!prompt.description().isEmpty()) {
-                text += QStringLiteral(" - ") + prompt.description();
-            }
-
-            QAction* action = m_promptsMenu->addAction(text);
-            action->setData(prompt.id());
-
-            connect(action, &QAction::triggered, this, &TrayIcon::onPromptTriggered);
+    // Separate root and non-root groups
+    QStringList nonRootGroups;
+    QStringList rootGroup;
+    for (const QString& group : grouped.keys()) {
+        if (group.isEmpty()) {
+            rootGroup.append(QString());
+        } else {
+            nonRootGroups.append(group);
         }
     }
 
-    // Add groups as submenus
-    for (const QString& group : groups) {
+    // Sort non-root groups alphabetically (dirs first)
+    nonRootGroups.sort(Qt::CaseInsensitive);
+
+    // Add groups as submenus first (like dirs in file manager)
+    for (const QString& group : nonRootGroups) {
+        qDebug() << "TrayIcon: Processing group:" << group;
+        
         // Build submenu path (e.g., "Text Processing" -> "Summarization")
         QStringList parts = group.split(QLatin1Char('/'));
+        qDebug() << "TrayIcon: Parts:" << parts;
 
         QMenu* currentMenu = m_promptsMenu;
 
@@ -192,7 +202,10 @@ void TrayIcon::rebuildPromptsMenu()
             }
 
             if (!found) {
-                QMenu* newMenu = currentMenu->addMenu(parts[i]);
+                qDebug() << "TrayIcon: Creating submenu:" << parts[i] << "parent:" << currentMenu;
+                QMenu* newMenu = new QMenu(parts[i], currentMenu);  // WITH PARENT
+                currentMenu->addMenu(newMenu);
+                qDebug() << "TrayIcon: Created submenu:" << newMenu << "added to:" << currentMenu;
                 currentMenu = newMenu;
             }
         }
@@ -216,6 +229,29 @@ void TrayIcon::rebuildPromptsMenu()
             }
 
             QAction* action = currentMenu->addAction(text);
+            action->setData(prompt.id());
+
+            connect(action, &QAction::triggered, this, &TrayIcon::onPromptTriggered);
+        }
+    }
+
+    // Add root prompts last (alphabetically, like files after dirs)
+    if (!rootGroup.isEmpty()) {
+        QVector<Models::Prompt> rootPrompts = grouped.value(QString());
+
+        // Sort root prompts by name (alphabetically, not priority)
+        std::sort(rootPrompts.begin(), rootPrompts.end(),
+            [](const Models::Prompt& a, const Models::Prompt& b) {
+                return a.name() < b.name();
+            });
+
+        for (const auto& prompt : rootPrompts) {
+            QString text = prompt.name();
+            if (!prompt.description().isEmpty()) {
+                text += QStringLiteral(" - ") + prompt.description();
+            }
+
+            QAction* action = m_promptsMenu->addAction(text);
             action->setData(prompt.id());
 
             connect(action, &QAction::triggered, this, &TrayIcon::onPromptTriggered);

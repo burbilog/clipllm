@@ -1750,59 +1750,89 @@ Beispiele:
     <name>ClipAI::UI::TrayIcon</name>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="39"/>
-        <location filename="../src/ui/trayicon.cpp" line="234"/>
-        <location filename="../src/ui/trayicon.cpp" line="339"/>
+        <location filename="../src/ui/trayicon.cpp" line="258"/>
+        <location filename="../src/ui/trayicon.cpp" line="363"/>
         <source>ClipAI - LLM Clipboard Utility</source>
         <translation>ClipAI - LLM-Zwischenablage-Dienstprogramm</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="70"/>
-        <location filename="../src/ui/trayicon.cpp" line="343"/>
+        <location filename="../src/ui/trayicon.cpp" line="367"/>
         <source>&amp;Settings</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="74"/>
-        <location filename="../src/ui/trayicon.cpp" line="346"/>
+        <location filename="../src/ui/trayicon.cpp" line="370"/>
         <source>&amp;History</source>
         <translation>&amp;Verlauf</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="78"/>
-        <location filename="../src/ui/trayicon.cpp" line="349"/>
+        <location filename="../src/ui/trayicon.cpp" line="373"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="88"/>
-        <location filename="../src/ui/trayicon.cpp" line="352"/>
+        <location filename="../src/ui/trayicon.cpp" line="376"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="96"/>
-        <location filename="../src/ui/trayicon.cpp" line="357"/>
+        <location filename="../src/ui/trayicon.cpp" line="381"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="118"/>
+        <location filename="../src/ui/trayicon.cpp" line="100"/>
+        <source>Test Submenu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/trayicon.cpp" line="101"/>
+        <source>Test Item 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/trayicon.cpp" line="102"/>
+        <source>Test Item 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/trayicon.cpp" line="124"/>
+        <source>Test Inside Prompts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/trayicon.cpp" line="125"/>
+        <source>Test Action 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/trayicon.cpp" line="126"/>
+        <source>Test Action 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/trayicon.cpp" line="130"/>
+        <location filename="../src/ui/trayicon.cpp" line="138"/>
         <source>No prompts available</source>
         <translation>Keine Prompts verfügbar</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="236"/>
+        <location filename="../src/ui/trayicon.cpp" line="260"/>
         <source>Hotkey: </source>
         <translation>Tastenkombination: </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="297"/>
+        <location filename="../src/ui/trayicon.cpp" line="321"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; ist ein plattformübergreifendes Zwischenablage-Dienstprogramm, das große Sprachmodelle (LLMs) direkt in Ihren Arbeitsablauf integriert. Wird als Systemleistendienst ausgeführt und ermöglicht es Ihnen, Zwischenablageinhalt (Text und Bilder) mit anpassbaren KI-Prompts unter Verwendung globaler Tastenkombinationen zu verarbeiten.&lt;/p&gt;&lt;p&gt;Egal ob Sie Text zusammenfassen, Inhalte übersetzen, Code umschreiben, Informationen aus Bildern extrahieren oder andere KI-gesteuerte Transformationen durchführen möchten – ClipAI macht dies sofort mit einem einfachen Tastendruck zugänglich. Kopieren Sie Inhalt, drücken Sie Ihre Tastenkombination und erhalten Sie KI-generierte Ergebnisse in Ihrer Zwischenablage.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="318"/>
+        <location filename="../src/ui/trayicon.cpp" line="342"/>
         <source>About ClipAI</source>
         <translation>Über ClipAI</translation>
     </message>

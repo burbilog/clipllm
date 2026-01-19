@@ -107,8 +107,8 @@ void ConfigManager::setLanguage(const QString& language)
 
 QString ConfigManager::hotkey() const
 {
-    // Default hotkey: Ctrl+Shift+C
-    return value(HOTKEY_KEY, QStringLiteral("Ctrl+Shift+C")).toString();
+    // Default hotkey: Ctrl+Alt+Shift+X
+    return value(HOTKEY_KEY, QStringLiteral("Ctrl+Alt+Shift+X")).toString();
 }
 
 void ConfigManager::setHotkey(const QString& hotkey)

@@ -176,7 +176,7 @@ void PromptEditorDialog::setupUi()
     m_prioritySpin->setSingleStep(10);
     m_prioritySpin->setValue(0);
     m_prioritySpin->setToolTip(tr("Higher priority prompts appear first in the menu"));
-    settingsLayout->addRow(tr("Priority:"), m_prioritySpin);
+    settingsLayout->addRow(tr("Priority (higher = first):"), m_prioritySpin);
 
     mainLayout->addWidget(settingsGroup);
 

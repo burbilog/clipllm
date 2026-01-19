@@ -271,9 +271,9 @@ void SettingsDialog::setupPromptsTab()
 
     // Prompts table
     m_promptsTable = new QTableWidget();
-    m_promptsTable->setColumnCount(5);
+    m_promptsTable->setColumnCount(6);
     m_promptsTable->setHorizontalHeaderLabels({
-        tr("Name"), tr("Description"), tr("Content Type"), tr("Model"), tr("Priority")
+        tr("Name"), tr("Description"), tr("Content Type"), tr("Model"), tr("Group"), tr("Priority")
     });
     m_promptsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_promptsTable->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -586,6 +586,9 @@ void SettingsDialog::loadPrompts()
         ));
         m_promptsTable->setItem(i, 3, new QTableWidgetItem(prompt.model()));
         m_promptsTable->setItem(i, 4, new QTableWidgetItem(
+            prompt.group().isEmpty() ? tr("(root)") : prompt.group()
+        ));
+        m_promptsTable->setItem(i, 5, new QTableWidgetItem(
             QString::number(prompt.priority())
         ));
     }

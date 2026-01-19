@@ -1178,7 +1178,7 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="226"/>
         <source>&lt;b&gt;Note:&lt;/b&gt; Global hotkeys may not work on Wayland. On X11, the hotkey works globally. On Windows and macOS, global hotkeys are fully supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Nota:&lt;/b&gt; Los atajos de teclado globales pueden no funcionar en Wayland. En X11, el atajo funciona globalmente. En Windows y macOS, los atajos globales son totalmente compatibles.</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="236"/>

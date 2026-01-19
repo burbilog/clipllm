@@ -3,7 +3,7 @@
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
 
-build:
+build: translations
 	@echo "Building ClipAI..."
 	@mkdir -p build
 	@cd build && cmake ..

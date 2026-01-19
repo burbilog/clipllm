@@ -11,7 +11,7 @@
     <message>
         <location filename="../src/core/app.cpp" line="212"/>
         <source>Couldn&apos;t detect any system tray on this system.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo detectar ninguna bandeja del sistema en este sistema.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="222"/>
@@ -156,7 +156,9 @@
         <source>Please provide a comprehensive summary of the following text:
 
 {clipboard}</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, proporciona un resumen completo del siguiente texto:
+
+{clipboard}</translation>
     </message>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="323"/>
@@ -214,7 +216,9 @@
         <source>Explain the following code:
 
 {clipboard}</source>
-        <translation type="unfinished"></translation>
+        <translation>Explica el siguiente código:
+
+{clipboard}</translation>
     </message>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="368"/>
@@ -236,7 +240,9 @@
         <source>Review the following code:
 
 {clipboard}</source>
-        <translation type="unfinished"></translation>
+        <translation>Revisa el siguiente código:
+
+{clipboard}</translation>
     </message>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="383"/>
@@ -258,7 +264,9 @@
         <source>Refactor the following code:
 
 {clipboard}</source>
-        <translation type="unfinished"></translation>
+        <translation>Refactoriza el siguiente código:
+
+{clipboard}</translation>
     </message>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="398"/>
@@ -677,12 +685,14 @@
         <source>Process the following text:
 
 {clipboard}</source>
-        <translation type="unfinished"></translation>
+        <translation>Procesa el siguiente texto:
+
+{clipboard}</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="117"/>
         <source>Use {clipboard} to insert clipboard content, {clipboard:1000} for truncated content, {language} for user&apos;s language.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa {clipboard} para insertar contenido del portapapeles, {clipboard:1000} para contenido truncado, {language} para el idioma del usuario.</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="125"/>
@@ -768,7 +778,7 @@
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="155"/>
         <source>Use default temperature from settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar temperatura predeterminada de la configuración</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="163"/>
@@ -803,17 +813,17 @@
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="197"/>
         <source>OK</source>
-        <translation type="unfinished">Aceptar</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="202"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="291"/>
         <source>Uses global default model</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa modelo global predeterminado</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="346"/>
@@ -838,19 +848,21 @@
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="385"/>
         <source>ID already exists: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>El ID ya existe: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="407"/>
         <source>Validation Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error de validación</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="408"/>
         <source>The prompt has validation errors:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>El prompt tiene errores de validación:
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -876,37 +888,37 @@
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="51"/>
         <source>⚠ This prompt is configured for Text content only, but there is an image in the clipboard. The image will be ignored.</source>
-        <translation type="unfinished"></translation>
+        <translation>⚠ Este prompt está configurado solo para contenido de texto, pero hay una imagen en el portapapeles. La imagen será ignorada.</translation>
     </message>
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="60"/>
         <source>⚠ This prompt is configured for Image content only, but there is text in the clipboard. Only the image will be sent to the model.</source>
-        <translation type="unfinished"></translation>
+        <translation>⚠ Este prompt está configurado solo para contenido de imagen, pero hay texto en el portapapeles. Solo se enviará la imagen al modelo.</translation>
     </message>
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="63"/>
         <source>⚠ This prompt is configured for Image content only, but the clipboard is empty or doesn&apos;t contain an image.</source>
-        <translation type="unfinished"></translation>
+        <translation>⚠ Este prompt está configurado solo para contenido de imagen, pero el portapapeles está vacío o no contiene una imagen.</translation>
     </message>
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="157"/>
         <source>%1x%2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x%2</translation>
     </message>
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="197"/>
         <source>Prompt Preview</source>
-        <translation type="unfinished">Vista previa del prompt</translation>
+        <translation>Vista previa del prompt</translation>
     </message>
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="209"/>
         <source>Request that will be sent to the API</source>
-        <translation type="unfinished"></translation>
+        <translation>Solicitud que se enviará a la API</translation>
     </message>
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="222"/>
         <source>This is the exact JSON that will be sent to the LLM API. Clipboard content is substituted for {clipboard} placeholder. Click the image link to view the full image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este es el JSON exacto que se enviará a la API del LLM. El contenido del portapapeles se sustituye por el marcador {clipboard}. Haz clic en el enlace de la imagen para ver la imagen completa.</translation>
     </message>
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="234"/>
@@ -924,23 +936,23 @@
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="25"/>
         <source>ClipAI - Result</source>
-        <translation type="unfinished"></translation>
+        <translation>ClipAI - Resultado</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="56"/>
         <source>Model: -</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelo: -</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="58"/>
         <source>Tokens: 0 / 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Tokens: 0 / 0</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="59"/>
         <location filename="../src/ui/resultdialog.cpp" line="170"/>
         <source>Traffic: 0 B</source>
-        <translation type="unfinished"></translation>
+        <translation>Tráfico: 0 B</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="76"/>
@@ -980,74 +992,74 @@
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="141"/>
         <source>ClipAI - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ClipAI - %1</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="153"/>
         <location filename="../src/ui/resultdialog.cpp" line="207"/>
         <source>Model: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelo: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="171"/>
         <source>Connecting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectando...</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="191"/>
         <source>Tokens: ~%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tokens: ~%1</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="204"/>
         <source>Completed in %1 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Completado en %1 segundos</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="209"/>
         <source>Tokens: %1 input / %2 output</source>
-        <translation type="unfinished"></translation>
+        <translation>Tokens: %1 entrada / %2 salida</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="222"/>
         <location filename="../src/ui/resultdialog.cpp" line="237"/>
         <source>Error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="268"/>
         <source>Saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardado</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="320"/>
         <source>Close During Generation</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar durante generación</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="321"/>
         <source>A response is still being generated. Close and cancel the request?</source>
-        <translation type="unfinished"></translation>
+        <translation>Aún se está generando una respuesta. ¿Cerrar y cancelar la solicitud?</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="329"/>
         <source>Cancelling...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelando...</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="370"/>
         <source>Model is thinking...</source>
-        <translation type="unfinished"></translation>
+        <translation>El modelo está pensando...</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="373"/>
         <source>Generating response...</source>
-        <translation type="unfinished"></translation>
+        <translation>Generando respuesta...</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="382"/>
         <source>Traffic: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tráfico: %1</translation>
     </message>
 </context>
 <context>
@@ -1389,17 +1401,17 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="697"/>
         <source>Failed to add prompt. ID may already exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al agregar prompt. El ID puede ya existir.</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="733"/>
         <source>Failed to update prompt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al actualizar prompt.</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="757"/>
         <source>Delete Prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar prompt</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="758"/>
@@ -1410,7 +1422,7 @@
         <location filename="../src/ui/settingsdialog.cpp" line="772"/>
         <location filename="../src/ui/settingsdialog.cpp" line="787"/>
         <source>Import Prompts</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar prompts</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="774"/>
@@ -1421,33 +1433,33 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="788"/>
         <source>Import will be implemented in a future version.</source>
-        <translation type="unfinished"></translation>
+        <translation>La importación se implementará en una versión futura.</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="795"/>
         <location filename="../src/ui/settingsdialog.cpp" line="811"/>
         <source>Export Prompts</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar prompts</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="812"/>
         <source>Prompts exported to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompts exportados a %1</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="819"/>
         <source>Reset Prompts</source>
-        <translation type="unfinished"></translation>
+        <translation>Restablecer prompts</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="820"/>
         <source>Are you sure you want to reset prompts to defaults? All custom prompts will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Estás seguro de que deseas restablecer los prompts a los valores predeterminados? Se perderán todos los prompts personalizados.</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="845"/>
         <source>Clear History</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar historial</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="846"/>
@@ -1457,7 +1469,7 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="902"/>
         <source>Fetch not supported for this provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Obtener modelos no compatible con este proveedor</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="912"/>
@@ -1467,17 +1479,17 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="923"/>
         <source>Error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="933"/>
         <source>Error: Invalid response</source>
-        <translation type="unfinished"></translation>
+        <translation>Error: Respuesta no válida</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="968"/>
         <source>No models found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontraron modelos</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="997"/>
@@ -1532,23 +1544,23 @@
         <location filename="../src/ui/trayicon.cpp" line="95"/>
         <location filename="../src/ui/trayicon.cpp" line="281"/>
         <source>&amp;Prompts</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Prompts</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="117"/>
         <location filename="../src/ui/trayicon.cpp" line="125"/>
         <source>No prompts available</source>
-        <translation type="unfinished">No hay prompts disponibles</translation>
+        <translation>No hay prompts disponibles</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="159"/>
         <source>Hotkey: </source>
-        <translation type="unfinished"></translation>
+        <translation>Atajo de teclado: </translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="221"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Versión 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; es una utilidad de portapapeles multiplataforma que integra modelos de lenguaje grandes (LLM) directamente en tu flujo de trabajo. Funcionando como un servicio en la bandeja del sistema, te permite procesar contenido del portapapeles (tanto texto como imágenes) con prompts de IA personalizados usando atajos de teclado globales.&lt;/p&gt;&lt;p&gt;Ya sea que necesites resumir texto, traducir contenido, reescribir código, extraer información de imágenes o realizar cualquier otra transformación potenciada por IA, ClipAI lo hace instantáneamente accesible con una sola pulsación de tecla. Copia contenido, presiona tu atajo y obtén resultados generados por IA de vuelta en tu portapapeles.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="242"/>
@@ -1561,13 +1573,13 @@
     <message>
         <location filename="../src/core/historymanager.cpp" line="71"/>
         <source>[Image: %1 bytes]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Imagen: %1 bytes]</translation>
     </message>
     <message>
         <location filename="../src/core/historymanager.cpp" line="75"/>
         <location filename="../src/core/historymanager.cpp" line="87"/>
         <source>[Empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Vacío]</translation>
     </message>
 </context>
 <context>
@@ -1575,12 +1587,12 @@
     <message>
         <location filename="../src/main.cpp" line="16"/>
         <source>ClipAI - Cross-platform LLM clipboard utility</source>
-        <translation type="unfinished">ClipAI - Utilidad de portapapeles LLM multiplataforma</translation>
+        <translation>ClipAI - Utilidad de portapapeles LLM multiplataforma</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="22"/>
         <source>Start minimized to system tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar minimizado en la bandeja del sistema</translation>
     </message>
 </context>
 </TS>

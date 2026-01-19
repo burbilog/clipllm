@@ -172,7 +172,9 @@ bool App::initialize(bool startMinimized)
     config.setOverrideTemperature(m_configManager->overrideTemperature());
     config.setMaxTokens(m_configManager->maxTokens());
     config.setStream(m_configManager->streamResponses());
+    config.setProxyUrl(m_configManager->proxyUrl());
     m_llmClient->setConfig(config);
+    m_llmClient->setProxy(m_configManager->proxyUrl());
 
     qDebug() << "LLM initialized: provider=" << Models::LLMConfig::providerToString(provider)
              << "model=" << model;
@@ -380,7 +382,9 @@ void App::showSettings()
             config.setOverrideTemperature(m_configManager->overrideTemperature());
             config.setMaxTokens(m_configManager->maxTokens());
             config.setStream(m_configManager->streamResponses());
+            config.setProxyUrl(m_configManager->proxyUrl());
             m_llmClient->setConfig(config);
+            m_llmClient->setProxy(m_configManager->proxyUrl());
             // Explicitly set API key since setConfig doesn't do it
             if (!apiKey.isEmpty()) {
                 m_llmClient->setApiKey(apiKey);

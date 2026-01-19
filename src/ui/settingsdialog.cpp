@@ -166,6 +166,7 @@ void SettingsDialog::setupLLMTab()
     providerLayout->addRow(tr("Custom API URL:"), m_customUrlEdit);
 
     m_proxyEdit = new QLineEdit();
+    m_proxyEdit->setPlaceholderText(tr("http://host:port or socks5://host:port"));
     providerLayout->addRow(tr("Proxy (optional):"), m_proxyEdit);
 
     layout->addWidget(providerGroup);

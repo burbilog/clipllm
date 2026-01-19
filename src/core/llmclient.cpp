@@ -115,8 +115,19 @@ void LLMClient::setProxy(const QString& proxyUrl)
 
     if (!proxyUrl.isEmpty()) {
         QUrl proxy(proxyUrl);
+
+        // Determine proxy type from scheme
+        QString scheme = proxy.scheme().toLower();
+        QNetworkProxy::ProxyType proxyType = QNetworkProxy::HttpProxy;
+
+        if (scheme == QStringLiteral("socks5") || scheme == QStringLiteral("socks5h")) {
+            proxyType = QNetworkProxy::Socks5Proxy;
+        } else if (scheme == QStringLiteral("http") || scheme == QStringLiteral("https")) {
+            proxyType = QNetworkProxy::HttpProxy;
+        }
+
         QNetworkProxy networkProxy(
-            QNetworkProxy::HttpProxy,
+            proxyType,
             proxy.host(),
             proxy.port(8080)
         );

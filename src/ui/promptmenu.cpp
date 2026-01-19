@@ -56,17 +56,23 @@ void PromptMenu::setContentTypeFilter(Models::ContentType type)
 
 void PromptMenu::showMenu(const QPoint& pos)
 {
-    // Determine content type from clipboard
-    if (m_clipboardManager && m_contentTypeFilter == Models::ContentType::Any) {
+    // Determine content type from clipboard (only if filter is Any)
+    Models::ContentType originalFilter = m_contentTypeFilter;
+    Models::ContentType effectiveFilter = m_contentTypeFilter;
+
+    if (m_clipboardManager && effectiveFilter == Models::ContentType::Any) {
         Core::ClipboardContentType contentType = m_clipboardManager->getContentType();
         if (contentType == Core::ClipboardContentType::Image) {
-            m_contentTypeFilter = Models::ContentType::Image;
+            effectiveFilter = Models::ContentType::Image;
         } else if (contentType == Core::ClipboardContentType::Text) {
-            m_contentTypeFilter = Models::ContentType::Text;
+            effectiveFilter = Models::ContentType::Text;
         }
     }
 
+    // Temporarily apply filter for this menu show
+    m_contentTypeFilter = effectiveFilter;
     rebuildMenu();
+    m_contentTypeFilter = originalFilter; // Restore original filter
 
     // Clear search and focus
     m_searchEdit->clear();
@@ -124,13 +130,7 @@ void PromptMenu::rebuildMenu()
             return a.name() < b.name();
         });
 
-    // Apply max prompts limit
-    int maxPrompts = m_configManager ? m_configManager->maxPrompts() : 10;
-    if (maxPrompts > 0 && filteredPrompts.size() > maxPrompts) {
-        filteredPrompts = filteredPrompts.mid(0, maxPrompts);
-    }
-
-    // Add prompt actions
+    // Add all prompt actions (QMenu handles scrolling automatically)
     for (const auto& prompt : filteredPrompts) {
         QAction* action = createPromptAction(prompt);
         addAction(action);
@@ -254,6 +254,14 @@ void PromptMenu::keyPressEvent(QKeyEvent* event)
 void PromptMenu::showEvent(QShowEvent* event)
 {
     QMenu::showEvent(event);
+
+    // Set maximum height based on maxPrompts setting
+    int maxPrompts = m_configManager ? m_configManager->maxPrompts() : 10;
+    if (maxPrompts > 0) {
+        // Approximate height: search box (50px) + separator + prompts (30px each)
+        int maxHeight = 50 + 2 + (maxPrompts * 30);
+        setMaximumHeight(maxHeight);
+    }
 
     // Focus search box after a short delay
     QTimer::singleShot(50, this, [this]() {

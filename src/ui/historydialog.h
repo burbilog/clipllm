@@ -12,6 +12,7 @@
 #include <QCheckBox>
 #include <QTextEdit>
 #include <QLabel>
+#include <QSplitter>
 #include "core/historymanager.h"
 
 namespace ClipAI {
@@ -65,6 +66,7 @@ private:
     // UI components
     QTableView* m_tableView = nullptr;
     QStandardItemModel* m_model = nullptr;
+    QSplitter* m_splitter = nullptr;
     QLineEdit* m_searchEdit = nullptr;
     QComboBox* m_modelCombo = nullptr;
     QComboBox* m_promptCombo = nullptr;

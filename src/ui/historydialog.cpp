@@ -30,17 +30,21 @@ HistoryDialog::~HistoryDialog() = default;
 void HistoryDialog::setupUi()
 {
     setWindowTitle(tr("ClipAI - History"));
-    resize(900, 600);
+    resize(700, 550);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
+
+    // Search bar at the top
+    QHBoxLayout* searchLayout = new QHBoxLayout();
+    m_searchEdit = new QLineEdit();
+    m_searchEdit->setPlaceholderText(tr("Search in history..."));
+    connect(m_searchEdit, &QLineEdit::textChanged, this, &HistoryDialog::onSearchTextChanged);
+    searchLayout->addWidget(m_searchEdit);
+    mainLayout->addLayout(searchLayout);
 
     // Filter group
     QGroupBox* filterGroup = new QGroupBox(tr("Filters"));
     QHBoxLayout* filterLayout = new QHBoxLayout(filterGroup);
-
-    m_searchEdit = new QLineEdit();
-    m_searchEdit->setPlaceholderText(tr("Search..."));
-    connect(m_searchEdit, &QLineEdit::textChanged, this, &HistoryDialog::onSearchTextChanged);
 
     m_modelCombo = new QComboBox();
     m_modelCombo->addItem(tr("All Models"), QString());
@@ -70,8 +74,6 @@ void HistoryDialog::setupUi()
     connect(m_toDateEdit, &QDateTimeEdit::dateTimeChanged,
             this, &HistoryDialog::onFilterChanged);
 
-    filterLayout->addWidget(new QLabel(tr("Search:")));
-    filterLayout->addWidget(m_searchEdit);
     filterLayout->addWidget(new QLabel(tr("Model:")));
     filterLayout->addWidget(m_modelCombo);
     filterLayout->addWidget(new QLabel(tr("Prompt:")));
@@ -85,7 +87,7 @@ void HistoryDialog::setupUi()
     mainLayout->addWidget(filterGroup);
 
     // Splitter for table and preview
-    QSplitter* splitter = new QSplitter(Qt::Vertical);
+    m_splitter = new QSplitter(Qt::Vertical);
 
     // Table view
     m_tableView = new QTableView();
@@ -99,7 +101,7 @@ void HistoryDialog::setupUi()
     connect(m_tableView, &QTableView::doubleClicked,
             this, &HistoryDialog::onItemDoubleClicked);
 
-    splitter->addWidget(m_tableView);
+    m_splitter->addWidget(m_tableView);
 
     // Preview group
     QGroupBox* previewGroup = new QGroupBox(tr("Preview"));
@@ -116,11 +118,11 @@ void HistoryDialog::setupUi()
     m_previewText->setReadOnly(true);
     previewLayout->addWidget(m_previewText);
 
-    splitter->addWidget(previewGroup);
-    splitter->setStretchFactor(0, 2);
-    splitter->setStretchFactor(1, 1);
+    m_splitter->addWidget(previewGroup);
+    m_splitter->setStretchFactor(0, 2);
+    m_splitter->setStretchFactor(1, 1);
 
-    mainLayout->addWidget(splitter, 1);
+    mainLayout->addWidget(m_splitter, 1);
 
     // Status label
     m_statusLabel = new QLabel();
@@ -160,10 +162,13 @@ void HistoryDialog::setupUi()
     m_closeButton = new QPushButton(tr("Close"));
     m_closeButton->setIcon(style()->standardIcon(QStyle::SP_DialogCloseButton));
     connect(m_closeButton, &QPushButton::clicked, this, [this]() {
-        // Save window geometry before closing
+        // Save window geometry and splitter state before closing
         QSettings settings;
         settings.beginGroup("WindowGeometry");
         settings.setValue("historyDialog", saveGeometry());
+        if (m_splitter) {
+            settings.setValue("historyDialogSplitter", m_splitter->saveState());
+        }
         settings.endGroup();
         settings.sync();
         accept();
@@ -188,9 +193,7 @@ void HistoryDialog::setupModel()
         tr("Date"),
         tr("Prompt"),
         tr("Model"),
-        tr("Input Preview"),
         tr("Output Preview"),
-        tr("Duration"),
         tr("ID")
     });
 
@@ -201,15 +204,13 @@ void HistoryDialog::setupModel()
             this, &HistoryDialog::onItemSelectionChanged);
 
     // Hide the ID column
-    m_tableView->setColumnHidden(6, true);
+    m_tableView->setColumnHidden(4, true);
 
     // Set column widths
-    m_tableView->setColumnWidth(0, 150);
+    m_tableView->setColumnWidth(0, 130);
     m_tableView->setColumnWidth(1, 120);
     m_tableView->setColumnWidth(2, 150);
     m_tableView->setColumnWidth(3, 200);
-    m_tableView->setColumnWidth(4, 200);
-    m_tableView->setColumnWidth(5, 80);
 }
 
 void HistoryDialog::refreshHistory()
@@ -307,14 +308,8 @@ void HistoryDialog::applyFilter()
         // Model
         row.append(new QStandardItem(entry.model));
 
-        // Input preview
-        row.append(new QStandardItem(entry.getInputPreview(100)));
-
         // Output preview
         row.append(new QStandardItem(entry.getOutputPreview(100)));
-
-        // Duration
-        row.append(new QStandardItem(formatDuration(entry.durationMs)));
 
         // ID (hidden)
         row.append(new QStandardItem(entry.id));
@@ -568,11 +563,18 @@ void HistoryDialog::onMarkdownToggleClicked()
 
 void HistoryDialog::showEvent(QShowEvent* event)
 {
-    // Restore window geometry when dialog is shown
-    // This works more reliably than restoring in constructor
+    // Restore window geometry and splitter state when dialog is shown
     QSettings settings;
     settings.beginGroup("WindowGeometry");
     restoreGeometry(settings.value("historyDialog").toByteArray());
+
+    // Restore splitter state
+    if (m_splitter) {
+        QByteArray splitterState = settings.value("historyDialogSplitter").toByteArray();
+        if (!splitterState.isEmpty()) {
+            m_splitter->restoreState(splitterState);
+        }
+    }
     settings.endGroup();
 
     QDialog::showEvent(event);
@@ -580,10 +582,15 @@ void HistoryDialog::showEvent(QShowEvent* event)
 
 void HistoryDialog::closeEvent(QCloseEvent* event)
 {
-    // Save window geometry
+    // Save window geometry and splitter state
     QSettings settings;
     settings.beginGroup("WindowGeometry");
     settings.setValue("historyDialog", saveGeometry());
+
+    // Save splitter state
+    if (m_splitter) {
+        settings.setValue("historyDialogSplitter", m_splitter->saveState());
+    }
     settings.endGroup();
     settings.sync();
 

@@ -44,12 +44,14 @@ private slots:
     void onExportClicked();
     void onClearClicked();
     void onViewDetailsClicked();
+    void onMarkdownToggleClicked();
 
 private:
     void setupUi();
     void setupModel();
     void applyFilter();
     void loadEntry(int row);
+    void updatePreviewDisplay(const Core::HistoryEntry& entry);
     QString formatDate(const QDateTime& date) const;
     QString formatDuration(double ms) const;
 
@@ -67,6 +69,14 @@ private:
 
     QTextEdit* m_previewText = nullptr;
     QLabel* m_statusLabel = nullptr;
+    QPushButton* m_markdownToggle = nullptr;
+
+    // Markdown state
+    bool m_markdownMode = true;
+
+    // Current display data
+    QString m_currentInputText;
+    QString m_currentOutputText;
 
     QPushButton* m_copyButton = nullptr;
     QPushButton* m_deleteButton = nullptr;

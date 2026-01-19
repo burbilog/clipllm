@@ -77,6 +77,14 @@ void ResultDialog::setupUi()
     m_statusLabel->setWordWrap(true);
     mainLayout->addWidget(m_statusLabel);
 
+    // Markdown toggle button
+    m_markdownToggle = new QPushButton(tr("Markdown"));
+    m_markdownToggle->setCheckable(true);
+    m_markdownToggle->setChecked(m_markdownMode);
+    connect(m_markdownToggle, &QPushButton::clicked, this, &ResultDialog::onMarkdownToggleClicked);
+    m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
+    mainLayout->addWidget(m_markdownToggle);
+
     // Splitter for input/output
     QSplitter* splitter = new QSplitter(Qt::Vertical);
 
@@ -163,6 +171,9 @@ void ResultDialog::startRequest()
     m_bytesReceived = 0;
     m_timer.start();
 
+    // Update markdown toggle button text
+    m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
+
     updateState();
 
     m_progressBar->setVisible(true);
@@ -177,13 +188,21 @@ void ResultDialog::startRequest()
 
 void ResultDialog::appendResponse(const QString& text)
 {
-    m_outputText->insertPlainText(text);
+    m_output.append(text);
+
+    if (m_markdownMode) {
+        // Set markdown content - QTextDocument will render it
+        m_outputText->setMarkdown(m_output);
+    } else {
+        // Show as plain text
+        m_outputText->setPlainText(m_output);
+    }
+
     m_outputText->moveCursor(QTextCursor::End);
 }
 
 void ResultDialog::onStreaming(const QString& content)
 {
-    m_output.append(content);
     appendResponse(content);
 
     // Update token estimate (rough approximation: 4 chars per token)
@@ -399,6 +418,22 @@ QString ResultDialog::formatBytes(qint64 bytes)
     }
 
     return QStringLiteral("%1 %2").arg(size, 0, 'f', 2).arg(units[unitIndex]);
+}
+
+void ResultDialog::onMarkdownToggleClicked()
+{
+    m_markdownMode = m_markdownToggle->isChecked();
+    m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
+
+    // Re-render the output
+    if (!m_output.isEmpty()) {
+        if (m_markdownMode) {
+            m_outputText->setMarkdown(m_output);
+        } else {
+            m_outputText->setPlainText(m_output);
+        }
+        m_outputText->moveCursor(QTextCursor::End);
+    }
 }
 
 } // namespace UI

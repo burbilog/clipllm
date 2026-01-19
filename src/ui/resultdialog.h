@@ -56,6 +56,7 @@ private slots:
     void onThinkingStateChanged(bool isThinking);
     void onBytesReceivedChanged(qint64 bytesReceived);
     void performClose();
+    void onMarkdownToggleClicked();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -80,6 +81,10 @@ private:
     QPushButton* m_saveButton = nullptr;
     QPushButton* m_retryButton = nullptr;
     QPushButton* m_closeButton = nullptr;
+    QPushButton* m_markdownToggle = nullptr;
+
+    // Markdown state
+    bool m_markdownMode = true;
 
     // Request data
     QString m_promptId;

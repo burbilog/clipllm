@@ -103,6 +103,13 @@ void HistoryDialog::setupUi()
     QGroupBox* previewGroup = new QGroupBox(tr("Preview"));
     QVBoxLayout* previewLayout = new QVBoxLayout(previewGroup);
 
+    m_markdownToggle = new QPushButton(tr("Markdown"));
+    m_markdownToggle->setCheckable(true);
+    m_markdownToggle->setChecked(m_markdownMode);
+    connect(m_markdownToggle, &QPushButton::clicked, this, &HistoryDialog::onMarkdownToggleClicked);
+    m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
+    previewLayout->addWidget(m_markdownToggle);
+
     m_previewText = new QTextEdit();
     m_previewText->setReadOnly(true);
     previewLayout->addWidget(m_previewText);
@@ -358,19 +365,11 @@ void HistoryDialog::loadEntry(int row)
         return;
     }
 
-    // Update preview
-    QString preview;
-    preview += tr("<b>Prompt:</b> %1<br>").arg(entry->promptName);
-    preview += tr("<b>Model:</b> %1<br>").arg(entry->model);
-    preview += tr("<b>Date:</b> %1<br>").arg(formatDate(entry->timestamp));
-    preview += tr("<b>Duration:</b> %1<br>").arg(formatDuration(entry->durationMs));
-    preview += tr("<b>Tokens:</b> %1 input / %2 output<br><br>")
-               .arg(entry->inputTokens)
-               .arg(entry->outputTokens);
-    preview += tr("<b>Input:</b><br>%1<br><br>").arg(entry->inputText.toHtmlEscaped());
-    preview += tr("<b>Output:</b><br>%1").arg(entry->outputText.toHtmlEscaped());
+    // Store raw text for markdown toggle
+    m_currentInputText = entry->inputText;
+    m_currentOutputText = entry->outputText;
 
-    m_previewText->setHtml(preview);
+    updatePreviewDisplay(*entry);
 
     // Update favorite button
     m_favoriteButton->setText(entry->favorite ? tr("Unfavorite") : tr("Favorite"));
@@ -504,6 +503,56 @@ QString HistoryDialog::formatDuration(double ms) const
         int minutes = qRound(ms / 60000.0);
         int seconds = qRound((ms - minutes * 60000) / 1000.0);
         return tr("%1m %2s").arg(minutes).arg(seconds);
+    }
+}
+
+void HistoryDialog::updatePreviewDisplay(const Core::HistoryEntry& entry)
+{
+    if (m_markdownMode) {
+        // Build full markdown content with headers
+        QString fullMarkdown;
+        fullMarkdown += "**Prompt:** " + entry.promptName + "\n\n";
+        fullMarkdown += "**Model:** " + entry.model + "\n\n";
+        fullMarkdown += "**Date:** " + formatDate(entry.timestamp) + "\n\n";
+        fullMarkdown += "**Duration:** " + formatDuration(entry.durationMs) + "\n\n";
+        fullMarkdown += "**Tokens:** " + QString::number(entry.inputTokens) + " input / " +
+                       QString::number(entry.outputTokens) + " output\n\n";
+        fullMarkdown += "---\n\n";
+        fullMarkdown += "## Input\n\n" + m_currentInputText + "\n\n";
+        fullMarkdown += "## Output\n\n" + m_currentOutputText;
+
+        m_previewText->setMarkdown(fullMarkdown);
+    } else {
+        // Plain text mode
+        QString fullText;
+        fullText += tr("Prompt: %1\n").arg(entry.promptName);
+        fullText += tr("Model: %1\n").arg(entry.model);
+        fullText += tr("Date: %1\n").arg(formatDate(entry.timestamp));
+        fullText += tr("Duration: %1\n").arg(formatDuration(entry.durationMs));
+        fullText += tr("Tokens: %1 input / %2 output\n")
+                       .arg(entry.inputTokens)
+                       .arg(entry.outputTokens);
+        fullText += "\n" + QString("-").repeated(40) + "\n\n";
+        fullText += tr("Input:\n");
+        fullText += m_currentInputText + "\n\n";
+        fullText += tr("Output:\n");
+        fullText += m_currentOutputText;
+
+        m_previewText->setPlainText(fullText);
+    }
+}
+
+void HistoryDialog::onMarkdownToggleClicked()
+{
+    m_markdownMode = m_markdownToggle->isChecked();
+    m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
+
+    // Re-render the current entry if one is selected
+    if (!m_currentEntryId.isEmpty() && m_historyManager) {
+        auto entry = m_historyManager->getEntry(m_currentEntryId);
+        if (entry) {
+            updatePreviewDisplay(*entry);
+        }
     }
 }
 

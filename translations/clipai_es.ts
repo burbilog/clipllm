@@ -26,22 +26,22 @@
     <message>
         <location filename="../src/core/app.cpp" line="315"/>
         <source>Hotkey Not Supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Atajo de teclado no compatible</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="316"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
-        <translation type="unfinished"></translation>
+        <translation>Los atajos de teclado globales no son compatibles con esta plataforma (¿Wayland?).</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="341"/>
         <source>Hotkey Registration Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Error en el registro del atajo de teclado</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="342"/>
         <source>Could not register global hotkey: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo registrar el atajo de teclado global: %1</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="439"/>
@@ -783,22 +783,22 @@
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="170"/>
         <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitado</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="178"/>
         <source>Higher priority prompts appear first in the menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Los prompts con mayor prioridad aparecen primero en el menú</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="179"/>
         <source>Priority (higher = first):</source>
-        <translation type="unfinished"></translation>
+        <translation>Prioridad (mayor = primero):</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="193"/>
         <source>Prompt Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Vista previa del prompt</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="197"/>
@@ -858,17 +858,17 @@
     <message>
         <location filename="../src/ui/promptmenu.cpp" line="36"/>
         <source>Search prompts...</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar prompts...</translation>
     </message>
     <message>
         <location filename="../src/ui/promptmenu.cpp" line="101"/>
         <source>No prompts available</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay prompts disponibles</translation>
     </message>
     <message>
         <location filename="../src/ui/promptmenu.cpp" line="119"/>
         <source>No prompts available for this content type</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay prompts disponibles para este tipo de contenido</translation>
     </message>
 </context>
 <context>
@@ -896,7 +896,7 @@
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="197"/>
         <source>Prompt Preview</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vista previa del prompt</translation>
     </message>
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="209"/>
@@ -945,27 +945,27 @@
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="76"/>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Listo</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="84"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="93"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Salida</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="107"/>
         <source>Copy &amp;&amp; close</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar y cerrar</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="112"/>
         <source>Save to History</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar en historial</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="117"/>
@@ -1188,17 +1188,17 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="245"/>
         <source>Menu Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración del menú</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="251"/>
         <source>Maximum number of prompts to show in the menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Número máximo de prompts para mostrar en el menú</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="252"/>
         <source>Max Prompts in Menu:</source>
-        <translation type="unfinished"></translation>
+        <translation>Máx. prompts en el menú:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="260"/>
@@ -1223,7 +1223,7 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="260"/>
         <source>Priority</source>
-        <translation type="unfinished"></translation>
+        <translation>Prioridad</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="275"/>
@@ -1338,7 +1338,7 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="605"/>
         <source>Reset Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Restablecer configuración</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="606"/>
@@ -1368,17 +1368,17 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="664"/>
         <source>Testing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Probando...</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="668"/>
         <source>Error: No API key</source>
-        <translation type="unfinished"></translation>
+        <translation>Error: Sin clave API</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="673"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectado</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="696"/>
@@ -1538,7 +1538,7 @@
         <location filename="../src/ui/trayicon.cpp" line="117"/>
         <location filename="../src/ui/trayicon.cpp" line="125"/>
         <source>No prompts available</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No hay prompts disponibles</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="159"/>

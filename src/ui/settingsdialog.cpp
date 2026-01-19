@@ -163,6 +163,12 @@ void SettingsDialog::setupLLMTab()
     providerLayout->addRow(tr("API Key:"), m_apiKeyEdit);
 
     m_customUrlEdit = new QLineEdit();
+    m_customUrlEdit->setPlaceholderText(tr("http://localhost:11434/v1/chat/completions"));
+    m_customUrlEdit->setToolTip(tr("Used only when Provider is set to Custom.\n\n"
+                                    "Examples:\n"
+                                    "• Ollama: http://localhost:11434/v1/chat/completions\n"
+                                    "• LM Studio: http://localhost:1234/v1/chat/completions\n"
+                                    "• LocalAI: http://localhost:8080/v1/chat/completions"));
     providerLayout->addRow(tr("Custom API URL:"), m_customUrlEdit);
 
     m_proxyEdit = new QLineEdit();

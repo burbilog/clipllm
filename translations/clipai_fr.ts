@@ -676,67 +676,67 @@
         <translation>Ajouter un prompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="59"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="58"/>
         <source>Edit Prompt</source>
         <translation>Modifier le prompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="89"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="88"/>
         <source>Basic Information</source>
         <translation>Informations de base</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="93"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="92"/>
         <source>e.g., custom_prompt</source>
         <translation>ex., custom_prompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="95"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="94"/>
         <source>ID:</source>
         <translation>ID :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="98"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="97"/>
         <source>e.g., My Custom Prompt</source>
         <translation>ex., Mon prompt personnalisé</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="100"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="99"/>
         <source>Name:</source>
         <translation>Nom :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="103"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="102"/>
         <source>e.g., Does something useful</source>
         <translation>ex., Fait quelque chose d&apos;utile</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="104"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="103"/>
         <source>Description:</source>
         <translation>Description :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="109"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="108"/>
         <source>Prompts</source>
         <translation>Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="112"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="111"/>
         <source>System Prompt:</source>
         <translation>Prompt système :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="115"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="114"/>
         <source>You are a helpful assistant...</source>
         <translation>Vous êtes un assistant utile...</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="120"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="119"/>
         <source>User Prompt Template:</source>
         <translation>Modèle de prompt utilisateur :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="123"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="122"/>
         <source>Process the following text:
 
 {clipboard}</source>
@@ -745,173 +745,165 @@
 {clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="130"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="129"/>
         <source>Use {clipboard} to insert clipboard content, {clipboard:1000} for truncated content, {language} for user&apos;s language.</source>
         <translation>Utilisez {clipboard} pour insérer le contenu du presse-papiers, {clipboard:1000} pour le contenu tronqué, {language} pour la langue de l&apos;utilisateur.</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="138"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="137"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="142"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="141"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="143"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="142"/>
         <source>Image</source>
         <translation>Image</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="144"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="143"/>
         <source>Any</source>
         <translation>Tout</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="145"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="144"/>
         <source>Content Type:</source>
         <translation>Type de contenu :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="148"/>
         <source>None</source>
-        <translation>Aucun</translation>
+        <translation type="vanished">Aucun</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="149"/>
         <source>Text Summary</source>
-        <translation>Résumé</translation>
+        <translation type="vanished">Résumé</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="150"/>
         <source>Translate</source>
-        <translation>Traduire</translation>
+        <translation type="vanished">Traduire</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="151"/>
         <source>Code Review</source>
-        <translation>Revue de code</translation>
+        <translation type="vanished">Revue de code</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="152"/>
         <source>Refactor</source>
-        <translation>Refactoriser</translation>
+        <translation type="vanished">Refactoriser</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="153"/>
         <source>Explain</source>
-        <translation>Expliquer</translation>
+        <translation type="vanished">Expliquer</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="154"/>
         <source>Custom</source>
-        <translation>Personnalisé</translation>
+        <translation type="vanished">Personnalisé</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="155"/>
         <source>Icon:</source>
-        <translation>Icône :</translation>
+        <translation type="vanished">Icône :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="158"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="147"/>
         <source>Use default model from settings</source>
         <translation>Utiliser le modèle par défaut des paramètres</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="164"/>
-        <location filename="../src/ui/prompteditordialog.cpp" line="307"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="153"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="282"/>
         <source>e.g., openai/gpt-4, anthropic/claude-3-opus</source>
         <translation>ex., openai/gpt-4, anthropic/claude-3-opus</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="165"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="154"/>
         <source>Model:</source>
         <translation>Modèle :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="168"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="157"/>
         <source>Use default temperature from settings</source>
         <translation>Utiliser la température par défaut des paramètres</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="176"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="165"/>
         <source>Temperature:</source>
         <translation>Température :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="181"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="170"/>
         <source>Max Tokens:</source>
         <translation>Jetons max :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="183"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="172"/>
         <source>Enabled</source>
         <translation>Activé</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="191"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="180"/>
         <source>Higher priority prompts appear first in the menu</source>
         <translation>Les prompts de priorité plus élevée apparaissent en premier dans le menu</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="192"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="181"/>
         <source>Priority (higher = first):</source>
         <translation>Priorité (plus élevé = premier) :</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="206"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="195"/>
         <source>Prompt Preview</source>
         <translation>Aperçu du prompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="210"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="199"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="215"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="204"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="304"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="279"/>
         <source>Uses global default model</source>
         <translation>Utilise le modèle global par défaut</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="359"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="334"/>
         <source>Name is required</source>
         <translation>Nom requis</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="363"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="338"/>
         <source>ID is required</source>
         <translation>ID requis</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="378"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="353"/>
         <source>Invalid placeholder in user template: %1</source>
         <translation>Espace réservé invalide dans le modèle utilisateur : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="388"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="363"/>
         <source>Invalid placeholder in system prompt: %1</source>
         <translation>Espace réservé invalide dans le prompt système : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="398"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="373"/>
         <source>ID already exists: %1</source>
         <translation>L&apos;ID existe déjà : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="420"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="395"/>
         <source>Validation Error</source>
         <translation>Erreur de validation</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="421"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="396"/>
         <source>The prompt has validation errors:
 
 %1</source>
@@ -1606,38 +1598,38 @@ Exemples :
     <name>ClipAI::UI::TrayIcon</name>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="38"/>
-        <location filename="../src/ui/trayicon.cpp" line="157"/>
-        <location filename="../src/ui/trayicon.cpp" line="262"/>
+        <location filename="../src/ui/trayicon.cpp" line="151"/>
+        <location filename="../src/ui/trayicon.cpp" line="256"/>
         <source>ClipAI - LLM Clipboard Utility</source>
         <translation>ClipAI - Utilitaire de presse-papiers LLM</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="69"/>
-        <location filename="../src/ui/trayicon.cpp" line="266"/>
+        <location filename="../src/ui/trayicon.cpp" line="260"/>
         <source>&amp;Settings</source>
         <translation>&amp;Paramètres</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="73"/>
-        <location filename="../src/ui/trayicon.cpp" line="269"/>
+        <location filename="../src/ui/trayicon.cpp" line="263"/>
         <source>&amp;History</source>
         <translation>&amp;Historique</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="77"/>
-        <location filename="../src/ui/trayicon.cpp" line="272"/>
+        <location filename="../src/ui/trayicon.cpp" line="266"/>
         <source>&amp;About</source>
         <translation>&amp;À propos</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="87"/>
-        <location filename="../src/ui/trayicon.cpp" line="275"/>
+        <location filename="../src/ui/trayicon.cpp" line="269"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="95"/>
-        <location filename="../src/ui/trayicon.cpp" line="280"/>
+        <location filename="../src/ui/trayicon.cpp" line="274"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Prompts</translation>
     </message>
@@ -1648,17 +1640,17 @@ Exemples :
         <translation>Aucun prompt disponible</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="159"/>
+        <location filename="../src/ui/trayicon.cpp" line="153"/>
         <source>Hotkey: </source>
         <translation>Raccourci : </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="220"/>
+        <location filename="../src/ui/trayicon.cpp" line="214"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; est un utilitaire de presse-papiers multiplateforme qui intègre les grands modèles de langage (LLM) directement dans votre flux de travail. Fonctionnant comme un service de zone de notification, il vous permet de traiter le contenu du presse-papiers (texte et images) avec des prompts IA personnalisables à l&apos;aide de raccourcis globaux.&lt;/p&gt;&lt;p&gt;Que vous ayez besoin de résumer du texte, de traduire du contenu, de réécrire du code, d&apos;extraire des informations d&apos;images ou d&apos;effectuer toute autre transformation alimentée par l&apos;IA, ClipAI rend cela instantanément accessible avec une seule pression de touche. Copiez le contenu, appuyez sur votre raccourci et obtenez des résultats générés par l&apos;IA dans votre presse-papiers.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="241"/>
+        <location filename="../src/ui/trayicon.cpp" line="235"/>
         <source>About ClipAI</source>
         <translation>À propos de ClipAI</translation>
     </message>

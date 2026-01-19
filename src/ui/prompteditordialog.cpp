@@ -33,7 +33,6 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager, QWidg
     m_maxTokensSpin->setValue(131072);
     m_enabledCheck->setChecked(true);
     m_contentTypeCombo->setCurrentIndex(2); // Any
-    m_iconCombo->setCurrentIndex(0); // None
     m_modelUseDefaultCheck->setChecked(true);
     updateModelFieldState();
     m_temperatureUseDefaultCheck->setChecked(true);
@@ -144,16 +143,6 @@ void PromptEditorDialog::setupUi()
     m_contentTypeCombo->addItem(tr("Any"), QStringLiteral("any"));
     settingsLayout->addRow(tr("Content Type:"), m_contentTypeCombo);
 
-    m_iconCombo = new QComboBox();
-    m_iconCombo->addItem(tr("None"), QStringLiteral("none"));
-    m_iconCombo->addItem(tr("Text Summary"), QStringLiteral("text-summary"));
-    m_iconCombo->addItem(tr("Translate"), QStringLiteral("translate"));
-    m_iconCombo->addItem(tr("Code Review"), QStringLiteral("code-review"));
-    m_iconCombo->addItem(tr("Refactor"), QStringLiteral("refactor"));
-    m_iconCombo->addItem(tr("Explain"), QStringLiteral("explain"));
-    m_iconCombo->addItem(tr("Custom"), QStringLiteral("custom"));
-    settingsLayout->addRow(tr("Icon:"), m_iconCombo);
-
     // Model field with checkbox
     m_modelUseDefaultCheck = new QCheckBox(tr("Use default model from settings"));
     connect(m_modelUseDefaultCheck, &QCheckBox::checkStateChanged,
@@ -234,13 +223,6 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
         m_contentTypeCombo->setCurrentIndex(contentTypeIndex);
     }
 
-    // Icon
-    QString iconStr = Models::Prompt::iconToString(prompt.icon());
-    int iconIndex = m_iconCombo->findData(iconStr.isEmpty() ? QStringLiteral("none") : iconStr);
-    if (iconIndex >= 0) {
-        m_iconCombo->setCurrentIndex(iconIndex);
-    }
-
     // Model - if empty, use default
     if (prompt.model().isEmpty()) {
         m_modelUseDefaultCheck->setChecked(true);
@@ -273,13 +255,6 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
     // Content type
     QString contentTypeStr = m_contentTypeCombo->currentData().toString();
     prompt.setContentType(Models::Prompt::contentTypeFromString(contentTypeStr));
-
-    // Icon
-    QString iconStr = m_iconCombo->currentData().toString();
-    if (iconStr == QStringLiteral("none")) {
-        iconStr.clear();
-    }
-    prompt.setIcon(Models::Prompt::iconFromString(iconStr));
 
     // Model - if checkbox is checked, use empty string (default)
     if (m_modelUseDefaultCheck->isChecked()) {

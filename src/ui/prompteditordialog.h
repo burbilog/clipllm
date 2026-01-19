@@ -62,7 +62,6 @@ private:
 
     // Settings fields
     QComboBox* m_contentTypeCombo = nullptr;
-    QComboBox* m_iconCombo = nullptr;
     QCheckBox* m_modelUseDefaultCheck = nullptr;
     QLineEdit* m_modelEdit = nullptr;
     QCheckBox* m_temperatureUseDefaultCheck = nullptr;

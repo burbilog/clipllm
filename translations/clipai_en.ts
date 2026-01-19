@@ -748,240 +748,212 @@
         <translation type="unfinished">Add Prompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="59"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="58"/>
         <source>Edit Prompt</source>
         <translation type="unfinished">Edit Prompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="89"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="88"/>
         <source>Basic Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="93"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="92"/>
         <source>e.g., custom_prompt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="95"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="94"/>
         <source>ID:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="98"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="97"/>
         <source>e.g., My Custom Prompt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="100"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="99"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="103"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="102"/>
         <source>e.g., Does something useful</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="104"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="103"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="109"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="108"/>
         <source>Prompts</source>
         <translation type="unfinished">Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="112"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="111"/>
         <source>System Prompt:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="115"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="114"/>
         <source>You are a helpful assistant...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="120"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="119"/>
         <source>User Prompt Template:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="123"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="122"/>
         <source>Process the following text:
 
 {clipboard}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="130"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="129"/>
         <source>Use {clipboard} to insert clipboard content, {clipboard:1000} for truncated content, {language} for user&apos;s language.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="138"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="137"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="142"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="141"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="143"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="142"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="144"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="143"/>
         <source>Any</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="145"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="144"/>
         <source>Content Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="148"/>
         <source>None</source>
-        <translation type="unfinished">None</translation>
+        <translation type="obsolete">None</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="149"/>
-        <source>Text Summary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="150"/>
-        <source>Translate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="151"/>
         <source>Code Review</source>
-        <translation type="unfinished">Code Review</translation>
+        <translation type="obsolete">Code Review</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="152"/>
-        <source>Refactor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="153"/>
-        <source>Explain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="154"/>
         <source>Custom</source>
-        <translation type="unfinished">Custom</translation>
+        <translation type="obsolete">Custom</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="155"/>
-        <source>Icon:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="158"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="147"/>
         <source>Use default model from settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="164"/>
-        <location filename="../src/ui/prompteditordialog.cpp" line="307"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="153"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="282"/>
         <source>e.g., openai/gpt-4, anthropic/claude-3-opus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="165"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="154"/>
         <source>Model:</source>
         <translation type="unfinished">Model:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="168"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="157"/>
         <source>Use default temperature from settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="176"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="165"/>
         <source>Temperature:</source>
         <translation type="unfinished">Temperature:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="181"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="170"/>
         <source>Max Tokens:</source>
         <translation type="unfinished">Max Tokens:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="183"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="172"/>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="191"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="180"/>
         <source>Higher priority prompts appear first in the menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="192"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="181"/>
         <source>Priority (higher = first):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="206"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="195"/>
         <source>Prompt Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="210"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="199"/>
         <source>OK</source>
         <translation type="unfinished">OK</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="215"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="204"/>
         <source>Cancel</source>
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="304"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="279"/>
         <source>Uses global default model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="359"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="334"/>
         <source>Name is required</source>
         <translation type="unfinished">Name is required</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="363"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="338"/>
         <source>ID is required</source>
         <translation type="unfinished">ID is required</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="378"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="353"/>
         <source>Invalid placeholder in user template: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="388"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="363"/>
         <source>Invalid placeholder in system prompt: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="398"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="373"/>
         <source>ID already exists: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="420"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="395"/>
         <source>Validation Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="421"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="396"/>
         <source>The prompt has validation errors:
 
 %1</source>
@@ -1709,38 +1681,38 @@ Examples:
     <name>ClipAI::UI::TrayIcon</name>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="38"/>
-        <location filename="../src/ui/trayicon.cpp" line="157"/>
-        <location filename="../src/ui/trayicon.cpp" line="262"/>
+        <location filename="../src/ui/trayicon.cpp" line="151"/>
+        <location filename="../src/ui/trayicon.cpp" line="256"/>
         <source>ClipAI - LLM Clipboard Utility</source>
         <translation>ClipAI - LLM Clipboard Utility</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="69"/>
-        <location filename="../src/ui/trayicon.cpp" line="266"/>
+        <location filename="../src/ui/trayicon.cpp" line="260"/>
         <source>&amp;Settings</source>
         <translation>&amp;Settings</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="73"/>
-        <location filename="../src/ui/trayicon.cpp" line="269"/>
+        <location filename="../src/ui/trayicon.cpp" line="263"/>
         <source>&amp;History</source>
         <translation>&amp;History</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="95"/>
-        <location filename="../src/ui/trayicon.cpp" line="280"/>
+        <location filename="../src/ui/trayicon.cpp" line="274"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Prompts</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="77"/>
-        <location filename="../src/ui/trayicon.cpp" line="272"/>
+        <location filename="../src/ui/trayicon.cpp" line="266"/>
         <source>&amp;About</source>
         <translation>&amp;About</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="87"/>
-        <location filename="../src/ui/trayicon.cpp" line="275"/>
+        <location filename="../src/ui/trayicon.cpp" line="269"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quit</translation>
     </message>
@@ -1751,17 +1723,17 @@ Examples:
         <translation>No prompts available</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="159"/>
+        <location filename="../src/ui/trayicon.cpp" line="153"/>
         <source>Hotkey: </source>
         <translation>Hotkey: </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="220"/>
+        <location filename="../src/ui/trayicon.cpp" line="214"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="241"/>
+        <location filename="../src/ui/trayicon.cpp" line="235"/>
         <source>About ClipAI</source>
         <translation>About ClipAI</translation>
     </message>

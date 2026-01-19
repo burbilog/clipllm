@@ -136,12 +136,6 @@ void TrayIcon::rebuildPromptsMenu()
         QAction* action = m_promptsMenu->addAction(text);
         action->setData(prompt.id());
 
-        // Set icon based on prompt icon type
-        QString iconName = prompt.getIconName();
-        if (!iconName.isEmpty()) {
-            action->setIcon(QIcon::fromTheme(iconName));
-        }
-
         connect(action, &QAction::triggered, this, &TrayIcon::onPromptTriggered);
     }
 }

@@ -152,12 +152,6 @@ QAction* PromptMenu::createPromptAction(const Models::Prompt& prompt)
     QAction* action = new QAction(text, this);
     action->setData(prompt.id());
 
-    // Set icon based on prompt icon type
-    QString iconName = prompt.getIconName();
-    if (!iconName.isEmpty()) {
-        action->setIcon(QApplication::style()->standardIcon(QStyle::SP_FileIcon));
-    }
-
     connect(action, &QAction::triggered, this, &PromptMenu::onPromptTriggered);
 
     return action;

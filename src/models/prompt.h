@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QVariantMap>
+#include <QStyle>
 
 namespace ClipAI {
 namespace Models {
@@ -72,6 +73,8 @@ public:
     QString formatSystemPrompt(const QString& clipboardContent = QString(), const QString& userLanguage = QString()) const;
     QString formatUserPrompt(const QString& clipboardContent, const QString& userLanguage = QString()) const;
     QString getIconName() const;
+    QString getSystemIconName() const;  // Returns FreeDesktop icon name for Linux theming
+    QStyle::StandardPixmap getStandardIcon() const;  // Returns cross-platform QStyle icon
     static QString languageCodeToName(const QString& code);
     static ContentType contentTypeFromString(const QString& str);
     static QString contentTypeToString(ContentType type);

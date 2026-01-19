@@ -148,6 +148,51 @@ QString Prompt::getIconName() const
     return iconToString(m_icon);
 }
 
+QString Prompt::getSystemIconName() const
+{
+    // Map prompt icons to real FreeDesktop icon names that exist in system themes
+    switch (m_icon) {
+        case PromptIcon::TextSummary:
+            return QStringLiteral("document-edit");
+        case PromptIcon::Translate:
+            return QStringLiteral("preferences-desktop-locale");
+        case PromptIcon::CodeReview:
+            return QStringLiteral("debugger");
+        case PromptIcon::Refactor:
+            return QStringLiteral("tools-check-spelling");
+        case PromptIcon::Explain:
+            return QStringLiteral("help-browser");
+        case PromptIcon::Custom:
+            return QStringLiteral("user-bookmarks");
+        case PromptIcon::None:
+            return QString();
+    }
+    return QString();
+}
+
+QStyle::StandardPixmap Prompt::getStandardIcon() const
+{
+    // Map prompt icons to cross-platform QStyle standard icons
+    // These work on Linux, Windows, and macOS
+    switch (m_icon) {
+        case PromptIcon::TextSummary:
+            return QStyle::SP_FileIcon;
+        case PromptIcon::Translate:
+            return QStyle::SP_DialogHelpButton;  // Use help icon for translation
+        case PromptIcon::CodeReview:
+            return QStyle::SP_BrowserReload;      // Use reload for review
+        case PromptIcon::Refactor:
+            return QStyle::SP_FileDialogDetailedView;  // Detailed view for refactor
+        case PromptIcon::Explain:
+            return QStyle::SP_MessageBoxInformation;    // Info for explain
+        case PromptIcon::Custom:
+            return QStyle::SP_DialogResetButton;       // Custom/reset
+        case PromptIcon::None:
+            return QStyle::SP_CustomBase;  // No icon
+    }
+    return QStyle::SP_CustomBase;
+}
+
 ContentType Prompt::contentTypeFromString(const QString& str)
 {
     QString lower = str.toLower();

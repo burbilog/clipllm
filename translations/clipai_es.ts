@@ -137,22 +137,22 @@
         <translation>Marcador de posición no válido en el prompt del sistema: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="336"/>
+        <location filename="../src/core/promptmanager.cpp" line="338"/>
         <source>Summary</source>
         <translation>Resumen</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="337"/>
+        <location filename="../src/core/promptmanager.cpp" line="339"/>
         <source>Generate a structured summary of the text</source>
         <translation>Generar un resumen estructurado del texto</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="339"/>
+        <location filename="../src/core/promptmanager.cpp" line="341"/>
         <source>You are a professional analyst. Create a clear, structured summary.</source>
         <translation>Eres un analista profesional. Crea un resumen claro y estructurado.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="340"/>
+        <location filename="../src/core/promptmanager.cpp" line="342"/>
         <source>Please provide a comprehensive summary of the following text:
 
 {clipboard}</source>
@@ -161,58 +161,58 @@
 {clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="351"/>
+        <location filename="../src/core/promptmanager.cpp" line="353"/>
         <source>Translate to Russian</source>
         <translation>Traducir al ruso</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="352"/>
+        <location filename="../src/core/promptmanager.cpp" line="354"/>
         <source>Translate the text to Russian</source>
         <translation>Traducir el texto al ruso</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="354"/>
+        <location filename="../src/core/promptmanager.cpp" line="356"/>
         <source>Ты — профессиональный переводчик. Переведи текст на русский язык, сохраняя стиль и смысл.</source>
         <translation>Eres un traductor profesional. Traduce el texto al ruso conservando el estilo y el significado.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="355"/>
-        <location filename="../src/core/promptmanager.cpp" line="370"/>
+        <location filename="../src/core/promptmanager.cpp" line="357"/>
+        <location filename="../src/core/promptmanager.cpp" line="372"/>
         <source>{clipboard}</source>
         <translation>{clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="366"/>
+        <location filename="../src/core/promptmanager.cpp" line="368"/>
         <source>Translate to English</source>
         <translation>Traducir al inglés</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="367"/>
+        <location filename="../src/core/promptmanager.cpp" line="369"/>
         <source>Translate the text to English</source>
         <translation>Traducir el texto al inglés</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="369"/>
+        <location filename="../src/core/promptmanager.cpp" line="371"/>
         <source>You are a professional translator. Translate the text to English, preserving style and meaning.</source>
         <translation>Eres un traductor profesional. Traduce el texto al inglés conservando el estilo y el significado.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="381"/>
+        <location filename="../src/core/promptmanager.cpp" line="383"/>
         <source>Explain Code</source>
         <translation>Explicar código</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="382"/>
+        <location filename="../src/core/promptmanager.cpp" line="384"/>
         <source>Explain what the code does</source>
         <translation>Explicar qué hace el código</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="384"/>
+        <location filename="../src/core/promptmanager.cpp" line="386"/>
         <source>You are an expert programmer. Explain the code clearly and concisely.</source>
         <translation>Eres un programador experto. Explica el código de forma clara y concisa.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="385"/>
+        <location filename="../src/core/promptmanager.cpp" line="387"/>
         <source>Explain the following code:
 
 {clipboard}</source>
@@ -221,22 +221,22 @@
 {clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="396"/>
+        <location filename="../src/core/promptmanager.cpp" line="398"/>
         <source>Code Review</source>
         <translation>Revisión de código</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="397"/>
+        <location filename="../src/core/promptmanager.cpp" line="399"/>
         <source>Review code and suggest improvements</source>
         <translation>Revisar código y sugerir mejoras</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="399"/>
+        <location filename="../src/core/promptmanager.cpp" line="401"/>
         <source>You are a code reviewer. Analyze the code for bugs, security issues, and suggest improvements.</source>
         <translation>Eres un revisor de código. Analiza el código en busca de bugs, problemas de seguridad y sugiere mejoras.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="400"/>
+        <location filename="../src/core/promptmanager.cpp" line="402"/>
         <source>Review the following code:
 
 {clipboard}</source>
@@ -245,22 +245,22 @@
 {clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="411"/>
+        <location filename="../src/core/promptmanager.cpp" line="413"/>
         <source>Refactor Code</source>
         <translation>Refactorizar código</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="412"/>
+        <location filename="../src/core/promptmanager.cpp" line="414"/>
         <source>Suggest refactoring improvements</source>
         <translation>Sugerir mejoras de refactorización</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="414"/>
+        <location filename="../src/core/promptmanager.cpp" line="416"/>
         <source>You are a code optimization expert. Suggest refactoring to improve readability, maintainability, and performance.</source>
         <translation>Eres un experto en optimización de código. Sugiere refactorización para mejorar la legibilidad, el mantenimiento y el rendimiento.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="415"/>
+        <location filename="../src/core/promptmanager.cpp" line="417"/>
         <source>Refactor the following code:
 
 {clipboard}</source>
@@ -269,42 +269,42 @@
 {clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="426"/>
+        <location filename="../src/core/promptmanager.cpp" line="428"/>
         <source>Describe Image</source>
         <translation>Describir imagen</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="427"/>
+        <location filename="../src/core/promptmanager.cpp" line="429"/>
         <source>Generate a detailed description of the image</source>
         <translation>Generar una descripción detallada de la imagen</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="429"/>
+        <location filename="../src/core/promptmanager.cpp" line="431"/>
         <source>You are a visual analyst. Provide a detailed description of the image.</source>
         <translation>Eres un analista visual. Proporciona una descripción detallada de la imagen.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="430"/>
+        <location filename="../src/core/promptmanager.cpp" line="432"/>
         <source>Describe this image in detail.</source>
         <translation>Describe esta imagen en detalle.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="441"/>
+        <location filename="../src/core/promptmanager.cpp" line="443"/>
         <source>Extract Text</source>
         <translation>Extraer texto</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="442"/>
+        <location filename="../src/core/promptmanager.cpp" line="444"/>
         <source>Extract all text from the image</source>
         <translation>Extraer todo el texto de la imagen</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="444"/>
+        <location filename="../src/core/promptmanager.cpp" line="446"/>
         <source>Extract all text from the image, preserving formatting where possible.</source>
         <translation>Extrae todo el texto de la imagen preservando el formato cuando sea posible.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="445"/>
+        <location filename="../src/core/promptmanager.cpp" line="447"/>
         <source>Extract all text from this image.</source>
         <translation>Extrae todo el texto de esta imagen.</translation>
     </message>
@@ -1750,59 +1750,59 @@ Ejemplos:
     <name>ClipAI::UI::TrayIcon</name>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="39"/>
-        <location filename="../src/ui/trayicon.cpp" line="241"/>
-        <location filename="../src/ui/trayicon.cpp" line="346"/>
+        <location filename="../src/ui/trayicon.cpp" line="243"/>
+        <location filename="../src/ui/trayicon.cpp" line="352"/>
         <source>ClipAI - LLM Clipboard Utility</source>
         <translation>ClipAI - Utilidad de portapapeles LLM</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="70"/>
-        <location filename="../src/ui/trayicon.cpp" line="350"/>
+        <location filename="../src/ui/trayicon.cpp" line="72"/>
+        <location filename="../src/ui/trayicon.cpp" line="356"/>
         <source>&amp;Settings</source>
         <translation>&amp;Configuración</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="74"/>
-        <location filename="../src/ui/trayicon.cpp" line="353"/>
+        <location filename="../src/ui/trayicon.cpp" line="76"/>
+        <location filename="../src/ui/trayicon.cpp" line="359"/>
         <source>&amp;History</source>
         <translation>&amp;Historial</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="78"/>
-        <location filename="../src/ui/trayicon.cpp" line="356"/>
+        <location filename="../src/ui/trayicon.cpp" line="80"/>
+        <location filename="../src/ui/trayicon.cpp" line="362"/>
         <source>&amp;About</source>
         <translation>&amp;Acerca de</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="88"/>
-        <location filename="../src/ui/trayicon.cpp" line="359"/>
+        <location filename="../src/ui/trayicon.cpp" line="90"/>
+        <location filename="../src/ui/trayicon.cpp" line="365"/>
         <source>&amp;Quit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="96"/>
-        <location filename="../src/ui/trayicon.cpp" line="364"/>
+        <location filename="../src/ui/trayicon.cpp" line="98"/>
+        <location filename="../src/ui/trayicon.cpp" line="370"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="118"/>
-        <location filename="../src/ui/trayicon.cpp" line="126"/>
+        <location filename="../src/ui/trayicon.cpp" line="120"/>
+        <location filename="../src/ui/trayicon.cpp" line="128"/>
         <source>No prompts available</source>
         <translation>No hay prompts disponibles</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="243"/>
+        <location filename="../src/ui/trayicon.cpp" line="245"/>
         <source>Hotkey: </source>
         <translation>Atajo de teclado: </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="304"/>
+        <location filename="../src/ui/trayicon.cpp" line="306"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Versión 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; es una utilidad de portapapeles multiplataforma que integra modelos de lenguaje grandes (LLM) directamente en tu flujo de trabajo. Funcionando como un servicio en la bandeja del sistema, te permite procesar contenido del portapapeles (tanto texto como imágenes) con prompts de IA personalizados usando atajos de teclado globales.&lt;/p&gt;&lt;p&gt;Ya sea que necesites resumir texto, traducir contenido, reescribir código, extraer información de imágenes o realizar cualquier otra transformación potenciada por IA, ClipAI lo hace instantáneamente accesible con una sola pulsación de tecla. Copia contenido, presiona tu atajo y obtén resultados generados por IA de vuelta en tu portapapeles.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="325"/>
+        <location filename="../src/ui/trayicon.cpp" line="327"/>
         <source>About ClipAI</source>
         <translation>Acerca de ClipAI</translation>
     </message>

@@ -58,6 +58,8 @@ TrayIcon::TrayIcon(App* app)
                 this, &TrayIcon::onPromptsUpdated);
         connect(m_app->promptManager(), &Core::PromptManager::promptRemoved,
                 this, &TrayIcon::onPromptsUpdated);
+        connect(m_app->promptManager(), &Core::PromptManager::promptUpdated,
+                this, &TrayIcon::onPromptsUpdated);
     }
 
     show();
@@ -332,7 +334,11 @@ void TrayIcon::onQuitTriggered()
 
 void TrayIcon::onPromptsUpdated()
 {
-    rebuildPromptsMenu();
+    // Recreate entire menu to ensure proper initialization
+    // (same state as at startup, which works correctly)
+    QMenu* oldMenu = m_menu;
+    createMenu();
+    delete oldMenu;
 }
 
 void TrayIcon::onLanguageChanged(const QString& languageCode)

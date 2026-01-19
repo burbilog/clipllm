@@ -308,6 +308,7 @@ void PromptManager::updatePromptGroup(const QString& oldGroup, const QString& ne
     }
     if (modified) {
         savePrompts();
+        emit promptsLoaded(); // Notify observers of bulk change
     }
 }
 
@@ -322,6 +323,7 @@ void PromptManager::movePromptsToGroup(const QString& fromGroup, const QString& 
     }
     if (modified) {
         savePrompts();
+        emit promptsLoaded(); // Notify observers of bulk change
     }
 }
 

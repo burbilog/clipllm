@@ -96,25 +96,7 @@ void TrayIcon::createMenu()
     m_promptsMenu = new QMenu(tr("&Prompts"), m_menu);
     m_promptsMenu->setIcon(QIcon::fromTheme(QStringLiteral("document-new")));
 
-    // DEBUG: Test if submenu works at all in tray - with nested levels
-    QMenu* testSubmenu = new QMenu(tr("Test Submenu"), m_menu);
-    testSubmenu->addAction(tr("Test Item 1"));
-    testSubmenu->addAction(tr("Test Item 2"));
-    
-    // Add nested submenu (Level 2)
-    QMenu* testLevel2 = new QMenu(tr("Level 2"), testSubmenu);
-    testLevel2->addAction(tr("Level 2 Item 1"));
-    testLevel2->addAction(tr("Level 2 Item 2"));
-    testSubmenu->addMenu(testLevel2);
-    
-    // Add deeply nested submenu (Level 3)
-    QMenu* testLevel3 = new QMenu(tr("Level 3"), testLevel2);
-    testLevel3->addAction(tr("Level 3 Item 1"));
-    testLevel3->addAction(tr("Level 3 Item 2"));
-    testLevel2->addMenu(testLevel3);
-
     m_menu->addMenu(m_promptsMenu);
-    m_menu->addMenu(testSubmenu);
     m_menu->addAction(m_historyAction);
     m_menu->addAction(m_settingsAction);
     m_menu->addAction(m_separator1);
@@ -131,12 +113,6 @@ void TrayIcon::createMenu()
 void TrayIcon::rebuildPromptsMenu()
 {
     m_promptsMenu->clear();
-
-    // DEBUG: Add test submenu inside Prompts menu - WITH PARENT
-    QMenu* testPromptsSubmenu = new QMenu(tr("Test Inside Prompts"), m_promptsMenu);
-    testPromptsSubmenu->addAction(tr("Test Action 1"));
-    testPromptsSubmenu->addAction(tr("Test Action 2"));
-    m_promptsMenu->addMenu(testPromptsSubmenu);
 
     if (!m_app || !m_app->promptManager()) {
         QAction* noPromptsAction = m_promptsMenu->addAction(tr("No prompts available"));
@@ -178,11 +154,8 @@ void TrayIcon::rebuildPromptsMenu()
 
     // Add groups as submenus first (like dirs in file manager)
     for (const QString& group : nonRootGroups) {
-        qDebug() << "TrayIcon: Processing group:" << group;
-        
         // Build submenu path (e.g., "Text Processing" -> "Summarization")
         QStringList parts = group.split(QLatin1Char('/'));
-        qDebug() << "TrayIcon: Parts:" << parts;
 
         QMenu* currentMenu = m_promptsMenu;
 
@@ -202,10 +175,8 @@ void TrayIcon::rebuildPromptsMenu()
             }
 
             if (!found) {
-                qDebug() << "TrayIcon: Creating submenu:" << parts[i] << "parent:" << currentMenu;
-                QMenu* newMenu = new QMenu(parts[i], currentMenu);  // WITH PARENT
+                QMenu* newMenu = new QMenu(parts[i], currentMenu);
                 currentMenu->addMenu(newMenu);
-                qDebug() << "TrayIcon: Created submenu:" << newMenu << "added to:" << currentMenu;
                 currentMenu = newMenu;
             }
         }

@@ -26,22 +26,22 @@
     <message>
         <location filename="../src/core/app.cpp" line="315"/>
         <source>Hotkey Not Supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Hotkey nicht unterstützt</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="316"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
-        <translation type="unfinished"></translation>
+        <translation>Globale Hotkeys werden auf dieser Plattform nicht unterstützt (Wayland?).</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="341"/>
         <source>Hotkey Registration Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Hotkey-Registrierung fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="342"/>
         <source>Could not register global hotkey: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Globaler Hotkey konnte nicht registriert werden: %1</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="439"/>
@@ -798,12 +798,12 @@
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="178"/>
         <source>Higher priority prompts appear first in the menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompts mit höherer Priorität erscheinen zuerst im Menü</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="179"/>
         <source>Priority (higher = first):</source>
-        <translation type="unfinished"></translation>
+        <translation>Priorität (höher = zuerst):</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="193"/>
@@ -1200,17 +1200,17 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="245"/>
         <source>Menu Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Menüeinstellungen</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="251"/>
         <source>Maximum number of prompts to show in the menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale Anzahl der Prompts, die im Menü angezeigt werden</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="252"/>
         <source>Max Prompts in Menu:</source>
-        <translation type="unfinished"></translation>
+        <translation>Max. Prompts im Menü:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="260"/>
@@ -1235,7 +1235,7 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="260"/>
         <source>Priority</source>
-        <translation type="unfinished"></translation>
+        <translation>Priorität</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="275"/>

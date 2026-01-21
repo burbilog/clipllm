@@ -972,7 +972,8 @@ void SettingsDialog::onRefreshModelsClicked()
 
     // Determine if we can fetch models based on URL
     bool canFetch = apiUrl.contains(QStringLiteral("openrouter.ai")) ||
-                    apiUrl.contains(QStringLiteral("api.openai.com"));
+                    apiUrl.contains(QStringLiteral("api.openai.com")) ||
+                    apiUrl.contains(QStringLiteral("nano-gpt.com"));
 
     if (!canFetch) {
         m_connectionStatusLabel->setText(tr("Model fetching not supported for this provider"));
@@ -1008,6 +1009,16 @@ void SettingsDialog::fetchModelsFromAPI()
         }
     } else if (apiUrl.contains(QStringLiteral("api.openai.com"))) {
         url = QUrl(QStringLiteral("https://api.openai.com/v1/models"));
+        if (!apiKey.isEmpty()) {
+            authHeader = QStringLiteral("Bearer ") + apiKey;
+        }
+    } else if (apiUrl.contains(QStringLiteral("nano-gpt.com"))) {
+        // NanoGPT uses base URL + /api/v1/models
+        // Replace /chat/completions with /models
+        url = QUrl(apiUrl);
+        QString path = url.path();
+        path.replace(QLatin1String("/chat/completions"), QLatin1String("/models"));
+        url.setPath(path);
         if (!apiKey.isEmpty()) {
             authHeader = QStringLiteral("Bearer ") + apiKey;
         }
@@ -1077,6 +1088,16 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
             QString id = modelObj.value(QStringLiteral("id")).toString();
             // Filter out legacy models (containing dot like gpt-3.5-turbo)
             if (!id.isEmpty() && !id.contains(QLatin1Char('.'))) {
+                models.append(id);
+            }
+        }
+    } else if (apiUrl.contains(QStringLiteral("nano-gpt.com"))) {
+        // NanoGPT uses OpenAI-compatible format: { "data": [ { "id": "model-name", ... }, ... ] }
+        QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
+        for (const QJsonValue& value : modelArray) {
+            QJsonObject modelObj = value.toObject();
+            QString id = modelObj.value(QStringLiteral("id")).toString();
+            if (!id.isEmpty()) {
                 models.append(id);
             }
         }
@@ -1431,7 +1452,8 @@ void SettingsDialog::updateProfileEditor(const Models::ProviderProfile& profile)
     // Enable/disable refresh button based on URL
     QString apiUrl = profile.apiUrl().toString();
     bool canFetch = apiUrl.contains(QStringLiteral("openrouter.ai")) ||
-                    apiUrl.contains(QStringLiteral("api.openai.com"));
+                    apiUrl.contains(QStringLiteral("api.openai.com")) ||
+                    apiUrl.contains(QStringLiteral("nano-gpt.com"));
     m_refreshModelsButton->setEnabled(canFetch);
 
     // Update API key status label

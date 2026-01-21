@@ -12,11 +12,13 @@
 #include <QPushButton>
 #include <QLabel>
 #include "models/prompt.h"
+#include "models/providerprofile.h"
 
 namespace ClipAI {
 namespace Core {
 class PromptManager;
 class GroupsManager;
+class ConfigManager;
 }
 namespace UI {
 
@@ -43,6 +45,7 @@ private slots:
     void onPreviewClicked();
     void onModelUseDefaultChanged(int state);
     void onTemperatureUseDefaultChanged(int state);
+    void onProviderUseDefaultChanged(int state);
     void validateInput();
 
 private:
@@ -51,10 +54,13 @@ private:
     Models::Prompt buildPrompt() const;
     void updateModelFieldState();
     void updateTemperatureFieldState();
+    void updateProviderFieldState();
+    void loadProviders();
     QString generateUniqueId() const;
 
     Core::PromptManager* m_promptManager = nullptr;
     Core::GroupsManager* m_groupsManager = nullptr;
+    Core::ConfigManager* m_configManager = nullptr;
     Models::Prompt m_originalPrompt;
     bool m_editMode = false;
 
@@ -70,6 +76,8 @@ private:
 
     // Settings fields
     QComboBox* m_contentTypeCombo = nullptr;
+    QCheckBox* m_providerUseDefaultCheck = nullptr;
+    QComboBox* m_providerCombo = nullptr;
     QCheckBox* m_modelUseDefaultCheck = nullptr;
     QLineEdit* m_modelEdit = nullptr;
     QCheckBox* m_temperatureUseDefaultCheck = nullptr;

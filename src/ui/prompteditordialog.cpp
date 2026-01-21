@@ -2,6 +2,7 @@
 #include "promptpreviewdialog.h"
 #include "core/promptmanager.h"
 #include "core/groupsmanager.h"
+#include "core/configmanager.h"
 #include "core/app.h"
 #include <QApplication>
 #include <QGroupBox>
@@ -25,7 +26,14 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
     , m_groupsManager(groupsManager)
     , m_editMode(false)
 {
+    // Get ConfigManager from app
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (app) {
+        m_configManager = app->configManager();
+    }
+
     setupUi();
+    loadProviders();
     setWindowTitle(tr("Add Prompt"));
 
     // Generate a unique ID for new prompts
@@ -60,7 +68,14 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
     , m_originalPrompt(prompt)
     , m_editMode(true)
 {
+    // Get ConfigManager from app
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (app) {
+        m_configManager = app->configManager();
+    }
+
     setupUi();
+    loadProviders();
     setWindowTitle(tr("Edit Prompt"));
 
     loadPrompt(prompt);
@@ -173,6 +188,16 @@ void PromptEditorDialog::setupUi()
     m_contentTypeCombo->addItem(tr("Any"), QStringLiteral("any"));
     settingsLayout->addRow(tr("Content Type:"), m_contentTypeCombo);
 
+    // Provider field with checkbox
+    m_providerUseDefaultCheck = new QCheckBox(tr("Use default provider from settings"));
+    connect(m_providerUseDefaultCheck, &QCheckBox::checkStateChanged,
+            this, &PromptEditorDialog::onProviderUseDefaultChanged);
+    settingsLayout->addRow(m_providerUseDefaultCheck);
+
+    m_providerCombo = new QComboBox();
+    m_providerCombo->setToolTip(tr("Select a specific provider profile for this prompt"));
+    settingsLayout->addRow(tr("Provider:"), m_providerCombo);
+
     // Model field with checkbox
     m_modelUseDefaultCheck = new QCheckBox(tr("Use default model from settings"));
     connect(m_modelUseDefaultCheck, &QCheckBox::checkStateChanged,
@@ -272,6 +297,20 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
         m_contentTypeCombo->setCurrentIndex(contentTypeIndex);
     }
 
+    // Provider - if overrideProvider is false, use default
+    if (!prompt.overrideProvider()) {
+        m_providerUseDefaultCheck->setChecked(true);
+        m_providerCombo->setCurrentIndex(0);
+    } else {
+        m_providerUseDefaultCheck->setChecked(false);
+        QString providerId = prompt.providerId();
+        int providerIndex = m_providerCombo->findData(providerId);
+        if (providerIndex >= 0) {
+            m_providerCombo->setCurrentIndex(providerIndex);
+        }
+    }
+    updateProviderFieldState();
+
     // Model - if empty, use default
     if (prompt.model().isEmpty()) {
         m_modelUseDefaultCheck->setChecked(true);
@@ -318,6 +357,15 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
     QString contentTypeStr = m_contentTypeCombo->currentData().toString();
     prompt.setContentType(Models::Prompt::contentTypeFromString(contentTypeStr));
 
+    // Provider - if checkbox is checked, use default
+    if (m_providerUseDefaultCheck->isChecked()) {
+        prompt.setProviderId(QString());
+        prompt.setOverrideProvider(false);
+    } else {
+        prompt.setProviderId(m_providerCombo->currentData().toString());
+        prompt.setOverrideProvider(true);
+    }
+
     // Model - if checkbox is checked, use empty string (default)
     if (m_modelUseDefaultCheck->isChecked()) {
         prompt.setModel(QString());
@@ -354,6 +402,53 @@ void PromptEditorDialog::updateTemperatureFieldState()
     }
 }
 
+void PromptEditorDialog::updateProviderFieldState()
+{
+    if (m_providerUseDefaultCheck->isChecked()) {
+        m_providerCombo->setEnabled(false);
+        m_providerCombo->setToolTip(tr("Uses default provider from settings"));
+    } else {
+        m_providerCombo->setEnabled(true);
+        m_providerCombo->setToolTip(tr("Select a specific provider for this prompt"));
+    }
+}
+
+void PromptEditorDialog::loadProviders()
+{
+    m_providerCombo->clear();
+
+    if (!m_configManager) {
+        m_providerCombo->addItem(tr("(No providers available)"), QString());
+        m_providerCombo->setEnabled(false);
+        return;
+    }
+
+    auto profiles = m_configManager->providerProfiles();
+
+    if (profiles.isEmpty()) {
+        m_providerCombo->addItem(tr("(No providers configured)"), QString());
+        m_providerCombo->setEnabled(false);
+        return;
+    }
+
+    // Add "(default)" as first option
+    m_providerCombo->addItem(tr("(Default from settings)"), QString());
+
+    // Add all enabled profiles
+    for (const auto& profile : profiles) {
+        if (profile.enabled()) {
+            QString display = profile.name();
+            if (profile.isDefault()) {
+                display += QStringLiteral(" (*)");
+            }
+            m_providerCombo->addItem(display, profile.id());
+        }
+    }
+
+    // Set default selection
+    m_providerCombo->setCurrentIndex(0);
+}
+
 QString PromptEditorDialog::generateUniqueId() const
 {
     if (!m_promptManager) {
@@ -385,6 +480,12 @@ void PromptEditorDialog::onTemperatureUseDefaultChanged(int state)
 {
     Q_UNUSED(state)
     updateTemperatureFieldState();
+}
+
+void PromptEditorDialog::onProviderUseDefaultChanged(int state)
+{
+    Q_UNUSED(state)
+    updateProviderFieldState();
 }
 
 void PromptEditorDialog::validateInput()

@@ -358,7 +358,7 @@ void HistoryDialog::onItemSelectionChanged()
 void HistoryDialog::loadEntry(int row)
 {
     // Get entry ID
-    QModelIndex idIndex = m_model->index(row, 6);
+    QModelIndex idIndex = m_model->index(row, 4);
     m_currentEntryId = m_model->data(idIndex).toString();
 
     if (!m_historyManager) {

@@ -118,7 +118,7 @@ QList<ProviderProfile::ProviderTemplate> ProviderProfile::availableTemplates()
         },
         {
             QStringLiteral("NanoGPT"),
-            QStringLiteral("https://nano.gpt/api/v1/chat/completions"),
+            QStringLiteral("https://nano-gpt.com/api/v1/chat/completions"),
             QStringLiteral("nano-gpt"),
             {
                 QStringLiteral("nano-gpt"),

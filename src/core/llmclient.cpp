@@ -53,7 +53,9 @@ QJsonObject LLMRequest::toJson() const
     if (temperature >= 0) {
         obj[QStringLiteral("temperature")] = temperature;
     }
-    obj[QStringLiteral("max_tokens")] = maxTokens;
+    if (maxTokens >= 0) {
+        obj[QStringLiteral("max_tokens")] = maxTokens;
+    }
     obj[QStringLiteral("stream")] = stream;
 
     if (responseFormat == QStringLiteral("json")) {

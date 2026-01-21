@@ -7,8 +7,14 @@
 #include <QSize>
 #include <QPoint>
 #include <memory>
+#include <optional>
 
 namespace ClipAI {
+
+namespace Models {
+class ProviderProfile;
+}
+
 namespace Core {
 
 class ConfigManager
@@ -119,6 +125,25 @@ public:
     // Cached models for providers
     QStringList cachedModels(const QString& provider) const;
     void setCachedModels(const QString& provider, const QStringList& models);
+
+    // Provider profiles (new multi-provider system)
+    QStringList providerProfileIds() const;
+    QList<Models::ProviderProfile> providerProfiles() const;
+    void setProviderProfiles(const QList<Models::ProviderProfile>& profiles);
+    void addProviderProfile(const Models::ProviderProfile& profile);
+    void updateProviderProfile(const Models::ProviderProfile& profile);
+    void removeProviderProfile(const QString& id);
+    std::optional<Models::ProviderProfile> providerProfile(const QString& id) const;
+
+    QString defaultProviderId() const;
+    void setDefaultProviderId(const QString& id);
+
+    // Global defaults - optional (if omitted, -1 is used which means "don't send to API, provider uses its own defaults")
+    std::optional<double> defaultTemperature() const;
+    void setDefaultTemperature(std::optional<double> temp);
+
+    std::optional<int> defaultMaxTokens() const;
+    void setDefaultMaxTokens(std::optional<int> tokens);
 
 private:
     std::unique_ptr<QSettings> m_settings;

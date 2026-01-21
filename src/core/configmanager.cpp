@@ -1,10 +1,20 @@
 #include "configmanager.h"
+#include "models/providerprofile.h"
 #include <QStandardPaths>
 #include <QDir>
 #include <QCoreApplication>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 namespace ClipAI {
 namespace Core {
+
+// Define static keys for provider profiles
+static const QString PROVIDER_PROFILES_GROUP = QStringLiteral("ProviderProfiles");
+static const QString PROVIDER_PROFILE_PREFIX = QStringLiteral("ProviderProfile_");
+static const QString DEFAULT_PROVIDER_ID_KEY = QStringLiteral("ProviderProfiles/default_id");
+static const QString DEFAULT_TEMPERATURE_KEY = QStringLiteral("LLM/default_temperature");
+static const QString DEFAULT_MAX_TOKENS_KEY = QStringLiteral("LLM/default_max_tokens");
 
 // Define static keys
 const QString ConfigManager::LANGUAGE_KEY = QStringLiteral("language");
@@ -305,6 +315,162 @@ void ConfigManager::setCachedModels(const QString& provider, const QStringList& 
 {
     QString key = CACHED_MODELS_KEY.arg(provider);
     setValue(key, models);
+}
+
+// Provider profiles implementation
+QStringList ConfigManager::providerProfileIds() const
+{
+    m_settings->beginGroup(PROVIDER_PROFILES_GROUP);
+    QStringList ids = m_settings->value(QStringLiteral("ids"), QStringList()).toStringList();
+    m_settings->endGroup();
+    return ids;
+}
+
+QList<Models::ProviderProfile> ConfigManager::providerProfiles() const
+{
+    QList<Models::ProviderProfile> profiles;
+    QStringList ids = providerProfileIds();
+
+    for (const QString& id : ids) {
+        auto profileOpt = providerProfile(id);
+        if (profileOpt.has_value()) {
+            profiles.append(profileOpt.value());
+        }
+    }
+
+    return profiles;
+}
+
+void ConfigManager::setProviderProfiles(const QList<Models::ProviderProfile>& profiles)
+{
+    // Clear existing profiles
+    QStringList oldIds = providerProfileIds();
+    for (const QString& oldId : oldIds) {
+        m_settings->remove(PROVIDER_PROFILE_PREFIX + oldId);
+    }
+
+    // Set new profiles
+    QStringList newIds;
+    for (const auto& profile : profiles) {
+        QString key = PROVIDER_PROFILE_PREFIX + profile.id();
+        QJsonObject json = profile.toJson();
+        m_settings->setValue(key, QJsonDocument(json).toJson(QJsonDocument::Compact));
+        newIds.append(profile.id());
+    }
+
+    // Save the list of IDs
+    m_settings->beginGroup(PROVIDER_PROFILES_GROUP);
+    m_settings->setValue(QStringLiteral("ids"), newIds);
+    m_settings->setValue(QStringLiteral("size"), newIds.size());
+    m_settings->endGroup();
+}
+
+void ConfigManager::addProviderProfile(const Models::ProviderProfile& profile)
+{
+    // Save the profile
+    QString key = PROVIDER_PROFILE_PREFIX + profile.id();
+    QJsonObject json = profile.toJson();
+    m_settings->setValue(key, QJsonDocument(json).toJson(QJsonDocument::Compact));
+
+    // Add to the list of IDs
+    QStringList ids = providerProfileIds();
+    if (!ids.contains(profile.id())) {
+        ids.append(profile.id());
+        m_settings->beginGroup(PROVIDER_PROFILES_GROUP);
+        m_settings->setValue(QStringLiteral("ids"), ids);
+        m_settings->setValue(QStringLiteral("size"), ids.size());
+        m_settings->endGroup();
+    }
+}
+
+void ConfigManager::updateProviderProfile(const Models::ProviderProfile& profile)
+{
+    // Update the profile
+    QString key = PROVIDER_PROFILE_PREFIX + profile.id();
+    QJsonObject json = profile.toJson();
+    m_settings->setValue(key, QJsonDocument(json).toJson(QJsonDocument::Compact));
+}
+
+void ConfigManager::removeProviderProfile(const QString& id)
+{
+    // Remove the profile
+    m_settings->remove(PROVIDER_PROFILE_PREFIX + id);
+
+    // Remove from the list of IDs
+    QStringList ids = providerProfileIds();
+    ids.removeAll(id);
+    m_settings->beginGroup(PROVIDER_PROFILES_GROUP);
+    m_settings->setValue(QStringLiteral("ids"), ids);
+    m_settings->setValue(QStringLiteral("size"), ids.size());
+    m_settings->endGroup();
+}
+
+std::optional<Models::ProviderProfile> ConfigManager::providerProfile(const QString& id) const
+{
+    QString key = PROVIDER_PROFILE_PREFIX + id;
+    if (!m_settings->contains(key)) {
+        return std::nullopt;
+    }
+
+    QByteArray jsonBytes = m_settings->value(key).toByteArray();
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(jsonBytes, &error);
+
+    if (error.error != QJsonParseError::NoError) {
+        qWarning() << "Failed to parse provider profile JSON:" << error.errorString();
+        return std::nullopt;
+    }
+
+    Models::ProviderProfile profile;
+    if (profile.fromJson(doc.object())) {
+        return profile;
+    }
+
+    return std::nullopt;
+}
+
+QString ConfigManager::defaultProviderId() const
+{
+    return value(DEFAULT_PROVIDER_ID_KEY).toString();
+}
+
+void ConfigManager::setDefaultProviderId(const QString& id)
+{
+    setValue(DEFAULT_PROVIDER_ID_KEY, id);
+}
+
+std::optional<double> ConfigManager::defaultTemperature() const
+{
+    if (contains(DEFAULT_TEMPERATURE_KEY)) {
+        return value(DEFAULT_TEMPERATURE_KEY).toDouble();
+    }
+    return std::nullopt;
+}
+
+void ConfigManager::setDefaultTemperature(std::optional<double> temp)
+{
+    if (temp.has_value()) {
+        setValue(DEFAULT_TEMPERATURE_KEY, *temp);
+    } else {
+        remove(DEFAULT_TEMPERATURE_KEY);
+    }
+}
+
+std::optional<int> ConfigManager::defaultMaxTokens() const
+{
+    if (contains(DEFAULT_MAX_TOKENS_KEY)) {
+        return value(DEFAULT_MAX_TOKENS_KEY).toInt();
+    }
+    return std::nullopt;
+}
+
+void ConfigManager::setDefaultMaxTokens(std::optional<int> tokens)
+{
+    if (tokens.has_value()) {
+        setValue(DEFAULT_MAX_TOKENS_KEY, *tokens);
+    } else {
+        remove(DEFAULT_MAX_TOKENS_KEY);
+    }
 }
 
 } // namespace Core

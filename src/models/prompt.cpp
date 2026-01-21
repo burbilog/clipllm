@@ -30,6 +30,8 @@ QJsonObject Prompt::toJson() const
     obj[QStringLiteral("priority")] = m_priority;
     obj[QStringLiteral("override_temperature")] = m_overrideTemperature;
     obj[QStringLiteral("group")] = m_group;
+    obj[QStringLiteral("provider_id")] = m_providerId;
+    obj[QStringLiteral("override_provider")] = m_overrideProvider;
 
     // Convert metadata to JSON object
     QJsonObject metadataObj;
@@ -60,6 +62,8 @@ bool Prompt::fromJson(const QJsonObject& json)
     m_priority = json.value(QStringLiteral("priority")).toInt(0);
     m_overrideTemperature = json.value(QStringLiteral("override_temperature")).toBool(false);
     m_group = json.value(QStringLiteral("group")).toString(QString());
+    m_providerId = json.value(QStringLiteral("provider_id")).toString(QString());
+    m_overrideProvider = json.value(QStringLiteral("override_provider")).toBool(false);
 
     // Load metadata
     QJsonObject metadataObj = json.value(QStringLiteral("metadata")).toObject();

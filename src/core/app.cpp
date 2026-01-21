@@ -6,6 +6,8 @@
 #include "keychainstore.h"
 #include "historymanager.h"
 #include "groupsmanager.h"
+#include "providerkeystore.h"
+#include "models/providerprofile.h"
 #include "ui/trayicon.h"
 #include "ui/settingsdialog.h"
 #include "ui/historydialog.h"
@@ -43,6 +45,7 @@ using Core::PromptManager;
 using Core::ConfigManager;
 using Core::KeychainStore;
 using Core::HistoryManager;
+using Core::ProviderKeyStore;
 
 // Getter implementations
 Core::ClipboardManager* App::clipboardManager() const { return m_clipboardManager.get(); }
@@ -52,6 +55,7 @@ Core::ConfigManager* App::configManager() const { return m_configManager.get(); 
 Core::KeychainStore* App::keychainStore() const { return m_keychainStore.get(); }
 Core::HistoryManager* App::historyManager() const { return m_historyManager.get(); }
 Core::GroupsManager* App::groupsManager() const { return m_groupsManager.get(); }
+Core::ProviderKeyStore* App::providerKeyStore() const { return m_providerKeyStore.get(); }
 
 App::App(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -132,6 +136,7 @@ bool App::initialize(bool startMinimized)
     // Create core components
     m_configManager = std::make_unique<ConfigManager>();
     m_keychainStore = std::make_unique<KeychainStore>();
+    m_providerKeyStore = std::make_unique<ProviderKeyStore>();
     m_historyManager = std::make_unique<HistoryManager>();
     m_promptManager = std::make_unique<PromptManager>();
     m_groupsManager = std::make_unique<Core::GroupsManager>();
@@ -155,41 +160,39 @@ bool App::initialize(bool startMinimized)
         qWarning() << "Failed to load prompts, using defaults";
     }
 
-    // Load API key from secure storage
-    QString apiKey = m_keychainStore->readApiKey();
-    if (!apiKey.isEmpty()) {
-        m_llmClient->setApiKey(apiKey);
-    }
-
-    // Load LLM configuration
-    auto provider = Models::LLMConfig::providerFromString(m_configManager->llmProvider());
-    auto config = Models::LLMConfig::createDefault(provider);
-    QString model = m_configManager->llmModel();
-    if (model.isEmpty()) {
-        qWarning() << "No model configured, using default for provider";
-        model = config.model();  // Use default from createDefault
-    }
-    config.setModel(model);
-    config.setApiKey(apiKey);
-    config.setTemperature(m_configManager->temperature());
-    config.setOverrideTemperature(m_configManager->overrideTemperature());
-    config.setMaxTokens(m_configManager->maxTokens());
-    config.setStream(m_configManager->streamResponses());
-    config.setProxyUrl(m_configManager->proxyUrl());
-
-    // For Custom provider, use the custom API URL from settings
-    if (provider == Models::LLMProvider::Custom) {
-        QString customUrl = m_configManager->customApiUrl();
-        if (!customUrl.isEmpty()) {
-            config.setApiUrl(QUrl(customUrl));
+    // Load LLM configuration from provider profiles
+    QString defaultProviderId = m_configManager->defaultProviderId();
+    if (defaultProviderId.isEmpty()) {
+        qWarning() << "No provider configured - LLM features disabled";
+        // Set empty config - features will show error when used
+        m_llmClient->setConfig(Models::LLMConfig());
+    } else {
+        auto profile = m_configManager->providerProfile(defaultProviderId);
+        if (!profile.has_value()) {
+            qWarning() << "Default provider not found, falling back to first available";
+            auto profiles = m_configManager->providerProfiles();
+            if (profiles.isEmpty()) {
+                qWarning() << "No providers configured at all";
+                m_llmClient->setConfig(Models::LLMConfig());
+            } else {
+                profile = profiles.first();
+                m_configManager->setDefaultProviderId(profile->id());
+                Models::LLMConfig config = profileToConfig(profile.value());
+                m_llmClient->setConfig(config);
+                m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
+                m_llmClient->setProxy(m_configManager->proxyUrl());
+                qDebug() << "LLM initialized: provider=" << profile->name()
+                         << "model=" << profile->model();
+            }
+        } else {
+            Models::LLMConfig config = profileToConfig(profile.value());
+            m_llmClient->setConfig(config);
+            m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
+            m_llmClient->setProxy(m_configManager->proxyUrl());
+            qDebug() << "LLM initialized: provider=" << profile->name()
+                     << "model=" << profile->model();
         }
     }
-
-    m_llmClient->setConfig(config);
-    m_llmClient->setProxy(m_configManager->proxyUrl());
-
-    qDebug() << "LLM initialized: provider=" << Models::LLMConfig::providerToString(provider)
-             << "model=" << model;
 
     // Setup UI components
     m_trayIcon = std::make_unique<UI::TrayIcon>(this);
@@ -378,40 +381,24 @@ void App::showSettings()
         });
         // Update LLM config when settings are applied
         connect(m_settingsDialog, &UI::SettingsDialog::settingsChanged, [this]() {
-            auto provider = Models::LLMConfig::providerFromString(m_configManager->llmProvider());
-            auto config = Models::LLMConfig::createDefault(provider);
-            QString model = m_configManager->llmModel();
-            if (model.isEmpty()) {
-                qWarning() << "No model in settings, using default for provider";
-                model = config.model();
-            }
-            config.setModel(model);
-            QString apiKey = m_keychainStore->readApiKey();
-            if (!apiKey.isEmpty()) {
-                config.setApiKey(apiKey);
-            }
-            config.setTemperature(m_configManager->temperature());
-            config.setOverrideTemperature(m_configManager->overrideTemperature());
-            config.setMaxTokens(m_configManager->maxTokens());
-            config.setStream(m_configManager->streamResponses());
-            config.setProxyUrl(m_configManager->proxyUrl());
-
-            // For Custom provider, use the custom API URL from settings
-            if (provider == Models::LLMProvider::Custom) {
-                QString customUrl = m_configManager->customApiUrl();
-                if (!customUrl.isEmpty()) {
-                    config.setApiUrl(QUrl(customUrl));
-                }
+            QString defaultProviderId = m_configManager->defaultProviderId();
+            if (defaultProviderId.isEmpty()) {
+                qWarning() << "No provider configured in settings";
+                return;
             }
 
+            auto profile = m_configManager->providerProfile(defaultProviderId);
+            if (!profile.has_value()) {
+                qWarning() << "Default provider not found:" << defaultProviderId;
+                return;
+            }
+
+            Models::LLMConfig config = profileToConfig(profile.value());
             m_llmClient->setConfig(config);
+            m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
             m_llmClient->setProxy(m_configManager->proxyUrl());
-            // Explicitly set API key since setConfig doesn't do it
-            if (!apiKey.isEmpty()) {
-                m_llmClient->setApiKey(apiKey);
-            }
-            qDebug() << "LLM config updated: provider=" << Models::LLMConfig::providerToString(provider)
-                     << "model=" << model;
+            qDebug() << "LLM config updated: provider=" << profile->name()
+                     << "model=" << profile->model();
         });
 
         // Apply language change immediately when selected in settings
@@ -488,6 +475,55 @@ void App::onPromptSelected(const QString& promptId)
 
     const Models::Prompt& prompt = promptOpt.value();
 
+    // Determine provider profile to use
+    Models::ProviderProfile profile;
+    QString defaultProviderId = m_configManager->defaultProviderId();
+
+    if (prompt.overrideProvider() && !prompt.providerId().isEmpty()) {
+        auto promptProfile = m_configManager->providerProfile(prompt.providerId());
+        if (promptProfile.has_value()) {
+            profile = promptProfile.value();
+        } else {
+            qWarning() << "Prompt references non-existent profile:" << prompt.providerId()
+                       << ", using default";
+            if (!defaultProviderId.isEmpty()) {
+                auto defaultProfile = m_configManager->providerProfile(defaultProviderId);
+                if (defaultProfile.has_value()) {
+                    profile = defaultProfile.value();
+                } else {
+                    showTrayMessage(tr("Provider Error"),
+                                   tr("No valid LLM provider configured."));
+                    return;
+                }
+            } else {
+                showTrayMessage(tr("Provider Error"),
+                               tr("No LLM provider configured. Please configure one in Settings."));
+                return;
+            }
+        }
+    } else {
+        if (!defaultProviderId.isEmpty()) {
+            auto defaultProfile = m_configManager->providerProfile(defaultProviderId);
+            if (defaultProfile.has_value()) {
+                profile = defaultProfile.value();
+            } else {
+                showTrayMessage(tr("Provider Error"),
+                               tr("Default LLM provider not found. Please configure one in Settings."));
+                return;
+            }
+        } else {
+            showTrayMessage(tr("Provider Error"),
+                           tr("No LLM provider configured. Please configure one in Settings."));
+            return;
+        }
+    }
+
+    // Configure LLM client with selected profile
+    Models::LLMConfig config = profileToConfig(profile);
+    m_llmClient->setConfig(config);
+    // Also set API key explicitly since LLMClient checks m_apiKey separately
+    m_llmClient->setApiKey(config.apiKey());
+
     // Get clipboard content
     auto clipboardContent = m_clipboardManager->getContent();
     if (!clipboardContent.has_value()) {
@@ -545,9 +581,8 @@ void App::onPromptSelected(const QString& promptId)
     m_resultDialog->setPrompt(promptId, prompt.name());
     m_resultDialog->setInput(clipboardText.isEmpty() ? tr("[Image content]") : clipboardText);
 
-    // Set model - always use the model from LLM client (settings)
-    // Prompt models are obsolete and should not override user settings
-    m_resultDialog->setModel(m_llmClient->model());
+    // Set model from the selected profile
+    m_resultDialog->setModel(profile.model());
 
     m_resultDialog->startRequest();
 
@@ -577,6 +612,49 @@ void App::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     Q_UNUSED(reason)
     // Could show settings or history on double click
+}
+
+Models::LLMConfig App::profileToConfig(const Models::ProviderProfile& profile) const
+{
+    Models::LLMConfig llmConfig;
+    llmConfig.setApiUrl(profile.apiUrl());
+    llmConfig.setModel(profile.model());
+
+    // Temperature cascade: profile -> global -> NOT SET (-1)
+    // If not set anywhere, use -1 which means "don't send to API"
+    // Provider will use its own defaults
+    if (profile.temperature().has_value()) {
+        llmConfig.setTemperature(*profile.temperature());
+        llmConfig.setOverrideTemperature(true);
+    } else if (m_configManager->defaultTemperature().has_value()) {
+        llmConfig.setTemperature(*m_configManager->defaultTemperature());
+        llmConfig.setOverrideTemperature(true);
+    } else {
+        llmConfig.setTemperature(-1.0); // Don't send temperature to API
+        llmConfig.setOverrideTemperature(false);
+    }
+
+    // MaxTokens cascade: profile -> global -> NOT SET (-1)
+    // Same logic - let provider decide if not specified
+    if (profile.maxTokens().has_value()) {
+        llmConfig.setMaxTokens(*profile.maxTokens());
+    } else if (m_configManager->defaultMaxTokens().has_value()) {
+        llmConfig.setMaxTokens(*m_configManager->defaultMaxTokens());
+    } else {
+        llmConfig.setMaxTokens(-1); // Don't send max_tokens to API
+    }
+
+    // Proxy: always global
+    llmConfig.setProxyUrl(m_configManager->proxyUrl());
+
+    // Stream: always true for now
+    llmConfig.setStream(true);
+
+    // API key from ProviderKeyStore
+    QString apiKey = m_providerKeyStore->providerKey(profile.id());
+    llmConfig.setApiKey(apiKey);
+
+    return llmConfig;
 }
 
 void App::onAboutToQuit()

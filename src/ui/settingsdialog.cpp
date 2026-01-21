@@ -4,11 +4,13 @@
 #include "hotkeyedit.h"
 #include "core/configmanager.h"
 #include "core/keychainstore.h"
+#include "core/providerkeystore.h"
 #include "core/promptmanager.h"
 #include "core/groupsmanager.h"
 #include "core/historymanager.h"
 #include "core/app.h"
 #include "models/llmconfig.h"
+#include "models/providerprofile.h"
 #include <QApplication>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -30,18 +32,21 @@
 #include <QJsonArray>
 #include <QUrlQuery>
 #include <QSettings>
+#include <QListWidget>
 
 namespace ClipAI {
 namespace UI {
 
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog(parent)
+    , m_updatingProfileEditor(false)
 {
     // Get managers from app
     App* app = qobject_cast<App*>(QApplication::instance());
     if (app) {
         m_configManager = app->configManager();
         m_keychainStore = app->keychainStore();
+        m_providerKeyStore = app->providerKeyStore();
     }
 
     // Create network manager for fetching models
@@ -141,75 +146,158 @@ void SettingsDialog::setupLLMTab()
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout(widget);
 
-    QGroupBox* providerGroup = new QGroupBox(tr("LLM Provider"));
-    QFormLayout* providerLayout = new QFormLayout(providerGroup);
+    // Provider Profiles section
+    QGroupBox* profilesGroup = new QGroupBox(tr("Provider Profiles"));
+    QVBoxLayout* profilesLayout = new QVBoxLayout(profilesGroup);
 
-    m_providerCombo = new QComboBox();
-    connect(m_providerCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &SettingsDialog::onProviderChanged);
-    providerLayout->addRow(tr("Provider:"), m_providerCombo);
+    // Profiles list with buttons
+    QHBoxLayout* profilesHeaderLayout = new QHBoxLayout();
+    QLabel* profilesLabel = new QLabel(tr("Available Profiles:"));
+    profilesHeaderLayout->addWidget(profilesLabel);
+    profilesHeaderLayout->addStretch();
 
-    // Model combo with refresh button and editable field
+    m_addProfileButton = new QPushButton(tr("+ Add"));
+    m_addProfileButton->setToolTip(tr("Add a new provider profile"));
+    connect(m_addProfileButton, &QPushButton::clicked, this, &SettingsDialog::onAddProfileClicked);
+    profilesHeaderLayout->addWidget(m_addProfileButton);
+
+    m_removeProfileButton = new QPushButton(tr("- Remove"));
+    m_removeProfileButton->setToolTip(tr("Remove selected profile"));
+    connect(m_removeProfileButton, &QPushButton::clicked, this, &SettingsDialog::onRemoveProfileClicked);
+    profilesHeaderLayout->addWidget(m_removeProfileButton);
+
+    m_setAsDefaultButton = new QPushButton(tr("Set as Default"));
+    m_setAsDefaultButton->setToolTip(tr("Set selected profile as default"));
+    connect(m_setAsDefaultButton, &QPushButton::clicked, this, &SettingsDialog::onSetAsDefaultClicked);
+    profilesHeaderLayout->addWidget(m_setAsDefaultButton);
+
+    profilesLayout->addLayout(profilesHeaderLayout);
+
+    m_profilesList = new QListWidget();
+    m_profilesList->setSelectionMode(QAbstractItemView::SingleSelection);
+    connect(m_profilesList, &QListWidget::currentRowChanged,
+            this, &SettingsDialog::onProfileSelectionChanged);
+    profilesLayout->addWidget(m_profilesList);
+
+    layout->addWidget(profilesGroup);
+
+    // Profile Configuration section
+    QGroupBox* configGroup = new QGroupBox(tr("Profile Configuration"));
+    QFormLayout* configLayout = new QFormLayout(configGroup);
+
+    m_profileNameEdit = new QLineEdit();
+    m_profileNameEdit->setPlaceholderText(tr("e.g., OpenRouter (Main)"));
+    connect(m_profileNameEdit, &QLineEdit::textChanged, this, &SettingsDialog::onProfileNameChanged);
+    configLayout->addRow(tr("Profile Name:"), m_profileNameEdit);
+
+    // API URL with template dropdown
+    QHBoxLayout* urlLayout = new QHBoxLayout();
+    m_profileApiUrlEdit = new QLineEdit();
+    m_profileApiUrlEdit->setPlaceholderText(tr("Select template or enter custom URL (e.g., http://.../v1/chat/completions)"));
+    connect(m_profileApiUrlEdit, &QLineEdit::textChanged, this, [this]() {
+        // Mark as modified
+        if (!m_updatingProfileEditor && m_profilesList->currentRow() >= 0) {
+            QListWidgetItem* item = m_profilesList->currentItem();
+            if (item) {
+                item->setData(Qt::UserRole + 1, true); // Modified flag
+            }
+        }
+    });
+    urlLayout->addWidget(m_profileApiUrlEdit, 1);
+
+    m_profileTemplateCombo = new QComboBox();
+    m_profileTemplateCombo->addItem(tr("Template..."));
+    m_profileTemplateCombo->addItems(Models::ProviderProfile::availableTemplateNames());
+    connect(m_profileTemplateCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &SettingsDialog::onTemplateChanged);
+    urlLayout->addWidget(m_profileTemplateCombo);
+
+    configLayout->addRow(tr("API URL:"), urlLayout);
+
+    // Model combo with refresh
     QHBoxLayout* modelLayout = new QHBoxLayout();
-    m_modelCombo = new QComboBox();
-    m_modelCombo->setEditable(true);  // Allow manual entry
-    m_modelCombo->setPlaceholderText(tr("Select or enter model name..."));
+    m_profileModelCombo = new QComboBox();
+    m_profileModelCombo->setEditable(true);
+    m_profileModelCombo->setPlaceholderText(tr("Select or enter model name..."));
+    connect(m_profileModelCombo, &QComboBox::editTextChanged,
+            this, &SettingsDialog::onModelChanged);
+    modelLayout->addWidget(m_profileModelCombo, 1);
+
     m_refreshModelsButton = new QPushButton(tr("Refresh"));
     m_refreshModelsButton->setEnabled(false);
     connect(m_refreshModelsButton, &QPushButton::clicked,
             this, &SettingsDialog::onRefreshModelsClicked);
-    modelLayout->addWidget(m_modelCombo, 1);
     modelLayout->addWidget(m_refreshModelsButton);
-    providerLayout->addRow(tr("Model:"), modelLayout);
 
-    m_apiKeyEdit = new QLineEdit();
-    m_apiKeyEdit->setEchoMode(QLineEdit::Password);
-    connect(m_apiKeyEdit, &QLineEdit::textChanged, this, &SettingsDialog::onApiKeyChanged);
-    providerLayout->addRow(tr("API Key:"), m_apiKeyEdit);
+    configLayout->addRow(tr("Model:"), modelLayout);
 
-    m_customUrlEdit = new QLineEdit();
-    m_customUrlEdit->setPlaceholderText(tr("http://localhost:11434/v1/chat/completions"));
-    m_customUrlEdit->setToolTip(tr("Used only when Provider is set to Custom.\n\n"
-                                    "Examples:\n"
-                                    "• Ollama: http://localhost:11434/v1/chat/completions\n"
-                                    "• LM Studio: http://localhost:1234/v1/chat/completions\n"
-                                    "• LocalAI: http://localhost:8080/v1/chat/completions"));
-    providerLayout->addRow(tr("Custom API URL:"), m_customUrlEdit);
+    m_profileApiKeyEdit = new QLineEdit();
+    m_profileApiKeyEdit->setEchoMode(QLineEdit::Password);
+    m_profileApiKeyEdit->setPlaceholderText(tr("Leave empty for local providers (e.g., Ollama)"));
+    connect(m_profileApiKeyEdit, &QLineEdit::textChanged, this, &SettingsDialog::onApiKeyChanged);
+    configLayout->addRow(tr("API Key:"), m_profileApiKeyEdit);
 
-    m_proxyEdit = new QLineEdit();
-    m_proxyEdit->setPlaceholderText(tr("http://host:port or socks5://host:port"));
-    providerLayout->addRow(tr("Proxy (optional):"), m_proxyEdit);
+    // Override Global Defaults section
+    QGroupBox* overrideGroup = new QGroupBox(tr("Override Global Defaults (optional, leave empty for default)"));
+    QFormLayout* overrideLayout = new QFormLayout(overrideGroup);
 
-    layout->addWidget(providerGroup);
+    m_profileTemperatureSpin = new QDoubleSpinBox();
+    m_profileTemperatureSpin->setRange(0.0, 2.0);
+    m_profileTemperatureSpin->setSingleStep(0.1);
+    m_profileTemperatureSpin->setSpecialValueText(tr("(use global)"));
+    m_profileTemperatureSpin->setValue(0.0);
+    overrideLayout->addRow(tr("Temperature:"), m_profileTemperatureSpin);
 
-    QGroupBox* optionsGroup = new QGroupBox(tr("Options"));
-    QFormLayout* optionsLayout = new QFormLayout(optionsGroup);
+    m_profileMaxTokensSpin = new QSpinBox();
+    m_profileMaxTokensSpin->setRange(0, 1000000);
+    m_profileMaxTokensSpin->setSingleStep(1024);
+    m_profileMaxTokensSpin->setSpecialValueText(tr("(use global)"));
+    m_profileMaxTokensSpin->setValue(0);
+    overrideLayout->addRow(tr("Max Tokens:"), m_profileMaxTokensSpin);
 
-    m_temperatureSpin = new QDoubleSpinBox();
-    m_temperatureSpin->setRange(0.0, 2.0);
-    m_temperatureSpin->setSingleStep(0.1);
-    m_temperatureSpin->setValue(0.7);
-    m_temperatureSpin->setEnabled(false);
-    optionsLayout->addRow(tr("Temperature:"), m_temperatureSpin);
+    configLayout->addRow(overrideGroup);
 
-    m_overrideTemperatureCheck = new QCheckBox(tr("Override temperature"));
-    connect(m_overrideTemperatureCheck, &QCheckBox::checkStateChanged,
-            this, [this](int state) {
-                m_temperatureSpin->setEnabled(state == Qt::Checked);
-            });
-    optionsLayout->addRow(m_overrideTemperatureCheck);
+    QHBoxLayout* enabledLayout = new QHBoxLayout();
+    m_profileEnabledCheck = new QCheckBox(tr("Enabled"));
+    connect(m_profileEnabledCheck, &QCheckBox::checkStateChanged,
+            this, &SettingsDialog::onProfileEnabledChanged);
+    enabledLayout->addWidget(m_profileEnabledCheck);
+    enabledLayout->addStretch();
+    configLayout->addRow(enabledLayout);
 
-    m_maxTokensSpin = new QSpinBox();
-    m_maxTokensSpin->setRange(1, 128000);
-    m_maxTokensSpin->setValue(131072);
-    m_maxTokensSpin->setSingleStep(512);
-    optionsLayout->addRow(tr("Max Tokens:"), m_maxTokensSpin);
+    layout->addWidget(configGroup);
 
-    m_streamCheck = new QCheckBox(tr("Enable streaming responses"));
-    m_streamCheck->setChecked(true);
-    optionsLayout->addRow(m_streamCheck);
+    // Global Defaults section
+    QGroupBox* globalGroup = new QGroupBox(tr("Global Defaults (optional, leave empty for provider defaults)"));
+    QFormLayout* globalLayout = new QFormLayout(globalGroup);
 
-    layout->addWidget(optionsGroup);
+    m_globalTemperatureSpin = new QDoubleSpinBox();
+    m_globalTemperatureSpin->setRange(0.0, 2.0);
+    m_globalTemperatureSpin->setSingleStep(0.1);
+    m_globalTemperatureSpin->setSpecialValueText(tr("(provider default)"));
+    m_globalTemperatureSpin->setValue(0.0);
+    m_globalTemperatureSpin->setToolTip(tr("Recommended: Leave empty to let provider use its defaults"));
+    connect(m_globalTemperatureSpin, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+            this, &SettingsDialog::onGlobalDefaultsChanged);
+    globalLayout->addRow(tr("Temperature:"), m_globalTemperatureSpin);
+
+    m_globalMaxTokensSpin = new QSpinBox();
+    m_globalMaxTokensSpin->setRange(0, 1000000);
+    m_globalMaxTokensSpin->setSingleStep(1024);
+    m_globalMaxTokensSpin->setSpecialValueText(tr("(provider default)"));
+    m_globalMaxTokensSpin->setValue(0);
+    m_globalMaxTokensSpin->setToolTip(tr("Recommended: Leave empty to let provider use its defaults"));
+    connect(m_globalMaxTokensSpin, QOverload<int>::of(&QSpinBox::valueChanged),
+            this, &SettingsDialog::onGlobalDefaultsChanged);
+    globalLayout->addRow(tr("Max Tokens:"), m_globalMaxTokensSpin);
+
+    m_globalProxyEdit = new QLineEdit();
+    m_globalProxyEdit->setPlaceholderText(tr("http://host:port or socks5://host:port"));
+    connect(m_globalProxyEdit, &QLineEdit::textChanged,
+            this, &SettingsDialog::onGlobalDefaultsChanged);
+    globalLayout->addRow(tr("Proxy URL:"), m_globalProxyEdit);
+
+    layout->addWidget(globalGroup);
 
     // Test connection button
     QHBoxLayout* testLayout = new QHBoxLayout();
@@ -393,6 +481,7 @@ void SettingsDialog::loadSettings()
     loadLanguages();
     loadProviders();
     loadPrompts();
+    loadProviderProfiles();
 
     if (!m_configManager) {
         return;
@@ -409,35 +498,20 @@ void SettingsDialog::loadSettings()
 
     m_autoSaveHistoryCheck->setChecked(m_configManager->historyAutoSave());
 
-    // LLM
-    QString provider = m_configManager->llmProvider();
-    int providerIndex = m_providerCombo->findData(provider);
-    if (providerIndex >= 0) {
-        m_providerCombo->setCurrentIndex(providerIndex);
+    // LLM - Global defaults
+    if (m_configManager->defaultTemperature().has_value()) {
+        m_globalTemperatureSpin->setValue(*m_configManager->defaultTemperature());
+    } else {
+        m_globalTemperatureSpin->setValue(0.0); // Special value: (provider default)
     }
 
-    // Load models for the current provider before restoring model selection
-    loadModels();
-
-    QString model = m_configManager->llmModel();
-    // Use setCurrentText for editable combo box (finds match or sets as manual entry)
-    if (!model.isEmpty()) {
-        m_modelCombo->setCurrentText(model);
+    if (m_configManager->defaultMaxTokens().has_value()) {
+        m_globalMaxTokensSpin->setValue(*m_configManager->defaultMaxTokens());
+    } else {
+        m_globalMaxTokensSpin->setValue(0); // Special value: (provider default)
     }
 
-    m_proxyEdit->setText(m_configManager->proxyUrl());
-    m_customUrlEdit->setText(m_configManager->customApiUrl());
-    m_temperatureSpin->setValue(m_configManager->temperature());
-    m_overrideTemperatureCheck->setChecked(m_configManager->overrideTemperature());
-    m_temperatureSpin->setEnabled(m_configManager->overrideTemperature());
-    m_maxTokensSpin->setValue(m_configManager->maxTokens());
-    m_streamCheck->setChecked(m_configManager->streamResponses());
-
-    // Load API key from secure storage
-    if (m_keychainStore) {
-        QString apiKey = m_keychainStore->readApiKey();
-        m_apiKeyEdit->setText(apiKey);
-    }
+    m_globalProxyEdit->setText(m_configManager->proxyUrl());
 
     // Hotkeys
     QString hotkey = m_configManager->hotkey();
@@ -465,28 +539,32 @@ void SettingsDialog::saveSettings()
     m_configManager->setLanguage(m_languageCombo->currentData().toString());
     m_configManager->setHistoryAutoSave(m_autoSaveHistoryCheck->isChecked());
 
-    // LLM
-    m_configManager->setLlmProvider(m_providerCombo->currentData().toString());
-    QString model = m_modelCombo->currentText().trimmed();
-    // Don't save placeholder text
-    if (model.isEmpty() || model == tr("Select or enter model name...")) {
-        model.clear();  // Clear to use default
-    }
-    m_configManager->setLlmModel(model);
-    m_configManager->setCustomApiUrl(m_customUrlEdit->text());
-    m_configManager->setProxyUrl(m_proxyEdit->text());
-    m_configManager->setTemperature(m_temperatureSpin->value());
-    m_configManager->setOverrideTemperature(m_overrideTemperatureCheck->isChecked());
-    m_configManager->setMaxTokens(m_maxTokensSpin->value());
-    m_configManager->setStreamResponses(m_streamCheck->isChecked());
-
-    // Save API key
-    if (m_keychainStore) {
-        QString newKey = m_apiKeyEdit->text();
-        if (!newKey.isEmpty()) {
-            m_keychainStore->writeApiKey(newKey);
+    // LLM - Save all profiles
+    QList<Models::ProviderProfile> profiles;
+    for (int i = 0; i < m_profilesList->count(); ++i) {
+        QListWidgetItem* item = m_profilesList->item(i);
+        QString profileId = item->data(Qt::UserRole).toString();
+        auto profileOpt = m_configManager->providerProfile(profileId);
+        if (profileOpt.has_value()) {
+            profiles.append(profileOpt.value());
         }
     }
+    m_configManager->setProviderProfiles(profiles);
+
+    // LLM - Global defaults
+    if (m_globalTemperatureSpin->value() > 0.0) {
+        m_configManager->setDefaultTemperature(m_globalTemperatureSpin->value());
+    } else {
+        m_configManager->setDefaultTemperature(std::nullopt);
+    }
+
+    if (m_globalMaxTokensSpin->value() > 0) {
+        m_configManager->setDefaultMaxTokens(m_globalMaxTokensSpin->value());
+    } else {
+        m_configManager->setDefaultMaxTokens(std::nullopt);
+    }
+
+    m_configManager->setProxyUrl(m_globalProxyEdit->text());
 
     // Hotkeys
     QString hotkeyText = m_hotkeyEdit->hotkeyText();
@@ -520,48 +598,16 @@ void SettingsDialog::loadLanguages()
 
 void SettingsDialog::loadProviders()
 {
-    m_providerCombo->clear();
-    m_providerCombo->addItem(tr("OpenRouter"), QStringLiteral("openrouter"));
-    m_providerCombo->addItem(tr("OpenAI"), QStringLiteral("openai"));
-    m_providerCombo->addItem(tr("Anthropic"), QStringLiteral("anthropic"));
-    m_providerCombo->addItem(tr("Custom"), QStringLiteral("custom"));
+    // This function is kept for compatibility but is no longer used
+    // with the new provider profiles system
+    // The old m_providerCombo is no longer available
 }
 
 void SettingsDialog::loadModels()
 {
-    QString provider = getCurrentProvider();
-    Models::LLMProvider providerEnum = Models::LLMConfig::providerFromString(provider);
-    QStringList models = Models::LLMConfig::availableModels(providerEnum);
-
-    // Check if we have cached models from API
-    if (m_configManager) {
-        QStringList cached = m_configManager->cachedModels(provider);
-        if (!cached.isEmpty()) {
-            models = cached;
-        }
-    }
-
-    // Sort models alphabetically
-    models.sort(Qt::CaseInsensitive);
-
-    // Save current text before clearing
-    QString currentText = m_modelCombo->currentText();
-
-    m_modelCombo->clear();
-    for (const QString& model : models) {
-        m_modelCombo->addItem(model, model);
-    }
-
-    // Restore current text if it existed (handles manual entries)
-    if (!currentText.isEmpty()) {
-        int index = m_modelCombo->findText(currentText);
-        if (index >= 0) {
-            m_modelCombo->setCurrentIndex(index);
-        } else {
-            // Manual entry not in list, set it as text
-            m_modelCombo->setCurrentText(currentText);
-        }
-    }
+    // This function is kept for compatibility but is no longer used
+    // with the new provider profiles system
+    // Models are now loaded per-profile in updateProfileEditor
 }
 
 void SettingsDialog::loadPrompts()
@@ -597,17 +643,6 @@ void SettingsDialog::loadPrompts()
     }
 
     m_promptsTable->resizeColumnsToContents();
-}
-
-QString SettingsDialog::getCurrentProvider() const
-{
-    return m_providerCombo->currentData().toString();
-}
-
-QString SettingsDialog::getCurrentModel() const
-{
-    // Use currentText() for editable combo box to get manual entries
-    return m_modelCombo->currentText().trimmed();
 }
 
 void SettingsDialog::onTabChanged(int index)
@@ -666,44 +701,45 @@ void SettingsDialog::onLanguageChanged(int index)
     );
 }
 
-void SettingsDialog::onProviderChanged(int index)
-{
-    Q_UNUSED(index)
-    loadModels();
-
-    // Enable refresh button only for providers with model API
-    QString provider = getCurrentProvider();
-    m_refreshModelsButton->setEnabled(
-        provider == QStringLiteral("openrouter") ||
-        provider == QStringLiteral("openai")
-    );
-}
-
-void SettingsDialog::onModelChanged(int index)
-{
-    Q_UNUSED(index)
-}
-
-void SettingsDialog::onApiKeyChanged()
-{
-    // Update status based on key presence
-    bool hasKey = !m_apiKeyEdit->text().isEmpty();
-    m_connectionStatusLabel->setText(hasKey ? tr("API key set") : tr("No API key"));
-}
-
 void SettingsDialog::onTestConnectionClicked()
 {
-    // TODO: Implement test connection
     m_connectionStatusLabel->setText(tr("Testing..."));
 
-    // For now, just check if we have an API key
-    if (m_apiKeyEdit->text().isEmpty()) {
+    QString providerId = getCurrentProviderId();
+    if (providerId.isEmpty()) {
+        m_connectionStatusLabel->setText(tr("No profile selected"));
+        m_connectionStatusLabel->setStyleSheet("color: red;");
+        return;
+    }
+
+    // Check if profile has required fields
+    auto profileOpt = m_configManager->providerProfile(providerId);
+    if (!profileOpt.has_value()) {
+        m_connectionStatusLabel->setText(tr("Profile not found"));
+        m_connectionStatusLabel->setStyleSheet("color: red;");
+        return;
+    }
+
+    const auto& profile = profileOpt.value();
+    if (!profile.apiUrl().isValid()) {
+        m_connectionStatusLabel->setText(tr("Invalid API URL"));
+        m_connectionStatusLabel->setStyleSheet("color: red;");
+        return;
+    }
+
+    // Check if local provider (no API key needed)
+    QString apiUrl = profile.apiUrl().toString();
+    bool isLocalProvider = apiUrl.contains(QStringLiteral("localhost")) ||
+                          apiUrl.contains(QStringLiteral("127.0.0.1")) ||
+                          apiUrl.contains(QStringLiteral("ollama"));
+
+    if (!isLocalProvider && m_profileApiKeyEdit->text().isEmpty()) {
         m_connectionStatusLabel->setText(tr("Error: No API key"));
         m_connectionStatusLabel->setStyleSheet("color: red;");
         return;
     }
 
-    m_connectionStatusLabel->setText(tr("Connected"));
+    m_connectionStatusLabel->setText(tr("Configuration valid"));
     m_connectionStatusLabel->setStyleSheet("color: green;");
 }
 
@@ -919,8 +955,27 @@ void SettingsDialog::onDaysToKeepChanged(int value)
 
 void SettingsDialog::onRefreshModelsClicked()
 {
-    QString provider = getCurrentProvider();
-    if (provider.isEmpty()) {
+    QString providerId = getCurrentProviderId();
+    if (providerId.isEmpty()) {
+        m_connectionStatusLabel->setText(tr("No profile selected"));
+        return;
+    }
+
+    auto profileOpt = m_configManager->providerProfile(providerId);
+    if (!profileOpt.has_value()) {
+        m_connectionStatusLabel->setText(tr("Profile not found"));
+        return;
+    }
+
+    const auto& profile = profileOpt.value();
+    QString apiUrl = profile.apiUrl().toString();
+
+    // Determine if we can fetch models based on URL
+    bool canFetch = apiUrl.contains(QStringLiteral("openrouter.ai")) ||
+                    apiUrl.contains(QStringLiteral("api.openai.com"));
+
+    if (!canFetch) {
+        m_connectionStatusLabel->setText(tr("Model fetching not supported for this provider"));
         return;
     }
 
@@ -929,18 +984,29 @@ void SettingsDialog::onRefreshModelsClicked()
 
 void SettingsDialog::fetchModelsFromAPI()
 {
-    QString provider = getCurrentProvider();
-    QString apiKey = m_apiKeyEdit->text();
+    QString providerId = getCurrentProviderId();
+    if (providerId.isEmpty()) {
+        return;
+    }
+
+    auto profileOpt = m_configManager->providerProfile(providerId);
+    if (!profileOpt.has_value()) {
+        return;
+    }
+
+    const auto& profile = profileOpt.value();
+    QString apiKey = m_profileApiKeyEdit->text();
+    QString apiUrl = profile.apiUrl().toString();
 
     QUrl url;
     QString authHeader;
 
-    if (provider == QStringLiteral("openrouter")) {
+    if (apiUrl.contains(QStringLiteral("openrouter.ai"))) {
         url = QUrl(QStringLiteral("https://openrouter.ai/api/v1/models"));
         if (!apiKey.isEmpty()) {
             authHeader = QStringLiteral("Bearer ") + apiKey;
         }
-    } else if (provider == QStringLiteral("openai")) {
+    } else if (apiUrl.contains(QStringLiteral("api.openai.com"))) {
         url = QUrl(QStringLiteral("https://api.openai.com/v1/models"));
         if (!apiKey.isEmpty()) {
             authHeader = QStringLiteral("Bearer ") + apiKey;
@@ -986,9 +1052,14 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
     QJsonObject root = doc.object();
     QStringList models;
 
-    QString provider = getCurrentProvider();
+    QString providerId = getCurrentProviderId();
+    auto profileOpt = m_configManager->providerProfile(providerId);
+    QString apiUrl;
+    if (profileOpt.has_value()) {
+        apiUrl = profileOpt->apiUrl().toString();
+    }
 
-    if (provider == QStringLiteral("openrouter")) {
+    if (apiUrl.contains(QStringLiteral("openrouter"))) {
         // OpenRouter format: { "data": [ { "id": "model/name", ... }, ... ] }
         QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
         for (const QJsonValue& value : modelArray) {
@@ -998,7 +1069,7 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
                 models.append(id);
             }
         }
-    } else if (provider == QStringLiteral("openai")) {
+    } else if (apiUrl.contains(QStringLiteral("api.openai.com"))) {
         // OpenAI format: { "data": [ { "id": "model-name", ... }, ... ] }
         QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
         for (const QJsonValue& value : modelArray) {
@@ -1018,27 +1089,22 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
         models.sort(Qt::CaseInsensitive);
 
         // Save current selection (use text for editable combo box)
-        QString currentModel = m_modelCombo->currentText().trimmed();
+        QString currentModel = m_profileModelCombo->currentText().trimmed();
 
         // Update combo box (no "Auto" entry, user can type manually)
-        m_modelCombo->clear();
+        m_profileModelCombo->clear();
         for (const QString& model : models) {
-            m_modelCombo->addItem(model, model);
+            m_profileModelCombo->addItem(model, model);
         }
 
         // Restore selection (use setText for editable combo box)
         if (!currentModel.isEmpty()) {
-            int index = m_modelCombo->findText(currentModel);
+            int index = m_profileModelCombo->findText(currentModel);
             if (index >= 0) {
-                m_modelCombo->setCurrentIndex(index);
+                m_profileModelCombo->setCurrentIndex(index);
             } else {
-                m_modelCombo->setCurrentText(currentModel);
+                m_profileModelCombo->setCurrentText(currentModel);
             }
-        }
-
-        // Cache models for future use
-        if (m_configManager) {
-            m_configManager->setCachedModels(provider, models);
         }
 
         m_connectionStatusLabel->setText(tr("Loaded %1 models").arg(models.size()));
@@ -1046,6 +1112,400 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
     }
 
     reply->deleteLater();
+}
+
+// Provider profiles handlers
+
+void SettingsDialog::loadProviderProfiles()
+{
+    m_profilesList->clear();
+
+    if (!m_configManager) {
+        return;
+    }
+
+    QList<Models::ProviderProfile> profiles = m_configManager->providerProfiles();
+    QString defaultId = m_configManager->defaultProviderId();
+
+    for (const auto& profile : profiles) {
+        QListWidgetItem* item = new QListWidgetItem();
+        QString displayText = profile.name();
+        if (profile.id() == defaultId) {
+            displayText += tr(" [Default]");
+            QFont font = item->font();
+            font.setBold(true);
+            item->setFont(font);
+        }
+        if (!profile.enabled()) {
+            displayText += tr(" (disabled)");
+        }
+        item->setText(displayText);
+        item->setData(Qt::UserRole, profile.id());
+        m_profilesList->addItem(item);
+    }
+
+    // Enable/disable buttons based on selection
+    onProfileSelectionChanged();
+}
+
+void SettingsDialog::onProfileSelectionChanged()
+{
+    int row = m_profilesList->currentRow();
+    bool hasSelection = row >= 0;
+
+    m_removeProfileButton->setEnabled(hasSelection);
+    m_setAsDefaultButton->setEnabled(hasSelection);
+
+    if (hasSelection) {
+        QListWidgetItem* item = m_profilesList->currentItem();
+        QString profileId = item->data(Qt::UserRole).toString();
+        auto profileOpt = m_configManager->providerProfile(profileId);
+        if (profileOpt.has_value()) {
+            updateProfileEditor(profileOpt.value());
+        }
+    } else {
+        clearProfileEditor();
+    }
+}
+
+void SettingsDialog::onAddProfileClicked()
+{
+    // Create a new profile from a template or as custom
+    bool ok;
+    QString templateName = QInputDialog::getItem(
+        this,
+        tr("Add Provider Profile"),
+        tr("Select a template or create custom:"),
+        Models::ProviderProfile::availableTemplateNames(),
+        0, false, &ok
+    );
+
+    if (!ok || templateName.isEmpty()) {
+        return;
+    }
+
+    // Create profile from template
+    Models::ProviderProfile profile = Models::ProviderProfile::createFromTemplate(
+        templateName,
+        QString()
+    );
+
+    // Add to config
+    m_configManager->addProviderProfile(profile);
+
+    // Set as default if it's the first profile
+    if (m_configManager->providerProfiles().size() == 1) {
+        m_configManager->setDefaultProviderId(profile.id());
+    }
+
+    // Reload list and select the new profile
+    loadProviderProfiles();
+    for (int i = 0; i < m_profilesList->count(); ++i) {
+        QListWidgetItem* item = m_profilesList->item(i);
+        if (item->data(Qt::UserRole).toString() == profile.id()) {
+            m_profilesList->setCurrentRow(i);
+            break;
+        }
+    }
+}
+
+void SettingsDialog::onRemoveProfileClicked()
+{
+    int row = m_profilesList->currentRow();
+    if (row < 0) {
+        return;
+    }
+
+    QListWidgetItem* item = m_profilesList->currentItem();
+    QString profileId = item->data(Qt::UserRole).toString();
+    QString profileName = item->text().replace(tr(" [Default]"), QString()).replace(tr(" (disabled)"), QString());
+
+    auto reply = QMessageBox::question(
+        this,
+        tr("Remove Profile"),
+        tr("Are you sure you want to remove the profile \"%1\"?").arg(profileName),
+        QMessageBox::Yes | QMessageBox::No
+    );
+
+    if (reply == QMessageBox::Yes) {
+        // Remove API key
+        if (m_providerKeyStore) {
+            m_providerKeyStore->removeProviderKey(profileId);
+        }
+
+        // Remove profile
+        m_configManager->removeProviderProfile(profileId);
+
+        // If this was the default, clear the default
+        if (m_configManager->defaultProviderId() == profileId) {
+            m_configManager->setDefaultProviderId(QString());
+        }
+
+        loadProviderProfiles();
+        clearProfileEditor();
+    }
+}
+
+void SettingsDialog::onSetAsDefaultClicked()
+{
+    int row = m_profilesList->currentRow();
+    if (row < 0) {
+        return;
+    }
+
+    QListWidgetItem* item = m_profilesList->currentItem();
+    QString profileId = item->data(Qt::UserRole).toString();
+
+    m_configManager->setDefaultProviderId(profileId);
+
+    loadProviderProfiles();
+
+    // Reselect the profile
+    for (int i = 0; i < m_profilesList->count(); ++i) {
+        QListWidgetItem* listItem = m_profilesList->item(i);
+        if (listItem->data(Qt::UserRole).toString() == profileId) {
+            m_profilesList->setCurrentRow(i);
+            break;
+        }
+    }
+}
+
+void SettingsDialog::onProfileNameChanged(const QString& text)
+{
+    if (m_updatingProfileEditor) {
+        return;
+    }
+
+    // Update the profile in config
+    Models::ProviderProfile profile = getCurrentProfileFromEditor();
+    profile.setName(text);
+    m_configManager->updateProviderProfile(profile);
+
+    // Update list item
+    int row = m_profilesList->currentRow();
+    if (row >= 0) {
+        QListWidgetItem* item = m_profilesList->currentItem();
+        QString displayText = text;
+        if (profile.id() == m_configManager->defaultProviderId()) {
+            displayText += tr(" [Default]");
+        }
+        if (!profile.enabled()) {
+            displayText += tr(" (disabled)");
+        }
+        item->setText(displayText);
+    }
+}
+
+void SettingsDialog::onTemplateChanged(int index)
+{
+    if (index <= 0) { // First item is "Template..."
+        return;
+    }
+
+    QString templateName = m_profileTemplateCombo->currentText();
+    auto tmpl = Models::ProviderProfile::templateByName(templateName);
+
+    if (!tmpl.name.isEmpty()) {
+        m_updatingProfileEditor = true;
+        m_profileApiUrlEdit->setText(tmpl.templateUrl);
+        m_profileModelCombo->clear();
+        m_profileModelCombo->addItems(tmpl.suggestedModels);
+        if (!tmpl.defaultModel.isEmpty()) {
+            m_profileModelCombo->setCurrentText(tmpl.defaultModel);
+        }
+        m_updatingProfileEditor = false;
+
+        // Update the profile
+        Models::ProviderProfile profile = getCurrentProfileFromEditor();
+        profile.setApiUrl(QUrl(tmpl.templateUrl));
+        if (!tmpl.defaultModel.isEmpty()) {
+            profile.setModel(tmpl.defaultModel);
+        }
+        m_configManager->updateProviderProfile(profile);
+    }
+
+    // Reset template combo
+    m_profileTemplateCombo->blockSignals(true);
+    m_profileTemplateCombo->setCurrentIndex(0);
+    m_profileTemplateCombo->blockSignals(false);
+}
+
+void SettingsDialog::onModelChanged(const QString& text)
+{
+    Q_UNUSED(text)
+    if (m_updatingProfileEditor) {
+        return;
+    }
+
+    // Update the profile
+    Models::ProviderProfile profile = getCurrentProfileFromEditor();
+    m_configManager->updateProviderProfile(profile);
+}
+
+void SettingsDialog::onApiKeyChanged()
+{
+    if (m_updatingProfileEditor) {
+        return;
+    }
+
+    // Get current profile ID
+    QString profileId = getCurrentProviderId();
+    if (profileId.isEmpty()) {
+        return;
+    }
+
+    // Store API key directly using profile ID
+    if (m_providerKeyStore) {
+        m_providerKeyStore->setProviderKey(profileId, m_profileApiKeyEdit->text());
+    }
+
+    // Update status label
+    bool hasKey = !m_profileApiKeyEdit->text().isEmpty();
+    m_connectionStatusLabel->setText(hasKey ? tr("API key set") : tr("No API key"));
+
+    // Also update the profile in config (model, name, etc. may have changed)
+    Models::ProviderProfile profile = getCurrentProfileFromEditor();
+    m_configManager->updateProviderProfile(profile);
+}
+
+void SettingsDialog::onProfileEnabledChanged(int state)
+{
+    if (m_updatingProfileEditor) {
+        return;
+    }
+
+    // Update the profile
+    Models::ProviderProfile profile = getCurrentProfileFromEditor();
+    profile.setEnabled(state == Qt::Checked);
+    m_configManager->updateProviderProfile(profile);
+
+    // Reload list to show updated state
+    loadProviderProfiles();
+
+    // Reselect the profile
+    for (int i = 0; i < m_profilesList->count(); ++i) {
+        QListWidgetItem* item = m_profilesList->item(i);
+        if (item->data(Qt::UserRole).toString() == profile.id()) {
+            m_profilesList->setCurrentRow(i);
+            break;
+        }
+    }
+}
+
+void SettingsDialog::onGlobalDefaultsChanged()
+{
+    // Just mark that global defaults have changed
+    // They will be saved when OK is clicked
+}
+
+void SettingsDialog::updateProfileEditor(const Models::ProviderProfile& profile)
+{
+    m_updatingProfileEditor = true;
+    m_currentEditingProfile = profile;
+
+    m_profileNameEdit->setText(profile.name());
+    m_profileApiUrlEdit->setText(profile.apiUrl().toString());
+    m_profileModelCombo->setCurrentText(profile.model());
+    m_profileEnabledCheck->setChecked(profile.enabled());
+
+    // Load API key
+    if (m_providerKeyStore) {
+        QString apiKey = m_providerKeyStore->providerKey(profile.id());
+        m_profileApiKeyEdit->setText(apiKey);
+    }
+
+    // Temperature override
+    if (profile.temperature().has_value()) {
+        m_profileTemperatureSpin->setValue(*profile.temperature());
+    } else {
+        m_profileTemperatureSpin->setValue(0.0); // Special value
+    }
+
+    // MaxTokens override
+    if (profile.maxTokens().has_value()) {
+        m_profileMaxTokensSpin->setValue(*profile.maxTokens());
+    } else {
+        m_profileMaxTokensSpin->setValue(0); // Special value
+    }
+
+    // Enable/disable refresh button based on URL
+    QString apiUrl = profile.apiUrl().toString();
+    bool canFetch = apiUrl.contains(QStringLiteral("openrouter.ai")) ||
+                    apiUrl.contains(QStringLiteral("api.openai.com"));
+    m_refreshModelsButton->setEnabled(canFetch);
+
+    // Update API key status label
+    bool hasKey = !m_profileApiKeyEdit->text().isEmpty();
+    m_connectionStatusLabel->setText(hasKey ? tr("API key set") : tr("No API key"));
+    m_connectionStatusLabel->setStyleSheet(QString());
+
+    m_updatingProfileEditor = false;
+}
+
+void SettingsDialog::clearProfileEditor()
+{
+    m_updatingProfileEditor = true;
+    m_currentEditingProfile = Models::ProviderProfile();
+
+    m_profileNameEdit->clear();
+    m_profileApiUrlEdit->clear();
+    m_profileModelCombo->clear();
+    m_profileApiKeyEdit->clear();
+    m_profileTemperatureSpin->setValue(0.0);
+    m_profileMaxTokensSpin->setValue(0);
+    m_profileEnabledCheck->setChecked(true);
+
+    m_updatingProfileEditor = false;
+}
+
+Models::ProviderProfile SettingsDialog::getCurrentProfileFromEditor() const
+{
+    Models::ProviderProfile profile = m_currentEditingProfile;
+
+    profile.setName(m_profileNameEdit->text());
+    profile.setApiUrl(QUrl(m_profileApiUrlEdit->text()));
+    profile.setModel(m_profileModelCombo->currentText().trimmed());
+    profile.setEnabled(m_profileEnabledCheck->isChecked());
+
+    // Temperature override - 0 means use global
+    if (m_profileTemperatureSpin->value() > 0.0) {
+        profile.setTemperature(m_profileTemperatureSpin->value());
+    } else {
+        profile.setTemperature(std::nullopt);
+    }
+
+    // MaxTokens override - 0 means use global
+    if (m_profileMaxTokensSpin->value() > 0) {
+        profile.setMaxTokens(m_profileMaxTokensSpin->value());
+    } else {
+        profile.setMaxTokens(std::nullopt);
+    }
+
+    return profile;
+}
+
+QString SettingsDialog::getCurrentProviderId() const
+{
+    int row = m_profilesList->currentRow();
+    if (row >= 0) {
+        QListWidgetItem* item = m_profilesList->item(row);
+        return item->data(Qt::UserRole).toString();
+    }
+    return QString();
+}
+
+// Legacy methods (for compatibility with old code)
+
+QString SettingsDialog::getCurrentProvider() const
+{
+    // Return a dummy provider string for compatibility
+    return QStringLiteral("custom");
+}
+
+QString SettingsDialog::getCurrentModel() const
+{
+    // Return the current profile's model
+    return m_profileModelCombo->currentText().trimmed();
 }
 
 void SettingsDialog::showEvent(QShowEvent* event)

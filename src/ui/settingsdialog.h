@@ -15,12 +15,16 @@
 #include <QGroupBox>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QListWidget>
+#include <QPushButton>
 #include "core/promptmanager.h"
+#include "models/providerprofile.h"
 
 namespace ClipAI {
 namespace Core {
 class ConfigManager;
 class KeychainStore;
+class ProviderKeyStore;
 }
 }
 
@@ -54,12 +58,19 @@ private slots:
     void onLanguageChanged(int index);
 
     // LLM tab
-    void onProviderChanged(int index);
-    void onModelChanged(int index);
+    void onProfileSelectionChanged();
+    void onAddProfileClicked();
+    void onRemoveProfileClicked();
+    void onSetAsDefaultClicked();
+    void onProfileNameChanged(const QString& text);
+    void onTemplateChanged(int index);
+    void onModelChanged(const QString& text);
     void onApiKeyChanged();
     void onTestConnectionClicked();
     void onRefreshModelsClicked();
     void onModelsFetchFinished(QNetworkReply* reply);
+    void onProfileEnabledChanged(int state);
+    void onGlobalDefaultsChanged();
 
     // Hotkeys tab
     void onHotkeyChanged(const QKeySequence& sequence);
@@ -96,13 +107,21 @@ private:
     void loadModels();
     void loadLanguages();
     void loadPrompts();
+    void loadProviderProfiles();
     void fetchModelsFromAPI();
 
+    void updateProfileEditor(const Models::ProviderProfile& profile);
+    void clearProfileEditor();
+    Models::ProviderProfile getCurrentProfileFromEditor() const;
+    QString getCurrentProviderId() const;
+
+    // Legacy methods (for compatibility with old code)
     QString getCurrentProvider() const;
     QString getCurrentModel() const;
 
     Core::ConfigManager* m_configManager = nullptr;
     Core::KeychainStore* m_keychainStore = nullptr;
+    Core::ProviderKeyStore* m_providerKeyStore = nullptr;
 
     // Tab widget
     QTabWidget* m_tabWidget = nullptr;
@@ -111,20 +130,32 @@ private:
     QComboBox* m_languageCombo = nullptr;
     QCheckBox* m_autoSaveHistoryCheck = nullptr;
 
-    // LLM tab
-    QComboBox* m_providerCombo = nullptr;
-    QComboBox* m_modelCombo = nullptr;
-    QLineEdit* m_apiKeyEdit = nullptr;
-    QLineEdit* m_customUrlEdit = nullptr;
-    QLineEdit* m_proxyEdit = nullptr;
-    QDoubleSpinBox* m_temperatureSpin = nullptr;
-    QCheckBox* m_overrideTemperatureCheck = nullptr;
-    QSpinBox* m_maxTokensSpin = nullptr;
-    QCheckBox* m_streamCheck = nullptr;
-    QPushButton* m_testConnectionButton = nullptr;
+    // LLM tab - Provider Profiles
+    QListWidget* m_profilesList = nullptr;
+    QPushButton* m_addProfileButton = nullptr;
+    QPushButton* m_removeProfileButton = nullptr;
+    QPushButton* m_setAsDefaultButton = nullptr;
+    QLineEdit* m_profileNameEdit = nullptr;
+    QLineEdit* m_profileApiUrlEdit = nullptr;
+    QComboBox* m_profileTemplateCombo = nullptr;
+    QComboBox* m_profileModelCombo = nullptr;
     QPushButton* m_refreshModelsButton = nullptr;
+    QLineEdit* m_profileApiKeyEdit = nullptr;
+    QPushButton* m_testConnectionButton = nullptr;
     QLabel* m_connectionStatusLabel = nullptr;
+    QDoubleSpinBox* m_profileTemperatureSpin = nullptr;
+    QSpinBox* m_profileMaxTokensSpin = nullptr;
+    QCheckBox* m_profileEnabledCheck = nullptr;
+
+    // LLM tab - Global Defaults
+    QDoubleSpinBox* m_globalTemperatureSpin = nullptr;
+    QSpinBox* m_globalMaxTokensSpin = nullptr;
+    QLineEdit* m_globalProxyEdit = nullptr;
+
     QNetworkAccessManager* m_networkManager = nullptr;
+    QStringList m_currentSuggestedModels;
+    Models::ProviderProfile m_currentEditingProfile;
+    bool m_updatingProfileEditor = false;
 
     // Hotkeys tab
     HotkeyEdit* m_hotkeyEdit = nullptr;

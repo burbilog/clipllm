@@ -49,6 +49,8 @@ public:
     bool overrideTemperature() const { return m_overrideTemperature; }
     QVariantMap metadata() const { return m_metadata; }
     QString group() const { return m_group; }
+    QString providerId() const { return m_providerId; }
+    bool overrideProvider() const { return m_overrideProvider; }
 
     // Setters
     void setId(const QString& id) { m_id = id; }
@@ -66,6 +68,8 @@ public:
     void setOverrideTemperature(bool override) { m_overrideTemperature = override; }
     void setMetadata(const QVariantMap& metadata) { m_metadata = metadata; }
     void setGroup(const QString& group) { m_group = group; }
+    void setProviderId(const QString& providerId) { m_providerId = providerId; }
+    void setOverrideProvider(bool override) { m_overrideProvider = override; }
 
     // Serialization
     QJsonObject toJson() const;
@@ -102,6 +106,8 @@ private:
     bool m_overrideTemperature = false;
     QVariantMap m_metadata;
     QString m_group;
+    QString m_providerId;
+    bool m_overrideProvider = false;
 };
 
 } // namespace Models

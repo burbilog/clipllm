@@ -14,6 +14,11 @@ namespace ClipAI {
 
 class App;
 
+namespace Models {
+class ProviderProfile;
+class LLMConfig;
+}
+
 namespace Core {
 class ClipboardManager;
 class LLMClient;
@@ -22,6 +27,7 @@ class ConfigManager;
 class KeychainStore;
 class HistoryManager;
 class GroupsManager;
+class ProviderKeyStore;
 }
 
 namespace UI {
@@ -54,6 +60,7 @@ public:
     Core::KeychainStore* keychainStore() const;
     Core::HistoryManager* historyManager() const;
     Core::GroupsManager* groupsManager() const;
+    Core::ProviderKeyStore* providerKeyStore() const;
 
     // Language management
     void setLanguage(const QString& languageCode);
@@ -82,6 +89,9 @@ private:
     void cleanupTranslations();
     QString getDefaultLanguage() const;
 
+    // Profile to LLM config conversion with cascade logic
+    Models::LLMConfig profileToConfig(const Models::ProviderProfile& profile) const;
+
     // Core components
     std::unique_ptr<Core::ClipboardManager> m_clipboardManager;
     std::unique_ptr<Core::LLMClient> m_llmClient;
@@ -90,6 +100,7 @@ private:
     std::unique_ptr<Core::KeychainStore> m_keychainStore;
     std::unique_ptr<Core::HistoryManager> m_historyManager;
     std::unique_ptr<Core::GroupsManager> m_groupsManager;
+    std::unique_ptr<Core::ProviderKeyStore> m_providerKeyStore;
 
     // UI components
     std::unique_ptr<UI::TrayIcon> m_trayIcon;

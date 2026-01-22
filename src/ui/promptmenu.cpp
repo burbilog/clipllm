@@ -122,15 +122,26 @@ void PromptMenu::rebuildMenu()
 
     QVector<Models::Prompt> prompts = m_promptManager->getEnabledPrompts();
 
-    // Filter by content type
-    QVector<Models::Prompt> filteredPrompts;
+    // Split into high priority (>0) and normal priority (<=0 or unset)
+    QVector<Models::Prompt> highPriority;
+    QVector<Models::Prompt> normalPriority;
+
     for (const auto& prompt : prompts) {
-        if (m_contentTypeFilter == Models::ContentType::Any ||
-            prompt.contentType() == m_contentTypeFilter ||
-            prompt.contentType() == Models::ContentType::Any) {
-            filteredPrompts.append(prompt);
+        if (prompt.priority() > 0) {
+            // High priority prompts are always included regardless of content type
+            highPriority.append(prompt);
+        } else {
+            // Normal priority prompts are filtered by content type
+            if (m_contentTypeFilter == Models::ContentType::Any ||
+                prompt.contentType() == m_contentTypeFilter ||
+                prompt.contentType() == Models::ContentType::Any) {
+                normalPriority.append(prompt);
+            }
         }
     }
+
+    // Combine for filtering (high priority + filtered normal priority)
+    QVector<Models::Prompt> filteredPrompts = highPriority + normalPriority;
 
     if (filteredPrompts.isEmpty()) {
         QAction* noPromptsAction = addAction(tr("No prompts available for this content type"));
@@ -160,20 +171,20 @@ void PromptMenu::rebuildMenu()
         return;
     }
 
-    // Split into high priority (>0) and normal priority (<=0 or unset)
-    QVector<Models::Prompt> highPriority;
-    QVector<Models::Prompt> normalPriority;
+    // Re-split after search filtering (high priority might have been filtered out)
+    QVector<Models::Prompt> highPriorityAfterSearch;
+    QVector<Models::Prompt> normalPriorityAfterSearch;
 
     for (const auto& prompt : filteredPrompts) {
         if (prompt.priority() > 0) {
-            highPriority.append(prompt);
+            highPriorityAfterSearch.append(prompt);
         } else {
-            normalPriority.append(prompt);
+            normalPriorityAfterSearch.append(prompt);
         }
     }
 
     // If search is empty, show notification if no priority prompts
-    if (searchEmpty && highPriority.isEmpty()) {
+    if (searchEmpty && highPriorityAfterSearch.isEmpty()) {
         QAction* hintAction = addAction(tr("Add priority to prompts to see them here"));
         hintAction->setEnabled(false);
         m_selectedIndex = -1;
@@ -181,7 +192,7 @@ void PromptMenu::rebuildMenu()
     }
 
     // Sort high priority by priority DESC, then name ASC
-    std::sort(highPriority.begin(), highPriority.end(),
+    std::sort(highPriorityAfterSearch.begin(), highPriorityAfterSearch.end(),
         [](const Models::Prompt& a, const Models::Prompt& b) {
             if (a.priority() != b.priority()) {
                 return a.priority() > b.priority();  // Higher priority first
@@ -190,7 +201,7 @@ void PromptMenu::rebuildMenu()
         });
 
     // Sort normal priority by name ASC
-    std::sort(normalPriority.begin(), normalPriority.end(),
+    std::sort(normalPriorityAfterSearch.begin(), normalPriorityAfterSearch.end(),
         [](const Models::Prompt& a, const Models::Prompt& b) {
             return a.name() < b.name();
         });
@@ -199,7 +210,7 @@ void PromptMenu::rebuildMenu()
     // When searching, show all prompts that match the search
     if (searchEmpty) {
         // Only show priority prompts
-        for (const auto& prompt : highPriority) {
+        for (const auto& prompt : highPriorityAfterSearch) {
             QAction* action = createPromptAction(prompt);
             addAction(action);
             m_promptActions.append(action);
@@ -207,14 +218,14 @@ void PromptMenu::rebuildMenu()
         }
     } else {
         // Show all prompts when searching (already filtered by search text)
-        for (const auto& prompt : highPriority) {
+        for (const auto& prompt : highPriorityAfterSearch) {
             QAction* action = createPromptAction(prompt);
             addAction(action);
             m_promptActions.append(action);
             m_promptIds.append(prompt.id());
         }
 
-        for (const auto& prompt : normalPriority) {
+        for (const auto& prompt : normalPriorityAfterSearch) {
             QAction* action = createPromptAction(prompt);
             addAction(action);
             m_promptActions.append(action);

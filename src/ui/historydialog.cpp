@@ -37,6 +37,7 @@ void HistoryDialog::setupUi()
 {
     setWindowTitle(tr("ClipAI - History"));
     resize(466, 550);
+    setMinimumWidth(400);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 

@@ -43,19 +43,18 @@ protected:
 private slots:
     void onOkClicked();
     void onPreviewClicked();
-    void onModelUseDefaultChanged(int state);
+    void onOverrideProviderAndModelChanged(int state);
+    void onProviderChanged(int index);
     void onTemperatureUseDefaultChanged(int state);
-    void onProviderUseDefaultChanged(int state);
     void validateInput();
 
 private:
     void setupUi();
     void loadPrompt(const Models::Prompt& prompt);
     Models::Prompt buildPrompt() const;
-    void updateModelFieldState();
     void updateTemperatureFieldState();
-    void updateProviderFieldState();
     void loadProviders();
+    void loadModelsForProvider(const QString& providerId);
     QString generateUniqueId() const;
 
     Core::PromptManager* m_promptManager = nullptr;
@@ -76,10 +75,9 @@ private:
 
     // Settings fields
     QComboBox* m_contentTypeCombo = nullptr;
-    QCheckBox* m_providerUseDefaultCheck = nullptr;
+    QCheckBox* m_overrideProviderAndModelCheck = nullptr;
     QComboBox* m_providerCombo = nullptr;
-    QCheckBox* m_modelUseDefaultCheck = nullptr;
-    QLineEdit* m_modelEdit = nullptr;
+    QComboBox* m_modelCombo = nullptr;
     QCheckBox* m_temperatureUseDefaultCheck = nullptr;
     QDoubleSpinBox* m_temperatureSpin = nullptr;
     QSpinBox* m_maxTokensSpin = nullptr;

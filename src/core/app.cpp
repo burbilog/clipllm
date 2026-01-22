@@ -518,10 +518,20 @@ void App::onPromptSelected(const QString& promptId)
 
     // Configure LLM client with selected profile
     Models::LLMConfig config = profileToConfig(profile);
+
+    // Override model if prompt has one set
+    QString modelToUse = profile.model();
+    if (!prompt.model().isEmpty()) {
+        modelToUse = prompt.model();
+        qDebug() << "Using model from prompt:" << modelToUse;
+    }
+    config.setModel(modelToUse);
+
     qDebug() << "Using provider:" << profile.name()
              << "ID:" << profile.id()
              << "URL:" << profile.apiUrl().toString()
-             << "model:" << profile.model();
+             << "model:" << modelToUse
+             << "proxy:" << profile.proxyUrl();
     m_llmClient->setConfig(config);
     // Also set API key explicitly since LLMClient checks m_apiKey separately
     m_llmClient->setApiKey(config.apiKey());
@@ -583,9 +593,10 @@ void App::onPromptSelected(const QString& promptId)
     m_resultDialog->setPrompt(promptId, prompt.name());
     m_resultDialog->setInput(clipboardText.isEmpty() ? tr("[Image content]") : clipboardText);
 
-    // Set provider and model from the selected profile
+    // Set provider and model (model from prompt takes precedence)
+    QString displayModel = modelToUse;
     m_resultDialog->setProvider(profile.name());
-    m_resultDialog->setModel(profile.model());
+    m_resultDialog->setModel(displayModel);
 
     m_resultDialog->startRequest();
 

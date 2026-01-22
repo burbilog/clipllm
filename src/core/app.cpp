@@ -200,6 +200,8 @@ bool App::initialize(bool startMinimized)
             this, &App::onTrayIconActivated);
     connect(m_trayIcon.get(), &UI::TrayIcon::showSettingsRequested,
             this, &App::showSettings);
+    connect(m_trayIcon.get(), &UI::TrayIcon::showPromptMenuRequested,
+            this, &App::showPromptMenuAtTray);
     connect(m_trayIcon.get(), &UI::TrayIcon::showHistoryRequested,
             this, &App::showHistory);
     connect(m_trayIcon.get(), &UI::TrayIcon::quitRequested,
@@ -217,6 +219,7 @@ bool App::initialize(bool startMinimized)
     // Create prompt menu
     m_promptMenu = new UI::PromptMenu(m_promptManager.get(), m_clipboardManager.get(), m_configManager.get());
     connect(m_promptMenu, &UI::PromptMenu::promptSelected, this, &App::onPromptSelected);
+    connect(m_promptMenu, &UI::PromptMenu::settingsRequested, this, &App::showSettings);
     connect(m_promptMenu, &UI::PromptMenu::cancelled, []() {
         qDebug() << "Prompt menu cancelled";
     });
@@ -435,6 +438,22 @@ void App::showTrayMessage(const QString& title, const QString& message)
     if (m_trayIcon) {
         m_trayIcon->showMessage(title, message, QSystemTrayIcon::Information, 3000);
     }
+}
+
+void App::showPromptMenuAtTray()
+{
+    if (!m_promptMenu) {
+        qWarning() << "PromptMenu not initialized";
+        return;
+    }
+
+    // Get tray icon geometry
+    QRect trayGeometry = m_trayIcon->geometry();
+    QPoint trayCenter = trayGeometry.center();
+
+    qDebug() << "Showing prompt menu at tray position:" << trayCenter;
+
+    m_promptMenu->showMenu(trayCenter);
 }
 
 void App::onHotkeyTriggered()

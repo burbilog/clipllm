@@ -74,6 +74,9 @@ public:
     void showHistory();
     void showTrayMessage(const QString& title, const QString& message);
 
+public slots:
+    void showPromptMenuAtTray();
+
 signals:
     void languageChanged(const QString& languageCode);
     void hotkeyTriggered();

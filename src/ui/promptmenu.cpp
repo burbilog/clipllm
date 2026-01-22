@@ -6,6 +6,8 @@
 #include <QTimer>
 #include <QApplication>
 #include <QStyle>
+#include <QToolButton>
+#include <QHBoxLayout>
 #include <QDebug>
 #include <algorithm>
 
@@ -28,9 +30,9 @@ PromptMenu::~PromptMenu() = default;
 
 void PromptMenu::setupUi()
 {
-    // Create search box at top
+    // Create search box with settings button at top
     QWidget* searchWidget = new QWidget();
-    QVBoxLayout* searchLayout = new QVBoxLayout(searchWidget);
+    QHBoxLayout* searchLayout = new QHBoxLayout(searchWidget);
     searchLayout->setContentsMargins(4, 4, 4, 4);
 
     m_searchEdit = new QLineEdit();
@@ -40,6 +42,14 @@ void PromptMenu::setupUi()
             this, &PromptMenu::onSearchTextChanged);
 
     searchLayout->addWidget(m_searchEdit);
+
+    // Add settings button
+    QToolButton* settingsButton = new QToolButton();
+    settingsButton->setIcon(QIcon::fromTheme(QStringLiteral("preferences-system")));
+    settingsButton->setToolTip(tr("Settings"));
+    settingsButton->setAutoRaise(true);
+    connect(settingsButton, &QToolButton::clicked, this, &PromptMenu::onSettingsClicked);
+    searchLayout->addWidget(settingsButton);
 
     m_searchAction = new QWidgetAction(this);
     m_searchAction->setDefaultWidget(searchWidget);
@@ -386,6 +396,12 @@ void PromptMenu::selectCurrentItem()
             hide();
         }
     }
+}
+
+void PromptMenu::onSettingsClicked()
+{
+    close();
+    emit settingsRequested();
 }
 
 } // namespace UI

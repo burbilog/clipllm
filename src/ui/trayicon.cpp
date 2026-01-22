@@ -272,10 +272,11 @@ void TrayIcon::onActivated(QSystemTrayIcon::ActivationReason reason)
 {
     emit activated(reason);
 
-    // Double-click to show settings
-    if (reason == QSystemTrayIcon::DoubleClick) {
-        emit showSettingsRequested();
+    // Left-click (Trigger) to show prompt menu
+    if (reason == QSystemTrayIcon::Trigger) {
+        emit showPromptMenuRequested();
     }
+    // Context (right-click) is handled automatically by QSystemTrayIcon
 }
 
 void TrayIcon::onPromptTriggered()

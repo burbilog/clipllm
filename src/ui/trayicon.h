@@ -34,6 +34,7 @@ public:
 signals:
     void activated(QSystemTrayIcon::ActivationReason reason);
     void showSettingsRequested();
+    void showPromptMenuRequested();
     void showHistoryRequested();
     void quitRequested();
     void hotkeyTriggered();

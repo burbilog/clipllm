@@ -4,103 +4,103 @@
 <context>
     <name>ClipAI::App</name>
     <message>
-        <location filename="../src/core/app.cpp" line="226"/>
+        <location filename="../src/core/app.cpp" line="228"/>
         <source>System Tray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="227"/>
+        <location filename="../src/core/app.cpp" line="229"/>
         <source>Couldn&apos;t detect any system tray on this system.</source>
         <translation type="unfinished">Couldn&apos;t detect any system tray on this system.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="237"/>
+        <location filename="../src/core/app.cpp" line="239"/>
         <source>Welcome to ClipAI</source>
         <translation type="unfinished">Welcome to ClipAI</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="238"/>
+        <location filename="../src/core/app.cpp" line="240"/>
         <source>ClipAI is running in the system tray. Press the global hotkey to start.</source>
         <translation type="unfinished">ClipAI is running in the system tray. Press the global hotkey to start.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="330"/>
+        <location filename="../src/core/app.cpp" line="332"/>
         <source>Hotkey Not Supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="331"/>
+        <location filename="../src/core/app.cpp" line="333"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="356"/>
+        <location filename="../src/core/app.cpp" line="358"/>
         <source>Hotkey Registration Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="357"/>
+        <location filename="../src/core/app.cpp" line="359"/>
         <source>Could not register global hotkey: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="448"/>
-        <location filename="../src/core/app.cpp" line="542"/>
+        <location filename="../src/core/app.cpp" line="466"/>
+        <location filename="../src/core/app.cpp" line="560"/>
         <source>Clipboard Empty</source>
         <translation type="unfinished">Clipboard Empty</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="449"/>
-        <location filename="../src/core/app.cpp" line="543"/>
+        <location filename="../src/core/app.cpp" line="467"/>
+        <location filename="../src/core/app.cpp" line="561"/>
         <source>No content found in clipboard.</source>
         <translation type="unfinished">No content found in clipboard.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="468"/>
+        <location filename="../src/core/app.cpp" line="486"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="469"/>
+        <location filename="../src/core/app.cpp" line="487"/>
         <source>Prompt not found: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="492"/>
-        <location filename="../src/core/app.cpp" line="497"/>
-        <location filename="../src/core/app.cpp" line="508"/>
-        <location filename="../src/core/app.cpp" line="513"/>
+        <location filename="../src/core/app.cpp" line="510"/>
+        <location filename="../src/core/app.cpp" line="515"/>
+        <location filename="../src/core/app.cpp" line="526"/>
+        <location filename="../src/core/app.cpp" line="531"/>
         <source>Provider Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="493"/>
+        <location filename="../src/core/app.cpp" line="511"/>
         <source>No valid LLM provider configured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="498"/>
-        <location filename="../src/core/app.cpp" line="514"/>
+        <location filename="../src/core/app.cpp" line="516"/>
+        <location filename="../src/core/app.cpp" line="532"/>
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="509"/>
+        <location filename="../src/core/app.cpp" line="527"/>
         <source>Default LLM provider not found. Please configure one in Settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="560"/>
+        <location filename="../src/core/app.cpp" line="578"/>
         <source>Incompatible Content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="561"/>
+        <location filename="../src/core/app.cpp" line="579"/>
         <source>This prompt requires %1 content.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="594"/>
+        <location filename="../src/core/app.cpp" line="615"/>
         <source>[Image content]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1279,7 +1279,7 @@
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="63"/>
-        <location filename="../src/ui/resultdialog.cpp" line="181"/>
+        <location filename="../src/ui/resultdialog.cpp" line="191"/>
         <source>Model: -</source>
         <translation>Model: -</translation>
     </message>
@@ -1290,62 +1290,67 @@
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="66"/>
-        <location filename="../src/ui/resultdialog.cpp" line="208"/>
+        <location filename="../src/ui/resultdialog.cpp" line="218"/>
         <source>Traffic: 0 B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="83"/>
+        <location filename="../src/ui/resultdialog.cpp" line="76"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="93"/>
         <source>Ready</source>
         <translation>Ready</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="88"/>
-        <location filename="../src/ui/resultdialog.cpp" line="92"/>
-        <location filename="../src/ui/resultdialog.cpp" line="202"/>
-        <location filename="../src/ui/resultdialog.cpp" line="461"/>
+        <location filename="../src/ui/resultdialog.cpp" line="98"/>
+        <location filename="../src/ui/resultdialog.cpp" line="102"/>
+        <location filename="../src/ui/resultdialog.cpp" line="212"/>
+        <location filename="../src/ui/resultdialog.cpp" line="471"/>
         <source>Markdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="92"/>
-        <location filename="../src/ui/resultdialog.cpp" line="202"/>
-        <location filename="../src/ui/resultdialog.cpp" line="461"/>
+        <location filename="../src/ui/resultdialog.cpp" line="102"/>
+        <location filename="../src/ui/resultdialog.cpp" line="212"/>
+        <location filename="../src/ui/resultdialog.cpp" line="471"/>
         <source>Raw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="187"/>
+        <location filename="../src/ui/resultdialog.cpp" line="197"/>
         <source>Model: %1 / %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="374"/>
+        <location filename="../src/ui/resultdialog.cpp" line="384"/>
         <source>Close During Generation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="375"/>
+        <location filename="../src/ui/resultdialog.cpp" line="385"/>
         <source>A response is still being generated. Close and cancel the request?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="383"/>
+        <location filename="../src/ui/resultdialog.cpp" line="393"/>
         <source>Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="424"/>
+        <location filename="../src/ui/resultdialog.cpp" line="434"/>
         <source>Model is thinking...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="427"/>
+        <location filename="../src/ui/resultdialog.cpp" line="437"/>
         <source>Generating response...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="436"/>
+        <location filename="../src/ui/resultdialog.cpp" line="446"/>
         <source>Traffic: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1354,12 +1359,12 @@
         <translation type="vanished">Processing...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="99"/>
+        <location filename="../src/ui/resultdialog.cpp" line="109"/>
         <source>Input</source>
         <translation>Input</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="108"/>
+        <location filename="../src/ui/resultdialog.cpp" line="118"/>
         <source>Output</source>
         <translation>Output</translation>
     </message>
@@ -1368,49 +1373,49 @@
         <translation type="vanished">Copy</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="127"/>
+        <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <source>Save to History</source>
         <translation>Save to History</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="132"/>
+        <location filename="../src/ui/resultdialog.cpp" line="142"/>
         <source>Retry</source>
         <translation>Retry</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="137"/>
+        <location filename="../src/ui/resultdialog.cpp" line="147"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="209"/>
+        <location filename="../src/ui/resultdialog.cpp" line="219"/>
         <source>Connecting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="250"/>
+        <location filename="../src/ui/resultdialog.cpp" line="260"/>
         <source>Completed in %1 seconds</source>
         <translation>Completed in %1 seconds</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="183"/>
-        <location filename="../src/ui/resultdialog.cpp" line="185"/>
+        <location filename="../src/ui/resultdialog.cpp" line="193"/>
+        <location filename="../src/ui/resultdialog.cpp" line="195"/>
         <source>Model: %1</source>
         <translation>Model: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="122"/>
+        <location filename="../src/ui/resultdialog.cpp" line="132"/>
         <source>Copy &amp;&amp; close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="255"/>
+        <location filename="../src/ui/resultdialog.cpp" line="265"/>
         <source>Tokens: %1 input / %2 output</source>
         <translation>Tokens: %1 input / %2 output</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="268"/>
-        <location filename="../src/ui/resultdialog.cpp" line="283"/>
+        <location filename="../src/ui/resultdialog.cpp" line="278"/>
+        <location filename="../src/ui/resultdialog.cpp" line="293"/>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
@@ -1423,17 +1428,17 @@
         <translation type="vanished">Completed</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="315"/>
+        <location filename="../src/ui/resultdialog.cpp" line="325"/>
         <source>Saved</source>
         <translation>Saved</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="156"/>
+        <location filename="../src/ui/resultdialog.cpp" line="166"/>
         <source>ClipAI - %1</source>
         <translation>ClipAI - %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="237"/>
+        <location filename="../src/ui/resultdialog.cpp" line="247"/>
         <source>Tokens: ~%1</source>
         <translation>Tokens: ~%1</translation>
     </message>
@@ -2086,60 +2091,60 @@
 <context>
     <name>ClipAI::UI::TrayIcon</name>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="39"/>
-        <location filename="../src/ui/trayicon.cpp" line="243"/>
-        <location filename="../src/ui/trayicon.cpp" line="352"/>
+        <location filename="../src/ui/trayicon.cpp" line="40"/>
+        <location filename="../src/ui/trayicon.cpp" line="244"/>
+        <location filename="../src/ui/trayicon.cpp" line="367"/>
         <source>ClipAI - LLM Clipboard Utility</source>
         <translation>ClipAI - LLM Clipboard Utility</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="72"/>
-        <location filename="../src/ui/trayicon.cpp" line="356"/>
+        <location filename="../src/ui/trayicon.cpp" line="73"/>
+        <location filename="../src/ui/trayicon.cpp" line="371"/>
         <source>&amp;Settings</source>
         <translation>&amp;Settings</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="76"/>
-        <location filename="../src/ui/trayicon.cpp" line="359"/>
+        <location filename="../src/ui/trayicon.cpp" line="77"/>
+        <location filename="../src/ui/trayicon.cpp" line="374"/>
         <source>&amp;History</source>
         <translation>&amp;History</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="98"/>
-        <location filename="../src/ui/trayicon.cpp" line="370"/>
+        <location filename="../src/ui/trayicon.cpp" line="99"/>
+        <location filename="../src/ui/trayicon.cpp" line="385"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="80"/>
-        <location filename="../src/ui/trayicon.cpp" line="362"/>
+        <location filename="../src/ui/trayicon.cpp" line="81"/>
+        <location filename="../src/ui/trayicon.cpp" line="377"/>
         <source>&amp;About</source>
         <translation>&amp;About</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="90"/>
-        <location filename="../src/ui/trayicon.cpp" line="365"/>
+        <location filename="../src/ui/trayicon.cpp" line="91"/>
+        <location filename="../src/ui/trayicon.cpp" line="380"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quit</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="120"/>
-        <location filename="../src/ui/trayicon.cpp" line="128"/>
+        <location filename="../src/ui/trayicon.cpp" line="121"/>
+        <location filename="../src/ui/trayicon.cpp" line="129"/>
         <source>No prompts available</source>
         <translation>No prompts available</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="245"/>
+        <location filename="../src/ui/trayicon.cpp" line="246"/>
         <source>Hotkey: </source>
         <translation>Hotkey: </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="306"/>
+        <location filename="../src/ui/trayicon.cpp" line="321"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="327"/>
+        <location filename="../src/ui/trayicon.cpp" line="342"/>
         <source>About ClipAI</source>
         <translation>About ClipAI</translation>
     </message>

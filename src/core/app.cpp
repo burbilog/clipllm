@@ -220,6 +220,7 @@ bool App::initialize(bool startMinimized)
     m_promptMenu = new UI::PromptMenu(m_promptManager.get(), m_clipboardManager.get(), m_configManager.get());
     connect(m_promptMenu, &UI::PromptMenu::promptSelected, this, &App::onPromptSelected);
     connect(m_promptMenu, &UI::PromptMenu::settingsRequested, this, &App::showSettings);
+    connect(m_promptMenu, &UI::PromptMenu::historyRequested, this, &App::showHistory);
     connect(m_promptMenu, &UI::PromptMenu::cancelled, []() {
         qDebug() << "Prompt menu cancelled";
     });

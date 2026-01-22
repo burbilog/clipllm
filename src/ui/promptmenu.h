@@ -36,6 +36,7 @@ signals:
     void promptSelected(const QString& promptId);
     void cancelled();
     void settingsRequested();
+    void historyRequested();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
@@ -50,6 +51,7 @@ private slots:
     void onNextItem();
     void selectCurrentItem();
     void onSettingsClicked();
+    void onHistoryClicked();
 
 private:
     void setupUi();

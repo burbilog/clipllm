@@ -3,103 +3,103 @@
 <context>
     <name>ClipAI::App</name>
     <message>
-        <location filename="../src/core/app.cpp" line="229" />
+        <location filename="../src/core/app.cpp" line="230" />
         <source>System Tray</source>
         <translation>System Tray</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="230" />
+        <location filename="../src/core/app.cpp" line="231" />
         <source>Couldn't detect any system tray on this system.</source>
         <translation>Couldn't detect any system tray on this system.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="240" />
+        <location filename="../src/core/app.cpp" line="241" />
         <source>Welcome to ClipAI</source>
         <translation>Welcome to ClipAI</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="241" />
+        <location filename="../src/core/app.cpp" line="242" />
         <source>ClipAI is running in the system tray. Press the global hotkey to start.</source>
         <translation>ClipAI is running in the system tray. Press the global hotkey to start.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="333" />
+        <location filename="../src/core/app.cpp" line="334" />
         <source>Hotkey Not Supported</source>
         <translation>Hotkey Not Supported</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="334" />
+        <location filename="../src/core/app.cpp" line="335" />
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
         <translation>Global hotkeys are not supported on this platform (Wayland?).</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="359" />
+        <location filename="../src/core/app.cpp" line="360" />
         <source>Hotkey Registration Failed</source>
         <translation>Hotkey Registration Failed</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="360" />
+        <location filename="../src/core/app.cpp" line="361" />
         <source>Could not register global hotkey: %1</source>
         <translation>Could not register global hotkey: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="467" />
-        <location filename="../src/core/app.cpp" line="561" />
+        <location filename="../src/core/app.cpp" line="468" />
+        <location filename="../src/core/app.cpp" line="562" />
         <source>Clipboard Empty</source>
         <translation>Clipboard Empty</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="468" />
-        <location filename="../src/core/app.cpp" line="562" />
+        <location filename="../src/core/app.cpp" line="469" />
+        <location filename="../src/core/app.cpp" line="563" />
         <source>No content found in clipboard.</source>
         <translation>No content found in clipboard.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="487" />
+        <location filename="../src/core/app.cpp" line="488" />
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="488" />
+        <location filename="../src/core/app.cpp" line="489" />
         <source>Prompt not found: %1</source>
         <translation>Prompt not found: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="511" />
-        <location filename="../src/core/app.cpp" line="516" />
-        <location filename="../src/core/app.cpp" line="527" />
-        <location filename="../src/core/app.cpp" line="532" />
+        <location filename="../src/core/app.cpp" line="512" />
+        <location filename="../src/core/app.cpp" line="517" />
+        <location filename="../src/core/app.cpp" line="528" />
+        <location filename="../src/core/app.cpp" line="533" />
         <source>Provider Error</source>
         <translation>Provider Error</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="512" />
+        <location filename="../src/core/app.cpp" line="513" />
         <source>No valid LLM provider configured.</source>
         <translation>No valid LLM provider configured.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="517" />
-        <location filename="../src/core/app.cpp" line="533" />
+        <location filename="../src/core/app.cpp" line="518" />
+        <location filename="../src/core/app.cpp" line="534" />
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation>No LLM provider configured. Please configure one in Settings.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="528" />
+        <location filename="../src/core/app.cpp" line="529" />
         <source>Default LLM provider not found. Please configure one in Settings.</source>
         <translation>Default LLM provider not found. Please configure one in Settings.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="579" />
+        <location filename="../src/core/app.cpp" line="580" />
         <source>Incompatible Content</source>
         <translation>Incompatible Content</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="580" />
+        <location filename="../src/core/app.cpp" line="581" />
         <source>This prompt requires %1 content.</source>
         <translation>This prompt requires %1 content.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="613" />
+        <location filename="../src/core/app.cpp" line="614" />
         <source>[Image content]</source>
         <translation>[Image content]</translation>
     </message>
@@ -1319,26 +1319,31 @@
     </message>
     <message>
         <location filename="../src/ui/promptmenu.cpp" line="52" />
+        <source>History</source>
+        <translation>History</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptmenu.cpp" line="60" />
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="118" />
+        <location filename="../src/ui/promptmenu.cpp" line="126" />
         <source>No prompts available</source>
         <translation>No prompts available</translation>
     </message>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="147" />
+        <location filename="../src/ui/promptmenu.cpp" line="155" />
         <source>No prompts available for this content type</source>
         <translation>No prompts available for this content type</translation>
     </message>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="169" />
+        <location filename="../src/ui/promptmenu.cpp" line="177" />
         <source>No prompts found</source>
         <translation>No prompts found</translation>
     </message>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="188" />
+        <location filename="../src/ui/promptmenu.cpp" line="196" />
         <source>Add priority to prompts to see them here</source>
         <translation>Add priority to prompts to see them here</translation>
     </message>

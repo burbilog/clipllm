@@ -46,6 +46,14 @@ void PromptMenu::setupUi()
 
     searchLayout->addWidget(m_searchEdit);
 
+    // Add history button
+    QToolButton* historyButton = new QToolButton();
+    historyButton->setIcon(QIcon::fromTheme(QStringLiteral("document-open-recent")));
+    historyButton->setToolTip(tr("History"));
+    historyButton->setAutoRaise(true);
+    connect(historyButton, &QToolButton::clicked, this, &PromptMenu::onHistoryClicked);
+    searchLayout->addWidget(historyButton);
+
     // Add settings button
     QToolButton* settingsButton = new QToolButton();
     settingsButton->setIcon(QIcon::fromTheme(QStringLiteral("preferences-system")));
@@ -454,6 +462,12 @@ void PromptMenu::onSettingsClicked()
 {
     close();
     emit settingsRequested();
+}
+
+void PromptMenu::onHistoryClicked()
+{
+    close();
+    emit historyRequested();
 }
 
 } // namespace UI

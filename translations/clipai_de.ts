@@ -4,103 +4,103 @@
 <context>
     <name>ClipAI::App</name>
     <message>
-        <location filename="../src/core/app.cpp" line="228"/>
+        <location filename="../src/core/app.cpp" line="229"/>
         <source>System Tray</source>
         <translation>Systemleiste</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="229"/>
+        <location filename="../src/core/app.cpp" line="230"/>
         <source>Couldn&apos;t detect any system tray on this system.</source>
         <translation>Konnte keine Systemleiste auf diesem System erkennen.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="239"/>
+        <location filename="../src/core/app.cpp" line="240"/>
         <source>Welcome to ClipAI</source>
         <translation>Willkommen bei ClipAI</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="240"/>
+        <location filename="../src/core/app.cpp" line="241"/>
         <source>ClipAI is running in the system tray. Press the global hotkey to start.</source>
         <translation>ClipAI läuft in der Systemleiste. Drücken Sie die globale Tastenkombination, um zu starten.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="332"/>
+        <location filename="../src/core/app.cpp" line="333"/>
         <source>Hotkey Not Supported</source>
         <translation>Hotkey nicht unterstützt</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="333"/>
+        <location filename="../src/core/app.cpp" line="334"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
         <translation>Globale Hotkeys werden auf dieser Plattform nicht unterstützt (Wayland?).</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="358"/>
+        <location filename="../src/core/app.cpp" line="359"/>
         <source>Hotkey Registration Failed</source>
         <translation>Hotkey-Registrierung fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="359"/>
+        <location filename="../src/core/app.cpp" line="360"/>
         <source>Could not register global hotkey: %1</source>
         <translation>Globaler Hotkey konnte nicht registriert werden: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="466"/>
-        <location filename="../src/core/app.cpp" line="560"/>
+        <location filename="../src/core/app.cpp" line="467"/>
+        <location filename="../src/core/app.cpp" line="561"/>
         <source>Clipboard Empty</source>
         <translation>Zwischenablage leer</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="467"/>
-        <location filename="../src/core/app.cpp" line="561"/>
+        <location filename="../src/core/app.cpp" line="468"/>
+        <location filename="../src/core/app.cpp" line="562"/>
         <source>No content found in clipboard.</source>
         <translation>Kein Inhalt in der Zwischenablage gefunden.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="486"/>
+        <location filename="../src/core/app.cpp" line="487"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="487"/>
+        <location filename="../src/core/app.cpp" line="488"/>
         <source>Prompt not found: %1</source>
         <translation>Prompt nicht gefunden: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="510"/>
-        <location filename="../src/core/app.cpp" line="515"/>
-        <location filename="../src/core/app.cpp" line="526"/>
-        <location filename="../src/core/app.cpp" line="531"/>
+        <location filename="../src/core/app.cpp" line="511"/>
+        <location filename="../src/core/app.cpp" line="516"/>
+        <location filename="../src/core/app.cpp" line="527"/>
+        <location filename="../src/core/app.cpp" line="532"/>
         <source>Provider Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="511"/>
+        <location filename="../src/core/app.cpp" line="512"/>
         <source>No valid LLM provider configured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="516"/>
-        <location filename="../src/core/app.cpp" line="532"/>
+        <location filename="../src/core/app.cpp" line="517"/>
+        <location filename="../src/core/app.cpp" line="533"/>
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="527"/>
+        <location filename="../src/core/app.cpp" line="528"/>
         <source>Default LLM provider not found. Please configure one in Settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="578"/>
+        <location filename="../src/core/app.cpp" line="579"/>
         <source>Incompatible Content</source>
         <translation>Inkompatibler Inhalt</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="579"/>
+        <location filename="../src/core/app.cpp" line="580"/>
         <source>This prompt requires %1 content.</source>
         <translation>Dieser Prompt erfordert %1-Inhalt.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="615"/>
+        <location filename="../src/core/app.cpp" line="613"/>
         <source>[Image content]</source>
         <translation>[Bildinhalt]</translation>
     </message>
@@ -1175,17 +1175,22 @@
 <context>
     <name>ClipAI::UI::PromptMenu</name>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="37"/>
+        <location filename="../src/ui/promptmenu.cpp" line="40"/>
         <source>Search prompts...</source>
         <translation>Prompts durchsuchen...</translation>
     </message>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="102"/>
+        <location filename="../src/ui/promptmenu.cpp" line="50"/>
+        <source>Settings</source>
+        <translation type="unfinished">Einstellungen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptmenu.cpp" line="113"/>
         <source>No prompts available</source>
         <translation>Keine Prompts verfügbar</translation>
     </message>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="120"/>
+        <location filename="../src/ui/promptmenu.cpp" line="131"/>
         <source>No prompts available for this content type</source>
         <translation>Keine Prompts für diesen Inhaltstyp verfügbar</translation>
     </message>
@@ -1247,7 +1252,7 @@
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="63"/>
-        <location filename="../src/ui/resultdialog.cpp" line="191"/>
+        <location filename="../src/ui/resultdialog.cpp" line="181"/>
         <source>Model: -</source>
         <translation>Modell: -</translation>
     </message>
@@ -1258,139 +1263,138 @@
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="66"/>
-        <location filename="../src/ui/resultdialog.cpp" line="218"/>
+        <location filename="../src/ui/resultdialog.cpp" line="208"/>
         <source>Traffic: 0 B</source>
         <translation>Datenvolumen: 0 B</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="76"/>
         <source>Settings</source>
-        <translation type="unfinished">Einstellungen</translation>
+        <translation type="obsolete">Einstellungen</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="93"/>
+        <location filename="../src/ui/resultdialog.cpp" line="83"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="98"/>
-        <location filename="../src/ui/resultdialog.cpp" line="102"/>
-        <location filename="../src/ui/resultdialog.cpp" line="212"/>
-        <location filename="../src/ui/resultdialog.cpp" line="471"/>
+        <location filename="../src/ui/resultdialog.cpp" line="88"/>
+        <location filename="../src/ui/resultdialog.cpp" line="92"/>
+        <location filename="../src/ui/resultdialog.cpp" line="202"/>
+        <location filename="../src/ui/resultdialog.cpp" line="461"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="102"/>
-        <location filename="../src/ui/resultdialog.cpp" line="212"/>
-        <location filename="../src/ui/resultdialog.cpp" line="471"/>
+        <location filename="../src/ui/resultdialog.cpp" line="92"/>
+        <location filename="../src/ui/resultdialog.cpp" line="202"/>
+        <location filename="../src/ui/resultdialog.cpp" line="461"/>
         <source>Raw</source>
         <translation>Roh</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="109"/>
+        <location filename="../src/ui/resultdialog.cpp" line="99"/>
         <source>Input</source>
         <translation>Eingabe</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="118"/>
+        <location filename="../src/ui/resultdialog.cpp" line="108"/>
         <source>Output</source>
         <translation>Ausgabe</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="132"/>
+        <location filename="../src/ui/resultdialog.cpp" line="122"/>
         <source>Copy &amp;&amp; close</source>
         <translation>Kopieren und schließen</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="137"/>
+        <location filename="../src/ui/resultdialog.cpp" line="127"/>
         <source>Save to History</source>
         <translation>Im Verlauf speichern</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="142"/>
+        <location filename="../src/ui/resultdialog.cpp" line="132"/>
         <source>Retry</source>
         <translation>Wiederholen</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="147"/>
+        <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="166"/>
+        <location filename="../src/ui/resultdialog.cpp" line="156"/>
         <source>ClipAI - %1</source>
         <translation>ClipAI - %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="193"/>
-        <location filename="../src/ui/resultdialog.cpp" line="195"/>
+        <location filename="../src/ui/resultdialog.cpp" line="183"/>
+        <location filename="../src/ui/resultdialog.cpp" line="185"/>
         <source>Model: %1</source>
         <translation>Modell: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="197"/>
+        <location filename="../src/ui/resultdialog.cpp" line="187"/>
         <source>Model: %1 / %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="219"/>
+        <location filename="../src/ui/resultdialog.cpp" line="209"/>
         <source>Connecting...</source>
         <translation>Verbindung wird hergestellt...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="247"/>
+        <location filename="../src/ui/resultdialog.cpp" line="237"/>
         <source>Tokens: ~%1</source>
         <translation>Tokens: ~%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="260"/>
+        <location filename="../src/ui/resultdialog.cpp" line="250"/>
         <source>Completed in %1 seconds</source>
         <translation>Fertig gestellt in %1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="265"/>
+        <location filename="../src/ui/resultdialog.cpp" line="255"/>
         <source>Tokens: %1 input / %2 output</source>
         <translation>Tokens: %1 Eingabe / %2 Ausgabe</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="278"/>
-        <location filename="../src/ui/resultdialog.cpp" line="293"/>
+        <location filename="../src/ui/resultdialog.cpp" line="268"/>
+        <location filename="../src/ui/resultdialog.cpp" line="283"/>
         <source>Error: %1</source>
         <translation>Fehler: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="325"/>
+        <location filename="../src/ui/resultdialog.cpp" line="315"/>
         <source>Saved</source>
         <translation>Gespeichert</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="384"/>
+        <location filename="../src/ui/resultdialog.cpp" line="374"/>
         <source>Close During Generation</source>
         <translation>Schließen während der Generierung</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="385"/>
+        <location filename="../src/ui/resultdialog.cpp" line="375"/>
         <source>A response is still being generated. Close and cancel the request?</source>
         <translation>Es wird noch eine Antwort generiert. Schließen und Anfrage abbrechen?</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="393"/>
+        <location filename="../src/ui/resultdialog.cpp" line="383"/>
         <source>Cancelling...</source>
         <translation>Wird abgebrochen...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="434"/>
+        <location filename="../src/ui/resultdialog.cpp" line="424"/>
         <source>Model is thinking...</source>
         <translation>Modell denkt nach...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="437"/>
+        <location filename="../src/ui/resultdialog.cpp" line="427"/>
         <source>Generating response...</source>
         <translation>Antwort wird generiert...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="446"/>
+        <location filename="../src/ui/resultdialog.cpp" line="436"/>
         <source>Traffic: %1</source>
         <translation>Datenvolumen: %1</translation>
     </message>
@@ -2049,60 +2053,60 @@ Beispiele:
 <context>
     <name>ClipAI::UI::TrayIcon</name>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="40"/>
-        <location filename="../src/ui/trayicon.cpp" line="244"/>
-        <location filename="../src/ui/trayicon.cpp" line="367"/>
+        <location filename="../src/ui/trayicon.cpp" line="39"/>
+        <location filename="../src/ui/trayicon.cpp" line="243"/>
+        <location filename="../src/ui/trayicon.cpp" line="353"/>
         <source>ClipAI - LLM Clipboard Utility</source>
         <translation>ClipAI - LLM-Zwischenablage-Dienstprogramm</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="73"/>
-        <location filename="../src/ui/trayicon.cpp" line="371"/>
+        <location filename="../src/ui/trayicon.cpp" line="72"/>
+        <location filename="../src/ui/trayicon.cpp" line="357"/>
         <source>&amp;Settings</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="77"/>
-        <location filename="../src/ui/trayicon.cpp" line="374"/>
+        <location filename="../src/ui/trayicon.cpp" line="76"/>
+        <location filename="../src/ui/trayicon.cpp" line="360"/>
         <source>&amp;History</source>
         <translation>&amp;Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="81"/>
-        <location filename="../src/ui/trayicon.cpp" line="377"/>
+        <location filename="../src/ui/trayicon.cpp" line="80"/>
+        <location filename="../src/ui/trayicon.cpp" line="363"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="91"/>
-        <location filename="../src/ui/trayicon.cpp" line="380"/>
+        <location filename="../src/ui/trayicon.cpp" line="90"/>
+        <location filename="../src/ui/trayicon.cpp" line="366"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="99"/>
-        <location filename="../src/ui/trayicon.cpp" line="385"/>
+        <location filename="../src/ui/trayicon.cpp" line="98"/>
+        <location filename="../src/ui/trayicon.cpp" line="371"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="121"/>
-        <location filename="../src/ui/trayicon.cpp" line="129"/>
+        <location filename="../src/ui/trayicon.cpp" line="120"/>
+        <location filename="../src/ui/trayicon.cpp" line="128"/>
         <source>No prompts available</source>
         <translation>Keine Prompts verfügbar</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="246"/>
+        <location filename="../src/ui/trayicon.cpp" line="245"/>
         <source>Hotkey: </source>
         <translation>Tastenkombination: </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="321"/>
+        <location filename="../src/ui/trayicon.cpp" line="307"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; ist ein plattformübergreifendes Zwischenablage-Dienstprogramm, das große Sprachmodelle (LLMs) direkt in Ihren Arbeitsablauf integriert. Wird als Systemleistendienst ausgeführt und ermöglicht es Ihnen, Zwischenablageinhalt (Text und Bilder) mit anpassbaren KI-Prompts unter Verwendung globaler Tastenkombinationen zu verarbeiten.&lt;/p&gt;&lt;p&gt;Egal ob Sie Text zusammenfassen, Inhalte übersetzen, Code umschreiben, Informationen aus Bildern extrahieren oder andere KI-gesteuerte Transformationen durchführen möchten – ClipAI macht dies sofort mit einem einfachen Tastendruck zugänglich. Kopieren Sie Inhalt, drücken Sie Ihre Tastenkombination und erhalten Sie KI-generierte Ergebnisse in Ihrer Zwischenablage.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="342"/>
+        <location filename="../src/ui/trayicon.cpp" line="328"/>
         <source>About ClipAI</source>
         <translation>Über ClipAI</translation>
     </message>

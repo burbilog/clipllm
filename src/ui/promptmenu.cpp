@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QTimer>
 #include <QApplication>
+#include <QScreen>
 #include <QStyle>
 #include <QToolButton>
 #include <QHBoxLayout>
@@ -100,10 +101,13 @@ void PromptMenu::showMenu(const QPoint& pos)
 
 void PromptMenu::rebuildMenu()
 {
-    // Remove existing prompt actions
-    for (QAction* action : m_promptActions) {
-        removeAction(action);
-        action->deleteLater();
+    // Remove all existing actions except search widget and separator
+    const QList<QAction*> allActions = actions();
+    for (QAction* action : allActions) {
+        if (action != m_searchAction && action != m_separatorAction) {
+            removeAction(action);
+            action->deleteLater();
+        }
     }
     m_promptActions.clear();
     m_promptIds.clear();
@@ -132,76 +136,85 @@ void PromptMenu::rebuildMenu()
         return;
     }
 
-    // Group prompts by their group path
-    QMap<QString, QVector<Models::Prompt>> grouped;
-    for (const auto& prompt : filteredPrompts) {
-        QString group = prompt.group();
-        if (group.isEmpty()) {
-            group = QStringLiteral(""); // Root
+    // Get search text and filter by it
+    QString searchText = m_searchEdit->text().toLower();
+    bool searchEmpty = searchText.isEmpty();
+
+    // Apply search filter to prompts
+    if (!searchEmpty) {
+        QVector<Models::Prompt> searchFiltered;
+        for (const auto& prompt : filteredPrompts) {
+            QString text = prompt.name() + prompt.description() + prompt.id();
+            if (text.toLower().contains(searchText)) {
+                searchFiltered.append(prompt);
+            }
         }
-        grouped[group].append(prompt);
+        filteredPrompts = searchFiltered;
     }
 
-    // Sort groups alphabetically
-    QStringList groups = grouped.keys();
-    groups.sort(Qt::CaseInsensitive);
+    if (filteredPrompts.isEmpty()) {
+        QAction* noPromptsAction = addAction(tr("No prompts found"));
+        noPromptsAction->setEnabled(false);
+        return;
+    }
 
-    // Helper function to sort prompts by priority
-    auto sortByPriority = [](QVector<Models::Prompt>& prompts) {
-        std::sort(prompts.begin(), prompts.end(),
-            [](const Models::Prompt& a, const Models::Prompt& b) {
-                if (a.priority() != b.priority()) {
-                    return a.priority() > b.priority();
-                }
-                return a.name() < b.name();
-            });
-    };
+    // Split into high priority (>0) and normal priority (<=0 or unset)
+    QVector<Models::Prompt> highPriority;
+    QVector<Models::Prompt> normalPriority;
 
-    // Add root prompts first (at top level)
-    if (groups.contains(QString())) {
-        groups.removeAll(QString());
-        QVector<Models::Prompt> rootPrompts = grouped.value(QString());
-        sortByPriority(rootPrompts);
+    for (const auto& prompt : filteredPrompts) {
+        if (prompt.priority() > 0) {
+            highPriority.append(prompt);
+        } else {
+            normalPriority.append(prompt);
+        }
+    }
 
-        for (const auto& prompt : rootPrompts) {
+    // If search is empty, show notification if no priority prompts
+    if (searchEmpty && highPriority.isEmpty()) {
+        QAction* hintAction = addAction(tr("Add priority to prompts to see them here"));
+        hintAction->setEnabled(false);
+        m_selectedIndex = -1;
+        return;
+    }
+
+    // Sort high priority by priority DESC, then name ASC
+    std::sort(highPriority.begin(), highPriority.end(),
+        [](const Models::Prompt& a, const Models::Prompt& b) {
+            if (a.priority() != b.priority()) {
+                return a.priority() > b.priority();  // Higher priority first
+            }
+            return a.name() < b.name();  // Alphabetical tiebreaker
+        });
+
+    // Sort normal priority by name ASC
+    std::sort(normalPriority.begin(), normalPriority.end(),
+        [](const Models::Prompt& a, const Models::Prompt& b) {
+            return a.name() < b.name();
+        });
+
+    // When search is empty, only show high priority prompts
+    // When searching, show all prompts that match the search
+    if (searchEmpty) {
+        // Only show priority prompts
+        for (const auto& prompt : highPriority) {
             QAction* action = createPromptAction(prompt);
             addAction(action);
             m_promptActions.append(action);
             m_promptIds.append(prompt.id());
         }
-    }
-
-    // Add groups as submenus
-    for (const QString& group : groups) {
-        // Build submenu path
-        QStringList parts = group.split(QLatin1Char('/'));
-
-        QMenu* currentMenu = this;
-
-        // Navigate/create nested menus
-        for (int i = 0; i < parts.size(); ++i) {
-            // Look for existing submenu
-            bool found = false;
-            for (QAction* action : currentMenu->actions()) {
-                if (action->menu() && action->text() == parts[i]) {
-                    currentMenu = action->menu();
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                currentMenu = currentMenu->addMenu(parts[i]);
-            }
+    } else {
+        // Show all prompts when searching (already filtered by search text)
+        for (const auto& prompt : highPriority) {
+            QAction* action = createPromptAction(prompt);
+            addAction(action);
+            m_promptActions.append(action);
+            m_promptIds.append(prompt.id());
         }
 
-        // Add prompts to the final submenu
-        QVector<Models::Prompt> groupPrompts = grouped.value(group);
-        sortByPriority(groupPrompts);
-
-        for (const auto& prompt : groupPrompts) {
+        for (const auto& prompt : normalPriority) {
             QAction* action = createPromptAction(prompt);
-            currentMenu->addAction(action);
+            addAction(action);
             m_promptActions.append(action);
             m_promptIds.append(prompt.id());
         }
@@ -318,11 +331,11 @@ void PromptMenu::showEvent(QShowEvent* event)
 {
     QMenu::showEvent(event);
 
-    // Set maximum height based on maxPrompts setting
-    int maxPrompts = m_configManager ? m_configManager->maxPrompts() : 10;
-    if (maxPrompts > 0) {
-        // Approximate height: search box (50px) + separator + prompts (30px each)
-        int maxHeight = 50 + 2 + (maxPrompts * 30);
+    // Set maximum height to 1/2 of screen height
+    QScreen* screen = QApplication::primaryScreen();
+    if (screen) {
+        QRect screenGeometry = screen->availableGeometry();
+        int maxHeight = screenGeometry.height() / 2;
         setMaximumHeight(maxHeight);
     }
 
@@ -347,7 +360,10 @@ void PromptMenu::onPromptTriggered()
 
 void PromptMenu::onSearchTextChanged(const QString& text)
 {
-    filterMenu(text);
+    Q_UNUSED(text);
+    // Rebuild menu - when search is empty, show only priority prompts
+    // when searching, show all prompts and filter them
+    rebuildMenu();
 }
 
 void PromptMenu::onPrevItem()

@@ -90,19 +90,30 @@ void ResultDialog::setupUi()
     m_markdownToggle->setChecked(m_markdownMode);
     connect(m_markdownToggle, &QPushButton::clicked, this, &ResultDialog::onMarkdownToggleClicked);
     m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
-    mainLayout->addWidget(m_markdownToggle);
+
+    // Input toggle button
+    m_inputToggleBtn = new QPushButton(tr("Show Input"));
+    m_inputToggleBtn->setCheckable(true);
+    m_inputToggleBtn->setChecked(false);
+    connect(m_inputToggleBtn, &QPushButton::clicked, this, &ResultDialog::onInputToggleClicked);
+
+    // Toggle buttons layout
+    QHBoxLayout* toggleLayout = new QHBoxLayout();
+    toggleLayout->addWidget(m_markdownToggle);
+    toggleLayout->addWidget(m_inputToggleBtn);
+    mainLayout->addLayout(toggleLayout);
 
     // Splitter for input/output
-    QSplitter* splitter = new QSplitter(Qt::Vertical);
+    m_splitter = new QSplitter(Qt::Vertical);
 
     // Input group
-    QGroupBox* inputGroup = new QGroupBox(tr("Input"));
-    QVBoxLayout* inputLayout = new QVBoxLayout(inputGroup);
+    m_inputGroup = new QGroupBox(tr("Input"));
+    QVBoxLayout* inputLayout = new QVBoxLayout(m_inputGroup);
     m_inputText = new QTextEdit();
     m_inputText->setReadOnly(true);
     m_inputText->setMaximumHeight(150);
     inputLayout->addWidget(m_inputText);
-    splitter->addWidget(inputGroup);
+    m_splitter->addWidget(m_inputGroup);
 
     // Output group
     QGroupBox* outputGroup = new QGroupBox(tr("Output"));
@@ -110,11 +121,13 @@ void ResultDialog::setupUi()
     m_outputText = new QTextEdit();
     m_outputText->setReadOnly(true);
     outputLayout->addWidget(m_outputText);
-    splitter->addWidget(outputGroup);
+    m_splitter->addWidget(outputGroup);
 
-    splitter->setStretchFactor(0, 1);
-    splitter->setStretchFactor(1, 3);
-    mainLayout->addWidget(splitter, 1);
+    // Set initial sizes - input collapsed (0 height), output takes all space
+    m_splitter->setStretchFactor(0, 0);
+    m_splitter->setStretchFactor(1, 1);
+    m_splitter->setSizes({0, 600});
+    mainLayout->addWidget(m_splitter, 1);
 
     // Button row
     QHBoxLayout* buttonLayout = new QHBoxLayout();
@@ -468,6 +481,21 @@ void ResultDialog::onMarkdownToggleClicked()
             m_outputText->setPlainText(m_output);
         }
         m_outputText->moveCursor(QTextCursor::End);
+    }
+}
+
+void ResultDialog::onInputToggleClicked()
+{
+    m_inputExpanded = m_inputToggleBtn->isChecked();
+
+    if (m_inputExpanded) {
+        // Expand input section
+        m_inputToggleBtn->setText(tr("Hide Input"));
+        m_splitter->setSizes({200, 400});
+    } else {
+        // Collapse input section
+        m_inputToggleBtn->setText(tr("Show Input"));
+        m_splitter->setSizes({0, 600});
     }
 }
 

@@ -10,6 +10,11 @@
 #include <QHBoxLayout>
 #include <QElapsedTimer>
 
+QT_BEGIN_NAMESPACE
+class QGroupBox;
+class QSplitter;
+QT_END_NAMESPACE
+
 namespace ClipAI {
 namespace Core {
 class LLMClient;
@@ -58,6 +63,7 @@ private slots:
     void onBytesReceivedChanged(qint64 bytesReceived);
     void performClose();
     void onMarkdownToggleClicked();
+    void onInputToggleClicked();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -74,6 +80,8 @@ private:
     // UI components
     QTextEdit* m_outputText = nullptr;
     QTextEdit* m_inputText = nullptr;
+    QGroupBox* m_inputGroup = nullptr;
+    QSplitter* m_splitter = nullptr;
     QLabel* m_statusLabel = nullptr;
     QLabel* m_modelLabel = nullptr;
     QLabel* m_tokensLabel = nullptr;
@@ -84,9 +92,13 @@ private:
     QPushButton* m_retryButton = nullptr;
     QPushButton* m_closeButton = nullptr;
     QPushButton* m_markdownToggle = nullptr;
+    QPushButton* m_inputToggleBtn = nullptr;
 
     // Markdown state
     bool m_markdownMode = true;
+
+    // Input section state
+    bool m_inputExpanded = false;
 
     // Request data
     QString m_promptId;

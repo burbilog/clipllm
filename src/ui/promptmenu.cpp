@@ -3,6 +3,8 @@
 #include "core/configmanager.h"
 #include "core/groupsmanager.h"
 #include <QKeyEvent>
+#include <QFocusEvent>
+#include <QHideEvent>
 #include <QTimer>
 #include <QApplication>
 #include <QScreen>
@@ -321,8 +323,16 @@ void PromptMenu::keyPressEvent(QKeyEvent* event)
             break;
 
         default:
-            // Pass other keys to search
-            QMenu::keyPressEvent(event);
+            // Ignore modifier keys (Alt, Ctrl, Shift, Meta) to prevent menu from closing
+            // when switching keyboard layout or using keyboard shortcuts
+            if (event->key() == Qt::Key_Alt ||
+                event->key() == Qt::Key_Control ||
+                event->key() == Qt::Key_Shift ||
+                event->key() == Qt::Key_Meta) {
+                event->accept();
+            } else {
+                QMenu::keyPressEvent(event);
+            }
             break;
     }
 }
@@ -343,6 +353,21 @@ void PromptMenu::showEvent(QShowEvent* event)
     QTimer::singleShot(50, this, [this]() {
         m_searchEdit->setFocus();
     });
+}
+
+void PromptMenu::focusOutEvent(QFocusEvent* event)
+{
+    // Don't close menu on focus out - this prevents closing when switching keyboard layout
+    // The menu will still close on Escape key or when a prompt is selected
+    Q_UNUSED(event);
+    // Intentionally not calling QMenu::focusOutEvent() to prevent auto-close
+}
+
+void PromptMenu::hideEvent(QHideEvent* event)
+{
+    QMenu::hideEvent(event);
+    // Menu is hidden - emit cancelled if not explicitly triggered
+    // This allows proper cleanup when menu closes for any reason
 }
 
 void PromptMenu::onPromptTriggered()

@@ -40,6 +40,8 @@ signals:
 protected:
     void keyPressEvent(QKeyEvent* event) override;
     void showEvent(QShowEvent* event) override;
+    void focusOutEvent(QFocusEvent* event) override;
+    void hideEvent(QHideEvent* event) override;
 
 private slots:
     void onPromptTriggered();

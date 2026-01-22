@@ -45,13 +45,13 @@
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="451"/>
-        <location filename="../src/core/app.cpp" line="530"/>
+        <location filename="../src/core/app.cpp" line="535"/>
         <source>Clipboard Empty</source>
         <translation>Буфер обмена пуст</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="452"/>
-        <location filename="../src/core/app.cpp" line="531"/>
+        <location filename="../src/core/app.cpp" line="536"/>
         <source>No content found in clipboard.</source>
         <translation>В буфере обмена нет содержимого.</translation>
     </message>
@@ -66,41 +66,41 @@
         <translation>Промпт не найден: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="494"/>
-        <location filename="../src/core/app.cpp" line="499"/>
-        <location filename="../src/core/app.cpp" line="510"/>
-        <location filename="../src/core/app.cpp" line="515"/>
+        <location filename="../src/core/app.cpp" line="495"/>
+        <location filename="../src/core/app.cpp" line="500"/>
+        <location filename="../src/core/app.cpp" line="511"/>
+        <location filename="../src/core/app.cpp" line="516"/>
         <source>Provider Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="495"/>
+        <location filename="../src/core/app.cpp" line="496"/>
         <source>No valid LLM provider configured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="500"/>
-        <location filename="../src/core/app.cpp" line="516"/>
+        <location filename="../src/core/app.cpp" line="501"/>
+        <location filename="../src/core/app.cpp" line="517"/>
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="511"/>
+        <location filename="../src/core/app.cpp" line="512"/>
         <source>Default LLM provider not found. Please configure one in Settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="548"/>
+        <location filename="../src/core/app.cpp" line="553"/>
         <source>Incompatible Content</source>
         <translation>Несовместимое содержимое</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="549"/>
+        <location filename="../src/core/app.cpp" line="554"/>
         <source>This prompt requires %1 content.</source>
         <translation>Этот промпт требует содержимое типа %1.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="582"/>
+        <location filename="../src/core/app.cpp" line="587"/>
         <source>[Image content]</source>
         <translation>[Изображение]</translation>
     </message>
@@ -1820,14 +1820,14 @@ Examples:
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1155"/>
         <location filename="../src/ui/settingsdialog.cpp" line="1242"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1311"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1315"/>
         <source> [Default]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1161"/>
         <location filename="../src/ui/settingsdialog.cpp" line="1242"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1314"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1318"/>
         <source> (disabled)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1852,14 +1852,14 @@ Examples:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1385"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1461"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1389"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1465"/>
         <source>API key set</source>
         <translation>API ключ установлен</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1385"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1461"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1389"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1465"/>
         <source>No API key</source>
         <translation>Нет API ключа</translation>
     </message>

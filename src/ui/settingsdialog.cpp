@@ -1278,6 +1278,10 @@ void SettingsDialog::onSetAsDefaultClicked()
     QString profileId = item->data(Qt::UserRole).toString();
 
     m_configManager->setDefaultProviderId(profileId);
+    m_configManager->sync();  // Ensure the setting is written immediately
+
+    qDebug() << "Default provider set to:" << profileId
+             << "current default:" << m_configManager->defaultProviderId();
 
     loadProviderProfiles();
 

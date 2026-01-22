@@ -478,6 +478,7 @@ void App::onPromptSelected(const QString& promptId)
     // Determine provider profile to use
     Models::ProviderProfile profile;
     QString defaultProviderId = m_configManager->defaultProviderId();
+    qDebug() << "onPromptSelected: defaultProviderId from config:" << defaultProviderId;
 
     if (prompt.overrideProvider() && !prompt.providerId().isEmpty()) {
         auto promptProfile = m_configManager->providerProfile(prompt.providerId());
@@ -520,6 +521,10 @@ void App::onPromptSelected(const QString& promptId)
 
     // Configure LLM client with selected profile
     Models::LLMConfig config = profileToConfig(profile);
+    qDebug() << "Using provider:" << profile.name()
+             << "ID:" << profile.id()
+             << "URL:" << profile.apiUrl().toString()
+             << "model:" << profile.model();
     m_llmClient->setConfig(config);
     // Also set API key explicitly since LLMClient checks m_apiKey separately
     m_llmClient->setApiKey(config.apiKey());

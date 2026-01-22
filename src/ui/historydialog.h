@@ -46,7 +46,6 @@ private slots:
     void onFilterChanged();
     void onItemSelectionChanged();
     void onItemDoubleClicked(const QModelIndex& index);
-    void onCopyClicked();
     void onDeleteClicked();
     void onFavoriteClicked();
     void onExportClicked();
@@ -95,7 +94,6 @@ private:
     QString m_currentInputText;
     QString m_currentOutputText;
 
-    QPushButton* m_copyButton = nullptr;
     QPushButton* m_deleteButton = nullptr;
     QPushButton* m_favoriteButton = nullptr;
     QPushButton* m_exportButton = nullptr;

@@ -143,11 +143,6 @@ void HistoryDialog::setupUi()
     m_viewDetailsButton->setEnabled(false);
     connect(m_viewDetailsButton, &QPushButton::clicked, this, &HistoryDialog::onViewDetailsClicked);
 
-    m_copyButton = new QPushButton(tr("Copy Output"));
-    m_copyButton->setIcon(style()->standardIcon(QStyle::SP_DialogSaveButton));
-    m_copyButton->setEnabled(false);
-    connect(m_copyButton, &QPushButton::clicked, this, &HistoryDialog::onCopyClicked);
-
     m_favoriteButton = new QPushButton(tr("Favorite"));
     m_favoriteButton->setIcon(style()->standardIcon(QStyle::SP_DialogSaveButton));
     m_favoriteButton->setEnabled(false);
@@ -193,7 +188,6 @@ void HistoryDialog::setupUi()
     connect(m_zoomInButton, &QPushButton::clicked, this, &HistoryDialog::onZoomInClicked);
 
     buttonLayout->addWidget(m_viewDetailsButton);
-    buttonLayout->addWidget(m_copyButton);
     buttonLayout->addWidget(m_favoriteButton);
     buttonLayout->addWidget(m_deleteButton);
     buttonLayout->addStretch();
@@ -363,7 +357,6 @@ void HistoryDialog::onItemSelectionChanged()
     if (selected.isEmpty()) {
         m_currentEntryId.clear();
         m_previewText->clear();
-        m_copyButton->setEnabled(false);
         m_deleteButton->setEnabled(false);
         m_favoriteButton->setEnabled(false);
         m_viewDetailsButton->setEnabled(false);
@@ -373,7 +366,6 @@ void HistoryDialog::onItemSelectionChanged()
     int row = selected.first().row();
     loadEntry(row);
 
-    m_copyButton->setEnabled(true);
     m_deleteButton->setEnabled(true);
     m_favoriteButton->setEnabled(true);
     m_viewDetailsButton->setEnabled(true);
@@ -407,19 +399,6 @@ void HistoryDialog::loadEntry(int row)
 void HistoryDialog::onItemDoubleClicked(const QModelIndex& index)
 {
     loadEntry(index.row());
-}
-
-void HistoryDialog::onCopyClicked()
-{
-    if (!m_historyManager || m_currentEntryId.isEmpty()) {
-        return;
-    }
-
-    auto entry = m_historyManager->getEntry(m_currentEntryId);
-    if (entry) {
-        QApplication::clipboard()->setText(entry->outputText);
-        m_statusLabel->setText(tr("Copied to clipboard"));
-    }
 }
 
 void HistoryDialog::onDeleteClicked()

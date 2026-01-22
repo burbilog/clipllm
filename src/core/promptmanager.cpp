@@ -1,6 +1,7 @@
 #include "promptmanager.h"
 #include "ui/promptconfirmdialog.h"
 #include "configmanager.h"
+#include "groupsmanager.h"
 #include "models/providerprofile.h"
 #include <QStandardPaths>
 #include <QDir>
@@ -474,6 +475,7 @@ QJsonObject PromptManager::getDefaultPromptsJson()
 
 bool PromptManager::importPromptsFromJson(const QJsonObject& json,
                                          ConfigManager* configManager,
+                                         GroupsManager* groupsManager,
                                          QWidget* parentWidget)
 {
     using namespace UI;
@@ -487,6 +489,45 @@ bool PromptManager::importPromptsFromJson(const QJsonObject& json,
     QMap<QString, Models::Prompt> existingByName;
     for (const auto& prompt : m_prompts) {
         existingByName[prompt.name()] = prompt;
+    }
+
+    // Ensure all groups from imported prompts exist in GroupsManager
+    if (groupsManager) {
+        QSet<QString> groupsToCreate;
+        QStringList existingGroups = groupsManager->loadGroups();
+        QSet<QString> existingGroupsSet(existingGroups.begin(), existingGroups.end());
+
+        // Collect all groups from imported prompts
+        for (const QJsonValue& value : promptsArray) {
+            if (!value.isObject()) {
+                continue;
+            }
+            Models::Prompt prompt(value.toObject());
+            if (!prompt.group().isEmpty()) {
+                QString group = prompt.group();
+                // Add the group and all its parent groups
+                while (!group.isEmpty() && !existingGroupsSet.contains(group)) {
+                    groupsToCreate.insert(group);
+                    // Also add parent groups
+                    int lastSlash = group.lastIndexOf(QLatin1Char('/'));
+                    if (lastSlash < 0) {
+                        break;
+                    }
+                    group = group.left(lastSlash);
+                }
+            }
+        }
+
+        // Create missing groups
+        if (!groupsToCreate.isEmpty()) {
+            QStringList allGroups = existingGroups;
+            for (const QString& group : groupsToCreate) {
+                if (!allGroups.contains(group)) {
+                    allGroups.append(group);
+                }
+            }
+            groupsManager->saveGroups(allGroups);
+        }
     }
 
     // Track "for all" decisions

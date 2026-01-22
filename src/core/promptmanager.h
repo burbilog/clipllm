@@ -31,6 +31,7 @@ public:
     // Import prompts with conflict resolution
     bool importPromptsFromJson(const QJsonObject& json,
                                class ConfigManager* configManager,
+                               class GroupsManager* groupsManager = nullptr,
                                QWidget* parentWidget = nullptr);
 
     // CRUD operations

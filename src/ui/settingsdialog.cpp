@@ -873,6 +873,7 @@ void SettingsDialog::onImportPromptsClicked()
     bool success = app->promptManager()->importPromptsFromJson(
         doc.object(),
         m_configManager,
+        app->groupsManager(),
         this
     );
 

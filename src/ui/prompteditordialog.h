@@ -46,6 +46,7 @@ protected:
 private slots:
     void onOkClicked();
     void onPreviewClicked();
+    void onExportClicked();
     void onOverrideProviderAndModelChanged(int state);
     void onProviderChanged(int index);
     void onRefreshModelsClicked();

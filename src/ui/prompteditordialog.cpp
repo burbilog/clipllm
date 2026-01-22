@@ -14,12 +14,15 @@
 #include <QRegularExpression>
 #include <QSet>
 #include <QSettings>
+#include <QFileDialog>
+#include <QDateTime>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QFile>
 
 namespace ClipAI {
 namespace UI {
@@ -271,6 +274,10 @@ void PromptEditorDialog::setupUi()
     // Buttons
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->addStretch();
+
+    QPushButton* exportButton = new QPushButton(tr("Export"));
+    connect(exportButton, &QPushButton::clicked, this, &PromptEditorDialog::onExportClicked);
+    buttonLayout->addWidget(exportButton);
 
     QPushButton* previewButton = new QPushButton(tr("Prompt Preview"));
     connect(previewButton, &QPushButton::clicked, this, &PromptEditorDialog::onPreviewClicked);
@@ -655,6 +662,58 @@ void PromptEditorDialog::onPreviewClicked()
     PromptPreviewDialog* previewDialog = new PromptPreviewDialog(prompt, this);
     previewDialog->setAttribute(Qt::WA_DeleteOnClose);
     previewDialog->exec();
+}
+
+void PromptEditorDialog::onExportClicked()
+{
+    Models::Prompt prompt = buildPrompt();
+
+    // Validate prompt before export
+    if (!prompt.isValid()) {
+        QMessageBox::warning(this, tr("Export Prompt"),
+                           tr("Cannot export: prompt is not valid."));
+        return;
+    }
+
+    // Generate default filename: prompt_{id}_{date}.json
+    QString defaultFileName = QStringLiteral("prompt_%1_%2.json")
+        .arg(prompt.id())
+        .arg(QDateTime::currentDateTime().toString("yyyyMMdd"));
+
+    QString fileName = QFileDialog::getSaveFileName(
+        this,
+        tr("Export Prompt"),
+        defaultFileName,
+        tr("JSON Files (*.json)")
+    );
+
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    // Create JSON in the same format as full export
+    QJsonObject root;
+    root[QStringLiteral("version")] = QStringLiteral("1.0");
+
+    QJsonArray promptsArray;
+    promptsArray.append(prompt.toJson());
+    root[QStringLiteral("prompts")] = promptsArray;
+
+    QJsonDocument doc(root);
+
+    // Write to file
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly)) {
+        QMessageBox::warning(this, tr("Export Prompt"),
+                           tr("Failed to open file for writing: %1").arg(fileName));
+        return;
+    }
+
+    file.write(doc.toJson(QJsonDocument::Indented));
+    file.close();
+
+    QMessageBox::information(this, tr("Export Prompt"),
+                           tr("Prompt exported to %1").arg(fileName));
 }
 
 void PromptEditorDialog::closeEvent(QCloseEvent* event)

@@ -176,9 +176,15 @@ void LLMClient::sendRequest(const LLMRequest& request)
     QNetworkRequest netRequest = createRequest(request);
     QByteArray body = createRequestBody(request);
 
-    qDebug() << "Sending request to:" << m_config.apiUrl();
+    qDebug() << "=== LLMClient Request ===";
+    qDebug() << "Config URL:" << m_config.apiUrl();
+    qDebug() << "Request URL:" << netRequest.url();
     qDebug() << "Model:" << request.model;
     qDebug() << "Messages:" << request.messages.size();
+    qDebug() << "Has API key:" << !m_apiKey.isEmpty();
+    qDebug() << "Proxy:" << m_networkManager->proxy().hostName() << ":" << m_networkManager->proxy().port();
+    qDebug() << "Proxy type:" << m_networkManager->proxy().type();
+    qDebug() << "=======================";
 
     m_currentReply = m_networkManager->post(netRequest, body);
 
@@ -360,9 +366,11 @@ QNetworkRequest LLMClient::createRequest(const LLMRequest& llmRequest) const
     request.setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("application/json"));
     request.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("ClipAI/1.0"));
 
-    // Set authorization header
-    QString authHeader = QStringLiteral("Bearer ") + m_apiKey;
-    request.setRawHeader("Authorization", authHeader.toUtf8());
+    // Set authorization header only if API key is present
+    if (!m_apiKey.isEmpty()) {
+        QString authHeader = QStringLiteral("Bearer ") + m_apiKey;
+        request.setRawHeader("Authorization", authHeader.toUtf8());
+    }
 
     // Additional headers
     request.setRawHeader("HTTP-Referer", QStringLiteral("https://clipai.org").toUtf8()); // For OpenRouter

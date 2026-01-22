@@ -180,7 +180,6 @@ bool App::initialize(bool startMinimized)
                 Models::LLMConfig config = profileToConfig(profile.value());
                 m_llmClient->setConfig(config);
                 m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
-                m_llmClient->setProxy(m_configManager->proxyUrl());
                 qDebug() << "LLM initialized: provider=" << profile->name()
                          << "model=" << profile->model();
             }
@@ -188,7 +187,6 @@ bool App::initialize(bool startMinimized)
             Models::LLMConfig config = profileToConfig(profile.value());
             m_llmClient->setConfig(config);
             m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
-            m_llmClient->setProxy(m_configManager->proxyUrl());
             qDebug() << "LLM initialized: provider=" << profile->name()
                      << "model=" << profile->model();
         }
@@ -396,7 +394,6 @@ void App::showSettings()
             Models::LLMConfig config = profileToConfig(profile.value());
             m_llmClient->setConfig(config);
             m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
-            m_llmClient->setProxy(m_configManager->proxyUrl());
             qDebug() << "LLM config updated: provider=" << profile->name()
                      << "model=" << profile->model();
         });
@@ -650,8 +647,8 @@ Models::LLMConfig App::profileToConfig(const Models::ProviderProfile& profile) c
         llmConfig.setMaxTokens(-1); // Don't send max_tokens to API
     }
 
-    // Proxy: always global
-    llmConfig.setProxyUrl(m_configManager->proxyUrl());
+    // Proxy: from provider profile (per-provider proxy setting)
+    llmConfig.setProxyUrl(profile.proxyUrl());
 
     // Stream: always true for now
     llmConfig.setStream(true);

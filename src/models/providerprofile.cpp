@@ -19,6 +19,11 @@ QJsonObject ProviderProfile::toJson() const
     obj[QStringLiteral("api_url")] = m_apiUrl.toString();
     obj[QStringLiteral("model")] = m_model;
 
+    // Proxy URL - only save if set
+    if (!m_proxyUrl.isEmpty()) {
+        obj[QStringLiteral("proxy_url")] = m_proxyUrl;
+    }
+
     // Temperature - only save if set
     if (m_temperature.has_value()) {
         obj[QStringLiteral("temperature")] = *m_temperature;
@@ -41,6 +46,9 @@ bool ProviderProfile::fromJson(const QJsonObject& json)
     m_name = json.value(QStringLiteral("name")).toString();
     m_apiUrl = QUrl(json.value(QStringLiteral("api_url")).toString());
     m_model = json.value(QStringLiteral("model")).toString();
+
+    // Proxy URL - optional
+    m_proxyUrl = json.value(QStringLiteral("proxy_url")).toString();
 
     // Temperature - optional
     if (json.contains(QStringLiteral("temperature"))) {

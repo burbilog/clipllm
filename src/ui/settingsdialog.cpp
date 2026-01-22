@@ -236,6 +236,18 @@ void SettingsDialog::setupLLMTab()
     connect(m_profileApiKeyEdit, &QLineEdit::textChanged, this, &SettingsDialog::onApiKeyChanged);
     configLayout->addRow(tr("API Key:"), m_profileApiKeyEdit);
 
+    m_profileProxyEdit = new QLineEdit();
+    m_profileProxyEdit->setPlaceholderText(tr("http://host:port or socks5://host:port (optional)"));
+    connect(m_profileProxyEdit, &QLineEdit::textChanged, this, [this]() {
+        if (m_updatingProfileEditor) {
+            return;
+        }
+        // Update the profile
+        Models::ProviderProfile profile = getCurrentProfileFromEditor();
+        m_configManager->updateProviderProfile(profile);
+    });
+    configLayout->addRow(tr("Proxy:"), m_profileProxyEdit);
+
     // Override Global Defaults section
     QGroupBox* overrideGroup = new QGroupBox(tr("Override Global Defaults (optional, leave empty for default)"));
     QFormLayout* overrideLayout = new QFormLayout(overrideGroup);
@@ -289,12 +301,6 @@ void SettingsDialog::setupLLMTab()
     connect(m_globalMaxTokensSpin, QOverload<int>::of(&QSpinBox::valueChanged),
             this, &SettingsDialog::onGlobalDefaultsChanged);
     globalLayout->addRow(tr("Max Tokens:"), m_globalMaxTokensSpin);
-
-    m_globalProxyEdit = new QLineEdit();
-    m_globalProxyEdit->setPlaceholderText(tr("http://host:port or socks5://host:port"));
-    connect(m_globalProxyEdit, &QLineEdit::textChanged,
-            this, &SettingsDialog::onGlobalDefaultsChanged);
-    globalLayout->addRow(tr("Proxy URL:"), m_globalProxyEdit);
 
     layout->addWidget(globalGroup);
 
@@ -510,8 +516,6 @@ void SettingsDialog::loadSettings()
         m_globalMaxTokensSpin->setValue(0); // Special value: (provider default)
     }
 
-    m_globalProxyEdit->setText(m_configManager->proxyUrl());
-
     // Hotkeys
     QString hotkey = m_configManager->hotkey();
     qDebug() << "SettingsDialog: loading hotkey from config:" << hotkey;
@@ -562,8 +566,6 @@ void SettingsDialog::saveSettings()
     } else {
         m_configManager->setDefaultMaxTokens(std::nullopt);
     }
-
-    m_configManager->setProxyUrl(m_globalProxyEdit->text());
 
     // Hotkeys
     QString hotkeyText = m_hotkeyEdit->hotkeyText();
@@ -1443,6 +1445,9 @@ void SettingsDialog::updateProfileEditor(const Models::ProviderProfile& profile)
         m_profileApiKeyEdit->setText(apiKey);
     }
 
+    // Proxy URL
+    m_profileProxyEdit->setText(profile.proxyUrl());
+
     // Temperature override
     if (profile.temperature().has_value()) {
         m_profileTemperatureSpin->setValue(*profile.temperature());
@@ -1480,6 +1485,7 @@ void SettingsDialog::clearProfileEditor()
     m_profileApiUrlEdit->clear();
     m_profileModelCombo->clear();
     m_profileApiKeyEdit->clear();
+    m_profileProxyEdit->clear();
     m_profileTemperatureSpin->setValue(0.0);
     m_profileMaxTokensSpin->setValue(0);
     m_profileEnabledCheck->setChecked(true);
@@ -1494,6 +1500,7 @@ Models::ProviderProfile SettingsDialog::getCurrentProfileFromEditor() const
     profile.setName(m_profileNameEdit->text());
     profile.setApiUrl(QUrl(m_profileApiUrlEdit->text()));
     profile.setModel(m_profileModelCombo->currentText().trimmed());
+    profile.setProxyUrl(m_profileProxyEdit->text().trimmed());
     profile.setEnabled(m_profileEnabledCheck->isChecked());
 
     // Temperature override - 0 means use global

@@ -145,12 +145,12 @@ private:
     QLabel* m_connectionStatusLabel = nullptr;
     QDoubleSpinBox* m_profileTemperatureSpin = nullptr;
     QSpinBox* m_profileMaxTokensSpin = nullptr;
+    QLineEdit* m_profileProxyEdit = nullptr;
     QCheckBox* m_profileEnabledCheck = nullptr;
 
     // LLM tab - Global Defaults
     QDoubleSpinBox* m_globalTemperatureSpin = nullptr;
     QSpinBox* m_globalMaxTokensSpin = nullptr;
-    QLineEdit* m_globalProxyEdit = nullptr;
 
     QNetworkAccessManager* m_networkManager = nullptr;
     QStringList m_currentSuggestedModels;

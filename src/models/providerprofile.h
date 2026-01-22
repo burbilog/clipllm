@@ -28,6 +28,7 @@ public:
     QString name() const { return m_name; }
     QUrl apiUrl() const { return m_apiUrl; }
     QString model() const { return m_model; }
+    QString proxyUrl() const { return m_proxyUrl; }
 
     // Temperature: optional per provider.
     // If std::nullopt -> use global default.
@@ -47,6 +48,7 @@ public:
     void setName(const QString& name) { m_name = name; }
     void setApiUrl(const QUrl& url) { m_apiUrl = url; }
     void setModel(const QString& model) { m_model = model; }
+    void setProxyUrl(const QString& proxy) { m_proxyUrl = proxy; }
     void setTemperature(std::optional<double> temp) { m_temperature = temp; }
     void setMaxTokens(std::optional<int> tokens) { m_maxTokens = tokens; }
     void setIsDefault(bool isDefault) { m_isDefault = isDefault; }
@@ -72,6 +74,7 @@ private:
     QString m_name;
     QUrl m_apiUrl;
     QString m_model;
+    QString m_proxyUrl;
     std::optional<double> m_temperature;
     std::optional<int> m_maxTokens;
     bool m_isDefault = false;

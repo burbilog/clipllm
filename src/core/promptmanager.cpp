@@ -1,4 +1,7 @@
 #include "promptmanager.h"
+#include "ui/promptconfirmdialog.h"
+#include "configmanager.h"
+#include "models/providerprofile.h"
 #include <QStandardPaths>
 #include <QDir>
 #include <QFile>
@@ -6,6 +9,7 @@
 #include <QJsonArray>
 #include <QRegularExpression>
 #include <QDebug>
+#include <QMap>
 
 namespace ClipAI {
 namespace Core {
@@ -466,6 +470,138 @@ QJsonObject PromptManager::getDefaultPromptsJson()
     root[QStringLiteral("prompts")] = promptsArray;
 
     return root;
+}
+
+bool PromptManager::importPromptsFromJson(const QJsonObject& json,
+                                         ConfigManager* configManager,
+                                         QWidget* parentWidget)
+{
+    using namespace UI;
+
+    QJsonArray promptsArray = json.value(QStringLiteral("prompts")).toArray();
+    if (promptsArray.isEmpty()) {
+        return true; // Nothing to import
+    }
+
+    // Build map of existing prompts by name for conflict detection
+    QMap<QString, Models::Prompt> existingByName;
+    for (const auto& prompt : m_prompts) {
+        existingByName[prompt.name()] = prompt;
+    }
+
+    // Track "for all" decisions
+    enum class GlobalDecision {
+        None,
+        OverwriteAll,
+        SkipAll
+    };
+    GlobalDecision globalDecision = GlobalDecision::None;
+
+    int importedCount = 0;
+
+    for (const QJsonValue& value : promptsArray) {
+        if (!value.isObject()) {
+            continue;
+        }
+
+        Models::Prompt importedPrompt(value.toObject());
+        if (!importedPrompt.isValid()) {
+            continue;
+        }
+
+        // Check for name conflict
+        if (existingByName.contains(importedPrompt.name())) {
+            const Models::Prompt& existing = existingByName[importedPrompt.name()];
+
+            // Always show conflict dialog, even if IDs match
+            PromptConflictDialog::Action action = PromptConflictDialog::Action::Cancel;
+
+            if (globalDecision == GlobalDecision::OverwriteAll) {
+                action = PromptConflictDialog::Action::Yes;
+            } else if (globalDecision == GlobalDecision::SkipAll) {
+                action = PromptConflictDialog::Action::No;
+            } else {
+                // Show conflict dialog
+                QString existingDetails = QStringLiteral("%1").arg(existing.description());
+                QString newDetails = QStringLiteral("%1").arg(importedPrompt.description());
+
+                PromptConflictDialog dialog(importedPrompt.name(),
+                                           existingDetails,
+                                           newDetails,
+                                           parentWidget);
+                if (dialog.exec() == QDialog::Accepted) {
+                    action = dialog.action();
+                } else {
+                    action = PromptConflictDialog::Action::Cancel;
+                }
+            }
+
+            // Handle the action
+            switch (action) {
+            case PromptConflictDialog::Action::Yes:
+                // Overwrite this prompt
+                for (int i = 0; i < m_prompts.size(); ++i) {
+                    if (m_prompts[i].name() == importedPrompt.name()) {
+                        m_prompts[i] = importedPrompt;
+                        break;
+                    }
+                }
+                importedCount++;
+                break;
+
+            case PromptConflictDialog::Action::YesForAll:
+                // Overwrite all conflicts
+                globalDecision = GlobalDecision::OverwriteAll;
+                for (int i = 0; i < m_prompts.size(); ++i) {
+                    if (m_prompts[i].name() == importedPrompt.name()) {
+                        m_prompts[i] = importedPrompt;
+                        break;
+                    }
+                }
+                importedCount++;
+                break;
+
+            case PromptConflictDialog::Action::No:
+                // Skip this prompt
+                continue;
+
+            case PromptConflictDialog::Action::NoForAll:
+                // Skip all conflicts
+                globalDecision = GlobalDecision::SkipAll;
+                continue;
+
+            case PromptConflictDialog::Action::Cancel:
+                // Cancel entire import
+                return false;
+            }
+        } else {
+            // No conflict, add new prompt
+            m_prompts.append(importedPrompt);
+            existingByName[importedPrompt.name()] = importedPrompt;
+            importedCount++;
+        }
+    }
+
+    // Validate and fix provider settings
+    if (configManager) {
+        for (auto& prompt : m_prompts) {
+            if (prompt.overrideProvider()) {
+                QString providerId = prompt.providerId();
+                // Check if provider exists
+                if (!providerId.isEmpty() && !configManager->providerProfile(providerId).has_value()) {
+                    // Provider doesn't exist, reset to defaults
+                    prompt.setOverrideProvider(false);
+                    prompt.setProviderId(QString());
+                    prompt.setModel(QString());
+                }
+            }
+        }
+    }
+
+    // Save the merged prompts
+    savePrompts();
+    emit promptsLoaded();
+    return true;
 }
 
 } // namespace Core

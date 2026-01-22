@@ -166,12 +166,12 @@
 <context>
     <name>ClipAI::Core::PromptManager</name>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="241"/>
+        <location filename="../src/core/promptmanager.cpp" line="245"/>
         <source>ID is required</source>
         <translation>ID is required</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="245"/>
+        <location filename="../src/core/promptmanager.cpp" line="249"/>
         <source>Name is required</source>
         <translation>Name is required</translation>
     </message>
@@ -180,17 +180,17 @@
         <translation type="vanished">Invalid placeholder: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="338"/>
+        <location filename="../src/core/promptmanager.cpp" line="342"/>
         <source>Summary</source>
         <translation>Summary</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="339"/>
+        <location filename="../src/core/promptmanager.cpp" line="343"/>
         <source>Generate a structured summary of the text</source>
         <translation>Generate a structured summary of the text</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="341"/>
+        <location filename="../src/core/promptmanager.cpp" line="345"/>
         <source>You are a professional analyst. Create a clear, structured summary.</source>
         <translation>You are a professional analyst. Create a clear, structured summary.</translation>
     </message>
@@ -203,7 +203,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="353"/>
+        <location filename="../src/core/promptmanager.cpp" line="357"/>
         <source>Translate to Russian</source>
         <translation>Translate to Russian</translation>
     </message>
@@ -212,12 +212,12 @@
         <translation type="vanished">Full translation to Russian</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="356"/>
+        <location filename="../src/core/promptmanager.cpp" line="360"/>
         <source>Ты — профессиональный переводчик. Переведи текст на русский язык, сохраняя стиль и смысл.</source>
         <translation>Ты — профессиональный переводчик. Переведи текст на русский язык, сохраняя стиль и смысл.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="368"/>
+        <location filename="../src/core/promptmanager.cpp" line="372"/>
         <source>Translate to English</source>
         <translation>Translate to English</translation>
     </message>
@@ -226,22 +226,22 @@
         <translation type="vanished">Full translation to English</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="371"/>
+        <location filename="../src/core/promptmanager.cpp" line="375"/>
         <source>You are a professional translator. Translate the text to English, preserving style and meaning.</source>
         <translation>You are a professional translator. Translate the text to English, preserving style and meaning.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="383"/>
+        <location filename="../src/core/promptmanager.cpp" line="387"/>
         <source>Explain Code</source>
         <translation>Explain Code</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="384"/>
+        <location filename="../src/core/promptmanager.cpp" line="388"/>
         <source>Explain what the code does</source>
         <translation>Explain what the code does</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="386"/>
+        <location filename="../src/core/promptmanager.cpp" line="390"/>
         <source>You are an expert programmer. Explain the code clearly and concisely.</source>
         <translation>You are an expert programmer. Explain the code clearly and concisely.</translation>
     </message>
@@ -254,17 +254,17 @@
 </translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="398"/>
+        <location filename="../src/core/promptmanager.cpp" line="402"/>
         <source>Code Review</source>
         <translation>Code Review</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="399"/>
+        <location filename="../src/core/promptmanager.cpp" line="403"/>
         <source>Review code and suggest improvements</source>
         <translation>Review code and suggest improvements</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="401"/>
+        <location filename="../src/core/promptmanager.cpp" line="405"/>
         <source>You are a code reviewer. Analyze the code for bugs, security issues, and suggest improvements.</source>
         <translation>You are a code reviewer. Analyze the code for bugs, security issues, and suggest improvements.</translation>
     </message>
@@ -277,17 +277,17 @@
 </translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="413"/>
+        <location filename="../src/core/promptmanager.cpp" line="417"/>
         <source>Refactor Code</source>
         <translation>Refactor Code</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="414"/>
+        <location filename="../src/core/promptmanager.cpp" line="418"/>
         <source>Suggest refactoring improvements</source>
         <translation>Suggest refactoring improvements</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="416"/>
+        <location filename="../src/core/promptmanager.cpp" line="420"/>
         <source>You are a code optimization expert. Suggest refactoring to improve readability, maintainability, and performance.</source>
         <translation>You are a code optimization expert. Suggest refactoring to improve readability, maintainability, and performance.</translation>
     </message>
@@ -300,106 +300,106 @@
 </translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="260"/>
+        <location filename="../src/core/promptmanager.cpp" line="264"/>
         <source>Invalid placeholder in user template: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="270"/>
+        <location filename="../src/core/promptmanager.cpp" line="274"/>
         <source>Invalid placeholder in system prompt: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="342"/>
+        <location filename="../src/core/promptmanager.cpp" line="346"/>
         <source>Please provide a comprehensive summary of the following text:
 
 {clipboard}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="354"/>
+        <location filename="../src/core/promptmanager.cpp" line="358"/>
         <source>Translate the text to Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="357"/>
-        <location filename="../src/core/promptmanager.cpp" line="372"/>
+        <location filename="../src/core/promptmanager.cpp" line="361"/>
+        <location filename="../src/core/promptmanager.cpp" line="376"/>
         <source>{clipboard}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="369"/>
+        <location filename="../src/core/promptmanager.cpp" line="373"/>
         <source>Translate the text to English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="387"/>
+        <location filename="../src/core/promptmanager.cpp" line="391"/>
         <source>Explain the following code:
 
 {clipboard}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="402"/>
+        <location filename="../src/core/promptmanager.cpp" line="406"/>
         <source>Review the following code:
 
 {clipboard}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="417"/>
+        <location filename="../src/core/promptmanager.cpp" line="421"/>
         <source>Refactor the following code:
 
 {clipboard}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="428"/>
+        <location filename="../src/core/promptmanager.cpp" line="432"/>
         <source>Describe Image</source>
         <translation>Describe Image</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="429"/>
+        <location filename="../src/core/promptmanager.cpp" line="433"/>
         <source>Generate a detailed description of the image</source>
         <translation>Generate a detailed description of the image</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="431"/>
+        <location filename="../src/core/promptmanager.cpp" line="435"/>
         <source>You are a visual analyst. Provide a detailed description of the image.</source>
         <translation>You are a visual analyst. Provide a detailed description of the image.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="432"/>
+        <location filename="../src/core/promptmanager.cpp" line="436"/>
         <source>Describe this image in detail.</source>
         <translation>Describe this image in detail.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="443"/>
+        <location filename="../src/core/promptmanager.cpp" line="447"/>
         <source>Extract Text</source>
         <translation>Extract Text</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="444"/>
+        <location filename="../src/core/promptmanager.cpp" line="448"/>
         <source>Extract all text from the image</source>
         <translation>Extract all text from the image</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="446"/>
+        <location filename="../src/core/promptmanager.cpp" line="450"/>
         <source>Extract all text from the image, preserving formatting where possible.</source>
         <translation>Extract all text from the image, preserving formatting where possible.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="447"/>
+        <location filename="../src/core/promptmanager.cpp" line="451"/>
         <source>Extract all text from this image.</source>
         <translation>Extract all text from this image.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="48"/>
+        <location filename="../src/core/promptmanager.cpp" line="52"/>
         <source>Failed to open prompts file</source>
         <translation>Failed to open prompts file</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="58"/>
+        <location filename="../src/core/promptmanager.cpp" line="62"/>
         <source>Failed to parse prompts file</source>
         <translation>Failed to parse prompts file</translation>
     </message>
@@ -894,6 +894,59 @@
     </message>
 </context>
 <context>
+    <name>ClipAI::UI::PromptConflictDialog</name>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="16"/>
+        <source>Prompt Conflict</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="23"/>
+        <source>A prompt named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="31"/>
+        <source>&lt;b&gt;Existing:&lt;/b&gt; %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="37"/>
+        <source>&lt;b&gt;New:&lt;/b&gt; %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="44"/>
+        <source>Do you want to replace it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="53"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="54"/>
+        <source>Yes for all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="55"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="56"/>
+        <source>No for all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptconfirmdialog.cpp" line="57"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+</context>
+<context>
     <name>ClipAI::UI::PromptEditorDialog</name>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="46"/>
@@ -1207,24 +1260,34 @@
 <context>
     <name>ClipAI::UI::PromptMenu</name>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="40"/>
+        <location filename="../src/ui/promptmenu.cpp" line="42"/>
         <source>Search prompts...</source>
         <translation>Search prompts...</translation>
     </message>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="50"/>
+        <location filename="../src/ui/promptmenu.cpp" line="52"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="113"/>
+        <location filename="../src/ui/promptmenu.cpp" line="118"/>
         <source>No prompts available</source>
         <translation>No prompts available</translation>
     </message>
     <message>
-        <location filename="../src/ui/promptmenu.cpp" line="131"/>
+        <location filename="../src/ui/promptmenu.cpp" line="136"/>
         <source>No prompts available for this content type</source>
         <translation>No prompts available for this content type</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptmenu.cpp" line="158"/>
+        <source>No prompts found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/promptmenu.cpp" line="177"/>
+        <source>Add priority to prompts to see them here</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1466,7 +1529,7 @@
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="99"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="423"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="413"/>
         <source>Reset to Defaults</source>
         <translation>Reset to Defaults</translation>
     </message>
@@ -1486,13 +1549,13 @@
         <translation>Hotkeys</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="433"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="423"/>
         <source>Prompts</source>
         <translation>Prompts</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="131"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="481"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="471"/>
         <source>History</source>
         <translation>History</translation>
     </message>
@@ -1640,27 +1703,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="592"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="576"/>
         <source>English</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="593"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="577"/>
         <source>Russian</source>
         <translation>Russian</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="594"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="578"/>
         <source>German</source>
         <translation>German</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="595"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="579"/>
         <source>French</source>
         <translation>French</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="596"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="580"/>
         <source>Spanish</source>
         <translation>Spanish</translation>
     </message>
@@ -1741,140 +1804,140 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="357"/>
-        <source>Menu Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="363"/>
-        <source>Maximum number of prompts to show in the menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="364"/>
-        <source>Max Prompts in Menu:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="372"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="360"/>
         <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="372"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="360"/>
         <source>Priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="372"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="360"/>
         <source>Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="396"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="386"/>
         <source>Delete</source>
         <translation type="unfinished">Delete</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="401"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="391"/>
         <source>Manage Groups...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="639"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="623"/>
         <source>(root)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="700"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="684"/>
         <source>Language Changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="701"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="685"/>
         <source>The language will be changed after you restart the application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="711"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="961"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="695"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="975"/>
         <source>No profile selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="719"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="967"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="703"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="981"/>
         <source>Profile not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="726"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="710"/>
         <source>Invalid API URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="743"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="727"/>
         <source>Configuration valid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="976"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="858"/>
+        <source>Failed to open file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingsdialog.cpp" line="868"/>
+        <source>Failed to parse JSON file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingsdialog.cpp" line="881"/>
+        <source>Prompts imported successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingsdialog.cpp" line="990"/>
         <source>Model fetching not supported for this provider</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1161"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1248"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1321"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1175"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1262"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1335"/>
         <source> [Default]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1167"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1248"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1324"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1181"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1262"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1338"/>
         <source> (disabled)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1204"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1218"/>
         <source>Add Provider Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1205"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1219"/>
         <source>Select a template or create custom:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1252"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1266"/>
         <source>Remove Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1253"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1267"/>
         <source>Are you sure you want to remove the profile &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1395"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1473"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1409"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1487"/>
         <source>API key set</source>
         <translation>API key set</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1395"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1473"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1409"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1487"/>
         <source>No API key</source>
         <translation>No API key</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="707"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="691"/>
         <source>Testing...</source>
         <translation>Testing...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="738"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="722"/>
         <source>Error: No API key</source>
         <translation>Error: No API key</translation>
     </message>
@@ -1883,43 +1946,43 @@
         <translation type="vanished">Connected</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="766"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="802"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="750"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="786"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="767"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="751"/>
         <source>Failed to add prompt. ID may already exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="803"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="787"/>
         <source>Failed to update prompt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1051"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1065"/>
         <source>Fetching models...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1062"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1076"/>
         <source>Error: %1</source>
         <translation type="unfinished">Error: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1072"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1086"/>
         <source>Error: Invalid response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1113"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1127"/>
         <source>No models found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1137"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1151"/>
         <source>Loaded %1 models</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1938,82 +2001,82 @@
         <translation type="vanished">&lt;b&gt;Note:&lt;/b&gt; Global hotkeys may not work on Wayland. </translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="372"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="360"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="372"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="360"/>
         <source>Description</source>
         <translation>Description</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="372"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="360"/>
         <source>Content Type</source>
         <translation>Content Type</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="387"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="377"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="391"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="381"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="415"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="405"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="419"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="409"/>
         <source>Export</source>
         <translation>Export</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="441"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="431"/>
         <source>History Settings</source>
         <translation>History Settings</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="450"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="440"/>
         <source>Maximum entries:</source>
         <translation>Maximum entries:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="447"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="437"/>
         <source>Unlimited</source>
         <translation>Unlimited</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="452"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="442"/>
         <source>Automatically clean up old entries</source>
         <translation>Automatically clean up old entries</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="462"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="452"/>
         <source>Days to keep:</source>
         <translation>Days to keep:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="466"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="456"/>
         <source>Actions</source>
         <translation>Actions</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="469"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="459"/>
         <source>Clear All History</source>
         <translation>Clear All History</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="674"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="658"/>
         <source>Reset Settings</source>
         <translation>Reset Settings</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="675"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="659"/>
         <source>Are you sure you want to reset all settings to defaults?</source>
         <translation>Are you sure you want to reset all settings to defaults?</translation>
     </message>
@@ -2030,60 +2093,61 @@
         <translation type="vanished">Prompt editor will be implemented in a future version.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="827"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="811"/>
         <source>Delete Prompt</source>
         <translation>Delete Prompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="828"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="812"/>
         <source>Are you sure you want to delete this prompt?</source>
         <translation>Are you sure you want to delete this prompt?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="856"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="871"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="840"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="857"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="867"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="880"/>
         <source>Import Prompts</source>
         <translation>Import Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="858"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="881"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="842"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="895"/>
         <source>JSON Files (*.json)</source>
         <translation type="unfinished">JSON Files (*.json)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="872"/>
         <source>Import will be implemented in a future version.</source>
-        <translation>Import will be implemented in a future version.</translation>
+        <translation type="vanished">Import will be implemented in a future version.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="879"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="895"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="893"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="909"/>
         <source>Export Prompts</source>
         <translation>Export Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="896"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="910"/>
         <source>Prompts exported to %1</source>
         <translation>Prompts exported to %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="903"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="917"/>
         <source>Reset Prompts</source>
         <translation>Reset Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="904"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="918"/>
         <source>Are you sure you want to reset prompts to defaults? All custom prompts will be lost.</source>
         <translation>Are you sure you want to reset prompts to defaults? All custom prompts will be lost.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="929"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="943"/>
         <source>Clear History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="930"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="944"/>
         <source>Are you sure you want to delete all history entries? This cannot be undone.</source>
         <translation>Are you sure you want to delete all history entries? This cannot be undone.</translation>
     </message>

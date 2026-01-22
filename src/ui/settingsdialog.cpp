@@ -851,9 +851,39 @@ void SettingsDialog::onImportPromptsClicked()
         return;
     }
 
-    // TODO: Implement import
-    QMessageBox::information(this, tr("Import Prompts"),
-                           tr("Import will be implemented in a future version."));
+    // Read and parse the JSON file
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::warning(this, tr("Import Prompts"),
+                            tr("Failed to open file: %1").arg(fileName));
+        return;
+    }
+
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
+    file.close();
+
+    if (error.error != QJsonParseError::NoError) {
+        QMessageBox::warning(this, tr("Import Prompts"),
+                            tr("Failed to parse JSON file: %1").arg(error.errorString()));
+        return;
+    }
+
+    // Import the prompts with conflict resolution
+    bool success = app->promptManager()->importPromptsFromJson(
+        doc.object(),
+        m_configManager,
+        this
+    );
+
+    if (success) {
+        QMessageBox::information(this, tr("Import Prompts"),
+                               tr("Prompts imported successfully."));
+        loadPrompts();
+    } else {
+        // Import was cancelled or failed - no message needed for cancel
+        // User already saw the conflict dialog and chose cancel
+    }
 }
 
 void SettingsDialog::onExportPromptsClicked()

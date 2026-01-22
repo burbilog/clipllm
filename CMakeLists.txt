@@ -63,6 +63,7 @@ set(SOURCES
     src/ui/historydialog.cpp
     src/ui/prompteditordialog.cpp
     src/ui/promptpreviewdialog.cpp
+    src/ui/promptconfirmdialog.cpp
     src/ui/imageviewdialog.cpp
     src/ui/groupsdialog.cpp
     src/models/prompt.cpp
@@ -90,6 +91,7 @@ set(HEADERS
     src/ui/historydialog.h
     src/ui/prompteditordialog.h
     src/ui/promptpreviewdialog.h
+    src/ui/promptconfirmdialog.h
     src/ui/imageviewdialog.h
     src/ui/groupsdialog.h
     src/models/prompt.h

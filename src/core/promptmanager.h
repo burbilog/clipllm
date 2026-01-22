@@ -28,6 +28,11 @@ public:
     bool savePrompts();
     bool savePromptsToFile(const QString& filePath);
 
+    // Import prompts with conflict resolution
+    bool importPromptsFromJson(const QJsonObject& json,
+                               class ConfigManager* configManager,
+                               QWidget* parentWidget = nullptr);
+
     // CRUD operations
     bool addPrompt(const Models::Prompt& prompt);
     bool updatePrompt(const QString& id, const Models::Prompt& prompt);

@@ -33,6 +33,7 @@ public:
 
     void setPrompt(const QString& promptId, const QString& promptName);
     void setInput(const QString& input);
+    void setProvider(const QString& provider);
     void setModel(const QString& model);
     void startRequest();
     void appendResponse(const QString& text);
@@ -64,6 +65,7 @@ protected:
 private:
     void setupUi();
     void updateState();
+    void updateModelLabel();
 
     Core::LLMClient* m_llmClient = nullptr;
     Core::HistoryManager* m_historyManager = nullptr;
@@ -91,6 +93,8 @@ private:
     QString m_promptName;
     QString m_input;
     QString m_output;
+    QString m_provider;
+    QString m_model;
 
     // State
     bool m_isStreaming = false;

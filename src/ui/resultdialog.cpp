@@ -163,9 +163,29 @@ void ResultDialog::setInput(const QString& input)
     m_inputText->setPlainText(input);
 }
 
+void ResultDialog::setProvider(const QString& provider)
+{
+    m_provider = provider;
+    updateModelLabel();
+}
+
 void ResultDialog::setModel(const QString& model)
 {
-    m_modelLabel->setText(tr("Model: %1").arg(model));
+    m_model = model;
+    updateModelLabel();
+}
+
+void ResultDialog::updateModelLabel()
+{
+    if (m_provider.isEmpty() && m_model.isEmpty()) {
+        m_modelLabel->setText(tr("Model: -"));
+    } else if (m_provider.isEmpty()) {
+        m_modelLabel->setText(tr("Model: %1").arg(m_model));
+    } else if (m_model.isEmpty()) {
+        m_modelLabel->setText(tr("Model: %1").arg(m_provider));
+    } else {
+        m_modelLabel->setText(tr("Model: %1 / %2").arg(m_provider, m_model));
+    }
 }
 
 void ResultDialog::startRequest()
@@ -230,7 +250,7 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
         m_statusLabel->setText(tr("Completed in %1 seconds").arg(elapsed, 0, 'f', 2));
         // Model is already set via setModel(), but update if response has different one
         if (!response.model.isEmpty()) {
-            m_modelLabel->setText(tr("Model: %1").arg(response.model));
+            setModel(response.model);
         }
         m_tokensLabel->setText(tr("Tokens: %1 input / %2 output")
                               .arg(response.inputTokens)

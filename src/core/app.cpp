@@ -586,7 +586,8 @@ void App::onPromptSelected(const QString& promptId)
     m_resultDialog->setPrompt(promptId, prompt.name());
     m_resultDialog->setInput(clipboardText.isEmpty() ? tr("[Image content]") : clipboardText);
 
-    // Set model from the selected profile
+    // Set provider and model from the selected profile
+    m_resultDialog->setProvider(profile.name());
     m_resultDialog->setModel(profile.model());
 
     m_resultDialog->startRequest();

@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QElapsedTimer>
+#include <QShortcut>
 
 QT_BEGIN_NAMESPACE
 class QGroupBox;
@@ -64,14 +65,21 @@ private slots:
     void performClose();
     void onMarkdownToggleClicked();
     void onInputToggleClicked();
+    void onZoomOutClicked();
+    void onZoomInClicked();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 private:
     void setupUi();
     void updateState();
     void updateModelLabel();
+    void applyFontSize();
+    void saveFontSize();
+    void loadFontSize();
 
     Core::LLMClient* m_llmClient = nullptr;
     Core::HistoryManager* m_historyManager = nullptr;
@@ -93,12 +101,17 @@ private:
     QPushButton* m_closeButton = nullptr;
     QPushButton* m_markdownToggle = nullptr;
     QPushButton* m_inputToggleBtn = nullptr;
+    QPushButton* m_zoomOutButton = nullptr;
+    QPushButton* m_zoomInButton = nullptr;
 
     // Markdown state
     bool m_markdownMode = true;
 
     // Input section state
     bool m_inputExpanded = false;
+
+    // Font size state
+    int m_fontSize = 10;
 
     // Request data
     QString m_promptId;

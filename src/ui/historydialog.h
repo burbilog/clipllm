@@ -38,6 +38,8 @@ public:
 protected:
     void showEvent(QShowEvent* event) override;
     void closeEvent(QCloseEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 private slots:
     void onSearchTextChanged(const QString& text);
@@ -51,6 +53,8 @@ private slots:
     void onClearClicked();
     void onViewDetailsClicked();
     void onMarkdownToggleClicked();
+    void onZoomOutClicked();
+    void onZoomInClicked();
 
 private:
     void setupUi();
@@ -60,6 +64,9 @@ private:
     void updatePreviewDisplay(const Core::HistoryEntry& entry);
     QString formatDate(const QDateTime& date) const;
     QString formatDuration(double ms) const;
+    void applyFontSize();
+    void saveFontSize();
+    void loadFontSize();
 
     Core::HistoryManager* m_historyManager = nullptr;
 
@@ -81,6 +88,9 @@ private:
     // Markdown state
     bool m_markdownMode = true;
 
+    // Font size state
+    int m_fontSize = 10;
+
     // Current display data
     QString m_currentInputText;
     QString m_currentOutputText;
@@ -92,6 +102,8 @@ private:
     QPushButton* m_clearButton = nullptr;
     QPushButton* m_viewDetailsButton = nullptr;
     QPushButton* m_closeButton = nullptr;
+    QPushButton* m_zoomOutButton = nullptr;
+    QPushButton* m_zoomInButton = nullptr;
 
     // Current selection
     QString m_currentEntryId;

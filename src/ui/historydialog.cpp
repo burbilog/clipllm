@@ -12,6 +12,8 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QSettings>
+#include <QWheelEvent>
+#include <QKeyEvent>
 
 namespace ClipAI {
 namespace UI {
@@ -23,6 +25,10 @@ HistoryDialog::HistoryDialog(Core::HistoryManager* historyManager, QWidget* pare
     setupUi();
     setupModel();
     refreshHistory();
+
+    // Restore font size
+    loadFontSize();
+    applyFontSize();
 }
 
 HistoryDialog::~HistoryDialog() = default;
@@ -116,6 +122,7 @@ void HistoryDialog::setupUi()
 
     m_previewText = new QTextEdit();
     m_previewText->setReadOnly(true);
+    m_previewText->installEventFilter(this);  // Install event filter for zoom
     previewLayout->addWidget(m_previewText);
 
     m_splitter->addWidget(previewGroup);
@@ -174,11 +181,28 @@ void HistoryDialog::setupUi()
         accept();
     });
 
+    // Zoom buttons
+    m_zoomOutButton = new QPushButton(tr("-"));
+    m_zoomOutButton->setToolTip(tr("Zoom out"));
+    m_zoomOutButton->setMaximumWidth(40);
+    connect(m_zoomOutButton, &QPushButton::clicked, this, &HistoryDialog::onZoomOutClicked);
+
+    m_zoomInButton = new QPushButton(tr("+"));
+    m_zoomInButton->setToolTip(tr("Zoom in"));
+    m_zoomInButton->setMaximumWidth(40);
+    connect(m_zoomInButton, &QPushButton::clicked, this, &HistoryDialog::onZoomInClicked);
+
     buttonLayout->addWidget(m_viewDetailsButton);
     buttonLayout->addWidget(m_copyButton);
     buttonLayout->addWidget(m_favoriteButton);
     buttonLayout->addWidget(m_deleteButton);
     buttonLayout->addStretch();
+
+    // Add zoom buttons
+    QHBoxLayout* zoomLayout = new QHBoxLayout();
+    zoomLayout->addWidget(m_zoomOutButton);
+    zoomLayout->addWidget(m_zoomInButton);
+    buttonLayout->addLayout(zoomLayout);
     buttonLayout->addWidget(m_exportButton);
     buttonLayout->addWidget(m_clearButton);
     buttonLayout->addWidget(m_closeButton);
@@ -574,6 +598,20 @@ void HistoryDialog::onMarkdownToggleClicked()
     }
 }
 
+void HistoryDialog::onZoomOutClicked()
+{
+    m_fontSize = std::max(m_fontSize - 1, 6);
+    applyFontSize();
+    saveFontSize();
+}
+
+void HistoryDialog::onZoomInClicked()
+{
+    m_fontSize = std::min(m_fontSize + 1, 30);
+    applyFontSize();
+    saveFontSize();
+}
+
 void HistoryDialog::showEvent(QShowEvent* event)
 {
     // Restore window geometry and splitter state when dialog is shown
@@ -605,9 +643,83 @@ void HistoryDialog::closeEvent(QCloseEvent* event)
         settings.setValue("historyDialogSplitter", m_splitter->saveState());
     }
     settings.endGroup();
+
+    // Save font size
+    saveFontSize();
     settings.sync();
 
     QDialog::closeEvent(event);
+}
+
+void HistoryDialog::wheelEvent(QWheelEvent* event)
+{
+    // Check if Ctrl key is pressed
+    if (event->modifiers() & Qt::ControlModifier) {
+        // Calculate delta
+        int delta = event->angleDelta().y();
+        if (delta > 0) {
+            m_fontSize = std::min(m_fontSize + 1, 30);
+        } else {
+            m_fontSize = std::max(m_fontSize - 1, 6);
+        }
+        applyFontSize();
+        saveFontSize();  // Save immediately
+        event->accept();
+    } else {
+        QDialog::wheelEvent(event);
+    }
+}
+
+bool HistoryDialog::eventFilter(QObject* watched, QEvent* event)
+{
+    // Handle key events for + and - shortcuts
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+        // Plus/Equal key (for zoom in)
+        if (keyEvent->key() == Qt::Key_Plus || keyEvent->key() == Qt::Key_Equal) {
+            m_fontSize = std::min(m_fontSize + 1, 30);
+            applyFontSize();
+            saveFontSize();
+            keyEvent->accept();
+            return true;
+        }
+        // Minus key (for zoom out)
+        if (keyEvent->key() == Qt::Key_Minus) {
+            m_fontSize = std::max(m_fontSize - 1, 6);
+            applyFontSize();
+            saveFontSize();
+            keyEvent->accept();
+            return true;
+        }
+    }
+
+    return QDialog::eventFilter(watched, event);
+}
+
+void HistoryDialog::applyFontSize()
+{
+    if (m_previewText) {
+        QFont font = m_previewText->font();
+        font.setPointSize(m_fontSize);
+        m_previewText->setFont(font);
+    }
+}
+
+void HistoryDialog::saveFontSize()
+{
+    QSettings settings;
+    settings.beginGroup("HistoryDialog");
+    settings.setValue("fontSize", m_fontSize);
+    settings.endGroup();
+    settings.sync();
+}
+
+void HistoryDialog::loadFontSize()
+{
+    QSettings settings;
+    settings.beginGroup("HistoryDialog");
+    m_fontSize = settings.value("fontSize", 10).toInt();
+    settings.endGroup();
 }
 
 } // namespace UI

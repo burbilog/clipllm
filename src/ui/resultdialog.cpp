@@ -11,6 +11,8 @@
 #include <QStyle>
 #include <QTimer>
 #include <QSettings>
+#include <QWheelEvent>
+#include <QKeyEvent>
 
 namespace ClipAI {
 namespace UI {
@@ -31,6 +33,10 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
     settings.beginGroup("WindowGeometry");
     restoreGeometry(settings.value("resultDialog").toByteArray());
     settings.endGroup();
+
+    // Restore font size
+    loadFontSize();
+    applyFontSize();
 
     // Hide save button if auto-save is enabled
     if (m_configManager && m_configManager->historyAutoSave()) {
@@ -112,6 +118,7 @@ void ResultDialog::setupUi()
     m_inputText = new QTextEdit();
     m_inputText->setReadOnly(true);
     m_inputText->setMaximumHeight(150);
+    m_inputText->installEventFilter(this);  // Install event filter for zoom
     inputLayout->addWidget(m_inputText);
     m_splitter->addWidget(m_inputGroup);
 
@@ -120,6 +127,7 @@ void ResultDialog::setupUi()
     QVBoxLayout* outputLayout = new QVBoxLayout(outputGroup);
     m_outputText = new QTextEdit();
     m_outputText->setReadOnly(true);
+    m_outputText->installEventFilter(this);  // Install event filter for zoom
     outputLayout->addWidget(m_outputText);
     m_splitter->addWidget(outputGroup);
 
@@ -151,9 +159,27 @@ void ResultDialog::setupUi()
     m_closeButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCloseButton));
     connect(m_closeButton, &QPushButton::clicked, this, &ResultDialog::onCloseClicked);
 
+    // Zoom buttons
+    m_zoomOutButton = new QPushButton(tr("-"));
+    m_zoomOutButton->setToolTip(tr("Zoom out"));
+    m_zoomOutButton->setMaximumWidth(40);
+    connect(m_zoomOutButton, &QPushButton::clicked, this, &ResultDialog::onZoomOutClicked);
+
+    m_zoomInButton = new QPushButton(tr("+"));
+    m_zoomInButton->setToolTip(tr("Zoom in"));
+    m_zoomInButton->setMaximumWidth(40);
+    connect(m_zoomInButton, &QPushButton::clicked, this, &ResultDialog::onZoomInClicked);
+
     buttonLayout->addWidget(m_copyButton);
     buttonLayout->addWidget(m_saveButton);
     buttonLayout->addStretch();
+
+    // Add zoom buttons
+    QHBoxLayout* zoomLayout = new QHBoxLayout();
+    zoomLayout->addWidget(m_zoomOutButton);
+    zoomLayout->addWidget(m_zoomInButton);
+    buttonLayout->addLayout(zoomLayout);
+
     buttonLayout->addWidget(m_retryButton);
     buttonLayout->addWidget(m_closeButton);
 
@@ -371,6 +397,9 @@ void ResultDialog::closeEvent(QCloseEvent* event)
     settings.beginGroup("WindowGeometry");
     settings.setValue("resultDialog", saveGeometry());
     settings.endGroup();
+
+    // Save font size
+    saveFontSize();
     settings.sync();
 
     // Prevent re-entry
@@ -497,6 +526,96 @@ void ResultDialog::onInputToggleClicked()
         m_inputToggleBtn->setText(tr("Show Input"));
         m_splitter->setSizes({0, 600});
     }
+}
+
+void ResultDialog::onZoomOutClicked()
+{
+    m_fontSize = std::max(m_fontSize - 1, 6);
+    applyFontSize();
+    saveFontSize();
+}
+
+void ResultDialog::onZoomInClicked()
+{
+    m_fontSize = std::min(m_fontSize + 1, 30);
+    applyFontSize();
+    saveFontSize();
+}
+
+void ResultDialog::wheelEvent(QWheelEvent* event)
+{
+    // Check if Ctrl (or Cmd on macOS) key is pressed
+    if (event->modifiers() & (Qt::ControlModifier | Qt::MetaModifier)) {
+        // Calculate delta
+        int delta = event->angleDelta().y();
+        if (delta > 0) {
+            m_fontSize = std::min(m_fontSize + 1, 30);
+        } else {
+            m_fontSize = std::max(m_fontSize - 1, 6);
+        }
+        applyFontSize();
+        saveFontSize();
+        event->accept();
+    } else {
+        QDialog::wheelEvent(event);
+    }
+}
+
+bool ResultDialog::eventFilter(QObject* watched, QEvent* event)
+{
+    // Handle key events for + and - shortcuts
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+        // Plus/Equal key (for zoom in)
+        if (keyEvent->key() == Qt::Key_Plus || keyEvent->key() == Qt::Key_Equal) {
+            m_fontSize = std::min(m_fontSize + 1, 30);
+            applyFontSize();
+            saveFontSize();
+            keyEvent->accept();
+            return true;
+        }
+        // Minus key (for zoom out)
+        if (keyEvent->key() == Qt::Key_Minus) {
+            m_fontSize = std::max(m_fontSize - 1, 6);
+            applyFontSize();
+            saveFontSize();
+            keyEvent->accept();
+            return true;
+        }
+    }
+
+    return QDialog::eventFilter(watched, event);
+}
+
+void ResultDialog::applyFontSize()
+{
+    if (m_inputText) {
+        QFont font = m_inputText->font();
+        font.setPointSize(m_fontSize);
+        m_inputText->setFont(font);
+    }
+    if (m_outputText) {
+        QFont font = m_outputText->font();
+        font.setPointSize(m_fontSize);
+        m_outputText->setFont(font);
+    }
+}
+
+void ResultDialog::saveFontSize()
+{
+    QSettings settings;
+    settings.beginGroup("ResultDialog");
+    settings.setValue("fontSize", m_fontSize);
+    settings.endGroup();
+    settings.sync();
+}
+
+void ResultDialog::loadFontSize()
+{
+    QSettings settings;
+    settings.beginGroup("ResultDialog");
+    m_fontSize = settings.value("fontSize", 10).toInt();
+    settings.endGroup();
 }
 
 } // namespace UI

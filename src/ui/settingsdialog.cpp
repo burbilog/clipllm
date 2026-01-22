@@ -195,13 +195,12 @@ void SettingsDialog::setupLLMTab()
     m_profileApiUrlEdit = new QLineEdit();
     m_profileApiUrlEdit->setPlaceholderText(tr("Select template or enter custom URL (e.g., http://.../v1/chat/completions)"));
     connect(m_profileApiUrlEdit, &QLineEdit::textChanged, this, [this]() {
-        // Mark as modified
-        if (!m_updatingProfileEditor && m_profilesList->currentRow() >= 0) {
-            QListWidgetItem* item = m_profilesList->currentItem();
-            if (item) {
-                item->setData(Qt::UserRole + 1, true); // Modified flag
-            }
+        if (m_updatingProfileEditor) {
+            return;
         }
+        // Update the profile
+        Models::ProviderProfile profile = getCurrentProfileFromEditor();
+        m_configManager->updateProviderProfile(profile);
     });
     urlLayout->addWidget(m_profileApiUrlEdit, 1);
 
@@ -970,12 +969,8 @@ void SettingsDialog::onRefreshModelsClicked()
     const auto& profile = profileOpt.value();
     QString apiUrl = profile.apiUrl().toString();
 
-    // Determine if we can fetch models based on URL
-    bool canFetch = apiUrl.contains(QStringLiteral("openrouter.ai")) ||
-                    apiUrl.contains(QStringLiteral("api.openai.com")) ||
-                    apiUrl.contains(QStringLiteral("nano-gpt.com"));
-
-    if (!canFetch) {
+    // Anthropic uses different API format, not supported
+    if (apiUrl.contains(QStringLiteral("anthropic.com"))) {
         m_connectionStatusLabel->setText(tr("Model fetching not supported for this provider"));
         return;
     }
@@ -1023,8 +1018,26 @@ void SettingsDialog::fetchModelsFromAPI()
             authHeader = QStringLiteral("Bearer ") + apiKey;
         }
     } else {
-        m_connectionStatusLabel->setText(tr("Fetch not supported for this provider"));
-        return;
+        // OpenAI-compatible providers (Ollama, llama.cpp, custom, etc.)
+        // Replace /chat/completions or /messages with /models
+        url = QUrl(apiUrl);
+        QString path = url.path();
+        path.replace(QLatin1String("/chat/completions"), QLatin1String("/models"));
+        path.replace(QLatin1String("/messages"), QLatin1String("/models"));
+        // Ensure we have /v1/models or /models
+        if (!path.endsWith(QLatin1String("/models"))) {
+            if (path.endsWith(QLatin1String("/v1")) || path.endsWith(QLatin1String("/api"))) {
+                path += QLatin1String("/models");
+            } else if (path.contains(QLatin1String("/v1/")) || path.contains(QLatin1String("/api/"))) {
+                path = path.left(path.lastIndexOf(QLatin1Char('/'))) + QLatin1String("/models");
+            } else {
+                path = QLatin1String("/v1/models");
+            }
+        }
+        url.setPath(path);
+        if (!apiKey.isEmpty()) {
+            authHeader = QStringLiteral("Bearer ") + apiKey;
+        }
     }
 
     QNetworkRequest request(url);
@@ -1070,17 +1083,7 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
         apiUrl = profileOpt->apiUrl().toString();
     }
 
-    if (apiUrl.contains(QStringLiteral("openrouter"))) {
-        // OpenRouter format: { "data": [ { "id": "model/name", ... }, ... ] }
-        QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
-        for (const QJsonValue& value : modelArray) {
-            QJsonObject modelObj = value.toObject();
-            QString id = modelObj.value(QStringLiteral("id")).toString();
-            if (!id.isEmpty()) {
-                models.append(id);
-            }
-        }
-    } else if (apiUrl.contains(QStringLiteral("api.openai.com"))) {
+    if (apiUrl.contains(QStringLiteral("api.openai.com"))) {
         // OpenAI format: { "data": [ { "id": "model-name", ... }, ... ] }
         QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
         for (const QJsonValue& value : modelArray) {
@@ -1091,8 +1094,9 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
                 models.append(id);
             }
         }
-    } else if (apiUrl.contains(QStringLiteral("nano-gpt.com"))) {
-        // NanoGPT uses OpenAI-compatible format: { "data": [ { "id": "model-name", ... }, ... ] }
+    } else {
+        // OpenAI-compatible format (OpenRouter, NanoGPT, Ollama, llama.cpp, custom, etc.)
+        // { "data": [ { "id": "model/name", ... }, ... ] }
         QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
         for (const QJsonValue& value : modelArray) {
             QJsonObject modelObj = value.toObject();
@@ -1455,9 +1459,8 @@ void SettingsDialog::updateProfileEditor(const Models::ProviderProfile& profile)
 
     // Enable/disable refresh button based on URL
     QString apiUrl = profile.apiUrl().toString();
-    bool canFetch = apiUrl.contains(QStringLiteral("openrouter.ai")) ||
-                    apiUrl.contains(QStringLiteral("api.openai.com")) ||
-                    apiUrl.contains(QStringLiteral("nano-gpt.com"));
+    // Disable only for Anthropic (uses different API format), enable for all others
+    bool canFetch = !apiUrl.contains(QStringLiteral("anthropic.com"));
     m_refreshModelsButton->setEnabled(canFetch);
 
     // Update API key status label

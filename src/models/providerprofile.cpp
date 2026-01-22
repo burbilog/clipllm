@@ -126,6 +126,13 @@ QList<ProviderProfile::ProviderTemplate> ProviderProfile::availableTemplates()
             }
         },
         {
+            QStringLiteral("llama.cpp"),
+            QStringLiteral("http://localhost:8080/v1/chat/completions"),
+            QString(),
+            {
+            }
+        },
+        {
             QStringLiteral("Custom"),
             QString(),
             QString(),

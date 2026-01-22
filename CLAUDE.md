@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Important Guidelines
+
+**DO NOT create git commits unless explicitly requested by the user.**
+
+After making code changes, build the project to verify everything compiles, but wait for explicit user approval before committing.
+
 ## Project Overview
 
 ClipAI is a cross-platform LLM clipboard utility written in C++ using Qt6. It runs as a system tray service and allows users to process clipboard content (text and images) with AI prompts using global hotkeys.

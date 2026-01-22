@@ -299,6 +299,7 @@ void ResultDialog::onSaveClicked()
         Core::HistoryEntry entry;
         entry.promptId = m_promptId;
         entry.promptName = m_promptName;
+        entry.provider = m_provider;
         entry.model = m_llmClient ? m_llmClient->model() : QString();
         entry.inputText = m_input;
         entry.outputText = m_output;

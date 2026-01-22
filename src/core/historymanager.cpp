@@ -19,6 +19,7 @@ QJsonObject HistoryEntry::toJson() const
     obj[QStringLiteral("timestamp")] = timestamp.toString(Qt::ISODate);
     obj[QStringLiteral("prompt_id")] = promptId;
     obj[QStringLiteral("prompt_name")] = promptName;
+    obj[QStringLiteral("provider")] = provider;
     obj[QStringLiteral("model")] = model;
     obj[QStringLiteral("content_type")] = contentType == HistoryEntryType::Text ? QStringLiteral("text") :
                                          contentType == HistoryEntryType::Image ? QStringLiteral("image") :
@@ -41,6 +42,7 @@ HistoryEntry HistoryEntry::fromJson(const QJsonObject& json)
     entry.timestamp = QDateTime::fromString(json.value(QStringLiteral("timestamp")).toString(), Qt::ISODate);
     entry.promptId = json.value(QStringLiteral("prompt_id")).toString();
     entry.promptName = json.value(QStringLiteral("prompt_name")).toString();
+    entry.provider = json.value(QStringLiteral("provider")).toString();
     entry.model = json.value(QStringLiteral("model")).toString();
 
     QString typeStr = json.value(QStringLiteral("content_type")).toString();

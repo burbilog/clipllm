@@ -513,11 +513,24 @@ QString HistoryDialog::formatDuration(double ms) const
 
 void HistoryDialog::updatePreviewDisplay(const Core::HistoryEntry& entry)
 {
+    // Format provider/model string
+    QString providerText = entry.provider.isEmpty() ? tr("Unknown") : entry.provider;
+    QString modelText;
+    if (!entry.provider.isEmpty() && !entry.model.isEmpty()) {
+        modelText = providerText + " / " + entry.model;
+    } else if (!entry.model.isEmpty()) {
+        modelText = entry.model;
+    } else if (!entry.provider.isEmpty()) {
+        modelText = providerText;
+    } else {
+        modelText = tr("Unknown");
+    }
+
     if (m_markdownMode) {
         // Build full markdown content with headers
         QString fullMarkdown;
         fullMarkdown += "**Prompt:** " + entry.promptName + "\n\n";
-        fullMarkdown += "**Model:** " + entry.model + "\n\n";
+        fullMarkdown += "**Model:** " + modelText + "\n\n";
         fullMarkdown += "**Date:** " + formatDate(entry.timestamp) + "\n\n";
         fullMarkdown += "**Duration:** " + formatDuration(entry.durationMs) + "\n\n";
         fullMarkdown += "**Tokens:** " + QString::number(entry.inputTokens) + " input / " +
@@ -531,7 +544,7 @@ void HistoryDialog::updatePreviewDisplay(const Core::HistoryEntry& entry)
         // Plain text mode
         QString fullText;
         fullText += tr("Prompt: %1\n").arg(entry.promptName);
-        fullText += tr("Model: %1\n").arg(entry.model);
+        fullText += tr("Model: %1\n").arg(modelText);
         fullText += tr("Date: %1\n").arg(formatDate(entry.timestamp));
         fullText += tr("Duration: %1\n").arg(formatDuration(entry.durationMs));
         fullText += tr("Tokens: %1 input / %2 output\n")

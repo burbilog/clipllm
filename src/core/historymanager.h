@@ -23,6 +23,7 @@ struct HistoryEntry
     QDateTime timestamp;
     QString promptId;
     QString promptName;
+    QString provider;
     QString model;
     HistoryEntryType contentType;
     QString inputText;

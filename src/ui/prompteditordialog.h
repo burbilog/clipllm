@@ -14,6 +14,9 @@
 #include "models/prompt.h"
 #include "models/providerprofile.h"
 
+class QNetworkAccessManager;
+class QNetworkReply;
+
 namespace ClipAI {
 namespace Core {
 class PromptManager;
@@ -45,6 +48,7 @@ private slots:
     void onPreviewClicked();
     void onOverrideProviderAndModelChanged(int state);
     void onProviderChanged(int index);
+    void onRefreshModelsClicked();
     void onTemperatureUseDefaultChanged(int state);
     void validateInput();
 
@@ -55,6 +59,8 @@ private:
     void updateTemperatureFieldState();
     void loadProviders();
     void loadModelsForProvider(const QString& providerId);
+    void fetchModelsFromAPI();
+    void onModelsFetchFinished(QNetworkReply* reply);
     QString generateUniqueId() const;
 
     Core::PromptManager* m_promptManager = nullptr;
@@ -78,11 +84,16 @@ private:
     QCheckBox* m_overrideProviderAndModelCheck = nullptr;
     QComboBox* m_providerCombo = nullptr;
     QComboBox* m_modelCombo = nullptr;
+    QPushButton* m_refreshModelsButton = nullptr;
+    QLabel* m_modelsStatusLabel = nullptr;
     QCheckBox* m_temperatureUseDefaultCheck = nullptr;
     QDoubleSpinBox* m_temperatureSpin = nullptr;
     QSpinBox* m_maxTokensSpin = nullptr;
     QCheckBox* m_enabledCheck = nullptr;
     QSpinBox* m_prioritySpin = nullptr;
+
+    // Network
+    QNetworkAccessManager* m_networkManager = nullptr;
 
     // Validation
     QLabel* m_validationLabel = nullptr;

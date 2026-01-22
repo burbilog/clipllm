@@ -14,6 +14,12 @@
 #include <QRegularExpression>
 #include <QSet>
 #include <QSettings>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 namespace ClipAI {
 namespace UI {
@@ -31,6 +37,9 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
     if (app) {
         m_configManager = app->configManager();
     }
+
+    // Create network manager for fetching models
+    m_networkManager = new QNetworkAccessManager(this);
 
     setupUi();
     loadProviders();
@@ -73,6 +82,9 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
     if (app) {
         m_configManager = app->configManager();
     }
+
+    // Create network manager for fetching models
+    m_networkManager = new QNetworkAccessManager(this);
 
     setupUi();
     loadProviders();
@@ -201,10 +213,25 @@ void PromptEditorDialog::setupUi()
             this, &PromptEditorDialog::onProviderChanged);
     settingsLayout->addRow(tr("Provider:"), m_providerCombo);
 
+    // Model combo with refresh button
+    QHBoxLayout* modelLayout = new QHBoxLayout();
     m_modelCombo = new QComboBox();
     m_modelCombo->setEditable(true);
     m_modelCombo->setToolTip(tr("Select or enter model name"));
-    settingsLayout->addRow(tr("Model:"), m_modelCombo);
+    modelLayout->addWidget(m_modelCombo, 1);
+
+    m_refreshModelsButton = new QPushButton(tr("Refresh"));
+    m_refreshModelsButton->setEnabled(false);
+    connect(m_refreshModelsButton, &QPushButton::clicked,
+            this, &PromptEditorDialog::onRefreshModelsClicked);
+    modelLayout->addWidget(m_refreshModelsButton);
+
+    m_modelsStatusLabel = new QLabel();
+    m_modelsStatusLabel->setWordWrap(true);
+    m_modelsStatusLabel->setStyleSheet("color: gray; font-size: 10px;");
+    modelLayout->addWidget(m_modelsStatusLabel);
+
+    settingsLayout->addRow(tr("Model:"), modelLayout);
 
     // Temperature field with checkbox
     m_temperatureUseDefaultCheck = new QCheckBox(tr("Use default temperature from settings"));
@@ -400,6 +427,12 @@ void PromptEditorDialog::onOverrideProviderAndModelChanged(int state)
     bool enabled = (state == Qt::Checked);
     m_providerCombo->setEnabled(enabled);
     m_modelCombo->setEnabled(enabled);
+    m_refreshModelsButton->setEnabled(enabled);
+
+    // Clear status label when disabled
+    if (!enabled) {
+        m_modelsStatusLabel->clear();
+    }
 }
 
 void PromptEditorDialog::onProviderChanged(int index)
@@ -634,6 +667,164 @@ void PromptEditorDialog::closeEvent(QCloseEvent* event)
     settings.sync();
 
     QDialog::closeEvent(event);
+}
+
+void PromptEditorDialog::onRefreshModelsClicked()
+{
+    QString providerId = m_providerCombo->currentData().toString();
+    if (providerId.isEmpty()) {
+        m_modelsStatusLabel->setText(tr("No provider selected"));
+        m_modelsStatusLabel->setStyleSheet("color: red; font-size: 10px;");
+        return;
+    }
+
+    auto profileOpt = m_configManager->providerProfile(providerId);
+    if (!profileOpt.has_value()) {
+        m_modelsStatusLabel->setText(tr("Provider not found"));
+        m_modelsStatusLabel->setStyleSheet("color: red; font-size: 10px;");
+        return;
+    }
+
+    // Check if provider URL supports model fetching (not Anthropic)
+    QString apiUrl = profileOpt->apiUrl().toString();
+    if (apiUrl.contains(QStringLiteral("anthropic.com"))) {
+        m_modelsStatusLabel->setText(tr("Model fetching not supported for this provider"));
+        m_modelsStatusLabel->setStyleSheet("color: orange; font-size: 10px;");
+        return;
+    }
+
+    fetchModelsFromAPI();
+}
+
+void PromptEditorDialog::fetchModelsFromAPI()
+{
+    QString providerId = m_providerCombo->currentData().toString();
+    if (providerId.isEmpty()) {
+        return;
+    }
+
+    auto profileOpt = m_configManager->providerProfile(providerId);
+    if (!profileOpt.has_value()) {
+        return;
+    }
+
+    const auto& profile = profileOpt.value();
+    QString apiUrl = profile.apiUrl().toString();
+
+    qDebug() << "=== PromptEditor: Fetching models ===";
+    qDebug() << "Provider ID:" << providerId;
+    qDebug() << "Provider name:" << profile.name();
+    qDebug() << "Original API URL:" << apiUrl;
+
+    // Build models endpoint URL - same logic as SettingsDialog
+    QUrl url = QUrl(apiUrl);
+    QString path = url.path();
+    path.replace(QLatin1String("/chat/completions"), QLatin1String("/models"));
+    path.replace(QLatin1String("/messages"), QLatin1String("/models"));
+
+    // Ensure we have /v1/models or /models
+    if (!path.endsWith(QLatin1String("/models"))) {
+        if (path.endsWith(QLatin1String("/v1")) || path.endsWith(QLatin1String("/api"))) {
+            path += QLatin1String("/models");
+        } else if (path.contains(QLatin1String("/v1/")) || path.contains(QLatin1String("/api/"))) {
+            path = path.left(path.lastIndexOf(QLatin1Char('/'))) + QLatin1String("/models");
+        } else {
+            path = QLatin1String("/v1/models");
+        }
+    }
+    url.setPath(path);
+
+    qDebug() << "Models URL:" << url.toString();
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("application/json"));
+    request.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("ClipAI/1.0"));
+
+    // Note: API key not included here as many providers don't require it for model listing
+    // For providers that require authentication, the user can manually enter the model
+
+    m_modelsStatusLabel->setText(tr("Fetching models..."));
+    m_modelsStatusLabel->setStyleSheet("color: blue; font-size: 10px;");
+    m_refreshModelsButton->setEnabled(false);
+
+    QNetworkReply* reply = m_networkManager->get(request);
+    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+        onModelsFetchFinished(reply);
+    });
+}
+
+void PromptEditorDialog::onModelsFetchFinished(QNetworkReply* reply)
+{
+    m_refreshModelsButton->setEnabled(true);
+
+    if (reply->error() != QNetworkReply::NoError) {
+        qDebug() << "PromptEditor: Model fetch error:" << reply->errorString();
+        qDebug() << "HTTP status:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        QByteArray response = reply->readAll();
+        qDebug() << "Response body:" << response.left(500);
+        m_modelsStatusLabel->setText(tr("Error: %1").arg(reply->errorString()));
+        m_modelsStatusLabel->setStyleSheet("color: red; font-size: 10px;");
+        reply->deleteLater();
+        return;
+    }
+
+    QByteArray data = reply->readAll();
+    qDebug() << "PromptEditor: Received response, size:" << data.size();
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+
+    if (doc.isNull() || !doc.isObject()) {
+        qDebug() << "PromptEditor: Invalid JSON response";
+        qDebug() << "Response:" << data.left(500);
+        m_modelsStatusLabel->setText(tr("Error: Invalid response"));
+        m_modelsStatusLabel->setStyleSheet("color: red; font-size: 10px;");
+        reply->deleteLater();
+        return;
+    }
+
+    QJsonObject root = doc.object();
+    QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
+
+    qDebug() << "PromptEditor: Found" << modelArray.size() << "models";
+
+    if (modelArray.isEmpty()) {
+        m_modelsStatusLabel->setText(tr("No models found"));
+        m_modelsStatusLabel->setStyleSheet("color: orange; font-size: 10px;");
+        reply->deleteLater();
+        return;
+    }
+
+    // Save current selection
+    QString currentModel = m_modelCombo->currentText().trimmed();
+
+    // Update combo box
+    m_modelCombo->clear();
+    m_modelCombo->addItem(tr("(Custom model...)"), QString());
+
+    // Collect model names and sort them
+    QStringList models;
+    for (const QJsonValue& value : modelArray) {
+        QJsonObject modelObj = value.toObject();
+        QString id = modelObj.value(QStringLiteral("id")).toString();
+        if (!id.isEmpty()) {
+            models.append(id);
+        }
+    }
+    models.sort(Qt::CaseInsensitive);
+
+    // Add sorted models
+    for (const QString& model : models) {
+        m_modelCombo->addItem(model, model);
+    }
+
+    // Restore selection
+    if (!currentModel.isEmpty()) {
+        m_modelCombo->setCurrentText(currentModel);
+    }
+
+    m_modelsStatusLabel->setText(tr("Loaded %1 models").arg(models.size()));
+    m_modelsStatusLabel->setStyleSheet("color: green; font-size: 10px;");
+
+    reply->deleteLater();
 }
 
 } // namespace UI

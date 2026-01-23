@@ -146,6 +146,31 @@ The `App` class (inherits `QApplication`) is the central controller that:
 - Qt6 via Homebrew: `brew install qt@6`
 - Full functionality supported
 
+## Version Management
+
+**Single Source of Truth:** The application version is defined in ONE place:
+
+### CMakeLists.txt (line ~18)
+```cmake
+project(ClipAI VERSION 1.0.0 LANGUAGES CXX)
+```
+
+When you change the version here:
+- CMake automatically generates `build/src/core/version.h`
+- All code can include `core/version.h` to access version macros:
+  - `CLIPAI_VERSION_MAJOR`, `CLIPAI_VERSION_MINOR`, `CLIPAI_VERSION_PATCH`
+  - `CLIPAI_VERSION_STR` - full version string (e.g., "1.0.0")
+  - `ClipAI::versionString()` - Qt function returning version QString
+
+**Example usage in code:**
+```cpp
+#include "core/version.h"
+
+QString version = ClipAI::versionString();  // "1.0.0"
+```
+
+**Never edit** `build/src/core/version.h` directly - it will be overwritten on rebuild.
+
 ## Adding New Features
 
 ### Adding a New LLM Provider
@@ -175,7 +200,6 @@ only if I reference previous, python incarnation of this program.
 
 ## Known Limitations
 
-- **No Unit Tests**: No test framework configured yet
 - **No CI/CD**: No GitHub Actions or other CI configuration
 
 ## Dependencies

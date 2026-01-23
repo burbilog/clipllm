@@ -4,17 +4,17 @@
 <context>
     <name>ClipAI::App</name>
     <message>
-        <location filename="../src/core/app.cpp" line="246"/>
+        <location filename="../src/core/app.cpp" line="247"/>
         <source>System Tray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="247"/>
+        <location filename="../src/core/app.cpp" line="248"/>
         <source>Couldn&apos;t detect any system tray on this system.</source>
         <translation>Не удалось обнаружить системный трей.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="257"/>
+        <location filename="../src/core/app.cpp" line="258"/>
         <source>Welcome to ClipAI</source>
         <translation>Добро пожаловать в ClipAI</translation>
     </message>
@@ -23,88 +23,88 @@
         <translation type="vanished">ClipAI запущен в системном трее. Нажмите глобальную горячую клавишу для начала работы.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="258"/>
+        <location filename="../src/core/app.cpp" line="259"/>
         <source>ClipAI is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
         <translation>ClipAI работает в системном трее. Щёлкните по значку в трее или настройте горячую клавишу в настройках.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="350"/>
+        <location filename="../src/core/app.cpp" line="351"/>
         <source>Hotkey Not Supported</source>
         <translation>Горячие клавиши не поддерживаются</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="351"/>
+        <location filename="../src/core/app.cpp" line="352"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
         <translation>Глобальные горячие клавиши не поддерживаются на этой платформе (Wayland?).</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="376"/>
+        <location filename="../src/core/app.cpp" line="377"/>
         <source>Hotkey Registration Failed</source>
         <translation>Не удалось зарегистрировать горячую клавишу</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="377"/>
+        <location filename="../src/core/app.cpp" line="378"/>
         <source>Could not register global hotkey: %1</source>
         <translation>Не удалось зарегистрировать глобальную горячую клавишу: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="484"/>
-        <location filename="../src/core/app.cpp" line="578"/>
+        <location filename="../src/core/app.cpp" line="485"/>
+        <location filename="../src/core/app.cpp" line="579"/>
         <source>Clipboard Empty</source>
         <translation>Буфер обмена пуст</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="485"/>
-        <location filename="../src/core/app.cpp" line="579"/>
+        <location filename="../src/core/app.cpp" line="486"/>
+        <location filename="../src/core/app.cpp" line="580"/>
         <source>No content found in clipboard.</source>
         <translation>В буфере обмена нет содержимого.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="504"/>
+        <location filename="../src/core/app.cpp" line="505"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="505"/>
+        <location filename="../src/core/app.cpp" line="506"/>
         <source>Prompt not found: %1</source>
         <translation>Промпт не найден: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="528"/>
-        <location filename="../src/core/app.cpp" line="533"/>
-        <location filename="../src/core/app.cpp" line="544"/>
-        <location filename="../src/core/app.cpp" line="549"/>
+        <location filename="../src/core/app.cpp" line="529"/>
+        <location filename="../src/core/app.cpp" line="534"/>
+        <location filename="../src/core/app.cpp" line="545"/>
+        <location filename="../src/core/app.cpp" line="550"/>
         <source>Provider Error</source>
         <translation>Ошибка провайдера</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="529"/>
+        <location filename="../src/core/app.cpp" line="530"/>
         <source>No valid LLM provider configured.</source>
         <translation>Не настроен ни один корректный провайдер LLM.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="534"/>
-        <location filename="../src/core/app.cpp" line="550"/>
+        <location filename="../src/core/app.cpp" line="535"/>
+        <location filename="../src/core/app.cpp" line="551"/>
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation>Провайдер LLM не настроен. Настройте его в настройках.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="545"/>
+        <location filename="../src/core/app.cpp" line="546"/>
         <source>Default LLM provider not found. Please configure one in Settings.</source>
         <translation>Провайдер LLM по умолчанию не найден. Настройте его в настройках.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="596"/>
+        <location filename="../src/core/app.cpp" line="597"/>
         <source>Incompatible Content</source>
         <translation>Несовместимое содержимое</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="597"/>
+        <location filename="../src/core/app.cpp" line="598"/>
         <source>This prompt requires %1 content.</source>
         <translation>Этот промпт требует содержимое типа %1.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="630"/>
+        <location filename="../src/core/app.cpp" line="631"/>
         <source>[Image content]</source>
         <translation>[Изображение]</translation>
     </message>
@@ -2298,60 +2298,64 @@ Examples:
 <context>
     <name>ClipAI::UI::TrayIcon</name>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="55"/>
-        <location filename="../src/ui/trayicon.cpp" line="259"/>
-        <location filename="../src/ui/trayicon.cpp" line="369"/>
+        <location filename="../src/ui/trayicon.cpp" line="56"/>
+        <location filename="../src/ui/trayicon.cpp" line="260"/>
+        <location filename="../src/ui/trayicon.cpp" line="370"/>
         <source>ClipAI - LLM Clipboard Utility</source>
         <translation>ClipAI — Утилита для буфера обмена LLM</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="88"/>
-        <location filename="../src/ui/trayicon.cpp" line="373"/>
+        <location filename="../src/ui/trayicon.cpp" line="89"/>
+        <location filename="../src/ui/trayicon.cpp" line="374"/>
         <source>&amp;Settings</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="92"/>
-        <location filename="../src/ui/trayicon.cpp" line="376"/>
+        <location filename="../src/ui/trayicon.cpp" line="93"/>
+        <location filename="../src/ui/trayicon.cpp" line="377"/>
         <source>&amp;History</source>
         <translation>&amp;История</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="114"/>
-        <location filename="../src/ui/trayicon.cpp" line="387"/>
+        <location filename="../src/ui/trayicon.cpp" line="115"/>
+        <location filename="../src/ui/trayicon.cpp" line="388"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Промпты</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="96"/>
-        <location filename="../src/ui/trayicon.cpp" line="379"/>
+        <location filename="../src/ui/trayicon.cpp" line="324"/>
+        <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
+        <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Версия %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; — кроссплатформенная утилита для работы с буфером обмена, интегрирующая большие языковые модели (LLM) непосредственно в ваш рабочий процесс. Работая как служба в системном трее, она позволяет обрабатывать содержимое буфера обмена (текст и изображения) с помощью настраиваемых AI-промптов, используя глобальные горячие клавиши.&lt;/p&gt;&lt;p&gt;Нужно ли вам суммировать текст, перевести содержимое, переписать код, извлечь информацию из изображений или выполнить любое другое AI-преобразование — ClipAI делает это мгновенно доступным с помощью одного нажатия клавиши. Скопируйте содержимое, нажмите горячую клавишу и получите AI-результат обратно в буфер обмена.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/trayicon.cpp" line="97"/>
+        <location filename="../src/ui/trayicon.cpp" line="380"/>
         <source>&amp;About</source>
         <translation>&amp;О программе</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="106"/>
-        <location filename="../src/ui/trayicon.cpp" line="382"/>
+        <location filename="../src/ui/trayicon.cpp" line="107"/>
+        <location filename="../src/ui/trayicon.cpp" line="383"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="136"/>
-        <location filename="../src/ui/trayicon.cpp" line="144"/>
+        <location filename="../src/ui/trayicon.cpp" line="137"/>
+        <location filename="../src/ui/trayicon.cpp" line="145"/>
         <source>No prompts available</source>
         <translation>Нет доступных промптов</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="261"/>
+        <location filename="../src/ui/trayicon.cpp" line="262"/>
         <source>Hotkey: </source>
         <translation>Горячая клавиша: </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="323"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
-        <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Версия 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; — это кроссплатформенная утилита для работы с буфером обмена, которая интегрирует большие языковые модели (LLM) непосредственно в ваш рабочий процесс. Работая как служба в системном трее, она позволяет обрабатывать содержимое буфера обмена (текст и изображения) с помощью настраиваемых AI промптов, используя глобальные горячие клавиши.&lt;/p&gt;&lt;p&gt;Нужно ли вам резюмировать текст, переводить содержимое, переписывать код, извлекать информацию из изображений или выполнять любое другое AI-преобразование, ClipAI делает это мгновенно доступным с помощью нажатия одной клавиши. Скопируйте содержимое, нажмите горячую клавишу и получите AI-результат обратно в буфере обмена.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Версия 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; — это кроссплатформенная утилита для работы с буфером обмена, которая интегрирует большие языковые модели (LLM) непосредственно в ваш рабочий процесс. Работая как служба в системном трее, она позволяет обрабатывать содержимое буфера обмена (текст и изображения) с помощью настраиваемых AI промптов, используя глобальные горячие клавиши.&lt;/p&gt;&lt;p&gt;Нужно ли вам резюмировать текст, переводить содержимое, переписывать код, извлекать информацию из изображений или выполнять любое другое AI-преобразование, ClipAI делает это мгновенно доступным с помощью нажатия одной клавиши. Скопируйте содержимое, нажмите горячую клавишу и получите AI-результат обратно в буфере обмена.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="344"/>
+        <location filename="../src/ui/trayicon.cpp" line="345"/>
         <source>About ClipAI</source>
         <translation>О ClipAI</translation>
     </message>

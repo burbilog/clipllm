@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "app.h"
+#include "core/version.h"
 #include "clipboardmanager.h"
 #include "llmclient.h"
 #include "promptmanager.h"
@@ -80,7 +81,7 @@ App::App(int &argc, char **argv)
     setApplicationName(APPLICATION_NAME);
     setOrganizationName(APPLICATION_NAME);
     setOrganizationDomain(ORGANIZATION_DOMAIN);
-    setApplicationVersion(QStringLiteral("1.0.0"));
+    setApplicationVersion(ClipAI::versionString());
 
     // Don't quit when last window is closed (important for tray apps)
     setQuitOnLastWindowClosed(false);

@@ -16,6 +16,7 @@
 
 #include "trayicon.h"
 #include "core/app.h"
+#include "core/version.h"
 #include "core/promptmanager.h"
 #include "core/groupsmanager.h"
 #include <QApplication>
@@ -328,7 +329,7 @@ void TrayIcon::onAboutTriggered()
         "</td>"
         "<td>"
         "<h2 style='margin-top:0;'>ClipAI</h2>"
-        "<p><b>Version 1.0.0</b></p>"
+        "<p><b>Version %1</b></p>"
         "</td>"
         "</tr>"
         "</table>"
@@ -339,7 +340,7 @@ void TrayIcon::onAboutTriggered()
         "or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single "
         "keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.</p>"
         "<p><small>Copyright © 2026 Roman V. Isaev &lt;<a href='mailto:rm@isaeff.net'>rm@isaeff.net</a>&gt;</small></p>"
-    );
+    ).arg(ClipAI::versionString());
 
     QMessageBox::about(nullptr, tr("About ClipAI"), aboutText);
 }

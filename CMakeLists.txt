@@ -118,6 +118,13 @@ set(HEADERS
     3rdparty/qhotkey/qhotkey_p.h
 )
 
+# Generate version.h from version.h.in (single source of truth for version)
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/version.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/src/core/version.h
+    @ONLY
+)
+
 # Create executable
 add_executable(${PROJECT_NAME}
     ${SOURCES}
@@ -147,6 +154,7 @@ endif()
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/qhotkey
+    ${CMAKE_CURRENT_BINARY_DIR}/src  # For generated version.h
 )
 
 # Generate tray icons from high-resolution source

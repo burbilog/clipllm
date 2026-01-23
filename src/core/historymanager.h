@@ -73,7 +73,8 @@ class HistoryManager : public QObject
     Q_OBJECT
 
 public:
-    explicit HistoryManager(QObject* parent = nullptr);
+    explicit HistoryManager(QObject* parent = nullptr,
+                          const QString& customHistoryPath = QString());
     ~HistoryManager();
 
     // Initialize history storage
@@ -130,6 +131,7 @@ private:
     QVector<HistoryEntry> m_entries;
     bool m_dirty = false;
     int m_maxEntries = 1000;
+    QString m_customPath;
 };
 
 } // namespace Core

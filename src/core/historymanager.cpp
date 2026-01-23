@@ -112,8 +112,8 @@ QString HistoryEntry::getOutputPreview(int maxLength) const
     return preview;
 }
 
-HistoryManager::HistoryManager(QObject* parent)
-    : QObject(parent)
+HistoryManager::HistoryManager(QObject* parent, const QString& customHistoryPath)
+    : QObject(parent), m_customPath(customHistoryPath)
 {
 }
 
@@ -603,6 +603,9 @@ QString HistoryManager::generateId() const
 
 QString HistoryManager::getHistoryFilePath() const
 {
+    if (!m_customPath.isEmpty()) {
+        return m_customPath;
+    }
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     return dataPath + QStringLiteral("/history.json");
 }

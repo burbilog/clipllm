@@ -60,8 +60,9 @@ void TestHistoryManager::init()
     m_tempDir = new QTemporaryDir();
     QVERIFY(m_tempDir->isValid());
 
-    // Create a fresh manager for each test
-    m_manager = new HistoryManager();
+    // Create a fresh manager for each test with isolated storage
+    m_manager = new HistoryManager(nullptr,
+                                  m_tempDir->filePath(QStringLiteral("history.json")));
 }
 
 void TestHistoryManager::cleanup()

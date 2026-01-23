@@ -167,17 +167,17 @@
         <location filename="../src/core/llmclient.cpp" line="341"/>
         <location filename="../src/core/llmclient.cpp" line="397"/>
         <source>Connection successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Connection successful</translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="400"/>
         <source>HTTP %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP %1: %2</translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="467"/>
         <source>SSL error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>SSL error: %1</translation>
     </message>
 </context>
 <context>
@@ -629,22 +629,22 @@
     <message>
         <location filename="../src/ui/historydialog.cpp" line="197"/>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="198"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom out</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="202"/>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="203"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom in</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="228"/>
@@ -1480,27 +1480,27 @@
         <location filename="../src/ui/resultdialog.cpp" line="117"/>
         <location filename="../src/ui/resultdialog.cpp" line="542"/>
         <source>Show Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Show Input</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="179"/>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="180"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom out</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="184"/>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="185"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom in</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="242"/>
@@ -1540,7 +1540,7 @@
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="538"/>
         <source>Hide Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide Input</translation>
     </message>
     <message>
         <source>Processing...</source>
@@ -2103,12 +2103,12 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="753"/>
         <source>Error: LLM client not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Error: LLM client not available</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="787"/>
         <source>Connection successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Connection successful</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1151"/>

@@ -156,17 +156,17 @@
         <location filename="../src/core/llmclient.cpp" line="341"/>
         <location filename="../src/core/llmclient.cpp" line="397"/>
         <source>Connection successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Соединение успешно</translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="400"/>
         <source>HTTP %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP %1: %2</translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="467"/>
         <source>SSL error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка SSL: %1</translation>
     </message>
 </context>
 <context>
@@ -2237,12 +2237,12 @@ Examples:
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="753"/>
         <source>Error: LLM client not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка: Клиент LLM недоступен</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="787"/>
         <source>Connection successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Соединение успешно</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1151"/>

@@ -89,7 +89,6 @@ void SettingsDialog::setupUi()
 
     setupGeneralTab();
     setupLLMTab();
-    setupHotkeysTab();
     setupPromptsTab();
     setupHistoryTab();
 
@@ -132,27 +131,36 @@ void SettingsDialog::setupGeneralTab()
     QVBoxLayout* layout = new QVBoxLayout(widget);
 
     QGroupBox* languageGroup = new QGroupBox(tr("Language"));
-    QVBoxLayout* languageLayout = new QVBoxLayout(languageGroup);
-
-    languageLayout->addWidget(new QLabel(tr("Interface Language:")));
+    QFormLayout* languageLayout = new QFormLayout(languageGroup);
 
     m_languageCombo = new QComboBox();
     connect(m_languageCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &SettingsDialog::onLanguageChanged);
 
-    languageLayout->addWidget(m_languageCombo);
-    languageLayout->addStretch();
+    languageLayout->addRow(tr("Interface Language:"), m_languageCombo);
 
     layout->addWidget(languageGroup);
 
-    QGroupBox* historyGroup = new QGroupBox(tr("History"));
-    QVBoxLayout* historyLayout = new QVBoxLayout(historyGroup);
+    // Global hotkey group
+    QGroupBox* hotkeyGroup = new QGroupBox(tr("Global Hotkey"));
+    QFormLayout* hotkeyLayout = new QFormLayout(hotkeyGroup);
 
-    m_autoSaveHistoryCheck = new QCheckBox(tr("Automatically save to history after generation"));
-    historyLayout->addWidget(m_autoSaveHistoryCheck);
-    historyLayout->addStretch();
+    m_hotkeyEdit = new HotkeyEdit();
+    connect(m_hotkeyEdit, &HotkeyEdit::keySequenceChanged,
+            this, &SettingsDialog::onHotkeyChanged);
 
-    layout->addWidget(historyGroup);
+    hotkeyLayout->addRow(tr("Activate Clipboard Processing:"), m_hotkeyEdit);
+
+    QLabel* infoLabel = new QLabel(
+        tr("<b>Note:</b> Global hotkeys may not work on Wayland. "
+           "On X11, the hotkey works globally. On Windows and macOS, "
+           "global hotkeys are fully supported.")
+    );
+    infoLabel->setWordWrap(true);
+    infoLabel->setStyleSheet("font-size: 9pt;");
+    hotkeyLayout->addRow(infoLabel);
+
+    layout->addWidget(hotkeyGroup);
     layout->addStretch();
 
     m_tabWidget->addTab(widget, tr("General"));
@@ -337,34 +345,6 @@ void SettingsDialog::setupLLMTab()
     m_tabWidget->addTab(widget, tr("LLM"));
 }
 
-void SettingsDialog::setupHotkeysTab()
-{
-    QWidget* widget = new QWidget();
-    QVBoxLayout* layout = new QVBoxLayout(widget);
-
-    QGroupBox* hotkeyGroup = new QGroupBox(tr("Global Hotkey"));
-    QFormLayout* hotkeyLayout = new QFormLayout(hotkeyGroup);
-
-    m_hotkeyEdit = new HotkeyEdit();
-    connect(m_hotkeyEdit, &HotkeyEdit::keySequenceChanged,
-            this, &SettingsDialog::onHotkeyChanged);
-
-    hotkeyLayout->addRow(tr("Activate Clipboard Processing:"), m_hotkeyEdit);
-
-    QLabel* infoLabel = new QLabel(
-        tr("<b>Note:</b> Global hotkeys may not work on Wayland. "
-           "On X11, the hotkey works globally. On Windows and macOS, "
-           "global hotkeys are fully supported.")
-    );
-    infoLabel->setWordWrap(true);
-    hotkeyLayout->addRow(infoLabel);
-
-    layout->addWidget(hotkeyGroup);
-    layout->addStretch();
-
-    m_tabWidget->addTab(widget, tr("Hotkeys"));
-}
-
 void SettingsDialog::setupPromptsTab()
 {
     QWidget* widget = new QWidget();
@@ -444,6 +424,10 @@ void SettingsDialog::setupHistoryTab()
 {
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout(widget);
+
+    // Auto-save checkbox at the top
+    m_autoSaveHistoryCheck = new QCheckBox(tr("Automatically save to history after generation"));
+    layout->addWidget(m_autoSaveHistoryCheck);
 
     QGroupBox* settingsGroup = new QGroupBox(tr("History Settings"));
     QFormLayout* settingsLayout = new QFormLayout(settingsGroup);

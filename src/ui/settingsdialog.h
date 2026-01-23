@@ -116,7 +116,6 @@ private:
     void setupUi();
     void setupGeneralTab();
     void setupLLMTab();
-    void setupHotkeysTab();
     void setupPromptsTab();
     void setupHistoryTab();
 

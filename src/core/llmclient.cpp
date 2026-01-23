@@ -179,6 +179,7 @@ void LLMClient::sendRequest(const LLMRequest& request)
         m_currentReply->deleteLater();
     }
 
+    m_isTestingConnection = false;  // Ensure connection test flag is reset for normal requests
     setState(LLMClientState::Connecting);
     m_accumulatedContent.clear();
     m_lastInputTokens = 0;

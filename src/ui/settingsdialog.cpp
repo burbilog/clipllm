@@ -25,6 +25,7 @@
 #include "core/groupsmanager.h"
 #include "core/historymanager.h"
 #include "core/app.h"
+#include "core/llmclient.h"
 #include "models/llmconfig.h"
 #include "models/providerprofile.h"
 #include <QApplication>
@@ -322,7 +323,7 @@ void SettingsDialog::setupLLMTab()
 
     // Test connection button
     QHBoxLayout* testLayout = new QHBoxLayout();
-    m_testConnectionButton = new QPushButton(tr("Test Connection"));
+    m_testConnectionButton = new QPushButton(tr("Test Model Connection"));
     connect(m_testConnectionButton, &QPushButton::clicked, this, &SettingsDialog::onTestConnectionClicked);
 
     m_connectionStatusLabel = new QLabel();
@@ -705,11 +706,14 @@ void SettingsDialog::onLanguageChanged(int index)
 void SettingsDialog::onTestConnectionClicked()
 {
     m_connectionStatusLabel->setText(tr("Testing..."));
+    m_connectionStatusLabel->setStyleSheet("color: blue;");
+    m_testConnectionButton->setEnabled(false);
 
     QString providerId = getCurrentProviderId();
     if (providerId.isEmpty()) {
         m_connectionStatusLabel->setText(tr("No profile selected"));
         m_connectionStatusLabel->setStyleSheet("color: red;");
+        m_testConnectionButton->setEnabled(true);
         return;
     }
 
@@ -718,6 +722,7 @@ void SettingsDialog::onTestConnectionClicked()
     if (!profileOpt.has_value()) {
         m_connectionStatusLabel->setText(tr("Profile not found"));
         m_connectionStatusLabel->setStyleSheet("color: red;");
+        m_testConnectionButton->setEnabled(true);
         return;
     }
 
@@ -725,6 +730,7 @@ void SettingsDialog::onTestConnectionClicked()
     if (!profile.apiUrl().isValid()) {
         m_connectionStatusLabel->setText(tr("Invalid API URL"));
         m_connectionStatusLabel->setStyleSheet("color: red;");
+        m_testConnectionButton->setEnabled(true);
         return;
     }
 
@@ -737,11 +743,53 @@ void SettingsDialog::onTestConnectionClicked()
     if (!isLocalProvider && m_profileApiKeyEdit->text().isEmpty()) {
         m_connectionStatusLabel->setText(tr("Error: No API key"));
         m_connectionStatusLabel->setStyleSheet("color: red;");
+        m_testConnectionButton->setEnabled(true);
         return;
     }
 
-    m_connectionStatusLabel->setText(tr("Configuration valid"));
-    m_connectionStatusLabel->setStyleSheet("color: green;");
+    // Perform real connection test using LLMClient
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (!app || !app->llmClient()) {
+        m_connectionStatusLabel->setText(tr("Error: LLM client not available"));
+        m_connectionStatusLabel->setStyleSheet("color: red;");
+        m_testConnectionButton->setEnabled(true);
+        return;
+    }
+
+    // Configure LLM client with current profile settings
+    auto* llmClient = app->llmClient();
+
+    // Create a temporary config from the profile
+    Models::LLMConfig config;
+    config.setApiUrl(profile.apiUrl());
+    config.setModel(profile.model().isEmpty() ? QStringLiteral("gpt-3.5-turbo") : profile.model());
+
+    llmClient->setConfig(config);
+
+    QString apiKey = m_profileApiKeyEdit->text();
+    if (!isLocalProvider && !apiKey.isEmpty()) {
+        llmClient->setApiKey(apiKey);
+    }
+
+    // Connect to result signal
+    connect(llmClient, &Core::LLMClient::connectionTestResult,
+            this, &SettingsDialog::onConnectionTestResult,
+            Qt::UniqueConnection);
+
+    llmClient->testConnection();
+}
+
+void SettingsDialog::onConnectionTestResult(bool success, const QString& message)
+{
+    m_testConnectionButton->setEnabled(true);
+
+    if (success) {
+        m_connectionStatusLabel->setText(tr("Connection successful"));
+        m_connectionStatusLabel->setStyleSheet("color: green;");
+    } else {
+        m_connectionStatusLabel->setText(tr("Error: %1").arg(message));
+        m_connectionStatusLabel->setStyleSheet("color: red;");
+    }
 }
 
 void SettingsDialog::onHotkeyChanged(const QKeySequence& sequence)

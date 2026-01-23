@@ -270,6 +270,50 @@ void LLMClient::cancel()
     m_sseBuffer.clear();
 }
 
+void LLMClient::testConnection()
+{
+    if (m_apiKey.isEmpty()) {
+        emit connectionTestResult(false, tr("API key is not set"));
+        return;
+    }
+
+    // Cancel any existing request
+    if (m_currentReply) {
+        m_currentReply->abort();
+        m_currentReply->deleteLater();
+    }
+
+    m_isTestingConnection = true;
+    setState(LLMClientState::Connecting);
+    m_accumulatedContent.clear();
+    m_sseBuffer.clear();
+
+    // Create minimal test request
+    LLMRequest request;
+    request.model = m_config.model();
+    request.temperature = 0.0;
+    request.maxTokens = 10;  // Very short response
+    request.stream = false;  // Non-streaming for simpler handling
+
+    // Simple "hi" message
+    LLMMessage userMsg;
+    userMsg.role = QStringLiteral("user");
+    userMsg.content = QStringLiteral("hi");
+    request.messages.append(userMsg);
+
+    QNetworkRequest netRequest = createRequest(request);
+    QByteArray body = createRequestBody(request);
+
+    m_currentReply = m_networkManager->post(netRequest, body);
+
+    connect(m_currentReply, &QNetworkReply::readyRead,
+            this, &LLMClient::onReadyRead);
+    connect(m_currentReply, &QNetworkReply::finished,
+            this, &LLMClient::onFinished);
+    connect(m_currentReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::errorOccurred),
+            this, &LLMClient::onErrorOccurred);
+}
+
 void LLMClient::onReadyRead()
 {
     if (!m_currentReply) {
@@ -281,6 +325,24 @@ void LLMClient::onReadyRead()
     QByteArray data = m_currentReply->readAll();
     m_bytesReceived += data.size();
     emit bytesReceivedChanged(m_bytesReceived);
+
+    // For connection test, any data received means success
+    if (m_isTestingConnection) {
+        int httpStatus = m_currentReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        if (httpStatus >= 200 && httpStatus < 300) {
+            // Got successful response - abort and report success
+            disconnect(m_currentReply, nullptr, this, nullptr);
+            m_currentReply->abort();
+            m_currentReply->deleteLater();
+            m_currentReply = nullptr;
+
+            m_isTestingConnection = false;
+            setState(LLMClientState::Idle);
+            emit connectionTestResult(true, tr("Connection successful"));
+            return;
+        }
+    }
+
     processStreamingChunk(data);
 }
 
@@ -325,6 +387,28 @@ void LLMClient::onFinished()
         }
     }
 
+    // Handle connection test for non-streaming responses
+    if (m_isTestingConnection) {
+        m_isTestingConnection = false;
+        int httpStatus = m_currentReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+        if (httpStatus >= 200 && httpStatus < 300) {
+            setState(LLMClientState::Idle);
+            emit connectionTestResult(true, tr("Connection successful"));
+        } else {
+            setState(LLMClientState::Error);
+            QString errorMsg = tr("HTTP %1: %2")
+                .arg(httpStatus)
+                .arg(m_currentReply->errorString());
+            emit connectionTestResult(false, errorMsg);
+        }
+
+        m_sseBuffer.clear();
+        m_currentReply->deleteLater();
+        m_currentReply = nullptr;
+        return;
+    }
+
     LLMResponse response;
     response.content = m_accumulatedContent;
     response.model = m_currentModel;
@@ -349,6 +433,14 @@ void LLMClient::onErrorOccurred(QNetworkReply::NetworkError code)
         errorMsg = m_currentReply->errorString();
     }
 
+    // Handle connection test error
+    if (m_isTestingConnection) {
+        m_isTestingConnection = false;
+        setState(LLMClientState::Idle);
+        emit connectionTestResult(false, errorMsg);
+        return;
+    }
+
     m_sseBuffer.clear();
     setState(LLMClientState::Error);
     emit error(errorMsg);
@@ -362,6 +454,19 @@ void LLMClient::onSslErrors(const QList<QSslError>& errors)
     }
 
     qWarning() << "SSL errors:" << errorStrings.join(QStringLiteral(", "));
+
+    // For connection test, SSL errors are considered a failure
+    if (m_isTestingConnection && m_currentReply) {
+        m_isTestingConnection = false;
+        disconnect(m_currentReply, nullptr, this, nullptr);
+        m_currentReply->abort();
+        m_currentReply->deleteLater();
+        m_currentReply = nullptr;
+
+        setState(LLMClientState::Idle);
+        emit connectionTestResult(false, tr("SSL error: %1").arg(errorStrings.join(QStringLiteral(", "))));
+        return;
+    }
 
     // For production, you may want to be more strict
     // m_currentReply->ignoreSslErrors();

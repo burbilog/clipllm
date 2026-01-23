@@ -83,6 +83,7 @@ private slots:
     void onModelChanged(const QString& text);
     void onApiKeyChanged();
     void onTestConnectionClicked();
+    void onConnectionTestResult(bool success, const QString& message);
     void onRefreshModelsClicked();
     void onModelsFetchFinished(QNetworkReply* reply);
     void onProfileEnabledChanged(int state);

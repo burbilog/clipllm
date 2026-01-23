@@ -106,6 +106,9 @@ public:
     // Cancel current request
     void cancel();
 
+    // Test connection by sending minimal request
+    void testConnection();
+
     // State
     LLMClientState state() const { return m_state; }
     bool isIdle() const { return m_state == LLMClientState::Idle; }
@@ -128,6 +131,7 @@ signals:
     void stateChanged(LLMClientState state);
     void thinkingStateChanged(bool isThinking);
     void bytesReceivedChanged(qint64 bytesReceived);
+    void connectionTestResult(bool success, const QString& message);
 
 private slots:
     void onReadyRead();
@@ -165,6 +169,9 @@ private:
     // Thinking state (for reasoning models)
     bool m_isThinking = false;
     qint64 m_bytesReceived = 0;
+
+    // Connection test mode
+    bool m_isTestingConnection = false;
 };
 
 } // namespace Core

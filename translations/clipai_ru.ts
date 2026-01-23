@@ -19,9 +19,13 @@
         <translation>Добро пожаловать в ClipAI</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="258"/>
         <source>ClipAI is running in the system tray. Press the global hotkey to start.</source>
-        <translation>ClipAI запущен в системном трее. Нажмите глобальную горячую клавишу для начала работы.</translation>
+        <translation type="vanished">ClipAI запущен в системном трее. Нажмите глобальную горячую клавишу для начала работы.</translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="258"/>
+        <source>ClipAI is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
+        <translation>ClipAI работает в системном трее. Щёлкните по значку в трее или настройте горячую клавишу в настройках.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="350"/>

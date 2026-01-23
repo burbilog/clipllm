@@ -255,7 +255,7 @@ bool App::initialize(bool startMinimized)
         bool firstRun = m_configManager->value(QStringLiteral("firstRun"), true).toBool();
         if (firstRun) {
             showTrayMessage(tr("Welcome to ClipAI"),
-                           tr("ClipAI is running in the system tray. Press the global hotkey to start."));
+                           tr("ClipAI is running in the system tray. Click the tray icon or configure a hotkey in settings."));
             m_configManager->setValue(QStringLiteral("firstRun"), false);
         }
     }

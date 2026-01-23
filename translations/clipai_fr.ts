@@ -19,9 +19,13 @@
         <translation>Bienvenue dans ClipAI</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="258"/>
         <source>ClipAI is running in the system tray. Press the global hotkey to start.</source>
-        <translation>ClipAI fonctionne dans la zone de notification. Appuyez sur le raccourci global pour commencer.</translation>
+        <translation type="vanished">ClipAI fonctionne dans la zone de notification. Appuyez sur le raccourci global pour commencer.</translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="258"/>
+        <source>ClipAI is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
+        <translation>ClipAI s'exécute dans la zone de notification. Cliquez sur l'icône ou configurez un raccourci dans les paramètres.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="350"/>

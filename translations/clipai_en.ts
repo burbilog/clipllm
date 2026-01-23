@@ -19,9 +19,13 @@
         <translation>Welcome to ClipAI</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="258"/>
         <source>ClipAI is running in the system tray. Press the global hotkey to start.</source>
-        <translation>ClipAI is running in the system tray. Press the global hotkey to start.</translation>
+        <translation type="vanished">ClipAI is running in the system tray. Press the global hotkey to start.</translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="258"/>
+        <source>ClipAI is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
+        <translation>ClipAI is running in the system tray. Click the tray icon or configure a hotkey in settings.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="350"/>

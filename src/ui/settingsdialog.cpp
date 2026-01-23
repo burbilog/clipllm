@@ -432,22 +432,31 @@ void SettingsDialog::setupHistoryTab()
     QGroupBox* settingsGroup = new QGroupBox(tr("History Settings"));
     QFormLayout* settingsLayout = new QFormLayout(settingsGroup);
 
+    m_cleanupByCountCheck = new QCheckBox(tr("Auto-cleanup by max entries"));
+    m_cleanupByCountCheck->setToolTip(tr("Automatically remove oldest entries when limit is exceeded"));
+    connect(m_cleanupByCountCheck, &QCheckBox::checkStateChanged,
+            this, &SettingsDialog::onCleanupByCountChanged);
+    settingsLayout->addRow(m_cleanupByCountCheck);
+
     m_historyLimitSpin = new QSpinBox();
     m_historyLimitSpin->setRange(0, 10000);
     m_historyLimitSpin->setValue(1000);
     m_historyLimitSpin->setSpecialValueText(tr("Unlimited"));
+    m_historyLimitSpin->setEnabled(false); // Disabled by default
     connect(m_historyLimitSpin, QOverload<int>::of(&QSpinBox::valueChanged),
             this, &SettingsDialog::onHistoryLimitChanged);
     settingsLayout->addRow(tr("Maximum entries:"), m_historyLimitSpin);
 
-    m_autoCleanupCheck = new QCheckBox(tr("Automatically clean up old entries"));
-    connect(m_autoCleanupCheck, &QCheckBox::checkStateChanged,
-            this, &SettingsDialog::onAutoCleanupChanged);
-    settingsLayout->addRow(m_autoCleanupCheck);
+    m_cleanupByDateCheck = new QCheckBox(tr("Auto-cleanup by date"));
+    m_cleanupByDateCheck->setToolTip(tr("Automatically remove entries older than the specified number of days"));
+    connect(m_cleanupByDateCheck, &QCheckBox::checkStateChanged,
+            this, &SettingsDialog::onCleanupByDateChanged);
+    settingsLayout->addRow(m_cleanupByDateCheck);
 
     m_daysToKeepSpin = new QSpinBox();
     m_daysToKeepSpin->setRange(1, 365);
     m_daysToKeepSpin->setValue(30);
+    m_daysToKeepSpin->setEnabled(false); // Disabled by default
     connect(m_daysToKeepSpin, QOverload<int>::of(&QSpinBox::valueChanged),
             this, &SettingsDialog::onDaysToKeepChanged);
     settingsLayout->addRow(tr("Days to keep:"), m_daysToKeepSpin);
@@ -516,8 +525,12 @@ void SettingsDialog::loadSettings()
 
     // History
     m_historyLimitSpin->setValue(m_configManager->historyLimit());
-    m_autoCleanupCheck->setChecked(m_configManager->historyAutoCleanup());
+    m_cleanupByCountCheck->setChecked(m_configManager->historyCleanupByCount());
+    m_cleanupByDateCheck->setChecked(m_configManager->historyCleanupByDate());
     m_daysToKeepSpin->setValue(m_configManager->historyDaysToKeep());
+    // Update enabled state of spinboxes based on checkboxes
+    m_historyLimitSpin->setEnabled(m_cleanupByCountCheck->isChecked());
+    m_daysToKeepSpin->setEnabled(m_cleanupByDateCheck->isChecked());
 }
 
 void SettingsDialog::saveSettings()
@@ -562,7 +575,8 @@ void SettingsDialog::saveSettings()
 
     // History
     m_configManager->setHistoryLimit(m_historyLimitSpin->value());
-    m_configManager->setHistoryAutoCleanup(m_autoCleanupCheck->isChecked());
+    m_configManager->setHistoryCleanupByCount(m_cleanupByCountCheck->isChecked());
+    m_configManager->setHistoryCleanupByDate(m_cleanupByDateCheck->isChecked());
     m_configManager->setHistoryDaysToKeep(m_daysToKeepSpin->value());
 
     m_configManager->sync();
@@ -1007,7 +1021,12 @@ void SettingsDialog::onHistoryLimitChanged(int value)
     Q_UNUSED(value)
 }
 
-void SettingsDialog::onAutoCleanupChanged(int state)
+void SettingsDialog::onCleanupByCountChanged(int state)
+{
+    m_historyLimitSpin->setEnabled(state == Qt::Checked);
+}
+
+void SettingsDialog::onCleanupByDateChanged(int state)
 {
     m_daysToKeepSpin->setEnabled(state == Qt::Checked);
 }

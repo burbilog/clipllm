@@ -73,6 +73,8 @@ public:
     static const QString HISTORY_AUTO_CLEANUP_KEY;
     static const QString HISTORY_DAYS_TO_KEEP_KEY;
     static const QString HISTORY_AUTO_SAVE_KEY;
+    static const QString HISTORY_CLEANUP_BY_COUNT_KEY;
+    static const QString HISTORY_CLEANUP_BY_DATE_KEY;
     static const QString PROMPTS_FILE_KEY;
     static const QString CACHED_MODELS_KEY;
 
@@ -129,6 +131,12 @@ public:
 
     bool historyAutoSave() const;
     void setHistoryAutoSave(bool enabled);
+
+    bool historyCleanupByCount() const;
+    void setHistoryCleanupByCount(bool enabled);
+
+    bool historyCleanupByDate() const;
+    void setHistoryCleanupByDate(bool enabled);
 
     // Prompts settings
     QString promptsFile() const;

@@ -634,6 +634,20 @@ void App::onPromptSelected(const QString& promptId)
     m_resultDialog->setProvider(profile.name());
     m_resultDialog->setModel(displayModel);
 
+    // Auto-cleanup history if enabled
+    if (m_configManager->historyCleanupByCount()) {
+        int removed = m_historyManager->cleanupByCount(m_configManager->historyLimit());
+        if (removed > 0) {
+            qDebug() << "Auto-removed" << removed << "old history entries (by count)";
+        }
+    }
+    if (m_configManager->historyCleanupByDate()) {
+        int removed = m_historyManager->cleanupByDate(m_configManager->historyDaysToKeep());
+        if (removed > 0) {
+            qDebug() << "Auto-removed" << removed << "old history entries (by date)";
+        }
+    }
+
     m_resultDialog->startRequest();
 
     // Show dialog

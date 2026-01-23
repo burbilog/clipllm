@@ -398,6 +398,60 @@ int HistoryManager::optimize()
     return removed;
 }
 
+int HistoryManager::cleanupByCount(int maxEntries)
+{
+    if (maxEntries <= 0) {
+        return 0; // No limit
+    }
+
+    int removed = 0;
+    // Sort by timestamp (oldest first) to remove oldest entries
+    // Since we want to keep the most recent ones, we need to find entries to remove
+    if (m_entries.size() > maxEntries) {
+        // Sort entries by timestamp ascending (oldest first)
+        std::sort(m_entries.begin(), m_entries.end(),
+                  [](const HistoryEntry& a, const HistoryEntry& b) {
+                      return a.timestamp < b.timestamp;
+                  });
+
+        // Remove oldest entries (at the beginning after sorting)
+        int toRemove = m_entries.size() - maxEntries;
+        for (int i = 0; i < toRemove; ++i) {
+            m_entries.removeFirst();
+            ++removed;
+        }
+
+        if (removed > 0) {
+            m_dirty = true;
+        }
+    }
+
+    return removed;
+}
+
+int HistoryManager::cleanupByDate(int days)
+{
+    QDateTime cutoff = QDateTime::currentDateTime().addDays(-days);
+    int removed = 0;
+
+    // Use std::remove_if pattern for efficient removal
+    auto newEnd = std::remove_if(m_entries.begin(), m_entries.end(),
+        [&cutoff, &removed](const HistoryEntry& entry) {
+            if (entry.timestamp < cutoff) {
+                ++removed;
+                return true;
+            }
+            return false;
+        });
+
+    if (removed > 0) {
+        m_entries.erase(newEnd, m_entries.end());
+        m_dirty = true;
+    }
+
+    return removed;
+}
+
 QString HistoryManager::exportToJson(const HistoryFilter& filter) const
 {
     QJsonArray array;

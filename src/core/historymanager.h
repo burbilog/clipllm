@@ -104,6 +104,8 @@ public:
     bool clearBefore(const QDateTime& date);
     bool clearOlderThan(int days);
     int optimize();
+    int cleanupByCount(int maxEntries);
+    int cleanupByDate(int days);
 
     // Export/Import
     QString exportToJson(const HistoryFilter& filter = HistoryFilter()) const;

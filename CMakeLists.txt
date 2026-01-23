@@ -25,6 +25,7 @@ set(CMAKE_AUTOUIC ON)
 
 # Qt6 configuration
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network LinguistTools)
+find_package(Qt6 OPTIONAL_COMPONENTS Test)
 
 # Optional Qt6 Concurrent for async operations
 find_package(Qt6 OPTIONAL_COMPONENTS Concurrent)
@@ -290,6 +291,21 @@ add_custom_target(translations-copy
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/translations/*.qm
     DESTINATION share/clipai/translations
 )
+
+# Unit tests
+option(BUILD_TESTING "Build unit tests" ON)
+if(Qt6Test_FOUND AND BUILD_TESTING)
+    enable_testing()
+    add_subdirectory(tests)
+    message(STATUS "Unit tests enabled")
+else()
+    if(NOT Qt6Test_FOUND)
+        message(STATUS "Unit tests disabled: Qt6::Test not found")
+    endif()
+    if(NOT BUILD_TESTING)
+        message(STATUS "Unit tests disabled: BUILD_TESTING=OFF")
+    endif()
+endif()
 
 # Desktop file for Linux
 if(UNIX AND NOT APPLE)

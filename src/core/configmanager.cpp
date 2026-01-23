@@ -51,6 +51,8 @@ const QString ConfigManager::HISTORY_LIMIT_KEY = QStringLiteral("history/limit")
 const QString ConfigManager::HISTORY_AUTO_CLEANUP_KEY = QStringLiteral("history/auto_cleanup");
 const QString ConfigManager::HISTORY_DAYS_TO_KEEP_KEY = QStringLiteral("history/days_to_keep");
 const QString ConfigManager::HISTORY_AUTO_SAVE_KEY = QStringLiteral("history/auto_save");
+const QString ConfigManager::HISTORY_CLEANUP_BY_COUNT_KEY = QStringLiteral("history/cleanup_by_count");
+const QString ConfigManager::HISTORY_CLEANUP_BY_DATE_KEY = QStringLiteral("history/cleanup_by_date");
 const QString ConfigManager::PROMPTS_FILE_KEY = QStringLiteral("prompts/file");
 const QString ConfigManager::CACHED_MODELS_KEY = QStringLiteral("llm/cached_models/%1");
 
@@ -298,6 +300,26 @@ bool ConfigManager::historyAutoSave() const
 void ConfigManager::setHistoryAutoSave(bool enabled)
 {
     setValue(HISTORY_AUTO_SAVE_KEY, enabled);
+}
+
+bool ConfigManager::historyCleanupByCount() const
+{
+    return value(HISTORY_CLEANUP_BY_COUNT_KEY, false).toBool();
+}
+
+void ConfigManager::setHistoryCleanupByCount(bool enabled)
+{
+    setValue(HISTORY_CLEANUP_BY_COUNT_KEY, enabled);
+}
+
+bool ConfigManager::historyCleanupByDate() const
+{
+    return value(HISTORY_CLEANUP_BY_DATE_KEY, false).toBool();
+}
+
+void ConfigManager::setHistoryCleanupByDate(bool enabled)
+{
+    setValue(HISTORY_CLEANUP_BY_DATE_KEY, enabled);
 }
 
 QString ConfigManager::promptsFile() const

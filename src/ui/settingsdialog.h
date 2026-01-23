@@ -105,7 +105,8 @@ private slots:
     // History tab
     void onClearHistoryClicked();
     void onHistoryLimitChanged(int value);
-    void onAutoCleanupChanged(int state);
+    void onCleanupByCountChanged(int state);
+    void onCleanupByDateChanged(int state);
     void onDaysToKeepChanged(int value);
 
 protected:
@@ -188,7 +189,8 @@ private:
 
     // History tab
     QSpinBox* m_historyLimitSpin = nullptr;
-    QCheckBox* m_autoCleanupCheck = nullptr;
+    QCheckBox* m_cleanupByCountCheck = nullptr;
+    QCheckBox* m_cleanupByDateCheck = nullptr;
     QSpinBox* m_daysToKeepSpin = nullptr;
     QPushButton* m_clearHistoryButton = nullptr;
     QLabel* m_historyStatusLabel = nullptr;

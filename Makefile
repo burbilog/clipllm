@@ -1,4 +1,4 @@
-.PHONY: build translations clean
+.PHONY: build translations clean test
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -19,3 +19,7 @@ translations:
 clean:
 	@echo "Cleaning build directory..."
 	@rm -rf build
+
+test:
+	@echo "Running tests..."
+	@cd build && ctest --output-on-failure

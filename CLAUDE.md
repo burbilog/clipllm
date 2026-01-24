@@ -238,6 +238,58 @@ QString version = ClipLLM::versionString();  // "1.0.0"
 
 **Never edit** `build/src/core/version.h` directly - it will be overwritten on rebuild.
 
+## Release Management
+
+When user requests a release, follow these steps:
+
+### 1. Update version (if needed)
+Edit `CMakeLists.txt` and update the version number:
+```cmake
+project(ClipLLM VERSION X.Y.Z LANGUAGES CXX)
+```
+
+### 2. Build all distribution packages
+```bash
+make linux-appimage    # Creates dist/clipllm-X.Y.Z-linux-x86_64.AppImage
+make linux-tar         # Creates dist/clipllm-X.Y.Z-linux-x86_64.tar.gz
+make windows-installer # Creates dist/ClipLLM-X.Y.Z-windows-x86_64-setup.exe
+```
+
+### 3. Update web page
+```bash
+make web               # Updates version in docs/index.html
+```
+
+### 4. Commit and push
+```bash
+git add -A
+git commit -m "Release X.Y.Z"
+git push
+```
+
+### 5. Create git tag (if not exists)
+```bash
+git tag -a vX.Y.Z -m "Version X.Y.Z"
+git push origin vX.Y.Z
+```
+
+### 6. Create GitHub release
+```bash
+gh release create vX.Y.Z \
+  dist/clipllm-X.Y.Z-linux-x86_64.AppImage \
+  dist/clipllm-X.Y.Z-linux-x86_64.tar.gz \
+  dist/ClipLLM-X.Y.Z-windows-x86_64-setup.exe \
+  -n "Release X.Y.Z: brief description"
+```
+
+**Notes:**
+- Replace `X.Y.Z` with actual version number
+- Use files from `dist/` directory
+- `-g vX.Y.Z` specifies the git tag to use
+- `-n "..."` sets the release title/description (keep it brief)
+- GitHub credentials are already configured
+- Check if tag exists before creating: `git tag -l`
+
 ## Adding New Features
 
 ### Adding a New LLM Provider

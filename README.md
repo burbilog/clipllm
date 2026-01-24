@@ -246,10 +246,3 @@ GNU General Public License v3.0 - See LICENSE.md file for details
 
 Contributions are welcome! Please feel free to submit pull requests or open issues.
 
-## Roadmap
-
-- [ ] More built-in prompts
-- [ ] Plugin system for custom integrations
-- [ ] Voice input support
-- [ ] Automatic language detection
-- [ ] Batch processing

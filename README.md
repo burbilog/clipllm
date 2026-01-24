@@ -57,8 +57,8 @@ git clone https://github.com/mxe/mxe.git ~/mxe
 cd ~/mxe
 make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qt6
 
-# Optional: Build Qt Installer Framework for creating installers
-make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qtifw
+# Optional: Install NSIS for creating Windows installers
+sudo apt install nsis
 ```
 
 **Building ClipAI for Windows:**
@@ -78,7 +78,7 @@ make windows-deploy
 make windows-zip
 
 # Create NSIS installer (recommended for Windows)
-make windows-installer-nsis
+make windows-installer
 
 # Test with Wine
 make test-windows-wine
@@ -91,13 +91,11 @@ make test-windows-wine
    - Works on all Windows versions
    - Recommended for most users
 
-2. **NSIS Installer** (`make windows-installer-nsis`):
+2. **NSIS Installer** (`make windows-installer`):
    - Native Windows installer
    - Creates shortcuts, registry entries
    - Clean uninstall
    - Requires: `sudo apt install nsis`
-
-**Note:** Qt IFW installer (`make windows-installer`) uses Linux-built tools and may have compatibility issues on Windows. Use NSIS instead for reliable Windows installation.
 
 **Build Types:**
 - `shared` (default) - Dynamic linking, requires DLLs, smaller executable, works with installer
@@ -111,7 +109,8 @@ make windows MXE_BUILD_TYPE=static
 **Output:**
 - `build-windows/ClipAI.exe` - Compiled executable
 - `deploy-windows/` - Deployed package with DLLs (shared build)
-- `dist/clipai-*-windows-x86_64-setup.exe` - Installer (if `make windows-installer` run)
+- `dist/clipai-*-windows-x86_64.zip` - Portable ZIP archive
+- `dist/ClipAI-*-windows-x86_64-setup.exe` - NSIS installer
 
 ### macOS
 
@@ -193,8 +192,7 @@ clipai/
 ├── translations/       # i18n translation files
 ├── cmake/              # CMake toolchain files (Windows cross-compilation)
 ├── scripts/            # Build and deployment scripts
-├── packages/           # Qt Installer Framework package structure
-├── installer/          # Qt Installer Framework configuration
+├── installer/          # NSIS installer configuration
 ├── tests/              # Unit tests
 └── CMakeLists.txt      # Build configuration
 ```

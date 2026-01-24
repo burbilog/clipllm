@@ -6,9 +6,6 @@ build-windows/
 deploy-windows/
 dist/
 
-# Qt Installer Framework generated files
-packages/clipai/data/
-
 # Qt Creator/IDE files
 *.autosave
 *.pro.user

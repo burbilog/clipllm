@@ -1,4 +1,4 @@
-.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer windows-installer-nsis
+.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -85,32 +85,17 @@ windows-zip: windows-deploy
 		zip -r ../dist/clipai-$${VERSION}-windows-x86_64.zip . && \
 		cd .. && ls -lh dist/clipai-$${VERSION}-windows-x86_64.zip
 
-# Create Windows installer (requires Qt Installer Framework with installerbase)
+# Create Windows installer using NSIS (native Windows installer)
 windows-installer: windows-deploy
-	@echo "Creating Windows installer..."
-	@if [ -f "$(HOME)/mxe/qtifw-native/build/bin/installerbase" ]; then \
-		MXE_BUILD_TYPE=$(MXE_BUILD_TYPE) INSTALLER_BASE=$(HOME)/mxe/qtifw-native/build/bin/installerbase BINARYCREATOR=$(HOME)/mxe/qtifw-native/build/bin/binarycreator ./scripts/build-installer.sh; \
-	else \
-		echo "Qt Installer Framework installerbase not found."; \
-		echo "Please build Qt IFW natively:"; \
-		echo "  cd ~/mxe/qtifw-native"; \
-		echo "  /usr/lib/qt6/bin/qmake && make -j\$$(nproc)"; \
-		echo ""; \
-		echo "Or use: make windows-zip"; \
-		exit 1; \
-	fi
+	@echo "Creating Windows installer using NSIS..."
+	@which makensis >/dev/null 2>&1 || { echo "NSIS not found. Install with: sudo apt install nsis"; exit 1; }
+	@VERSION=$$(grep "^project(ClipAI VERSION" CMakeLists.txt | sed 's/project(ClipAI VERSION \([0-9.]*\).*/\1/'); \
+		echo "Building installer version $$VERSION..."; \
+		makensis -DPRODUCT_VERSION=$$VERSION -NOCD installer/clipai.nsi && \
+		ls -lh dist/ClipAI-$$VERSION-windows-x86_64-setup.exe
 
 # Quick test with Wine
 test-windows-wine: windows-deploy
 	@echo "Testing Windows build with Wine..."
 	@which wine >/dev/null 2>&1 || (echo "Wine not installed. Install with: sudo apt install wine" && exit 1)
 	@wine deploy-windows/ClipAI.exe --version 2>/dev/null || echo "Note: Full Wine test requires a complete Wine setup"
-
-# Create Windows installer using NSIS (native Windows installer)
-windows-installer-nsis: windows-deploy
-	@echo "Creating Windows installer using NSIS..."
-	@which makensis >/dev/null 2>&1 || { echo "NSIS not found. Install with: sudo apt install nsis"; exit 1; }
-	@VERSION=$$(grep "^project(ClipAI VERSION" CMakeLists.txt | sed 's/project(ClipAI VERSION \([0-9.]*\).*/\1/'); \
-	echo "Building installer version $$VERSION..."; \
-	makensis -DPRODUCT_VERSION=$$VERSION -NOCD installer/clipai.nsi && \
-	ls -lh dist/ClipAI-$$VERSION-windows-x86_64-setup.exe

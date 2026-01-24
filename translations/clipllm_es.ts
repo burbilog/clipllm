@@ -1937,48 +1937,53 @@ Ejemplos:
         <translation>Prompts importados exitosamente.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1246"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1333"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1406"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1060"/>
+        <source>No API URL set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingsdialog.cpp" line="1245"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1332"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1405"/>
         <source> [Default]</source>
         <translation> [Predeterminado]</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1252"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1333"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1409"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1251"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1332"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1408"/>
         <source> (disabled)</source>
         <translation> (deshabilitado)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1289"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1288"/>
         <source>Add Provider Profile</source>
         <translation>Agregar perfil de proveedor</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1290"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1289"/>
         <source>Select a template or create custom:</source>
         <translation>Seleccionar una plantilla o crear personalizada:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1337"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1336"/>
         <source>Remove Profile</source>
         <translation>Eliminar perfil</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1338"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1337"/>
         <source>Are you sure you want to remove the profile &quot;%1&quot;?</source>
         <translation>¿Está seguro de que desea eliminar el perfil &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1480"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1558"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1479"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1556"/>
         <source>API key set</source>
         <translation>Clave API configurada</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1480"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1558"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1479"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1556"/>
         <source>No API key</source>
         <translation>Sin clave API</translation>
     </message>
@@ -2212,22 +2217,21 @@ Ejemplos:
         <translation>¿Estás seguro de que deseas eliminar todas las entradas del historial? Esto no se puede deshacer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1061"/>
         <source>Model fetching not supported for this provider</source>
-        <translation>Obtención de modelos no soportada para este proveedor</translation>
+        <translation type="vanished">Obtención de modelos no soportada para este proveedor</translation>
     </message>
     <message>
         <source>Fetch not supported for this provider</source>
         <translation type="vanished">Obtener modelos no compatible con este proveedor</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1136"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1135"/>
         <source>Fetching models...</source>
         <translation>Obteniendo modelos...</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="785"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1147"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1146"/>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
@@ -2241,17 +2245,17 @@ Ejemplos:
         <translation>Conexión exitosa</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1157"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1156"/>
         <source>Error: Invalid response</source>
         <translation>Error: Respuesta no válida</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1198"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1197"/>
         <source>No models found</source>
         <translation>No se encontraron modelos</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1222"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1221"/>
         <source>Loaded %1 models</source>
         <translation>%1 modelos cargados</translation>
     </message>

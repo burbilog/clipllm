@@ -1056,9 +1056,8 @@ void SettingsDialog::onRefreshModelsClicked()
     const auto& profile = profileOpt.value();
     QString apiUrl = profile.apiUrl().toString();
 
-    // Anthropic uses different API format, not supported
-    if (apiUrl.contains(QStringLiteral("anthropic.com"))) {
-        m_connectionStatusLabel->setText(tr("Model fetching not supported for this provider"));
+    if (apiUrl.isEmpty()) {
+        m_connectionStatusLabel->setText(tr("No API URL set"));
         return;
     }
 
@@ -1549,9 +1548,8 @@ void SettingsDialog::updateProfileEditor(const Models::ProviderProfile& profile)
 
     // Enable/disable refresh button based on URL
     QString apiUrl = profile.apiUrl().toString();
-    // Disable only for Anthropic (uses different API format), enable for all others
-    bool canFetch = !apiUrl.contains(QStringLiteral("anthropic.com"));
-    m_refreshModelsButton->setEnabled(canFetch);
+    // Disable for empty URLs (user needs to enter URL first)
+    m_refreshModelsButton->setEnabled(!apiUrl.isEmpty());
 
     // Update API key status label
     bool hasKey = !m_profileApiKeyEdit->text().isEmpty();

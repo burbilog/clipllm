@@ -97,70 +97,38 @@ QList<ProviderProfile::ProviderTemplate> ProviderProfile::availableTemplates()
         {
             QStringLiteral("OpenRouter"),
             QStringLiteral("https://openrouter.ai/api/v1/chat/completions"),
-            QStringLiteral("openai/gpt-4"),
-            {
-                QStringLiteral("openai/gpt-4"),
-                QStringLiteral("openai/gpt-4-turbo"),
-                QStringLiteral("openai/gpt-3.5-turbo"),
-                QStringLiteral("anthropic/claude-3-opus"),
-                QStringLiteral("anthropic/claude-3-sonnet"),
-                QStringLiteral("google/gemini-pro"),
-                QStringLiteral("meta-llama/llama-3-70b")
-            }
+            QStringLiteral("model-name"),
+            {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("OpenAI"),
             QStringLiteral("https://api.openai.com/v1/chat/completions"),
-            QStringLiteral("gpt-4"),
-            {
-                QStringLiteral("gpt-4"),
-                QStringLiteral("gpt-4-turbo-preview"),
-                QStringLiteral("gpt-3.5-turbo"),
-                QStringLiteral("gpt-4-vision-preview")
-            }
-        },
-        {
-            QStringLiteral("Anthropic"),
-            QStringLiteral("https://api.anthropic.com/v1/messages"),
-            QStringLiteral("claude-3-opus-20240229"),
-            {
-                QStringLiteral("claude-3-opus-20240229"),
-                QStringLiteral("claude-3-sonnet-20240229"),
-                QStringLiteral("claude-3-haiku-20240307")
-            }
+            QStringLiteral("model-name"),
+            {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("Ollama"),
             QStringLiteral("http://localhost:11434/v1/chat/completions"),
-            QStringLiteral("llama3"),
-            {
-                QStringLiteral("llama3"),
-                QStringLiteral("llama3:70b"),
-                QStringLiteral("mistral"),
-                QStringLiteral("gemma")
-            }
+            QStringLiteral("model-name"),
+            {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("NanoGPT"),
             QStringLiteral("https://nano-gpt.com/api/v1/chat/completions"),
-            QStringLiteral("nano-gpt"),
-            {
-                QStringLiteral("nano-gpt"),
-                QStringLiteral("nano-gpt-turbo")
-            }
+            QStringLiteral("model-name"),
+            {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("llama.cpp"),
             QStringLiteral("http://localhost:8080/v1/chat/completions"),
-            QString(),
-            {
-            }
+            QStringLiteral("model-name"),
+            {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("Custom"),
             QString(),
-            QString(),
-            QStringList()
+            QStringLiteral("model-name"),
+            {QStringLiteral("Click Refresh to fetch models...")}
         }
     };
 }

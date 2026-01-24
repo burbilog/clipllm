@@ -34,10 +34,6 @@ _deps/
 # Translation .qm files (generated from .ts)
 translations/*.qm
 
-# Web generated files
-docs/index.html
-docs/clipllm_hires.png
-
 # Qt MOC/UIC/RCC generated files
 moc_*.cpp
 ui_*.h

@@ -1,4 +1,4 @@
-.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer regen-icons
+.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-tar
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -22,7 +22,7 @@ translations:
 
 clean:
 	@echo "Cleaning build directories..."
-	@rm -rf build build-windows deploy-windows dist
+	@rm -rf build build-windows deploy-windows deploy-linux AppDir dist
 
 # Force regeneration of tray icons from art/clipllm_hires.png
 # Use this after replacing the source image
@@ -108,3 +108,129 @@ test-windows-wine: windows-deploy
 	@echo "Testing Windows build with Wine..."
 	@which wine >/dev/null 2>&1 || (echo "Wine not installed. Install with: sudo apt install wine" && exit 1)
 	@wine deploy-windows/ClipLLM.exe --version 2>/dev/null || echo "Note: Full Wine test requires a complete Wine setup"
+
+# =============================================================================
+# Linux distribution targets
+# =============================================================================
+
+# Create tar.gz archive with portable distribution
+linux-tar: build
+	@echo "Creating Linux tar.gz archive..."
+	@mkdir -p dist
+	@rm -rf deploy-linux
+	@mkdir -p deploy-linux/clipllm
+	@mkdir -p deploy-linux/clipllm/translations
+	@mkdir -p deploy-linux/clipllm/share/applications
+	@mkdir -p deploy-linux/clipllm/share/icons/hicolor/scalable/apps
+	# Copy binary
+	@cp build/ClipLLM deploy-linux/clipllm/
+	# Copy translations
+	@cp build/translations/*.qm deploy-linux/clipllm/translations/ 2>/dev/null || true
+	# Copy desktop file with full path for portable use
+	@sed 's|Icon=clipllm|Icon=/opt/clipllm/share/icons/hicolor/scalable/apps/clipllm.svg|' \
+		resources/clipllm.desktop.in > deploy-linux/clipllm/share/applications/clipllm.desktop
+	@sed 's|Exec=clipllm|Exec=/opt/clipllm/ClipLLM|' \
+		deploy-linux/clipllm/share/applications/clipllm.desktop > /tmp/clipllm.desktop.tmp && \
+		mv /tmp/clipllm.desktop.tmp deploy-linux/clipllm/share/applications/clipllm.desktop
+	# Copy icon to proper location
+	@cp resources/icons/app-icon.svg deploy-linux/clipllm/share/icons/hicolor/scalable/apps/clipllm.svg
+	# Also copy icons to simple icons/ dir for reference
+	@mkdir -p deploy-linux/clipllm/icons
+	@cp resources/icons/app-icon.svg deploy-linux/clipllm/icons/
+	@cp resources/icons/tray-icon-*.png deploy-linux/clipllm/icons/ 2>/dev/null || true
+	# Create README
+	@echo "# ClipLLM - Portable Linux Distribution" > deploy-linux/clipllm/README.md
+	@echo "" >> deploy-linux/clipllm/README.md
+	@echo "## Installation" >> deploy-linux/clipllm/README.md
+	@echo "1. Copy clipllm/ directory to /opt/clipllm/ (or ~/opt/clipllm/)" >> deploy-linux/clipllm/README.md
+	@echo "2. Create symlink: sudo ln -sf /opt/clipllm/ClipLLM /usr/local/bin/clipllm" >> deploy-linux/clipllm/README.md
+	@echo "3. Copy desktop file: sudo cp share/applications/clipllm.desktop /usr/share/applications/" >> deploy-linux/clipllm/README.md
+	@echo "4. Update icon cache: sudo gtk-update-icon-cache /usr/share/icons/hicolor/" >> deploy-linux/clipllm/README.md
+	@echo "" >> deploy-linux/clipllm/README.md
+	@echo "## Quick Install (from extracted directory)" >> deploy-linux/clipllm/README.md
+	@echo "Run: sudo ./install.sh" >> deploy-linux/clipllm/README.md
+	@echo "" >> deploy-linux/clipllm/README.md
+	@echo "## Quick Uninstall" >> deploy-linux/clipllm/README.md
+	@echo "Run: sudo /opt/clipllm/uninstall.sh" >> deploy-linux/clipllm/README.md
+	@echo "" >> deploy-linux/clipllm/README.md
+	# Create install script
+	@echo "#!/bin/bash" > deploy-linux/clipllm/install.sh
+	@echo "set -e" >> deploy-linux/clipllm/install.sh
+	@echo "" >> deploy-linux/clipllm/install.sh
+	@echo 'INSTALL_DIR="/opt/clipllm"' >> deploy-linux/clipllm/install.sh
+	@echo 'SCRIPT_DIR="$$(dirname "$$(readlink -f \"$$0\")")"' >> deploy-linux/clipllm/install.sh
+	@echo "" >> deploy-linux/clipllm/install.sh
+	@echo 'if [ "$$EUID" -ne 0 ]; then' >> deploy-linux/clipllm/install.sh
+	@echo '    echo "Please run as root (sudo ./install.sh)"' >> deploy-linux/clipllm/install.sh
+	@echo '    exit 1' >> deploy-linux/clipllm/install.sh
+	@echo 'fi' >> deploy-linux/clipllm/install.sh
+	@echo "" >> deploy-linux/clipllm/install.sh
+	@echo "# Copy files to install directory" >> deploy-linux/clipllm/install.sh
+	@echo 'mkdir -p $$INSTALL_DIR' >> deploy-linux/clipllm/install.sh
+	@echo 'cp -r . $$INSTALL_DIR/' >> deploy-linux/clipllm/install.sh
+	@echo "" >> deploy-linux/clipllm/install.sh
+	@echo "# Create symlink in /usr/local/bin" >> deploy-linux/clipllm/install.sh
+	@echo 'ln -sf $$INSTALL_DIR/ClipLLM /usr/local/bin/clipllm' >> deploy-linux/clipllm/install.sh
+	@echo "" >> deploy-linux/clipllm/install.sh
+	@echo "# Install desktop file" >> deploy-linux/clipllm/install.sh
+	@echo 'cp $$INSTALL_DIR/share/applications/clipllm.desktop /usr/share/applications/' >> deploy-linux/clipllm/install.sh
+	@echo "" >> deploy-linux/clipllm/install.sh
+	@echo "# Install icon" >> deploy-linux/clipllm/install.sh
+	@echo "mkdir -p /usr/share/icons/hicolor/scalable/apps" >> deploy-linux/clipllm/install.sh
+	@echo 'cp $$INSTALL_DIR/share/icons/hicolor/scalable/apps/clipllm.svg /usr/share/icons/hicolor/scalable/apps/' >> deploy-linux/clipllm/install.sh
+	@echo "gtk-update-icon-cache /usr/share/icons/hicolor/ 2>/dev/null || true" >> deploy-linux/clipllm/install.sh
+	@echo "" >> deploy-linux/clipllm/install.sh
+	@echo "echo \"ClipLLM installed successfully!\"" >> deploy-linux/clipllm/install.sh
+	@echo "echo \"Run 'clipllm' to start the application\"" >> deploy-linux/clipllm/install.sh
+	@chmod +x deploy-linux/clipllm/install.sh
+	# Create uninstall script
+	@echo "#!/bin/bash" > deploy-linux/clipllm/uninstall.sh
+	@echo "set -e" >> deploy-linux/clipllm/uninstall.sh
+	@echo "" >> deploy-linux/clipllm/uninstall.sh
+	@echo 'INSTALL_DIR="/opt/clipllm"' >> deploy-linux/clipllm/uninstall.sh
+	@echo "" >> deploy-linux/clipllm/uninstall.sh
+	@echo 'if [ "$$EUID" -ne 0 ]; then' >> deploy-linux/clipllm/uninstall.sh
+	@echo '    echo "Please run as root (sudo $$0)"' >> deploy-linux/clipllm/uninstall.sh
+	@echo '    exit 1' >> deploy-linux/clipllm/uninstall.sh
+	@echo 'fi' >> deploy-linux/clipllm/uninstall.sh
+	@echo "" >> deploy-linux/clipllm/uninstall.sh
+	@echo 'echo "Uninstalling ClipLLM..."' >> deploy-linux/clipllm/uninstall.sh
+	@echo "rm -f /usr/local/bin/clipllm" >> deploy-linux/clipllm/uninstall.sh
+	@echo "rm -f /usr/share/applications/clipllm.desktop" >> deploy-linux/clipllm/uninstall.sh
+	@echo "rm -f /usr/share/icons/hicolor/scalable/apps/clipllm.svg" >> deploy-linux/clipllm/uninstall.sh
+	@echo "gtk-update-icon-cache /usr/share/icons/hicolor/ 2>/dev/null || true" >> deploy-linux/clipllm/uninstall.sh
+	@echo 'rm -rf $$INSTALL_DIR' >> deploy-linux/clipllm/uninstall.sh
+	@echo 'echo "ClipLLM uninstalled successfully!"' >> deploy-linux/clipllm/uninstall.sh
+	@chmod +x deploy-linux/clipllm/uninstall.sh
+	@echo "" >> deploy-linux/clipllm/README.md
+	@echo "## Requirements" >> deploy-linux/clipllm/README.md
+	@echo "- Qt6 (qt6-base, qt6-svg)" >> deploy-linux/clipllm/README.md
+	@echo "- X11 or Wayland" >> deploy-linux/clipllm/README.md
+	@VERSION=$$(grep "^project(ClipLLM VERSION" CMakeLists.txt | sed 's/project(ClipLLM VERSION \([0-9.]*\).*/\1/'); \
+		tar -czf dist/clipllm-$${VERSION}-linux-x86_64.tar.gz -C deploy-linux clipllm && \
+		ls -lh dist/clipllm-$${VERSION}-linux-x86_64.tar.gz
+
+# Create AppImage (requires linuxdeploy)
+linux-appimage: build
+	@echo "Creating AppImage..."
+	@which linuxdeploy >/dev/null 2>&1 || { echo "linuxdeploy not found. Download from https://github.com/linuxdeploy/linuxdeploy/releases"; exit 1; }
+	@mkdir -p dist
+	@rm -rf AppDir
+	@mkdir -p AppDir/usr/bin
+	@mkdir -p AppDir/usr/share/applications
+	@mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
+	@mkdir -p AppDir/usr/share/metainfo
+	# Copy binary
+	@cp build/ClipLLM AppDir/usr/bin/clipllm
+	# Copy desktop file
+	@sed 's/Exec=clipllm/Exec=clipllm/' resources/clipllm.desktop.in > AppDir/usr/share/applications/clipllm.desktop
+	# Copy icon
+	@cp resources/icons/app-icon.svg AppDir/usr/share/icons/hicolor/scalable/apps/clipllm.svg
+	# Copy translations
+	@mkdir -p AppDir/usr/share/clipllm/translations
+	@cp build/translations/*.qm AppDir/usr/share/clipllm/translations/ 2>/dev/null || true
+	# Run linuxdeploy
+	@linuxdeploy --appdir AppDir --output appimage
+	@VERSION=$$(grep "^project(ClipLLM VERSION" CMakeLists.txt | sed 's/project(ClipLLM VERSION \([0-9.]*\).*/\1/'); \
+		mv ClipLLM-x86_64.AppImage dist/clipllm-$${VERSION}-linux-x86_64.AppImage && \
+		ls -lh dist/clipllm-$${VERSION}-linux-x86_64.AppImage

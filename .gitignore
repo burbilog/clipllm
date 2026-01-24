@@ -4,6 +4,8 @@ build-windows/
 
 # Windows deployment
 deploy-windows/
+deploy-linux/
+AppDir/
 dist/
 
 # Qt Creator/IDE files

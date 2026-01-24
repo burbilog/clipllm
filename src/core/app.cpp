@@ -562,6 +562,14 @@ void App::onPromptSelected(const QString& promptId)
         modelToUse = prompt.model();
         qDebug() << "Using model from prompt:" << modelToUse;
     }
+
+    // Validate that model is set
+    if (modelToUse.isEmpty()) {
+        QMessageBox::warning(nullptr, tr("Model Error"),
+                           tr("No model selected. Please select a model in Settings → LLM → Provider Profiles."));
+        return;
+    }
+
     config.setModel(modelToUse);
 
     qDebug() << "Using provider:" << profile.name()

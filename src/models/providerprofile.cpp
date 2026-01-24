@@ -97,37 +97,37 @@ QList<ProviderProfile::ProviderTemplate> ProviderProfile::availableTemplates()
         {
             QStringLiteral("OpenRouter"),
             QStringLiteral("https://openrouter.ai/api/v1/chat/completions"),
-            QStringLiteral("model-name"),
+            QString(),
             {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("OpenAI"),
             QStringLiteral("https://api.openai.com/v1/chat/completions"),
-            QStringLiteral("model-name"),
+            QString(),
             {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("Ollama"),
             QStringLiteral("http://localhost:11434/v1/chat/completions"),
-            QStringLiteral("model-name"),
+            QString(),
             {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("NanoGPT"),
             QStringLiteral("https://nano-gpt.com/api/v1/chat/completions"),
-            QStringLiteral("model-name"),
+            QString(),
             {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("llama.cpp"),
             QStringLiteral("http://localhost:8080/v1/chat/completions"),
-            QStringLiteral("model-name"),
+            QString(),
             {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
             QStringLiteral("Custom"),
             QString(),
-            QStringLiteral("model-name"),
+            QString(),
             {QStringLiteral("Click Refresh to fetch models...")}
         }
     };

@@ -748,6 +748,13 @@ void SettingsDialog::onTestConnectionClicked()
         return;
     }
 
+    if (profile.model().isEmpty()) {
+        m_connectionStatusLabel->setText(tr("Error: No model selected"));
+        m_connectionStatusLabel->setStyleSheet("color: red;");
+        m_testConnectionButton->setEnabled(true);
+        return;
+    }
+
     // Clean up any existing test client
     delete m_testClient;
     m_testClient = nullptr;
@@ -758,7 +765,7 @@ void SettingsDialog::onTestConnectionClicked()
     // Create a temporary config from the profile
     Models::LLMConfig config;
     config.setApiUrl(profile.apiUrl());
-    config.setModel(profile.model().isEmpty() ? QStringLiteral("gpt-3.5-turbo") : profile.model());
+    config.setModel(profile.model());
 
     m_testClient->setConfig(config);
 
@@ -1208,7 +1215,7 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
             m_profileModelCombo->addItem(model, model);
         }
 
-        // Restore selection (use setText for editable combo box)
+        // Restore selection or auto-select first model if using placeholder
         if (!currentModel.isEmpty()) {
             int index = m_profileModelCombo->findText(currentModel);
             if (index >= 0) {
@@ -1216,7 +1223,15 @@ void SettingsDialog::onModelsFetchFinished(QNetworkReply* reply)
             } else {
                 m_profileModelCombo->setCurrentText(currentModel);
             }
+        } else {
+            // Auto-select first model and save to profile
+            m_profileModelCombo->setCurrentIndex(0);
+            Models::ProviderProfile profile = getCurrentProfileFromEditor();
+            m_configManager->updateProviderProfile(profile);
         }
+
+        // Expand the combo box to show models
+        m_profileModelCombo->showPopup();
 
         m_connectionStatusLabel->setText(tr("Loaded %1 models").arg(models.size()));
         m_connectionStatusLabel->setStyleSheet("color: green;");
@@ -1295,10 +1310,28 @@ void SettingsDialog::onAddProfileClicked()
         return;
     }
 
-    // Create profile from template
+    // Check for existing profiles with same name and find next number
+    QString suffix;
+    QList<Models::ProviderProfile> existingProfiles = m_configManager->providerProfiles();
+    QSet<QString> existingNames;
+    for (const auto& p : existingProfiles) {
+        existingNames.insert(p.name());
+    }
+
+    QString baseName = templateName;
+    if (existingNames.contains(baseName)) {
+        // Find next available number
+        int num = 2;
+        while (existingNames.contains(baseName + " " + QString::number(num))) {
+            num++;
+        }
+        suffix = QString::number(num);
+    }
+
+    // Create profile from template (with or without suffix)
     Models::ProviderProfile profile = Models::ProviderProfile::createFromTemplate(
         templateName,
-        QString()
+        suffix
     );
 
     // Add to config

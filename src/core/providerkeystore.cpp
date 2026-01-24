@@ -19,7 +19,7 @@
 #include <QDir>
 #include <QDebug>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 const QString ProviderKeyStore::KEYS_GROUP = QStringLiteral("ProviderKeys");
@@ -107,4 +107,4 @@ void ProviderKeyStore::sync()
 }
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM

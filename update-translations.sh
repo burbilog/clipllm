@@ -1,5 +1,5 @@
 #!/bin/bash
-# Update and compile translations for ClipAI
+# Update and compile translations for ClipLLM
 
 set -e
 
@@ -14,11 +14,11 @@ if [ ! -f "$LUPDATE" ]; then
 fi
 
 echo "=========================================="
-echo "ClipAI Translation Updater"
+echo "ClipLLM Translation Updater"
 echo "=========================================="
 echo ""
 
-# Get script directory (where ClipAI is located)
+# Get script directory (where ClipLLM is located)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "Updating translation source files from source code..."
@@ -40,18 +40,18 @@ echo "=========================================="
 echo ""
 echo "Next steps:"
 echo "  1. Open linguist to edit translations:"
-echo "     linguist $SCRIPT_DIR/translations/clipai_ru.ts"
+echo "     linguist $SCRIPT_DIR/translations/clipllm_ru.ts"
 echo ""
 echo "  2. Translate all strings marked with '?' (untranslated)"
 echo ""
 echo "  3. Compile translations:"
 echo "     cd $SCRIPT_DIR/build && cmake --build . --target translations"
 echo ""
-echo "  4. Rebuild ClipAI:"
+echo "  4. Rebuild ClipLLM:"
 echo "     cd $SCRIPT_DIR/build && cmake --build ."
 echo ""
 echo "Quick commands:"
 echo "  ./update-translations.sh    # Update source files"
-echo "  linguist translations/clipai_ru.ts  # Translate"
+echo "  linguist translations/clipllm_ru.ts  # Translate"
 echo "  cd build && cmake --build . --target translations  # Compile"
 echo ""

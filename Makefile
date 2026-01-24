@@ -8,13 +8,13 @@ NPROCS := $(shell nproc)
 MXE_BUILD_TYPE ?= shared
 
 build: translations
-	@echo "Building ClipAI..."
+	@echo "Building ClipLLM..."
 	@mkdir -p build
 	@cd build && cmake ..
 	@cd build && make -j$(NPROCS)
 	@echo ""
 	@echo "Build complete. Binary info:"
-	@ls -lh build/ClipAI
+	@ls -lh build/ClipLLM
 
 translations:
 	@echo "Updating translations..."
@@ -63,7 +63,7 @@ check-mxe:
 #	@ls -lh build-windows/ClipAI.exe
 
 windows: check-mxe translations
-	@echo "Building ClipAI for Windows (x86_64, $(MXE_BUILD_TYPE))..."
+	@echo "Building ClipLLM for Windows (x86_64, $(MXE_BUILD_TYPE))..."
 	@mkdir -p build-windows
 	@cd build-windows && \
 		$(HOME)/mxe/usr/bin/x86_64-w64-mingw32.$(MXE_BUILD_TYPE)-cmake \
@@ -80,22 +80,24 @@ windows-deploy: windows
 # Create Windows ZIP archive
 windows-zip: windows-deploy
 	@echo "Creating Windows ZIP archive..."
+	@mkdir -p dist
 	@cd deploy-windows && \
-		VERSION=$$(grep "^project(ClipAI VERSION" ../CMakeLists.txt | sed 's/project(ClipAI VERSION \([0-9.]*\).*/\1/') && \
-		zip -r ../dist/clipai-$${VERSION}-windows-x86_64.zip . && \
-		cd .. && ls -lh dist/clipai-$${VERSION}-windows-x86_64.zip
+		VERSION=$$(grep "^project(ClipLLM VERSION" ../CMakeLists.txt | sed 's/project(ClipLLM VERSION \([0-9.]*\).*/\1/') && \
+		zip -r ../dist/clipllm-$${VERSION}-windows-x86_64.zip . && \
+		cd .. && ls -lh dist/clipllm-$${VERSION}-windows-x86_64.zip
 
 # Create Windows installer using NSIS (native Windows installer)
 windows-installer: windows-deploy
 	@echo "Creating Windows installer using NSIS..."
 	@which makensis >/dev/null 2>&1 || { echo "NSIS not found. Install with: sudo apt install nsis"; exit 1; }
-	@VERSION=$$(grep "^project(ClipAI VERSION" CMakeLists.txt | sed 's/project(ClipAI VERSION \([0-9.]*\).*/\1/'); \
+	@mkdir -p dist
+	@VERSION=$$(grep "^project(ClipLLM VERSION" CMakeLists.txt | sed 's/project(ClipLLM VERSION \([0-9.]*\).*/\1/'); \
 		echo "Building installer version $$VERSION..."; \
-		makensis -DPRODUCT_VERSION=$$VERSION -NOCD installer/clipai.nsi && \
-		ls -lh dist/ClipAI-$$VERSION-windows-x86_64-setup.exe
+		makensis -DPRODUCT_VERSION=$$VERSION -NOCD installer/clipllm.nsi && \
+		ls -lh dist/ClipLLM-$$VERSION-windows-x86_64-setup.exe
 
 # Quick test with Wine
 test-windows-wine: windows-deploy
 	@echo "Testing Windows build with Wine..."
 	@which wine >/dev/null 2>&1 || (echo "Wine not installed. Install with: sudo apt install wine" && exit 1)
-	@wine deploy-windows/ClipAI.exe --version 2>/dev/null || echo "Note: Full Wine test requires a complete Wine setup"
+	@wine deploy-windows/ClipLLM.exe --version 2>/dev/null || echo "Note: Full Wine test requires a complete Wine setup"

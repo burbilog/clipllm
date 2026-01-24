@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_TRAYICON_H
-#define CLIPAI_UI_TRAYICON_H
+#ifndef CLIPLLM_UI_TRAYICON_H
+#define CLIPLLM_UI_TRAYICON_H
 
 #include <QSystemTrayIcon>
 #include <QMenu>
@@ -24,7 +24,7 @@
 #include "core/promptmanager.h"
 #include "models/prompt.h"
 
-namespace ClipAI {
+namespace ClipLLM {
 
 class App;
 
@@ -96,6 +96,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_UI_TRAYICON_H
+#endif // CLIPLLM_UI_TRAYICON_H

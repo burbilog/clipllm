@@ -20,7 +20,7 @@
 #include <QLabel>
 #include <QPushButton>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 PromptConflictDialog::PromptConflictDialog(const QString& promptName,
@@ -109,4 +109,4 @@ PromptConflictDialog::PromptConflictDialog(const QString& promptName,
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

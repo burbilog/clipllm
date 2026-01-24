@@ -14,14 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_UIUTILS_H
-#define CLIPAI_UI_UIUTILS_H
+#ifndef CLIPLLM_UI_UIUTILS_H
+#define CLIPLLM_UI_UIUTILS_H
 
 #include <QIcon>
 #include <QStyle>
 #include <QApplication>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 /**
@@ -71,6 +71,6 @@ inline QIcon iconDocumentNew() {
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_UI_UIUTILS_H
+#endif // CLIPLLM_UI_UIUTILS_H

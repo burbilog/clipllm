@@ -22,7 +22,7 @@
 #include <QDateTime>
 #include <QDebug>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 // Private implementation for forward declaration
@@ -238,4 +238,4 @@ QString ClipboardManager::formatTimestamp() const
 }
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM

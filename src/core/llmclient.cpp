@@ -25,7 +25,7 @@
 #include <QRegularExpression>
 #include <QDebug>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 // LLMMessage implementation
@@ -486,7 +486,7 @@ QNetworkRequest LLMClient::createRequest(const LLMRequest& llmRequest) const
     QNetworkRequest request;
     request.setUrl(m_config.apiUrl());
     request.setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("application/json"));
-    request.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("ClipAI/1.0"));
+    request.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("ClipLLM/1.0"));
 
     // Set authorization header only if API key is present
     if (!m_apiKey.isEmpty()) {
@@ -495,8 +495,8 @@ QNetworkRequest LLMClient::createRequest(const LLMRequest& llmRequest) const
     }
 
     // Additional headers
-    request.setRawHeader("HTTP-Referer", QStringLiteral("https://clipai.org").toUtf8()); // For OpenRouter
-    request.setRawHeader("X-Title", QStringLiteral("ClipAI").toUtf8()); // For OpenRouter
+    request.setRawHeader("HTTP-Referer", QStringLiteral("https://clipllm.org").toUtf8()); // For OpenRouter
+    request.setRawHeader("X-Title", QStringLiteral("ClipLLM").toUtf8()); // For OpenRouter
 
     return request;
 }
@@ -612,4 +612,4 @@ QString LLMClient::parseSseLine(const QString& line)
 }
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM

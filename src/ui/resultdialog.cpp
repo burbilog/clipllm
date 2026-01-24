@@ -30,7 +30,7 @@
 #include <QWheelEvent>
 #include <QKeyEvent>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* historyManager,
@@ -635,4 +635,4 @@ void ResultDialog::loadFontSize()
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

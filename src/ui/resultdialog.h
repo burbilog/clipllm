@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_RESULTDIALOG_H
-#define CLIPAI_UI_RESULTDIALOG_H
+#ifndef CLIPLLM_UI_RESULTDIALOG_H
+#define CLIPLLM_UI_RESULTDIALOG_H
 
 #include <QDialog>
 #include <QTextEdit>
@@ -32,7 +32,7 @@ class QGroupBox;
 class QSplitter;
 QT_END_NAMESPACE
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 class LLMClient;
 class HistoryManager;
@@ -41,7 +41,7 @@ struct LLMResponse;
 }
 }
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 class ResultDialog : public QDialog
@@ -150,6 +150,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_UI_RESULTDIALOG_H
+#endif // CLIPLLM_UI_RESULTDIALOG_H

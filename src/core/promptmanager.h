@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_CORE_PROMPTMANAGER_H
-#define CLIPAI_CORE_PROMPTMANAGER_H
+#ifndef CLIPLLM_CORE_PROMPTMANAGER_H
+#define CLIPLLM_CORE_PROMPTMANAGER_H
 
 #include <QObject>
 #include <QString>
@@ -24,7 +24,7 @@
 #include <optional>
 #include "models/prompt.h"
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 class PromptManager : public QObject
@@ -95,6 +95,6 @@ private:
 };
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_CORE_PROMPTMANAGER_H
+#endif // CLIPLLM_CORE_PROMPTMANAGER_H

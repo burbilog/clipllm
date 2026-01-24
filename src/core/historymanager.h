@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_CORE_HISTORYMANAGER_H
-#define CLIPAI_CORE_HISTORYMANAGER_H
+#ifndef CLIPLLM_CORE_HISTORYMANAGER_H
+#define CLIPLLM_CORE_HISTORYMANAGER_H
 
 #include <QObject>
 #include <QString>
@@ -24,7 +24,7 @@
 #include <QJsonObject>
 #include <optional>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 enum class HistoryEntryType {
@@ -135,10 +135,10 @@ private:
 };
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM
 
-Q_DECLARE_METATYPE(ClipAI::Core::HistoryEntry)
-Q_DECLARE_METATYPE(ClipAI::Core::HistoryEntryType)
-Q_DECLARE_METATYPE(ClipAI::Core::HistoryFilter)
+Q_DECLARE_METATYPE(ClipLLM::Core::HistoryEntry)
+Q_DECLARE_METATYPE(ClipLLM::Core::HistoryEntryType)
+Q_DECLARE_METATYPE(ClipLLM::Core::HistoryFilter)
 
-#endif // CLIPAI_CORE_HISTORYMANAGER_H
+#endif // CLIPLLM_CORE_HISTORYMANAGER_H

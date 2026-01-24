@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_CORE_GROUPSMANAGER_H
-#define CLIPAI_CORE_GROUPSMANAGER_H
+#ifndef CLIPLLM_CORE_GROUPSMANAGER_H
+#define CLIPLLM_CORE_GROUPSMANAGER_H
 
 #include <QObject>
 #include <QStringList>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 class GroupsManager : public QObject
@@ -48,6 +48,6 @@ signals:
 };
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_CORE_GROUPSMANAGER_H
+#endif // CLIPLLM_CORE_GROUPSMANAGER_H

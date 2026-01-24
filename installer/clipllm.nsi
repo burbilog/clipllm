@@ -1,7 +1,7 @@
-; ClipAI Installer Script for NSIS
+; ClipLLM Installer Script for NSIS
 ; Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 
-!define APP_NAME "ClipAI"
+!define APP_NAME "ClipLLM"
 ; APP_VERSION can be set with -DAPP_VERSION=x.y.z
 !ifdef PRODUCT_VERSION
   !define APP_VERSION "${PRODUCT_VERSION}"
@@ -9,7 +9,7 @@
   !define APP_VERSION "1.0.0"
 !endif
 !define APP_PUBLISHER "Roman V. Isaev"
-!define APP_URL "https://github.com/rm-isaeff/clipai"
+!define APP_URL "https://github.com/rm-isaeff/clipllm"
 !define APP_DESCRIPTION "Cross-platform LLM clipboard utility"
 
 ; Modern UI
@@ -63,7 +63,7 @@ Section "MainSection" SEC01
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayVersion" "${APP_VERSION}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "Publisher" "${APP_PUBLISHER}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "URLInfoAbout" "${APP_URL}"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayIcon" "$INSTDIR\ClipAI.exe"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayIcon" "$INSTDIR\ClipLLM.exe"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "UninstallString" "$INSTDIR\uninstall.exe"
   WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "NoModify" 1
   WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "NoRepair" 1
@@ -73,11 +73,11 @@ Section "MainSection" SEC01
 
   ; Start Menu shortcut
   CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-  CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\ClipAI.exe"
+  CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\ClipLLM.exe"
   CreateShortCut "$SMPROGRAMS\${APP_NAME}\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 
   ; Desktop shortcut
-  CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\ClipAI.exe"
+  CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\ClipLLM.exe"
 SectionEnd
 
 ; Uninstaller Section

@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_PROMPTEDITORDIALOG_H
-#define CLIPAI_UI_PROMPTEDITORDIALOG_H
+#ifndef CLIPLLM_UI_PROMPTEDITORDIALOG_H
+#define CLIPLLM_UI_PROMPTEDITORDIALOG_H
 
 #include <QDialog>
 #include <QCloseEvent>
@@ -33,7 +33,7 @@
 class QNetworkAccessManager;
 class QNetworkReply;
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 class PromptManager;
 class GroupsManager;
@@ -118,6 +118,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
 #endif

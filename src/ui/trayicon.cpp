@@ -27,7 +27,7 @@
 #include <QStyle>
 #include <QDebug>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 TrayIcon::TrayIcon(App* app)
@@ -341,7 +341,7 @@ void TrayIcon::onAboutTriggered()
         "or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single "
         "keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.</p>"
         "<p><small>Copyright © 2026 Roman V. Isaev &lt;<a href='mailto:rm@isaeff.net'>rm@isaeff.net</a>&gt;</small></p>"
-    ).arg(ClipAI::versionString());
+    ).arg(ClipLLM::versionString());
 
     QMessageBox::about(nullptr, tr("About ClipAI"), aboutText);
 }
@@ -394,4 +394,4 @@ void TrayIcon::retranslateUi()
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

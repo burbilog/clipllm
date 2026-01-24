@@ -40,7 +40,7 @@
 #include <QJsonArray>
 #include <QFile>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
@@ -903,4 +903,4 @@ void PromptEditorDialog::onModelsFetchFinished(QNetworkReply* reply)
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

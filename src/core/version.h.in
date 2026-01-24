@@ -1,26 +1,26 @@
-// ClipAI - Cross-platform LLM clipboard utility
+// ClipLLM - Cross-platform LLM clipboard utility
 // Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 //
 // This file is auto-generated from CMakeLists.txt project version.
 // DO NOT EDIT manually - change version in CMakeLists.txt
 
-#ifndef CLIPAI_CORE_VERSION_H
-#define CLIPAI_CORE_VERSION_H
+#ifndef CLIPLLM_CORE_VERSION_H
+#define CLIPLLM_CORE_VERSION_H
 
 #include <QtGlobal>
 
-#define CLIPAI_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
-#define CLIPAI_VERSION_MINOR @PROJECT_VERSION_MINOR@
-#define CLIPAI_VERSION_PATCH @PROJECT_VERSION_PATCH@
-#define CLIPAI_VERSION_STR "@PROJECT_VERSION@"
+#define CLIPLLM_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define CLIPLLM_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define CLIPLLM_VERSION_PATCH @PROJECT_VERSION_PATCH@
+#define CLIPLLM_VERSION_STR "@PROJECT_VERSION@"
 
-namespace ClipAI {
+namespace ClipLLM {
 
 inline QString versionString()
 {
-    return QStringLiteral(CLIPAI_VERSION_STR);
+    return QStringLiteral(CLIPLLM_VERSION_STR);
 }
 
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_CORE_VERSION_H
+#endif // CLIPLLM_CORE_VERSION_H

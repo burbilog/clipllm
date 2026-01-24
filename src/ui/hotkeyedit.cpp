@@ -20,7 +20,7 @@
 #include <QStyle>
 #include <QDebug>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 HotkeyEdit::HotkeyEdit(QWidget* parent)
@@ -233,4 +233,4 @@ bool HotkeyEdit::isModifierKey(int key) const
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

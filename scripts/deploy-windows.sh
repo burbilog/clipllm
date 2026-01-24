@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# ClipAI - Cross-platform LLM clipboard utility
+# ClipLLM - Cross-platform LLM clipboard utility
 # Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 #
-# Windows deployment script for ClipAI
+# Windows deployment script for ClipLLM
 # This script deploys the Windows build with all required Qt DLLs and plugins
 
 set -e
@@ -33,7 +33,7 @@ fi
 
 # Print configuration
 echo "=========================================="
-echo "ClipAI Windows Deployment Script"
+echo "ClipLLM Windows Deployment Script"
 echo "=========================================="
 echo "Build type:      ${BUILD_DESC}"
 echo "Build directory: ${BUILD_DIR}"
@@ -49,8 +49,8 @@ if [ ! -d "${BUILD_DIR}" ]; then
 fi
 
 # Check if executable exists
-if [ ! -f "${BUILD_DIR}/ClipAI.exe" ]; then
-    echo -e "${RED}Error: ClipAI.exe not found in ${BUILD_DIR}${NC}"
+if [ ! -f "${BUILD_DIR}/ClipLLM.exe" ]; then
+    echo -e "${RED}Error: ClipLLM.exe not found in ${BUILD_DIR}${NC}"
     echo "Please run 'make windows' first to build the project"
     exit 1
 fi
@@ -62,8 +62,8 @@ mkdir -p "${DEPLOY_DIR}"
 mkdir -p "${DEPLOY_DIR}/translations"
 
 # Copy executable
-echo "Copying ClipAI.exe..."
-cp "${BUILD_DIR}/ClipAI.exe" "${DEPLOY_DIR}/"
+echo "Copying ClipLLM.exe..."
+cp "${BUILD_DIR}/ClipLLM.exe" "${DEPLOY_DIR}/"
 
 # Copy translations
 echo "Copying translations..."
@@ -163,9 +163,9 @@ if [ "$MXE_BUILD_TYPE" = "shared" ]; then
 fi
 
 echo -e "${YELLOW}To test with Wine, run:${NC}"
-echo "  wine ${DEPLOY_DIR}/ClipAI.exe"
+echo "  wine ${DEPLOY_DIR}/ClipLLM.exe"
 echo ""
 echo -e "${YELLOW}To create a portable ZIP archive:${NC}"
 echo "  cd ${DEPLOY_DIR}"
-echo "  zip -r ../clipai-windows-x86_64-$(git describe --tags --always 2>/dev/null || echo 'dev').zip ."
+echo "  zip -r ../clipllm-windows-x86_64-$(git describe --tags --always 2>/dev/null || echo 'dev').zip ."
 echo ""

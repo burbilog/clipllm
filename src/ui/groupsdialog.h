@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_GROUPSDIALOG_H
-#define CLIPAI_UI_GROUPSDIALOG_H
+#ifndef CLIPLLM_UI_GROUPSDIALOG_H
+#define CLIPLLM_UI_GROUPSDIALOG_H
 
 #include <QDialog>
 #include <QTreeWidget>
@@ -23,7 +23,7 @@
 #include <QPushButton>
 #include <QLabel>
 
-namespace ClipAI {
+namespace ClipLLM {
 
 namespace Core {
 class GroupsManager;
@@ -73,6 +73,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_UI_GROUPSDIALOG_H
+#endif // CLIPLLM_UI_GROUPSDIALOG_H

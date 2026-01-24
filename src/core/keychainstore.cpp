@@ -25,12 +25,12 @@
 // #include <keychain.h>
 // #endif
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 KeychainStore::KeychainStore(QObject* parent)
     : QObject(parent)
-    , m_serviceName(QStringLiteral("ClipAI"))
+    , m_serviceName(QStringLiteral("ClipLLM"))
 {
 }
 
@@ -140,4 +140,4 @@ bool KeychainStore::removeProviderKey(const QString& provider)
 }
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM

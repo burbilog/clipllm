@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_PROMPTMENU_H
-#define CLIPAI_UI_PROMPTMENU_H
+#ifndef CLIPLLM_UI_PROMPTMENU_H
+#define CLIPLLM_UI_PROMPTMENU_H
 
 #include <QMenu>
 #include <QLineEdit>
@@ -24,14 +24,14 @@
 #include "core/promptmanager.h"
 #include "models/prompt.h"
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 class ClipboardManager;
 class ConfigManager;
 }
 }
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 class PromptMenu : public QMenu
@@ -93,6 +93,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_UI_PROMPTMENU_H
+#endif // CLIPLLM_UI_PROMPTMENU_H

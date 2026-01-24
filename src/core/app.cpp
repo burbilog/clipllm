@@ -42,12 +42,12 @@
 #include <QLibraryInfo>
 #include <QCursor>
 
-namespace ClipAI {
+namespace ClipLLM {
 
 // Static namespace for constants
 namespace {
-    const QString APPLICATION_NAME = QStringLiteral("ClipAI");
-    const QString ORGANIZATION_DOMAIN = QStringLiteral("clipai.org");
+    const QString APPLICATION_NAME = QStringLiteral("ClipLLM");
+    const QString ORGANIZATION_DOMAIN = QStringLiteral("clipllm.org");
 
     // Single instance management
     QSharedMemory* g_sharedMemory = nullptr;
@@ -81,7 +81,7 @@ App::App(int &argc, char **argv)
     setApplicationName(APPLICATION_NAME);
     setOrganizationName(APPLICATION_NAME);
     setOrganizationDomain(ORGANIZATION_DOMAIN);
-    setApplicationVersion(ClipAI::versionString());
+    setApplicationVersion(ClipLLM::versionString());
 
     // Don't quit when last window is closed (important for tray apps)
     setQuitOnLastWindowClosed(false);
@@ -123,7 +123,7 @@ bool App::isSecondary() const
 {
     // Check if another instance is running using lock file
     QString lockFilePath = QStandardPaths::writableLocation(QStandardPaths::TempLocation)
-                           + QStringLiteral("/clipai.lock");
+                           + QStringLiteral("/clipllm.lock");
     QLockFile lockFile(lockFilePath);
 
     if (!lockFile.tryLock(10)) {
@@ -138,7 +138,7 @@ bool App::initialize(bool startMinimized)
 {
     // Setup single instance lock
     QString lockFilePath = QStandardPaths::writableLocation(QStandardPaths::TempLocation)
-                           + QStringLiteral("/clipai.lock");
+                           + QStringLiteral("/clipllm.lock");
     g_lockFile = new QLockFile(lockFilePath);
     if (!g_lockFile->tryLock(0)) {
         qWarning() << "Another instance is already running";
@@ -255,8 +255,8 @@ bool App::initialize(bool startMinimized)
         // Optionally show a welcome message on first run
         bool firstRun = m_configManager->value(QStringLiteral("firstRun"), true).toBool();
         if (firstRun) {
-            showTrayMessage(tr("Welcome to ClipAI"),
-                           tr("ClipAI is running in the system tray. Click the tray icon or configure a hotkey in settings."));
+            showTrayMessage(tr("Welcome to ClipLLM"),
+                           tr("ClipLLM is running in the system tray. Click the tray icon or configure a hotkey in settings."));
             m_configManager->setValue(QStringLiteral("firstRun"), false);
         }
     }
@@ -285,7 +285,7 @@ void App::setLanguage(const QString& languageCode)
     // Load application translations
     QTranslator* appTranslator = new QTranslator(this);
     QString translationsPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                               + QStringLiteral("/../share/clipai/translations");
+                               + QStringLiteral("/../share/clipllm/translations");
 
     // Fallback paths for development
     if (!QDir(translationsPath).exists()) {
@@ -297,7 +297,7 @@ void App::setLanguage(const QString& languageCode)
         }
     }
 
-    if (appTranslator->load(QStringLiteral("clipai_") + languageCode, translationsPath)) {
+    if (appTranslator->load(QStringLiteral("clipllm_") + languageCode, translationsPath)) {
         installTranslator(appTranslator);
         m_translators.push_back(appTranslator);
     } else {
@@ -734,4 +734,4 @@ void App::onAboutToQuit()
     }
 }
 
-} // namespace ClipAI
+} // namespace ClipLLM

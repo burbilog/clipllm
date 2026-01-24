@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_CORE_APP_H
-#define CLIPAI_CORE_APP_H
+#ifndef CLIPLLM_CORE_APP_H
+#define CLIPLLM_CORE_APP_H
 
 #include <QApplication>
 #include <QSystemTrayIcon>
@@ -26,7 +26,7 @@
 // Forward declarations
 class QHotkey;
 
-namespace ClipAI {
+namespace ClipLLM {
 
 class App;
 
@@ -141,6 +141,6 @@ private:
     QByteArray m_instanceId;
 };
 
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_CORE_APP_H
+#endif // CLIPLLM_CORE_APP_H

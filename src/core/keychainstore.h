@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_CORE_KEYCHAINSTORE_H
-#define CLIPAI_CORE_KEYCHAINSTORE_H
+#ifndef CLIPLLM_CORE_KEYCHAINSTORE_H
+#define CLIPLLM_CORE_KEYCHAINSTORE_H
 
 #include <QObject>
 #include <QString>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 class KeychainStore : public QObject
@@ -54,6 +54,6 @@ private:
 };
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_CORE_KEYCHAINSTORE_H
+#endif // CLIPLLM_CORE_KEYCHAINSTORE_H

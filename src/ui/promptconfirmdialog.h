@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_PROMPTCONFLICTDIALOG_H
-#define CLIPAI_UI_PROMPTCONFLICTDIALOG_H
+#ifndef CLIPLLM_UI_PROMPTCONFLICTDIALOG_H
+#define CLIPLLM_UI_PROMPTCONFLICTDIALOG_H
 
 #include <QDialog>
 #include <QString>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 class PromptConflictDialog : public QDialog
@@ -48,6 +48,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_UI_PROMPTCONFLICTDIALOG_H
+#endif // CLIPLLM_UI_PROMPTCONFLICTDIALOG_H

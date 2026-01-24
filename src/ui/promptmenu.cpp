@@ -31,7 +31,7 @@
 #include <QDebug>
 #include <algorithm>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 PromptMenu::PromptMenu(Core::PromptManager* promptManager,
@@ -488,4 +488,4 @@ void PromptMenu::onHistoryClicked()
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

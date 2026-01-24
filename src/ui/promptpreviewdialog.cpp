@@ -34,7 +34,7 @@
 #include <QTextDocument>
 #include <QSettings>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 PromptPreviewDialog::PromptPreviewDialog(const Models::Prompt& prompt, QWidget* parent)
@@ -179,7 +179,7 @@ QString PromptPreviewDialog::buildJsonPreview()
         // Find and replace the image URL with a link
         QRegularExpression re(R"("url":\s*"data:image/[^;]+;base64,[^"]*")");
         QString imageSize = tr("%1x%2").arg(m_clipboardImage.width()).arg(m_clipboardImage.height());
-        QString replacement = QStringLiteral("\"url\": \"<a href=\"clipai://view-image\">[Clipboard image: %1 pixels - click to view]</a>\"").arg(imageSize);
+        QString replacement = QStringLiteral("\"url\": \"<a href=\"clipllm://view-image\">[Clipboard image: %1 pixels - click to view]</a>\"").arg(imageSize);
         jsonString.replace(re, replacement);
     }
 
@@ -188,8 +188,8 @@ QString PromptPreviewDialog::buildJsonPreview()
 
     // Wrap in <pre> for formatting, but convert our link back to HTML
     // The link was escaped, so we need to unescape it
-    jsonString.replace(QStringLiteral("&lt;a href=&quot;clipai://view-image&quot;&gt;"),
-                       QStringLiteral("<a href=\"clipai://view-image\">"));
+    jsonString.replace(QStringLiteral("&lt;a href=&quot;clipllm://view-image&quot;&gt;"),
+                       QStringLiteral("<a href=\"clipllm://view-image\">"));
     jsonString.replace(QStringLiteral("&lt;/a&gt;"), QStringLiteral("</a>"));
 
     return QStringLiteral("<pre style=\"font-family: monospace;\">") + jsonString + QStringLiteral("</pre>");
@@ -279,4 +279,4 @@ void PromptPreviewDialog::closeEvent(QCloseEvent* event)
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

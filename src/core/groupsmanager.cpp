@@ -23,7 +23,7 @@
 #include <QRegularExpression>
 #include <QDebug>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 GroupsManager::GroupsManager(QObject* parent)
@@ -189,4 +189,4 @@ QStringList GroupsManager::getSortedGroups(const QStringList& groups)
 }
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM

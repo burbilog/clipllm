@@ -16,7 +16,7 @@
 
 #include "llmconfig.h"
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Models {
 
 QJsonObject LLMConfig::toJson() const
@@ -182,4 +182,4 @@ QStringList LLMConfig::availableModels(LLMProvider provider)
 }
 
 } // namespace Models
-} // namespace ClipAI
+} // namespace ClipLLM

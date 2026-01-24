@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_PROMPTPREVIEWDIALOG_H
-#define CLIPAI_UI_PROMPTPREVIEWDIALOG_H
+#ifndef CLIPLLM_UI_PROMPTPREVIEWDIALOG_H
+#define CLIPLLM_UI_PROMPTPREVIEWDIALOG_H
 
 #include <QDialog>
 #include <QCloseEvent>
@@ -24,7 +24,7 @@
 #include <QLabel>
 #include "models/prompt.h"
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 class PromptPreviewDialog : public QDialog
@@ -59,6 +59,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
 #endif

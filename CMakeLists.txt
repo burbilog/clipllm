@@ -15,7 +15,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 cmake_minimum_required(VERSION 3.16)
-project(ClipAI VERSION 1.0.0 LANGUAGES CXX)
+project(ClipLLM VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -129,15 +129,15 @@ configure_file(
 if(WIN32)
     # Copy manifest to build directory
     configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources/clipai.exe.manifest
-        ${CMAKE_CURRENT_BINARY_DIR}/clipai.exe.manifest
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/clipllm.exe.manifest
+        ${CMAKE_CURRENT_BINARY_DIR}/clipllm.exe.manifest
         COPYONLY
     )
 
     # Generate .rc file from template
     configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources/clipai.rc.in
-        ${CMAKE_CURRENT_BINARY_DIR}/clipai.rc
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/clipllm.rc.in
+        ${CMAKE_CURRENT_BINARY_DIR}/clipllm.rc
         @ONLY
     )
 endif()
@@ -148,7 +148,7 @@ if(WIN32)
     add_executable(${PROJECT_NAME} WIN32
         ${SOURCES}
         ${HEADERS}
-        ${CMAKE_CURRENT_BINARY_DIR}/clipai.rc
+        ${CMAKE_CURRENT_BINARY_DIR}/clipllm.rc
     )
 else()
     add_executable(${PROJECT_NAME}
@@ -189,8 +189,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 # Generate tray icons from high-resolution source
-if(CONVERT_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png")
-    message(STATUS "Enabling icon generation from art/clipai_hires.png")
+if(CONVERT_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png")
+    message(STATUS "Enabling icon generation from art/clipllm_hires.png")
     
     # Create output directory
     file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons)
@@ -207,28 +207,28 @@ if(CONVERT_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.p
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-128.png
             ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon.ico
         COMMAND ${CONVERT_EXECUTABLE}
-            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png
             -resize 16x16 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-16.png
         COMMAND ${CONVERT_EXECUTABLE}
-            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png
             -resize 22x22 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-22.png
         COMMAND ${CONVERT_EXECUTABLE}
-            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png
             -resize 24x24 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-24.png
         COMMAND ${CONVERT_EXECUTABLE}
-            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png
             -resize 32x32 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-32.png
         COMMAND ${CONVERT_EXECUTABLE}
-            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png
             -resize 48x48 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-48.png
         COMMAND ${CONVERT_EXECUTABLE}
-            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png
             -resize 64x64 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-64.png
         COMMAND ${CONVERT_EXECUTABLE}
-            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png
             -resize 128x128 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon-128.png
         COMMAND ${CONVERT_EXECUTABLE}
-            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png
             \( -clone 0 -resize 16x16 \)
             \( -clone 0 -resize 32x32 \)
             \( -clone 0 -resize 48x48 \)
@@ -236,8 +236,8 @@ if(CONVERT_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.p
             \( -clone 0 -resize 128x128 \)
             \( -clone 0 -resize 256x256 \)
             -delete 0 ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/tray-icon.ico
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/art/clipai_hires.png
-        COMMENT "Generating tray icons from art/clipai_hires.png"
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/art/clipllm_hires.png
+        COMMENT "Generating tray icons from art/clipllm_hires.png"
         VERBATIM
     )
     
@@ -292,11 +292,11 @@ endif()
 
 # Translations
 set(TS_FILES
-    translations/clipai_en.ts
-    translations/clipai_ru.ts
-    translations/clipai_de.ts
-    translations/clipai_fr.ts
-    translations/clipai_es.ts
+    translations/clipllm_en.ts
+    translations/clipllm_ru.ts
+    translations/clipllm_de.ts
+    translations/clipllm_fr.ts
+    translations/clipllm_es.ts
 )
 
 set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/translations)
@@ -328,7 +328,7 @@ add_custom_target(translations-copy
 
 # Install translations
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/translations/*.qm
-    DESTINATION share/clipai/translations
+    DESTINATION share/clipllm/translations
 )
 
 # Unit tests
@@ -349,16 +349,16 @@ endif()
 # Desktop file for Linux
 if(UNIX AND NOT APPLE)
     configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources/clipai.desktop.in
-        ${CMAKE_CURRENT_BINARY_DIR}/clipai.desktop
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/clipllm.desktop.in
+        ${CMAKE_CURRENT_BINARY_DIR}/clipllm.desktop
         @ONLY
     )
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/clipai.desktop
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/clipllm.desktop
         DESTINATION share/applications
     )
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/app-icon.svg
         DESTINATION share/icons/hicolor/scalable/apps
-        RENAME clipai.svg
+        RENAME clipllm.svg
     )
 endif()
 
@@ -377,7 +377,7 @@ install(TARGETS ${PROJECT_NAME}
 
 # Print configuration summary
 message(STATUS "")
-message(STATUS "ClipAI Configuration:")
+message(STATUS "ClipLLM Configuration:")
 message(STATUS "  Version: ${PROJECT_VERSION}")
 message(STATUS "  Qt6: ${Qt6_VERSION}")
 message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")

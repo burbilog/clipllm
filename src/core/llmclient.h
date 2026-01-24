@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_CORE_LLMCLIENT_H
-#define CLIPAI_CORE_LLMCLIENT_H
+#ifndef CLIPLLM_CORE_LLMCLIENT_H
+#define CLIPLLM_CORE_LLMCLIENT_H
 
 #include <QObject>
 #include <QString>
@@ -25,7 +25,7 @@
 #include <QJsonArray>
 #include "models/llmconfig.h"
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 enum class LLMClientState {
@@ -175,11 +175,11 @@ private:
 };
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM
 
-Q_DECLARE_METATYPE(ClipAI::Core::LLMClientState)
-Q_DECLARE_METATYPE(ClipAI::Core::LLMMessage)
-Q_DECLARE_METATYPE(ClipAI::Core::LLMRequest)
-Q_DECLARE_METATYPE(ClipAI::Core::LLMResponse)
+Q_DECLARE_METATYPE(ClipLLM::Core::LLMClientState)
+Q_DECLARE_METATYPE(ClipLLM::Core::LLMMessage)
+Q_DECLARE_METATYPE(ClipLLM::Core::LLMRequest)
+Q_DECLARE_METATYPE(ClipLLM::Core::LLMResponse)
 
-#endif // CLIPAI_CORE_LLMCLIENT_H
+#endif // CLIPLLM_CORE_LLMCLIENT_H

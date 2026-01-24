@@ -28,7 +28,7 @@
 #include <QDebug>
 #include <QMap>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 PromptManager::PromptManager(QObject* parent)
@@ -662,4 +662,4 @@ bool PromptManager::importPromptsFromJson(const QJsonObject& json,
 }
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM

@@ -1,4 +1,4 @@
-# ClipAI
+# ClipLLM
 
 Cross-platform LLM clipboard utility - Process your clipboard content with AI prompts using global hotkeys.
 
@@ -61,12 +61,12 @@ make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qt6
 sudo apt install nsis
 ```
 
-**Building ClipAI for Windows:**
+**Building ClipLLM for Windows:**
 
 ```bash
-# Clone ClipAI (if not already done)
-git clone https://github.com/rm-isaeff/clipai.git
-cd clipai
+# Clone ClipLLM (if not already done)
+git clone https://github.com/rm-isaeff/clipllm.git
+cd clipllm
 
 # Build for Windows (shared - default)
 make windows
@@ -107,10 +107,10 @@ make windows MXE_BUILD_TYPE=static
 ```
 
 **Output:**
-- `build-windows/ClipAI.exe` - Compiled executable
+- `build-windows/ClipLLM.exe` - Compiled executable
 - `deploy-windows/` - Deployed package with DLLs (shared build)
-- `dist/clipai-*-windows-x86_64.zip` - Portable ZIP archive
-- `dist/ClipAI-*-windows-x86_64-setup.exe` - NSIS installer
+- `dist/clipllm-*-windows-x86_64.zip` - Portable ZIP archive
+- `dist/ClipLLM-*-windows-x86_64-setup.exe` - NSIS installer
 
 ### macOS
 
@@ -128,7 +128,7 @@ make -j$(sysctl -n hw.ncpu)
 
 ### First Run
 
-1. Launch ClipAI
+1. Launch ClipLLM
 2. Click on the tray icon and select "Settings"
 3. Configure your LLM provider:
    - Choose a provider (OpenRouter, OpenAI, Anthropic, or Custom)
@@ -139,7 +139,7 @@ make -j$(sysctl -n hw.ncpu)
 
 ### API Key Setup
 
-ClipAI supports multiple LLM providers:
+ClipLLM supports multiple LLM providers:
 
 - **OpenRouter** (https://openrouter.ai) - Access to multiple models
 - **OpenAI** - Direct GPT-4 access
@@ -183,7 +183,7 @@ Full functionality supported.
 ## Project Structure
 
 ```
-clipai/
+clipllm/
 ├── src/
 │   ├── core/           # Core application logic
 │   ├── ui/             # User interface components
@@ -204,7 +204,7 @@ clipai/
 You can create and edit prompts in several ways:
 
 1. **Settings Dialog** - Use the Prompts tab with full prompt editor UI
-2. **Direct File Edit** - Edit `~/.config/ClipAI/prompts.json` directly
+2. **Direct File Edit** - Edit `~/.config/ClipLLM/prompts.json` directly
 3. **Import/Export** - Share prompts via JSON export/import
 
 Prompt format:

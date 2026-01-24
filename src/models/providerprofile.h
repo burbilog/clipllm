@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_MODELS_PROVIDERPROFILE_H
-#define CLIPAI_MODELS_PROVIDERPROFILE_H
+#ifndef CLIPLLM_MODELS_PROVIDERPROFILE_H
+#define CLIPLLM_MODELS_PROVIDERPROFILE_H
 
 #include <QString>
 #include <QStringList>
@@ -23,7 +23,7 @@
 #include <QUrl>
 #include <optional>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Models {
 
 class ProviderProfile
@@ -101,8 +101,8 @@ private:
 };
 
 } // namespace Models
-} // namespace ClipAI
+} // namespace ClipLLM
 
-Q_DECLARE_METATYPE(ClipAI::Models::ProviderProfile)
+Q_DECLARE_METATYPE(ClipLLM::Models::ProviderProfile)
 
-#endif // CLIPAI_MODELS_PROVIDERPROFILE_H
+#endif // CLIPLLM_MODELS_PROVIDERPROFILE_H

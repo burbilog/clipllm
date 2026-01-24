@@ -51,7 +51,7 @@
 #include <QSettings>
 #include <QListWidget>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 SettingsDialog::SettingsDialog(QWidget* parent)
@@ -1651,4 +1651,4 @@ void SettingsDialog::closeEvent(QCloseEvent* event)
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

@@ -21,7 +21,7 @@
 #include <QMap>
 #include <QDebug>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Models {
 
 Prompt::Prompt(const QJsonObject& json)
@@ -285,4 +285,4 @@ bool Prompt::isValid() const
 }
 
 } // namespace Models
-} // namespace ClipAI
+} // namespace ClipLLM

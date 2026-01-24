@@ -10,7 +10,7 @@ After making code changes, build the project to verify everything compiles, but 
 
 ## Project Overview
 
-ClipAI is a cross-platform LLM clipboard utility written in C++ using Qt6. It runs as a system tray service and allows users to process clipboard content (text and images) with AI prompts using global hotkeys.
+ClipLLM is a cross-platform LLM clipboard utility written in C++ using Qt6. It runs as a system tray service and allows users to process clipboard content (text and images) with AI prompts using global hotkeys.
 
 **Key Statistics:** ~7,000+ lines of C++17 code across 3 modules (core, ui, models).
 
@@ -67,10 +67,10 @@ make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qtifw
 
 ### Standard Build (manual)
 
-**Build directory:** `/home/rm/clipai/build` (or `$HOME/clipai/build`)
+**Build directory:** `/home/rm/clipllm/build` (or `$HOME/clipllm/build`)
 
 ```bash
-cd /home/rm/clipai/build
+cd /home/rm/clipllm/build
 cmake ..
 make -j$(nproc)
 ```
@@ -96,11 +96,11 @@ make clean          # Remove all build directories (including Windows)
 
 ### Namespace Structure
 
-The codebase is organized into three namespaces under `ClipAI`:
+The codebase is organized into three namespaces under `ClipLLM`:
 
-- **`ClipAI::Core`** - Core business logic (clipboard, LLM client, prompts, config, keychain, history)
-- **`ClipAI::Models`** - Data structures (Prompt, LLMConfig, HistoryEntry)
-- **`ClipAI::UI`** - User interface components (tray icon, dialogs, menus)
+- **`ClipLLM::Core`** - Core business logic (clipboard, LLM client, prompts, config, keychain, history)
+- **`ClipLLM::Models`** - Data structures (Prompt, LLMConfig, HistoryEntry)
+- **`ClipLLM::UI`** - User interface components (tray icon, dialogs, menus)
 
 ### Application Flow (src/core/app.h)
 
@@ -135,14 +135,14 @@ The `App` class (inherits `QApplication`) is the central controller that:
 - Provider-specific response parsing required for streaming
 
 **PromptManager** (src/core/promptmanager.h)
-- Loads prompts from `~/.config/ClipAI/prompts.json` or bundled defaults
+- Loads prompts from `~/.config/ClipLLM/prompts.json` or bundled defaults
 - Template format: `{clipboard}` placeholder in user prompt templates
 
 **ConfigManager** (src/core/configmanager.h)
 - Platform-agnostic storage via QSettings:
-  - Linux: `~/.config/ClipAI/ClipAI.conf`
-  - Windows: Registry `HKEY_CURRENT_USER\Software\ClipAI`
-  - macOS: `~/Library/Preferences/com.ClipAI.plist`
+  - Linux: `~/.config/ClipLLM/ClipLLM.conf`
+  - Windows: Registry `HKEY_CURRENT_USER\Software\ClipLLM`
+  - macOS: `~/Library/Preferences/com.ClipLLM.plist`
 
 **KeychainStore** (src/core/keychainstore.h)
 - Platform-specific secure credential storage:
@@ -169,7 +169,7 @@ The `App` class (inherits `QApplication`) is the central controller that:
 
 - **Default Prompts**: `resources/config/prompts-default.json` (16 built-in prompts)
 - **Qt Resources**: `resources/resources.qrc` - bundles prompts and icons into executable
-- **Desktop Entry**: `resources/clipai.desktop.in` - Linux application launcher
+- **Desktop Entry**: `resources/clipllm.desktop.in` - Linux application launcher
 
 ## Platform-Specific Notes
 
@@ -196,7 +196,7 @@ The `App` class (inherits `QApplication`) is the central controller that:
 
 ### CMakeLists.txt (line ~18)
 ```cmake
-project(ClipAI VERSION 1.0.0 LANGUAGES CXX)
+project(ClipLLM VERSION 1.0.0 LANGUAGES CXX)
 ```
 
 When you change the version here:
@@ -204,13 +204,13 @@ When you change the version here:
 - All code can include `core/version.h` to access version macros:
   - `CLIPAI_VERSION_MAJOR`, `CLIPAI_VERSION_MINOR`, `CLIPAI_VERSION_PATCH`
   - `CLIPAI_VERSION_STR` - full version string (e.g., "1.0.0")
-  - `ClipAI::versionString()` - Qt function returning version QString
+  - `ClipLLM::versionString()` - Qt function returning version QString
 
 **Example usage in code:**
 ```cpp
 #include "core/version.h"
 
-QString version = ClipAI::versionString();  // "1.0.0"
+QString version = ClipLLM::versionString();  // "1.0.0"
 ```
 
 **Never edit** `build/src/core/version.h` directly - it will be overwritten on rebuild.
@@ -224,14 +224,14 @@ QString version = ClipAI::versionString();  // "1.0.0"
 4. Update Settings dialog provider dropdown
 
 ### Adding a New Prompt
-1. Edit `~/.config/ClipAI/prompts.json` directly, or
+1. Edit `~/.config/ClipLLM/prompts.json` directly, or
 2. Use the Settings → Prompts tab with full prompt editor UI
 3. Required fields: `id`, `name`, `system_prompt`, `user_prompt_template`, `content_type`, `enabled`
 4. Optional: `priority` (higher = appears first in menu), `description`, `icon`
 
 ### Adding a New Language
-1. Create `translations/clipai_xx.ts`
-2. Run `lupdate src/ -ts translations/clipai_xx.ts`
+1. Create `translations/clipllm_xx.ts`
+2. Run `lupdate src/ -ts translations/clipllm_xx.ts`
 3. Edit with Qt Linguist
 4. Add to `TS_FILES` in CMakeLists.txt
 5. Update Settings language dropdown

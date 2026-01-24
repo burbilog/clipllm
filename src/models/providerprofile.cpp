@@ -19,7 +19,7 @@
 #include <QDateTime>
 #include <QDebug>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Models {
 
 ProviderProfile::ProviderProfile(const QJsonObject& json)
@@ -237,4 +237,4 @@ QString ProviderProfile::generateId(const QString& name, const QString& suffix)
 }
 
 } // namespace Models
-} // namespace ClipAI
+} // namespace ClipLLM

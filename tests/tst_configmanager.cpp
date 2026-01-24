@@ -1,4 +1,4 @@
-// ClipAI - Cross-platform LLM clipboard utility
+// ClipLLM - Cross-platform LLM clipboard utility
 // Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 #include <QTemporaryDir>
 #include "core/configmanager.h"
 
-using namespace ClipAI::Core;
+using namespace ClipLLM::Core;
 
 class TestConfigManager : public QObject
 {
@@ -70,10 +70,10 @@ void TestConfigManager::cleanup()
 {
     // Clean up settings
     if (m_manager) {
-        m_manager->remove(ClipAI::Core::ConfigManager::HISTORY_CLEANUP_BY_COUNT_KEY);
-        m_manager->remove(ClipAI::Core::ConfigManager::HISTORY_CLEANUP_BY_DATE_KEY);
-        m_manager->remove(ClipAI::Core::ConfigManager::HISTORY_LIMIT_KEY);
-        m_manager->remove(ClipAI::Core::ConfigManager::HISTORY_DAYS_TO_KEEP_KEY);
+        m_manager->remove(ClipLLM::Core::ConfigManager::HISTORY_CLEANUP_BY_COUNT_KEY);
+        m_manager->remove(ClipLLM::Core::ConfigManager::HISTORY_CLEANUP_BY_DATE_KEY);
+        m_manager->remove(ClipLLM::Core::ConfigManager::HISTORY_LIMIT_KEY);
+        m_manager->remove(ClipLLM::Core::ConfigManager::HISTORY_DAYS_TO_KEEP_KEY);
         m_manager->sync();
     }
     delete m_manager;
@@ -85,7 +85,7 @@ void TestConfigManager::cleanup()
 void TestConfigManager::cleanupByCountDefault_isFalse()
 {
     // Clear the setting to test default
-    m_manager->remove(ClipAI::Core::ConfigManager::HISTORY_CLEANUP_BY_COUNT_KEY);
+    m_manager->remove(ClipLLM::Core::ConfigManager::HISTORY_CLEANUP_BY_COUNT_KEY);
     m_manager->sync();
 
     bool defaultValue = m_manager->historyCleanupByCount();
@@ -95,7 +95,7 @@ void TestConfigManager::cleanupByCountDefault_isFalse()
 void TestConfigManager::cleanupByDateDefault_isFalse()
 {
     // Clear the setting to test default
-    m_manager->remove(ClipAI::Core::ConfigManager::HISTORY_CLEANUP_BY_DATE_KEY);
+    m_manager->remove(ClipLLM::Core::ConfigManager::HISTORY_CLEANUP_BY_DATE_KEY);
     m_manager->sync();
 
     bool defaultValue = m_manager->historyCleanupByDate();
@@ -105,7 +105,7 @@ void TestConfigManager::cleanupByDateDefault_isFalse()
 void TestConfigManager::historyLimitDefault_is1000()
 {
     // Clear the setting to test default
-    m_manager->remove(ClipAI::Core::ConfigManager::HISTORY_LIMIT_KEY);
+    m_manager->remove(ClipLLM::Core::ConfigManager::HISTORY_LIMIT_KEY);
     m_manager->sync();
 
     int defaultValue = m_manager->historyLimit();
@@ -115,7 +115,7 @@ void TestConfigManager::historyLimitDefault_is1000()
 void TestConfigManager::historyDaysToKeepDefault_is30()
 {
     // Clear the setting to test default
-    m_manager->remove(ClipAI::Core::ConfigManager::HISTORY_DAYS_TO_KEEP_KEY);
+    m_manager->remove(ClipLLM::Core::ConfigManager::HISTORY_DAYS_TO_KEEP_KEY);
     m_manager->sync();
 
     int defaultValue = m_manager->historyDaysToKeep();

@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_CORE_CLIPBOARDMANAGER_H
-#define CLIPAI_CORE_CLIPBOARDMANAGER_H
+#ifndef CLIPLLM_CORE_CLIPBOARDMANAGER_H
+#define CLIPLLM_CORE_CLIPBOARDMANAGER_H
 
 #include <QObject>
 #include <QVariant>
@@ -23,7 +23,7 @@
 #include <optional>
 #include <memory>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 enum class ClipboardContentType {
@@ -108,9 +108,9 @@ private:
 };
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM
 
-Q_DECLARE_METATYPE(ClipAI::Core::ClipboardContentType)
-Q_DECLARE_METATYPE(ClipAI::Core::ClipboardContent)
+Q_DECLARE_METATYPE(ClipLLM::Core::ClipboardContentType)
+Q_DECLARE_METATYPE(ClipLLM::Core::ClipboardContent)
 
-#endif // CLIPAI_CORE_CLIPBOARDMANAGER_H
+#endif // CLIPLLM_CORE_CLIPBOARDMANAGER_H

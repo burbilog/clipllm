@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_MODELS_PROMPT_H
-#define CLIPAI_MODELS_PROMPT_H
+#ifndef CLIPLLM_MODELS_PROMPT_H
+#define CLIPLLM_MODELS_PROMPT_H
 
 #include <QString>
 #include <QStringList>
@@ -24,7 +24,7 @@
 #include <QVariantMap>
 #include <QStyle>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Models {
 
 enum class ContentType {
@@ -127,10 +127,10 @@ private:
 };
 
 } // namespace Models
-} // namespace ClipAI
+} // namespace ClipLLM
 
-Q_DECLARE_METATYPE(ClipAI::Models::Prompt)
-Q_DECLARE_METATYPE(ClipAI::Models::ContentType)
-Q_DECLARE_METATYPE(ClipAI::Models::PromptIcon)
+Q_DECLARE_METATYPE(ClipLLM::Models::Prompt)
+Q_DECLARE_METATYPE(ClipLLM::Models::ContentType)
+Q_DECLARE_METATYPE(ClipLLM::Models::PromptIcon)
 
-#endif // CLIPAI_MODELS_PROMPT_H
+#endif // CLIPLLM_MODELS_PROMPT_H

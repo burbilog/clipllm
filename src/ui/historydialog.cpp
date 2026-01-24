@@ -31,7 +31,7 @@
 #include <QWheelEvent>
 #include <QKeyEvent>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 HistoryDialog::HistoryDialog(Core::HistoryManager* historyManager, QWidget* parent)
@@ -456,7 +456,7 @@ void HistoryDialog::onExportClicked()
     QString fileName = QFileDialog::getSaveFileName(
         this,
         tr("Export History"),
-        QStringLiteral("clipai_history_%1.json").arg(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss")),
+        QStringLiteral("clipllm_history_%1.json").arg(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss")),
         tr("JSON Files (*.json)")
     );
 
@@ -719,4 +719,4 @@ void HistoryDialog::loadFontSize()
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

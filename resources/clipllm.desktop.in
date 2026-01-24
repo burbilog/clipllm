@@ -1,12 +1,12 @@
 [Desktop Entry]
-Name=ClipAI
+Name=ClipLLM
 Comment=Cross-platform LLM clipboard utility
 Comment[ru]=Кроссплатформенная утилита для работы с буфером обмена через LLM
 Comment[de]=Plattformübergreifendes LLM-Zwischenablage-Dienstprogramm
 Comment[fr]=Utilitaire de presse-papiers LLM multiplateforme
 Comment[es]=Utilidad de portapapeles LLM multiplataforma
-Exec=clipai
-Icon=clipai
+Exec=clipllm
+Icon=clipllm
 Type=Application
 Categories=Utility;Qt;
 Terminal=false

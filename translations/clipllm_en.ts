@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
-    <name>ClipAI::App</name>
+    <name>ClipLLM::App</name>
     <message>
         <location filename="../src/core/app.cpp" line="247"/>
         <source>System Tray</source>
@@ -15,17 +15,17 @@
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="258"/>
-        <source>Welcome to ClipAI</source>
-        <translation>Welcome to ClipAI</translation>
+        <source>Welcome to ClipLLM</source>
+        <translation>Welcome to ClipLLM</translation>
     </message>
     <message>
-        <source>ClipAI is running in the system tray. Press the global hotkey to start.</source>
-        <translation type="vanished">ClipAI is running in the system tray. Press the global hotkey to start.</translation>
+        <source>ClipLLM is running in the system tray. Press the global hotkey to start.</source>
+        <translation type="vanished">ClipLLM is running in the system tray. Press the global hotkey to start.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="259"/>
-        <source>ClipAI is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
-        <translation>ClipAI is running in the system tray. Click the tray icon or configure a hotkey in settings.</translation>
+        <source>ClipLLM is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
+        <translation>ClipLLM is running in the system tray. Click the tray icon or configure a hotkey in settings.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="351"/>
@@ -110,18 +110,18 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::Core::App</name>
+    <name>ClipLLM::Core::App</name>
     <message>
-        <source>ClipAI - Cross-platform LLM clipboard utility</source>
-        <translation type="vanished">ClipAI - Cross-platform LLM clipboard utility</translation>
+        <source>ClipLLM - Cross-platform LLM clipboard utility</source>
+        <translation type="vanished">ClipLLM - Cross-platform LLM clipboard utility</translation>
     </message>
     <message>
         <source>Start minimized to system tray</source>
         <translation type="vanished">Start minimized to system tray</translation>
     </message>
     <message>
-        <source>Another instance of ClipAI is already running</source>
-        <translation type="vanished">Another instance of ClipAI is already running</translation>
+        <source>Another instance of ClipLLM is already running</source>
+        <translation type="vanished">Another instance of ClipLLM is already running</translation>
     </message>
     <message>
         <source>Failed to initialize application</source>
@@ -132,12 +132,12 @@
         <translation type="vanished">Couldn&apos;t detect any system tray on this system.</translation>
     </message>
     <message>
-        <source>Welcome to ClipAI</source>
-        <translation type="vanished">Welcome to ClipAI</translation>
+        <source>Welcome to ClipLLM</source>
+        <translation type="vanished">Welcome to ClipLLM</translation>
     </message>
     <message>
-        <source>ClipAI is running in the system tray. Press the global hotkey to start.</source>
-        <translation type="vanished">ClipAI is running in the system tray. Press the global hotkey to start.</translation>
+        <source>ClipLLM is running in the system tray. Press the global hotkey to start.</source>
+        <translation type="vanished">ClipLLM is running in the system tray. Press the global hotkey to start.</translation>
     </message>
     <message>
         <source>Clipboard Empty</source>
@@ -149,7 +149,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::Core::HistoryManager</name>
+    <name>ClipLLM::Core::HistoryManager</name>
     <message>
         <source>[Image: %1 bytes]</source>
         <translation type="vanished">[Image: %1 bytes]</translation>
@@ -160,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::Core::LLMClient</name>
+    <name>ClipLLM::Core::LLMClient</name>
     <message>
         <location filename="../src/core/llmclient.cpp" line="172"/>
         <location filename="../src/core/llmclient.cpp" line="277"/>
@@ -185,7 +185,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::Core::PromptManager</name>
+    <name>ClipLLM::Core::PromptManager</name>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="262"/>
         <source>ID is required</source>
@@ -434,7 +434,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::GroupsDialog</name>
+    <name>ClipLLM::UI::GroupsDialog</name>
     <message>
         <location filename="../src/ui/groupsdialog.cpp" line="53"/>
         <source>Manage Groups</source>
@@ -562,11 +562,10 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::HistoryDialog</name>
+    <name>ClipLLM::UI::HistoryDialog</name>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="54"/>
-        <source>ClipAI - History</source>
-        <translation>ClipAI - History</translation>
+        <source>ClipLLM - History</source>
+        <translation type="vanished">ClipLLM - History</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="69"/>
@@ -828,6 +827,11 @@
         <translation>Total entries: %1</translation>
     </message>
     <message>
+        <location filename="../src/ui/historydialog.cpp" line="54"/>
+        <source>ClipAI - History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/historydialog.cpp" line="105"/>
         <source>From:</source>
         <translation>From:</translation>
@@ -897,7 +901,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::HotkeyEdit</name>
+    <name>ClipLLM::UI::HotkeyEdit</name>
     <message>
         <location filename="../src/ui/hotkeyedit.cpp" line="38"/>
         <location filename="../src/ui/hotkeyedit.cpp" line="193"/>
@@ -932,7 +936,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::ImageViewDialog</name>
+    <name>ClipLLM::UI::ImageViewDialog</name>
     <message>
         <location filename="../src/ui/imageviewdialog.cpp" line="45"/>
         <source>Clipboard Image</source>
@@ -950,7 +954,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::PromptConflictDialog</name>
+    <name>ClipLLM::UI::PromptConflictDialog</name>
     <message>
         <location filename="../src/ui/promptconfirmdialog.cpp" line="32"/>
         <source>Prompt Conflict</source>
@@ -1003,7 +1007,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::PromptEditorDialog</name>
+    <name>ClipLLM::UI::PromptEditorDialog</name>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="65"/>
         <source>Add Prompt</source>
@@ -1351,7 +1355,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::PromptMenu</name>
+    <name>ClipLLM::UI::PromptMenu</name>
     <message>
         <location filename="../src/ui/promptmenu.cpp" line="59"/>
         <source>Search prompts...</source>
@@ -1389,7 +1393,7 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::PromptPreviewDialog</name>
+    <name>ClipLLM::UI::PromptPreviewDialog</name>
     <message>
         <location filename="../src/ui/promptpreviewdialog.cpp" line="75"/>
         <source>⚠ This prompt is configured for Text content only, but there is an image in the clipboard. The image will be ignored.</source>
@@ -1437,11 +1441,10 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::ResultDialog</name>
+    <name>ClipLLM::UI::ResultDialog</name>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="44"/>
-        <source>ClipAI - Result</source>
-        <translation>ClipAI - Result</translation>
+        <source>ClipLLM - Result</source>
+        <translation type="vanished">ClipLLM - Result</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="85"/>
@@ -1505,6 +1508,11 @@
         <location filename="../src/ui/resultdialog.cpp" line="185"/>
         <source>Zoom in</source>
         <translation>Zoom in</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="211"/>
+        <source>ClipAI - %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="242"/>
@@ -1596,6 +1604,11 @@
         <translation>Model: %1</translation>
     </message>
     <message>
+        <location filename="../src/ui/resultdialog.cpp" line="44"/>
+        <source>ClipAI - Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/resultdialog.cpp" line="159"/>
         <source>Copy &amp;&amp; close</source>
         <translation>Copy &amp;&amp; close</translation>
@@ -1625,9 +1638,8 @@
         <translation>Saved</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="211"/>
-        <source>ClipAI - %1</source>
-        <translation>ClipAI - %1</translation>
+        <source>ClipLLM - %1</source>
+        <translation type="vanished">ClipLLM - %1</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="292"/>
@@ -1636,11 +1648,10 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::SettingsDialog</name>
+    <name>ClipLLM::UI::SettingsDialog</name>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="82"/>
-        <source>ClipAI - Settings</source>
-        <translation>ClipAI - Settings</translation>
+        <source>ClipLLM - Settings</source>
+        <translation type="vanished">ClipLLM - Settings</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -1705,6 +1716,11 @@
         <location filename="../src/ui/settingsdialog.cpp" line="175"/>
         <source>Provider Profiles</source>
         <translation>Provider Profiles</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingsdialog.cpp" line="82"/>
+        <source>ClipAI - Settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="180"/>
@@ -2313,13 +2329,10 @@
     </message>
 </context>
 <context>
-    <name>ClipAI::UI::TrayIcon</name>
+    <name>ClipLLM::UI::TrayIcon</name>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="57"/>
-        <location filename="../src/ui/trayicon.cpp" line="261"/>
-        <location filename="../src/ui/trayicon.cpp" line="371"/>
-        <source>ClipAI - LLM Clipboard Utility</source>
-        <translation>ClipAI - LLM Clipboard Utility</translation>
+        <source>ClipLLM - LLM Clipboard Utility</source>
+        <translation type="vanished">ClipLLM - LLM Clipboard Utility</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="90"/>
@@ -2340,9 +2353,15 @@
         <translation>&amp;Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="325"/>
-        <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
-        <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
+        <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
+        <translation type="vanished">&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/trayicon.cpp" line="57"/>
+        <location filename="../src/ui/trayicon.cpp" line="261"/>
+        <location filename="../src/ui/trayicon.cpp" line="371"/>
+        <source>ClipAI - LLM Clipboard Utility</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="98"/>
@@ -2368,21 +2387,30 @@
         <translation>Hotkey: </translation>
     </message>
     <message>
-        <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
-        <translation type="vanished">&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
+        <location filename="../src/ui/trayicon.cpp" line="325"/>
+        <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="346"/>
         <source>About ClipAI</source>
-        <translation>About ClipAI</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;h3&gt;ClipAI&lt;/h3&gt;
+        <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
+        <translation type="vanished">&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>About ClipLLM</source>
+        <translation type="vanished">About ClipLLM</translation>
+    </message>
+    <message>
+        <source>&lt;h3&gt;ClipLLM&lt;/h3&gt;
            &lt;p&gt;Version 1.0.0&lt;/p&gt;
            &lt;p&gt;Cross-platform LLM clipboard utility&lt;/p&gt;
            &lt;p&gt;Process your clipboard content with AI prompts.&lt;/p&gt;
            &lt;p&gt;Copyright © 2024&lt;/p&gt;</source>
-        <translation type="vanished">&lt;h3&gt;ClipAI&lt;/h3&gt;
+        <translation type="vanished">&lt;h3&gt;ClipLLM&lt;/h3&gt;
            &lt;p&gt;Version 1.0.0&lt;/p&gt;
            &lt;p&gt;Cross-platform LLM clipboard utility&lt;/p&gt;
            &lt;p&gt;Process your clipboard content with AI prompts.&lt;/p&gt;
@@ -2407,8 +2435,8 @@
     <name>QObject</name>
     <message>
         <location filename="../src/main.cpp" line="32"/>
-        <source>ClipAI - Cross-platform LLM clipboard utility</source>
-        <translation>ClipAI - Cross-platform LLM clipboard utility</translation>
+        <source>ClipLLM - Cross-platform LLM clipboard utility</source>
+        <translation>ClipLLM - Cross-platform LLM clipboard utility</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="38"/>

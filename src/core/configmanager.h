@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_CORE_CONFIGMANAGER_H
-#define CLIPAI_CORE_CONFIGMANAGER_H
+#ifndef CLIPLLM_CORE_CONFIGMANAGER_H
+#define CLIPLLM_CORE_CONFIGMANAGER_H
 
 #include <QSettings>
 #include <QVariant>
@@ -25,7 +25,7 @@
 #include <memory>
 #include <optional>
 
-namespace ClipAI {
+namespace ClipLLM {
 
 namespace Models {
 class ProviderProfile;
@@ -170,6 +170,6 @@ private:
 };
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_CORE_CONFIGMANAGER_H
+#endif // CLIPLLM_CORE_CONFIGMANAGER_H

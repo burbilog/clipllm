@@ -25,7 +25,7 @@
 #include <QCoreApplication>
 #include <algorithm>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 QJsonObject HistoryEntry::toJson() const
@@ -611,4 +611,4 @@ QString HistoryManager::getHistoryFilePath() const
 }
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM

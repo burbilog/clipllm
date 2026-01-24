@@ -1,4 +1,4 @@
-// ClipAI - Cross-platform LLM clipboard utility
+// ClipLLM - Cross-platform LLM clipboard utility
 // Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -25,11 +25,11 @@ int main(int argc, char *argv[])
 {
     // High DPI scaling is enabled by default in Qt6
 
-    ClipAI::App app(argc, argv);
+    ClipLLM::App app(argc, argv);
 
     // Setup command line parser
     QCommandLineParser parser;
-    parser.setApplicationDescription(QObject::tr("ClipAI - Cross-platform LLM clipboard utility"));
+    parser.setApplicationDescription(QObject::tr("ClipLLM - Cross-platform LLM clipboard utility"));
     parser.addHelpOption();
     parser.addVersionOption();
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     // Check if another instance is running
     if (app.isSecondary()) {
-        qDebug() << "Another instance of ClipAI is already running";
+        qDebug() << "Another instance of ClipLLM is already running";
         return 0;
     }
 

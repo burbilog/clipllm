@@ -21,7 +21,7 @@
 #include <QPixmap>
 #include <QSettings>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 ImageViewDialog::ImageViewDialog(const QImage& image, QWidget* parent)
@@ -89,4 +89,4 @@ void ImageViewDialog::closeEvent(QCloseEvent* event)
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

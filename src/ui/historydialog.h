@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_HISTORYDIALOG_H
-#define CLIPAI_UI_HISTORYDIALOG_H
+#ifndef CLIPLLM_UI_HISTORYDIALOG_H
+#define CLIPLLM_UI_HISTORYDIALOG_H
 
 #include <QDialog>
 #include <QCloseEvent>
@@ -31,13 +31,13 @@
 #include <QSplitter>
 #include "core/historymanager.h"
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 class HistoryManager;
 }
 }
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 class HistoryDialog : public QDialog
@@ -124,6 +124,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_UI_HISTORYDIALOG_H
+#endif // CLIPLLM_UI_HISTORYDIALOG_H

@@ -14,14 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_CORE_PROVIDERKEYSTORE_H
-#define CLIPAI_CORE_PROVIDERKEYSTORE_H
+#ifndef CLIPLLM_CORE_PROVIDERKEYSTORE_H
+#define CLIPLLM_CORE_PROVIDERKEYSTORE_H
 
 #include <QString>
 #include <QSettings>
 #include <memory>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 /**
@@ -85,6 +85,6 @@ private:
 };
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_CORE_PROVIDERKEYSTORE_H
+#endif // CLIPLLM_CORE_PROVIDERKEYSTORE_H

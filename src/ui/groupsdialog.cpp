@@ -26,7 +26,7 @@
 #include <QSettings>
 #include <QMenu>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 GroupsDialog::GroupsDialog(Core::GroupsManager* groupsManager,
@@ -482,4 +482,4 @@ QString GroupsDialog::getPathFromItem(QTreeWidgetItem* item) const
 }
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM

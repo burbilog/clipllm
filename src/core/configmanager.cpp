@@ -22,7 +22,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 
 // Define static keys for provider profiles
@@ -501,4 +501,4 @@ void ConfigManager::setDefaultMaxTokens(std::optional<int> tokens)
 }
 
 } // namespace Core
-} // namespace ClipAI
+} // namespace ClipLLM

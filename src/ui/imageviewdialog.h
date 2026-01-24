@@ -14,14 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_IMAGEVIEWDIALOG_H
-#define CLIPAI_UI_IMAGEVIEWDIALOG_H
+#ifndef CLIPLLM_UI_IMAGEVIEWDIALOG_H
+#define CLIPLLM_UI_IMAGEVIEWDIALOG_H
 
 #include <QDialog>
 #include <QCloseEvent>
 #include <QLabel>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 class ImageViewDialog : public QDialog
@@ -43,6 +43,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
 #endif

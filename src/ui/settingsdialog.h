@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_SETTINGSDIALOG_H
-#define CLIPAI_UI_SETTINGSDIALOG_H
+#ifndef CLIPLLM_UI_SETTINGSDIALOG_H
+#define CLIPLLM_UI_SETTINGSDIALOG_H
 
 #include <QDialog>
 #include <QCloseEvent>
@@ -36,7 +36,7 @@
 #include "core/promptmanager.h"
 #include "models/providerprofile.h"
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Core {
 class ConfigManager;
 class KeychainStore;
@@ -44,7 +44,7 @@ class ProviderKeyStore;
 }
 }
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 class HotkeyEdit;
@@ -202,6 +202,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_UI_SETTINGSDIALOG_H
+#endif // CLIPLLM_UI_SETTINGSDIALOG_H

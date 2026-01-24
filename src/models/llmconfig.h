@@ -14,15 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_MODELS_LLMCONFIG_H
-#define CLIPAI_MODELS_LLMCONFIG_H
+#ifndef CLIPLLM_MODELS_LLMCONFIG_H
+#define CLIPLLM_MODELS_LLMCONFIG_H
 
 #include <QString>
 #include <QStringList>
 #include <QJsonObject>
 #include <QUrl>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace Models {
 
 enum class LLMProvider {
@@ -109,10 +109,10 @@ private:
 };
 
 } // namespace Models
-} // namespace ClipAI
+} // namespace ClipLLM
 
-Q_DECLARE_METATYPE(ClipAI::Models::LLMConfig)
-Q_DECLARE_METATYPE(ClipAI::Models::LLMProvider)
-Q_DECLARE_METATYPE(ClipAI::Models::ResponseFormat)
+Q_DECLARE_METATYPE(ClipLLM::Models::LLMConfig)
+Q_DECLARE_METATYPE(ClipLLM::Models::LLMProvider)
+Q_DECLARE_METATYPE(ClipLLM::Models::ResponseFormat)
 
-#endif // CLIPAI_MODELS_LLMCONFIG_H
+#endif // CLIPLLM_MODELS_LLMCONFIG_H

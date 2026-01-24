@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef CLIPAI_UI_HOTKEYEDIT_H
-#define CLIPAI_UI_HOTKEYEDIT_H
+#ifndef CLIPLLM_UI_HOTKEYEDIT_H
+#define CLIPLLM_UI_HOTKEYEDIT_H
 
 #include <QWidget>
 #include <QKeySequence>
@@ -23,7 +23,7 @@
 #include <QLabel>
 #include <QHBoxLayout>
 
-namespace ClipAI {
+namespace ClipLLM {
 namespace UI {
 
 class HotkeyEdit : public QWidget
@@ -79,6 +79,6 @@ private:
 };
 
 } // namespace UI
-} // namespace ClipAI
+} // namespace ClipLLM
 
-#endif // CLIPAI_UI_HOTKEYEDIT_H
+#endif // CLIPLLM_UI_HOTKEYEDIT_H

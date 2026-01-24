@@ -262,7 +262,7 @@ void LLMClient::cancel()
         // Disconnect all signals from the reply to prevent crashes during abort
         disconnect(m_currentReply, nullptr, this, nullptr);
         m_currentReply->abort();
-        // Don't call deleteLater() - abort() will trigger proper cleanup via finished signal
+        m_currentReply->deleteLater();  // Explicitly delete since we disconnected signals
         m_currentReply = nullptr;
     }
 

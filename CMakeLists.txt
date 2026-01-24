@@ -125,11 +125,37 @@ configure_file(
     @ONLY
 )
 
+# Windows-specific: Generate .rc file and manifest
+if(WIN32)
+    # Copy manifest to build directory
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/clipai.exe.manifest
+        ${CMAKE_CURRENT_BINARY_DIR}/clipai.exe.manifest
+        COPYONLY
+    )
+
+    # Generate .rc file from template
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/clipai.rc.in
+        ${CMAKE_CURRENT_BINARY_DIR}/clipai.rc
+        @ONLY
+    )
+endif()
+
 # Create executable
-add_executable(${PROJECT_NAME}
-    ${SOURCES}
-    ${HEADERS}
-)
+if(WIN32)
+    # Windows: Add .rc file for version info and icon
+    add_executable(${PROJECT_NAME}
+        ${SOURCES}
+        ${HEADERS}
+        ${CMAKE_CURRENT_BINARY_DIR}/clipai.rc
+    )
+else()
+    add_executable(${PROJECT_NAME}
+        ${SOURCES}
+        ${HEADERS}
+    )
+endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Core
@@ -148,6 +174,11 @@ if(UNIX AND NOT APPLE)
     target_include_directories(${PROJECT_NAME} PRIVATE ${X11_INCLUDE_DIR})
 elseif(APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE ${CARBON_LIBRARY})
+endif()
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    find_library(BZ2_LIBRARY bz2 REQUIRED)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${BZ2_LIBRARY})
 endif()
 
 # Include directories
@@ -328,6 +359,14 @@ if(UNIX AND NOT APPLE)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/app-icon.svg
         DESTINATION share/icons/hicolor/scalable/apps
         RENAME clipai.svg
+    )
+endif()
+
+# Windows-specific installation
+if(WIN32)
+    # Install translations to bin directory (same as executable)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/translations/*.qm
+        DESTINATION bin/translations
     )
 endif()
 

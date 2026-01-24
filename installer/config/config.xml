@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>ClipAI</Name>
+    <Version>1.0.0</Version>
+    <Title>ClipAI Setup</Title>
+    <Publisher>Roman V. Isaev</Publisher>
+    <ProductUrl>https://github.com/rm-isaeff/clipai</ProductUrl>
+
+    <!-- Installer Window Configuration -->
+    <InstallerWindowIcon>icons/icon.png</InstallerWindowIcon>
+    <InstallerApplicationIcon>icons/icon.ico</InstallerApplicationIcon>
+    <Logo>icons/logo.png</Logo>
+
+    <!-- Watermark and Banner (optional) -->
+    <!-- <Watermark>icons/watermark.png</Watermark> -->
+    <!-- <Banner>icons/banner.png</Banner> -->
+
+    <!-- Target Directory -->
+    <TargetDir>@ApplicationsDir@/ClipAI</TargetDir>
+
+    <!-- Start Menu Entry (Windows only) -->
+    <StartMenuDir>ClipAI</StartMenuDir>
+
+    <!-- Run Program after installation -->
+    <RunProgram>@TargetDir@/ClipAI.exe</RunProgram>
+    <RunProgramArguments></RunProgramArguments>
+    <RunProgramDescription>Launch ClipAI</RunProgramDescription>
+
+    <!-- Maintenance Tool -->
+    <MaintenanceToolName>ClipAIMaintenanceTool</MaintenanceToolName>
+
+    <!-- Allow non-admin installation on Windows -->
+    <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
+    <AllowSpaceInPath>true</AllowSpaceInPath>
+
+    <!-- Installer Style -->
+    <WizardStyle>Modern</WizardStyle>
+    <WizardDefaultWidth>800</WizardDefaultWidth>
+    <WizardDefaultHeight>600</WizardDefaultHeight>
+
+    <!-- Repository Configuration (for online updates - optional) -->
+    <!-- <RepositoryUrl>https://example.com/clipai/repository</RepositoryUrl> -->
+
+    <!-- Control installation -->
+    <RemoveTargetDir>true</RemoveTargetDir>
+    <CreateLocalRepository>true</CreateLocalRepository>
+
+    <!-- Save default answers -->
+    <SaveDefaultAnswers>true</SaveDefaultAnswers>
+</Installer>

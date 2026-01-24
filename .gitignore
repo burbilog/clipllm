@@ -1,1 +1,51 @@
+# Build directories
 build/
+build-windows/
+
+# Windows deployment
+deploy-windows/
+dist/
+
+# Qt Creator/IDE files
+*.autosave
+*.pro.user
+*.pro.user.*
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile.cmake
+*.cmake.bak
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# Compiled files
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Translation .qm files (generated from .ts)
+translations/*.qm
+
+# Qt MOC/UIC/RCC generated files
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+*.moc
+
+# Editor files
+*.swp
+*.swo
+*~
+.*.swp
+.*.swo
+.vscode/
+.idea/
+
+# macOS
+.DS_Store

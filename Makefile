@@ -1,4 +1,4 @@
-.PHONY: build translations clean test web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-tar
+.PHONY: build translations clean test web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-tar dist dist-linux dist-windows
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -242,3 +242,37 @@ linux-appimage: build
 	@VERSION=$$(grep "^project(ClipLLM VERSION" CMakeLists.txt | sed 's/project(ClipLLM VERSION \([0-9.]*\).*/\1/'); \
 		mv ClipLLM-x86_64.AppImage dist/clipllm-$${VERSION}-linux-x86_64.AppImage && \
 		ls -lh dist/clipllm-$${VERSION}-linux-x86_64.AppImage
+
+# =============================================================================
+# Distribution targets (build all supported packages)
+# =============================================================================
+
+# Build all Linux distributions
+dist-linux: linux-tar linux-appimage
+
+# Build all Windows distributions (requires MXE)
+dist-windows: windows-zip windows-installer
+
+# Build all supported distributions
+dist: dist-linux
+	@echo ""
+	@echo "=========================================="
+	@echo "Building all supported distributions..."
+	@echo "=========================================="
+	@echo ""
+	@if [ -x "$${HOME}/mxe/usr/bin/x86_64-w64-mingw32.shared-gcc" ] || \
+	   [ -x "$${HOME}/mxe/usr/bin/x86_64-w64-mingw32.static-gcc" ]; then \
+		echo "MXE found, building Windows distributions..."; \
+		$(MAKE) dist-windows MXE_BUILD_TYPE=shared; \
+	else \
+		echo "MXE not found, skipping Windows distributions."; \
+		echo "To enable Windows builds, install MXE:"; \
+		echo "  git clone https://github.com/mxe/mxe.git ~/mxe"; \
+		echo "  cd ~/mxe && make -j\$$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qt6"; \
+	fi
+	@echo ""
+	@echo "=========================================="
+	@echo "Distribution packages in dist/:"
+	@echo "=========================================="
+	@ls -lh dist/
+	@echo ""

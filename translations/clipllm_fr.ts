@@ -1557,7 +1557,7 @@
         <source>An error occurred while communicating with the API:
 
 %1</source>
-        <translation>Une erreur s'est produite lors de la communication avec l'API :
+        <translation>Une erreur s&apos;est produite lors de la communication avec l&apos;API :
 
 %1</translation>
     </message>
@@ -1975,7 +1975,7 @@ Exemples :
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1067"/>
         <source>No API URL set</source>
-        <translation>URL de l'API non définie</translation>
+        <translation>URL de l&apos;API non définie</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1260"/>

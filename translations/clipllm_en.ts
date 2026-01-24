@@ -96,12 +96,12 @@
     <message>
         <location filename="../src/core/app.cpp" line="568"/>
         <source>Model Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Model Error</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="569"/>
         <source>No model selected. Please select a model in Settings → LLM → Provider Profiles.</source>
-        <translation type="unfinished"></translation>
+        <translation>No model selected. Please select a model in Settings → LLM → Provider Profiles.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="605"/>
@@ -185,7 +185,7 @@
     <message>
         <location filename="../src/core/llmclient.cpp" line="372"/>
         <source>HTTP %1: Authentication required. Please check your API key.</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP %1: Authentication required. Please check your API key.</translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="388"/>
@@ -196,7 +196,7 @@
     <message>
         <location filename="../src/core/llmclient.cpp" line="483"/>
         <source>HTTP %1: </source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP %1: </translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="518"/>
@@ -1535,7 +1535,7 @@
         <location filename="../src/ui/resultdialog.cpp" line="333"/>
         <location filename="../src/ui/resultdialog.cpp" line="361"/>
         <source>API Error</source>
-        <translation type="unfinished"></translation>
+        <translation>API Error</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="334"/>
@@ -1543,7 +1543,9 @@
         <source>An error occurred while communicating with the API:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>An error occurred while communicating with the API:
+
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="465"/>
@@ -1871,22 +1873,22 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="438"/>
         <source>Auto-cleanup by max entries</source>
-        <translation type="unfinished">Auto-cleanup by max entries</translation>
+        <translation>Auto-cleanup by max entries</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="439"/>
         <source>Automatically remove oldest entries when limit is exceeded</source>
-        <translation type="unfinished">Automatically remove oldest entries when limit is exceeded</translation>
+        <translation>Automatically remove oldest entries when limit is exceeded</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="453"/>
         <source>Auto-cleanup by date</source>
-        <translation type="unfinished">Auto-cleanup by date</translation>
+        <translation>Auto-cleanup by date</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="454"/>
         <source>Automatically remove entries older than the specified number of days</source>
-        <translation type="unfinished">Automatically remove entries older than the specified number of days</translation>
+        <translation>Automatically remove entries older than the specified number of days</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="594"/>
@@ -1916,7 +1918,7 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="752"/>
         <source>Error: No model selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Error: No model selected</translation>
     </message>
     <message>
         <source>LLM Provider</source>
@@ -2152,7 +2154,7 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1067"/>
         <source>No API URL set</source>
-        <translation type="unfinished"></translation>
+        <translation>No API URL set</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1142"/>

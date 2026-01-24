@@ -96,12 +96,12 @@
     <message>
         <location filename="../src/core/app.cpp" line="568"/>
         <source>Model Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Modellfehler</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="569"/>
         <source>No model selected. Please select a model in Settings → LLM → Provider Profiles.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Modell ausgewählt. Bitte wählen Sie ein Modell unter Einstellungen → LLM → Anbieterprofile.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="605"/>
@@ -150,7 +150,7 @@
     <message>
         <location filename="../src/core/llmclient.cpp" line="372"/>
         <source>HTTP %1: Authentication required. Please check your API key.</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP %1: Authentifizierung erforderlich. Bitte überprüfen Sie Ihren API-Schlüssel.</translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="388"/>
@@ -161,7 +161,7 @@
     <message>
         <location filename="../src/core/llmclient.cpp" line="483"/>
         <source>HTTP %1: </source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP %1: </translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="518"/>
@@ -1549,7 +1549,7 @@
         <location filename="../src/ui/resultdialog.cpp" line="333"/>
         <location filename="../src/ui/resultdialog.cpp" line="361"/>
         <source>API Error</source>
-        <translation type="unfinished"></translation>
+        <translation>API-Fehler</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="334"/>
@@ -1557,7 +1557,9 @@
         <source>An error occurred while communicating with the API:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler ist bei der Kommunikation mit der API aufgetreten:
+
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="337"/>
@@ -1973,7 +1975,7 @@ Beispiele:
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1067"/>
         <source>No API URL set</source>
-        <translation type="unfinished"></translation>
+        <translation>API-URL nicht festgelegt</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1260"/>
@@ -2174,7 +2176,7 @@ Beispiele:
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="752"/>
         <source>Error: No model selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: Kein Modell ausgewählt</translation>
     </message>
     <message>
         <source>Connected</source>

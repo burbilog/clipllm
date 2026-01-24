@@ -96,12 +96,12 @@
     <message>
         <location filename="../src/core/app.cpp" line="568"/>
         <source>Model Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка модели</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="569"/>
         <source>No model selected. Please select a model in Settings → LLM → Provider Profiles.</source>
-        <translation type="unfinished"></translation>
+        <translation>Модель не выбрана. Выберите модель в Настройки → LLM → Профили провайдеров.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="605"/>
@@ -174,7 +174,7 @@
     <message>
         <location filename="../src/core/llmclient.cpp" line="372"/>
         <source>HTTP %1: Authentication required. Please check your API key.</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP %1: Требуется аутентификация. Проверьте ваш API ключ.</translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="388"/>
@@ -185,7 +185,7 @@
     <message>
         <location filename="../src/core/llmclient.cpp" line="483"/>
         <source>HTTP %1: </source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP %1: </translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="518"/>
@@ -1573,7 +1573,7 @@
         <location filename="../src/ui/resultdialog.cpp" line="333"/>
         <location filename="../src/ui/resultdialog.cpp" line="361"/>
         <source>API Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка API</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="334"/>
@@ -1581,7 +1581,9 @@
         <source>An error occurred while communicating with the API:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Произошла ошибка при общении с API:
+
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="337"/>
@@ -1773,7 +1775,7 @@
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="752"/>
         <source>Error: No model selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка: Модель не выбрана</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -2142,7 +2144,7 @@ Examples:
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1067"/>
         <source>No API URL set</source>
-        <translation type="unfinished"></translation>
+        <translation>URL API не задан</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1260"/>

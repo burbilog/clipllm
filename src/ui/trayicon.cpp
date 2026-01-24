@@ -1,4 +1,4 @@
-// ClipAI - Cross-platform LLM clipboard utility
+// ClipLLM - Cross-platform LLM clipboard utility
 // Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ TrayIcon::TrayIcon(App* app)
     }
 
     setIcon(m_normalIcon);
-    setToolTip(tr("ClipAI - LLM Clipboard Utility"));
+    setToolTip(tr("ClipLLM - LLM Clipboard Utility"));
 
     // Create menu and actions
     createActions();
@@ -258,7 +258,7 @@ void TrayIcon::updatePromptsMenu(const QVector<Models::Prompt>& prompts)
 
 void TrayIcon::setHotkeyText(const QString& hotkey)
 {
-    QString tooltip = tr("ClipAI - LLM Clipboard Utility");
+    QString tooltip = tr("ClipLLM - LLM Clipboard Utility");
     if (!hotkey.isEmpty()) {
         tooltip += QStringLiteral("\n") + tr("Hotkey: ") + hotkey;
     }
@@ -329,21 +329,21 @@ void TrayIcon::onAboutTriggered()
         "<img src=':/icons/tray-icon-128.png' width='128' height='128'/>"
         "</td>"
         "<td>"
-        "<h2 style='margin-top:0;'>ClipAI</h2>"
+        "<h2 style='margin-top:0;'>ClipLLM</h2>"
         "<p><b>Version %1</b></p>"
         "</td>"
         "</tr>"
         "</table>"
-        "<p><b>ClipAI</b> is a cross-platform clipboard utility that integrates Large Language Models (LLMs) "
+        "<p><b>ClipLLM</b> is a cross-platform clipboard utility that integrates Large Language Models (LLMs) "
         "directly into your workflow. Running as a system tray service, it allows you to process clipboard "
         "content (both text and images) with customizable AI prompts using global hotkeys.</p>"
         "<p>Whether you need to summarize text, translate content, rewrite code, extract information from images, "
-        "or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single "
+        "or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single "
         "keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.</p>"
         "<p><small>Copyright © 2026 Roman V. Isaev &lt;<a href='mailto:rm@isaeff.net'>rm@isaeff.net</a>&gt;</small></p>"
     ).arg(ClipLLM::versionString());
 
-    QMessageBox::about(nullptr, tr("About ClipAI"), aboutText);
+    QMessageBox::about(nullptr, tr("About ClipLLM"), aboutText);
 }
 
 void TrayIcon::onQuitTriggered()
@@ -368,7 +368,7 @@ void TrayIcon::onLanguageChanged(const QString& languageCode)
 
 void TrayIcon::retranslateUi()
 {
-    setToolTip(tr("ClipAI - LLM Clipboard Utility"));
+    setToolTip(tr("ClipLLM - LLM Clipboard Utility"));
 
     // Update action texts
     if (m_settingsAction) {

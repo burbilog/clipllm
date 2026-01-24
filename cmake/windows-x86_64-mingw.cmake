@@ -1,7 +1,7 @@
-# ClipAI - Cross-platform LLM clipboard utility
+# ClipLLM - Cross-platform LLM clipboard utility
 # Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 #
-# CMake toolchain file for cross-compiling ClipAI for Windows x86_64
+# CMake toolchain file for cross-compiling ClipLLM for Windows x86_64
 # using MXE (M Cross Environment) from Linux
 #
 # Usage:

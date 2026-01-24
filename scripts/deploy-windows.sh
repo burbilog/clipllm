@@ -97,13 +97,21 @@ else
     )
 
     for dll in "${DLLS[@]}"; do
-        # Handle wildcards
-        for file in ${MXE_TARGET}/bin/${dll}; do
-            if [ -f "$file" ]; then
-                echo "  Copying $(basename "$file")"
-                cp "$file" "${DEPLOY_DIR}/"
-            fi
+        # Handle wildcards - try both bin/ and qt6/bin/ for Qt6 DLLs
+        found=false
+        for search_path in "${MXE_TARGET}/bin" "${MXE_TARGET}/qt6/bin"; do
+            for file in ${search_path}/${dll}; do
+                if [ -f "$file" ]; then
+                    echo "  Copying $(basename "$file")"
+                    cp "$file" "${DEPLOY_DIR}/"
+                    found=true
+                    break 2
+                fi
+            done
         done
+        if [ "$found" = false ]; then
+            echo "  Warning: ${dll} not found in MXE target"
+        fi
     done
 
     # Copy Qt plugins

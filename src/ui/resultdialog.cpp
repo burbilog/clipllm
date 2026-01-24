@@ -1,4 +1,4 @@
-// ClipAI - Cross-platform LLM clipboard utility
+// ClipLLM - Cross-platform LLM clipboard utility
 // Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
     , m_configManager(configManager)
 {
     setupUi();
-    setWindowTitle(tr("ClipAI - Result"));
+    setWindowTitle(tr("ClipLLM - Result"));
     resize(800, 600);
 
     // Restore window geometry
@@ -208,7 +208,7 @@ void ResultDialog::setPrompt(const QString& promptId, const QString& promptName)
     m_promptName = promptName;
 
     if (!m_promptName.isEmpty()) {
-        setWindowTitle(tr("ClipAI - %1").arg(m_promptName));
+        setWindowTitle(tr("ClipLLM - %1").arg(m_promptName));
     }
 }
 

@@ -51,8 +51,57 @@ SetCompressor /SOLID lzma
 Section "MainSection" SEC01
   SetOutPath $INSTDIR
 
-  ; Files
-  File /r "deploy-windows\*.*"
+  ; Main executable
+  File "deploy-windows\ClipLLM.exe"
+
+  ; Qt6 DLLs
+  File "deploy-windows\Qt6Core.dll"
+  File "deploy-windows\Qt6Gui.dll"
+  File "deploy-windows\Qt6Network.dll"
+  File "deploy-windows\Qt6Widgets.dll"
+
+  ; Runtime DLLs
+  File "deploy-windows\libgcc_s_seh-1.dll"
+  File "deploy-windows\libstdc++-6.dll"
+  File "deploy-windows\libwinpthread-1.dll"
+  File "deploy-windows\zlib1.dll"
+
+  ; OpenSSL DLLs
+  File "deploy-windows\libcrypto-3-x64.dll"
+  File "deploy-windows\libssl-3-x64.dll"
+
+  ; Qt config
+  File "deploy-windows\qt.conf"
+
+  ; Plugins
+  SetOutPath $INSTDIR\platforms
+  File "deploy-windows\platforms\qwindows.dll"
+
+  SetOutPath $INSTDIR\imageformats
+  File "deploy-windows\imageformats\qico.dll"
+  File "deploy-windows\imageformats\qjpeg.dll"
+  File "deploy-windows\imageformats\qsvg.dll"
+
+  SetOutPath $INSTDIR\tls
+  File "deploy-windows\tls\qcertonlybackend.dll"
+  File "deploy-windows\tls\qopensslbackend.dll"
+
+  SetOutPath $INSTDIR\iconengines
+  ; May be empty, but create directory anyway
+
+  SetOutPath $INSTDIR\styles
+  ; May be empty, but create directory anyway
+
+  ; Translations
+  SetOutPath $INSTDIR\translations
+  File "deploy-windows\translations\*.qm"
+
+  ; Config
+  SetOutPath $INSTDIR\config
+  File "deploy-windows\config\prompts-default.json"
+
+  ; Set back to root for uninstaller
+  SetOutPath $INSTDIR
 
   ; Write registry keys
   WriteRegStr HKCU "Software\${APP_NAME}" "" $INSTDIR

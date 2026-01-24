@@ -1,4 +1,4 @@
-// ClipAI - Cross-platform LLM clipboard utility
+// ClipLLM - Cross-platform LLM clipboard utility
 // Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -79,7 +79,7 @@ SettingsDialog::~SettingsDialog() = default;
 
 void SettingsDialog::setupUi()
 {
-    setWindowTitle(tr("ClipAI - Settings"));
+    setWindowTitle(tr("ClipLLM - Settings"));
     resize(700, 550);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);

@@ -1,4 +1,4 @@
-// ClipAI - Cross-platform LLM clipboard utility
+// ClipLLM - Cross-platform LLM clipboard utility
 // Copyright (C) 2026 Roman V. Isaev <rm@isaeff.net>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -813,7 +813,7 @@ void PromptEditorDialog::fetchModelsFromAPI()
 
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("application/json"));
-    request.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("ClipAI/1.0"));
+    request.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("ClipLLM/1.0"));
 
     // Note: API key not included here as many providers don't require it for model listing
     // For providers that require authentication, the user can manually enter the model

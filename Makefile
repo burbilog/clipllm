@@ -57,7 +57,7 @@ check-mxe:
 ## Build for Windows (cross-compilation with MXE)
 ## Use static by default, override with: make windows MXE_BUILD_TYPE=shared
 #windows: check-mxe translations
-#	@echo "Building ClipAI for Windows (x86_64, $(MXE_BUILD_TYPE))..."
+#	@echo "Building ClipLLM for Windows (x86_64, $(MXE_BUILD_TYPE))..."
 #	@mkdir -p build-windows
 #	@cd build-windows && \
 #		cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/windows-x86_64-mingw.cmake \
@@ -67,7 +67,7 @@ check-mxe:
 #		cmake --build . --parallel $(NPROCS)
 #	@echo ""
 #	@echo "Windows build complete!"
-#	@ls -lh build-windows/ClipAI.exe
+#	@ls -lh build-windows/ClipLLM.exe
 
 windows: check-mxe translations
 	@echo "Building ClipLLM for Windows (x86_64, $(MXE_BUILD_TYPE))..."

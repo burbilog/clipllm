@@ -509,8 +509,9 @@
 <context>
     <name>ClipLLM::UI::HistoryDialog</name>
     <message>
+        <location filename="../src/ui/historydialog.cpp" line="54"/>
         <source>ClipLLM - History</source>
-        <translation type="vanished">ClipLLM — История</translation>
+        <translation>ClipLLM — История</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="63"/>
@@ -688,11 +689,6 @@
         <location filename="../src/ui/historydialog.cpp" line="355"/>
         <source>Showing %1 entries</source>
         <translation>Показано записей: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/historydialog.cpp" line="54"/>
-        <source>ClipAI - History</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="566"/>
@@ -1416,8 +1412,9 @@
 <context>
     <name>ClipLLM::UI::ResultDialog</name>
     <message>
+        <location filename="../src/ui/resultdialog.cpp" line="44"/>
         <source>ClipLLM - Result</source>
-        <translation type="vanished">ClipLLM — Результат</translation>
+        <translation>ClipLLM — Результат</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="85"/>
@@ -1517,18 +1514,9 @@
         <translation>Увеличить</translation>
     </message>
     <message>
-        <source>ClipLLM - %1</source>
-        <translation type="vanished">ClipLLM — %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/resultdialog.cpp" line="44"/>
-        <source>ClipAI - Result</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/resultdialog.cpp" line="211"/>
-        <source>ClipAI - %1</source>
-        <translation type="unfinished"></translation>
+        <source>ClipLLM - %1</source>
+        <translation>ClipLLM — %1</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="238"/>
@@ -1611,8 +1599,9 @@
 <context>
     <name>ClipLLM::UI::SettingsDialog</name>
     <message>
+        <location filename="../src/ui/settingsdialog.cpp" line="82"/>
         <source>ClipLLM - Settings</source>
-        <translation type="vanished">ClipLLM — Настройки</translation>
+        <translation>ClipLLM — Настройки</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="166"/>
@@ -2267,11 +2256,6 @@ Examples:
         <translation>Ошибка: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="82"/>
-        <source>ClipAI - Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/settingsdialog.cpp" line="751"/>
         <source>Error: LLM client not available</source>
         <translation>Ошибка: Клиент LLM недоступен</translation>
@@ -2314,8 +2298,11 @@ Examples:
 <context>
     <name>ClipLLM::UI::TrayIcon</name>
     <message>
+        <location filename="../src/ui/trayicon.cpp" line="57"/>
+        <location filename="../src/ui/trayicon.cpp" line="261"/>
+        <location filename="../src/ui/trayicon.cpp" line="371"/>
         <source>ClipLLM - LLM Clipboard Utility</source>
-        <translation type="vanished">ClipLLM — Утилита для буфера обмена LLM</translation>
+        <translation>ClipLLM — Утилита для буфера обмена LLM</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="90"/>
@@ -2336,15 +2323,9 @@ Examples:
         <translation>&amp;Промпты</translation>
     </message>
     <message>
+        <location filename="../src/ui/trayicon.cpp" line="325"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
-        <translation type="vanished">&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Версия %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; — кроссплатформенная утилита для работы с буфером обмена, интегрирующая большие языковые модели (LLM) непосредственно в ваш рабочий процесс. Работая как служба в системном трее, она позволяет обрабатывать содержимое буфера обмена (текст и изображения) с помощью настраиваемых AI-промптов, используя глобальные горячие клавиши.&lt;/p&gt;&lt;p&gt;Нужно ли вам суммировать текст, перевести содержимое, переписать код, извлечь информацию из изображений или выполнить любое другое AI-преобразование — ClipLLM делает это мгновенно доступным с помощью одного нажатия клавиши. Скопируйте содержимое, нажмите горячую клавишу и получите AI-результат обратно в буфер обмена.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/trayicon.cpp" line="57"/>
-        <location filename="../src/ui/trayicon.cpp" line="261"/>
-        <location filename="../src/ui/trayicon.cpp" line="371"/>
-        <source>ClipAI - LLM Clipboard Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Версия %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; — кроссплатформенная утилита для работы с буфером обмена, интегрирующая большие языковые модели (LLM) непосредственно в ваш рабочий процесс. Работая как служба в системном трее, она позволяет обрабатывать содержимое буфера обмена (текст и изображения) с помощью настраиваемых AI-промптов, используя глобальные горячие клавиши.&lt;/p&gt;&lt;p&gt;Нужно ли вам суммировать текст, перевести содержимое, переписать код, извлечь информацию из изображений или выполнить любое другое AI-преобразование — ClipLLM делает это мгновенно доступным с помощью одного нажатия клавиши. Скопируйте содержимое, нажмите горячую клавишу и получите AI-результат обратно в буфер обмена.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="98"/>
@@ -2370,22 +2351,13 @@ Examples:
         <translation>Горячая клавиша: </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="325"/>
-        <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipAI&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipAI&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipAI makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/trayicon.cpp" line="346"/>
-        <source>About ClipAI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation type="vanished">&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Версия 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; — это кроссплатформенная утилита для работы с буфером обмена, которая интегрирует большие языковые модели (LLM) непосредственно в ваш рабочий процесс. Работая как служба в системном трее, она позволяет обрабатывать содержимое буфера обмена (текст и изображения) с помощью настраиваемых AI промптов, используя глобальные горячие клавиши.&lt;/p&gt;&lt;p&gt;Нужно ли вам резюмировать текст, переводить содержимое, переписывать код, извлекать информацию из изображений или выполнять любое другое AI-преобразование, ClipLLM делает это мгновенно доступным с помощью нажатия одной клавиши. Скопируйте содержимое, нажмите горячую клавишу и получите AI-результат обратно в буфере обмена.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
+        <location filename="../src/ui/trayicon.cpp" line="346"/>
         <source>About ClipLLM</source>
-        <translation type="vanished">О ClipLLM</translation>
+        <translation>О ClipLLM</translation>
     </message>
 </context>
 <context>

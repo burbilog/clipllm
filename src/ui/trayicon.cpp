@@ -340,6 +340,7 @@ void TrayIcon::onAboutTriggered()
         "<p>Whether you need to summarize text, translate content, rewrite code, extract information from images, "
         "or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single "
         "keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.</p>"
+        "<p><b>Project website:</b> <a href='https://burbilog.github.io/clipllm/'>https://burbilog.github.io/clipllm/</a></p>"
         "<p><small>Copyright © 2026 Roman V. Isaev &lt;<a href='mailto:rm@isaeff.net'>rm@isaeff.net</a>&gt;</small></p>"
     ).arg(ClipLLM::versionString());
 

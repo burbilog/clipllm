@@ -437,7 +437,7 @@
                     <div class="platform-icon">🍎</div>
                     <div class="platform-name">macOS</div>
                     <div class="platform-arch">Build from source</div>
-                    <a href="https://github.com/burbilog/clipllm/releases" class="btn btn-secondary">Get Source</a>
+                    <a href="https://github.com/burbilog/clipllm" class="btn btn-secondary">Get Source</a>
                 </div>
             </div>
         </section>

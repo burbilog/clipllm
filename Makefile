@@ -1,4 +1,4 @@
-.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer
+.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer regen-icons
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -23,6 +23,13 @@ translations:
 clean:
 	@echo "Cleaning build directories..."
 	@rm -rf build build-windows deploy-windows dist
+
+# Force regeneration of tray icons from art/clipllm_hires.png
+# Use this after replacing the source image
+regen-icons:
+	@echo "Regenerating tray icons from art/clipllm_hires.png..."
+	@rm -f resources/icons/tray-icon-*.png resources/icons/tray-icon.ico
+	@$(MAKE) build
 
 test:
 	@echo "Running tests..."

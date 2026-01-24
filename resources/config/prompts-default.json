@@ -1,5 +1,13 @@
 {
   "version": "1.0",
+  "groups": [
+    {
+      "id": "languages",
+      "name": "Languages",
+      "description": "Translation prompts for different languages",
+      "icon": "translate"
+    }
+  ],
   "prompts": [
     {
       "id": "summary",
@@ -9,21 +17,8 @@
       "system_prompt": "You are a professional analyst. Create a clear, structured summary with key points.",
       "user_prompt_template": "Please provide a comprehensive summary of the following text in {language}:\n\n{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.7,
-      "max_tokens": 4096,
-      "enabled": true
-    },
-    {
-      "id": "translate-ru",
-      "name": "Translate to Russian",
-      "description": "Full translation to Russian",
-      "icon": "translate",
-      "system_prompt": "Ты — профессиональный переводчик. Переведи текст на русский язык, сохраняя стиль и смысл оригинала.",
-      "user_prompt_template": "{clipboard}",
-      "content_type": "text",
-      "model": "openai/gpt-4",
-      "temperature": 0.3,
       "max_tokens": 4096,
       "enabled": true
     },
@@ -32,10 +27,25 @@
       "name": "Translate to English",
       "description": "Full translation to English",
       "icon": "translate",
+      "group": "languages",
       "system_prompt": "You are a professional translator. Translate the text to English, preserving style and meaning.",
       "user_prompt_template": "{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
+      "temperature": 0.3,
+      "max_tokens": 4096,
+      "enabled": true
+    },
+    {
+      "id": "translate-ru",
+      "name": "Translate to Russian",
+      "description": "Full translation to Russian",
+      "icon": "translate",
+      "group": "languages",
+      "system_prompt": "Ты — профессиональный переводчик. Переведи текст на русский язык, сохраняя стиль и смысл оригинала.",
+      "user_prompt_template": "{clipboard}",
+      "content_type": "text",
+      "override_provider_and_model": false,
       "temperature": 0.3,
       "max_tokens": 4096,
       "enabled": true
@@ -45,10 +55,11 @@
       "name": "Translate to German",
       "description": "Full translation to German",
       "icon": "translate",
+      "group": "languages",
       "system_prompt": "Sie sind ein professioneller Übersetzer. Übersetzen Sie den Text ins Deutsche, unter Beibehaltung von Stil und Bedeutung.",
       "user_prompt_template": "{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.3,
       "max_tokens": 4096,
       "enabled": true
@@ -58,10 +69,11 @@
       "name": "Translate to French",
       "description": "Full translation to French",
       "icon": "translate",
+      "group": "languages",
       "system_prompt": "Vous êtes un traducteur professionnel. Traduisez le texte en français, en préservant le style et le sens.",
       "user_prompt_template": "{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.3,
       "max_tokens": 4096,
       "enabled": true
@@ -71,10 +83,25 @@
       "name": "Translate to Spanish",
       "description": "Full translation to Spanish",
       "icon": "translate",
+      "group": "languages",
       "system_prompt": "Eres un traductor profesional. Traduce el texto al español, conservando el estilo y el significado.",
       "user_prompt_template": "{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
+      "temperature": 0.3,
+      "max_tokens": 4096,
+      "enabled": true
+    },
+    {
+      "id": "translate-ja",
+      "name": "Translate to Japanese",
+      "description": "Full translation to Japanese",
+      "icon": "translate",
+      "group": "languages",
+      "system_prompt": "あなたはプロの翻訳者です。原文のスタイルと意味を保ちながら、テキストを日本語に翻訳してください。",
+      "user_prompt_template": "{clipboard}",
+      "content_type": "text",
+      "override_provider_and_model": false,
       "temperature": 0.3,
       "max_tokens": 4096,
       "enabled": true
@@ -87,7 +114,7 @@
       "system_prompt": "You are an expert programmer. Explain the code clearly and concisely, including its purpose, how it works, and any potential issues.",
       "user_prompt_template": "Explain the following code:\n\n{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.5,
       "max_tokens": 4096,
       "enabled": true
@@ -100,7 +127,7 @@
       "system_prompt": "You are a senior code reviewer. Analyze the code for bugs, security issues, performance problems, and suggest improvements.",
       "user_prompt_template": "Review the following code:\n\n{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.5,
       "max_tokens": 4096,
       "enabled": true
@@ -113,7 +140,7 @@
       "system_prompt": "You are a code optimization expert. Suggest refactoring to improve readability, maintainability, and performance. Provide the refactored code.",
       "user_prompt_template": "Refactor the following code:\n\n{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.5,
       "max_tokens": 4096,
       "enabled": true
@@ -126,7 +153,7 @@
       "system_prompt": "You are a visual analyst. Provide a detailed description of the image, including objects, colors, composition, mood, and any text visible.",
       "user_prompt_template": "Describe this image in detail.",
       "content_type": "image",
-      "model": "openai/gpt-4-vision-preview",
+      "override_provider_and_model": false,
       "temperature": 0.7,
       "max_tokens": 4096,
       "enabled": true
@@ -139,7 +166,7 @@
       "system_prompt": "Extract all text from the image, preserving formatting and structure where possible. Organize the output clearly.",
       "user_prompt_template": "Extract all text from this image.",
       "content_type": "image",
-      "model": "openai/gpt-4-vision-preview",
+      "override_provider_and_model": false,
       "temperature": 0.3,
       "max_tokens": 4096,
       "enabled": true
@@ -152,7 +179,7 @@
       "system_prompt": "You are a professional editor. Correct all grammar, spelling, and punctuation errors in the text. Maintain the original style and meaning.",
       "user_prompt_template": "Fix the grammar and spelling in the following text:\n\n{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.3,
       "max_tokens": 4096,
       "enabled": true
@@ -165,7 +192,7 @@
       "system_prompt": "You are a professional editor. Improve the clarity, flow, and readability of the text while maintaining the original meaning and style.",
       "user_prompt_template": "Improve the writing in the following text. Reply in {language}:\n\n{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.5,
       "max_tokens": 4096,
       "enabled": true
@@ -178,7 +205,7 @@
       "system_prompt": "Extract all key information, facts, dates, names, and important data from the text. Present it in a structured format.",
       "user_prompt_template": "Extract the key information from:\n\n{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.3,
       "max_tokens": 4096,
       "enabled": true
@@ -191,7 +218,7 @@
       "system_prompt": "Extract the most important keywords, topics, and tags from the text. Return them as a comma-separated list.",
       "user_prompt_template": "Extract keywords from:\n\n{clipboard}",
       "content_type": "text",
-      "model": "openai/gpt-4",
+      "override_provider_and_model": false,
       "temperature": 0.3,
       "max_tokens": 4096,
       "enabled": true

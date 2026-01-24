@@ -647,7 +647,14 @@ void SettingsDialog::loadPrompts()
         m_promptsTable->setItem(i, 2, new QTableWidgetItem(
             Models::Prompt::contentTypeToString(prompt.contentType())
         ));
-        m_promptsTable->setItem(i, 3, new QTableWidgetItem(prompt.model()));
+        // Show model only if override is enabled, otherwise show "(default)"
+        QString modelText;
+        if (prompt.overrideProvider()) {
+            modelText = prompt.model().isEmpty() ? tr("(custom)") : prompt.model();
+        } else {
+            modelText = tr("(default)");
+        }
+        m_promptsTable->setItem(i, 3, new QTableWidgetItem(modelText));
         m_promptsTable->setItem(i, 4, new QTableWidgetItem(
             prompt.group().isEmpty() ? tr("(root)") : prompt.group()
         ));

@@ -370,7 +370,7 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
     m_providerCombo->blockSignals(true);
     m_modelCombo->blockSignals(true);
 
-    if (!prompt.overrideProvider() && prompt.model().isEmpty()) {
+    if (!prompt.overrideProvider()) {
         // Use default - checkbox unchecked, fields disabled
         m_overrideProviderAndModelCheck->setChecked(false);
     } else {

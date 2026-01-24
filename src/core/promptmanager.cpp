@@ -27,6 +27,7 @@
 #include <QRegularExpression>
 #include <QDebug>
 #include <QMap>
+#include <QSet>
 
 namespace ClipLLM {
 namespace Core {
@@ -38,26 +39,78 @@ PromptManager::PromptManager(QObject* parent)
 
 PromptManager::~PromptManager() = default;
 
-bool PromptManager::loadPrompts()
+bool PromptManager::loadPrompts(GroupsManager* groupsManager)
 {
+    if (groupsManager) {
+        m_groupsManager = groupsManager;
+    }
+
     QString customPath = getCustomPromptsFilePath();
+    qDebug() << "loadPrompts: customPath =" << customPath << "exists:" << QFile::exists(customPath);
 
     if (QFile::exists(customPath)) {
         return loadPromptsFromFile(customPath);
     }
 
-    // Try to load from default location
-    QString defaultPath = getPromptsFilePath();
-    if (QFile::exists(defaultPath)) {
-        return loadPromptsFromFile(defaultPath);
+    // No prompts file found, create default from bundled resource
+    qDebug() << "No prompts file found, creating default prompts from resource";
+
+    // Load default prompts from resource
+    QString resourcePath = QStringLiteral(":/config/prompts-default.json");
+    QFile resourceFile(resourcePath);
+    if (!resourceFile.open(QIODevice::ReadOnly)) {
+        qWarning() << "Failed to open default prompts resource:" << resourcePath;
+        emit promptsLoadFailed(tr("Failed to load default prompts"));
+        return false;
     }
 
-    // No prompts file found, create default
-    qDebug() << "No prompts file found, creating default prompts";
-    m_prompts = getDefaultPrompts();
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(resourceFile.readAll(), &error);
+    resourceFile.close();
+
+    if (error.error != QJsonParseError::NoError) {
+        qWarning() << "Failed to parse default prompts:" << error.errorString();
+        // Fall back to hardcoded defaults
+        m_prompts = getDefaultPrompts();
+    } else {
+        // Load prompts from JSON, including groups
+        QJsonObject json = doc.object();
+        loadPromptsFromJson(json);
+
+        // Import groups from the default prompts file if they exist
+        QJsonArray groupsArray = json.value(QStringLiteral("groups")).toArray();
+        if (!groupsArray.isEmpty() && m_groupsManager) {
+            // Load existing groups first
+            QStringList existingGroups = m_groupsManager->loadGroups();
+            QSet<QString> existingGroupsSet(existingGroups.begin(), existingGroups.end());
+
+            // Merge with new default groups
+            for (const QJsonValue& value : groupsArray) {
+                if (value.isObject()) {
+                    QJsonObject groupObj = value.toObject();
+                    QString groupId = groupObj.value(QStringLiteral("id")).toString();
+                    if (!groupId.isEmpty() && !existingGroupsSet.contains(groupId)) {
+                        existingGroups.append(groupId);
+                    }
+                }
+            }
+            // Save merged groups
+            qDebug() << "Saving merged groups:" << existingGroups;
+            m_groupsManager->saveGroups(existingGroups);
+            // Reload to ensure in-memory state is updated
+            m_groupsManager->loadGroups();
+        }
+    }
+
     savePromptsToFile(customPath);
     emit promptsLoaded();
+    qDebug() << "Prompts saved to:" << customPath << "exists:" << QFile::exists(customPath);
     return true;
+}
+
+void PromptManager::setGroupsManager(GroupsManager* groupsManager)
+{
+    m_groupsManager = groupsManager;
 }
 
 bool PromptManager::loadPromptsFromFile(const QString& filePath)
@@ -141,6 +194,36 @@ bool PromptManager::savePromptsToFile(const QString& filePath)
     return true;
 }
 
+void PromptManager::ensureGroupExists(const QString& group)
+{
+    if (!m_groupsManager || group.isEmpty()) {
+        return;
+    }
+
+    QStringList existingGroups = m_groupsManager->loadGroups();
+    if (existingGroups.contains(group)) {
+        return; // Already exists
+    }
+
+    // Add the group and all its parent groups
+    QStringList newGroups = existingGroups;
+    QString currentPath = group;
+    while (!currentPath.isEmpty()) {
+        if (!newGroups.contains(currentPath)) {
+            newGroups.append(currentPath);
+        }
+        // Move to parent
+        int lastSlash = currentPath.lastIndexOf(QLatin1Char('/'));
+        if (lastSlash < 0) {
+            break;
+        }
+        currentPath = currentPath.left(lastSlash);
+    }
+
+    qDebug() << "Adding new groups from prompt:" << newGroups;
+    m_groupsManager->saveGroups(newGroups);
+}
+
 bool PromptManager::addPrompt(const Models::Prompt& prompt)
 {
     if (!prompt.isValid()) {
@@ -164,7 +247,14 @@ bool PromptManager::updatePrompt(const QString& id, const Models::Prompt& prompt
 {
     for (int i = 0; i < m_prompts.size(); ++i) {
         if (m_prompts[i].id() == id) {
+            QString oldGroup = m_prompts[i].group();
             m_prompts[i] = prompt;
+
+            // Ensure the new group exists in GroupsManager
+            if (!prompt.group().isEmpty()) {
+                ensureGroupExists(prompt.group());
+            }
+
             emit promptUpdated(id);
             savePrompts();
             return true;

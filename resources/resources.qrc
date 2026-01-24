@@ -18,7 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <!DOCTYPE RCC>
 <RCC version="1.0">
     <qresource prefix="/config">
-        <file>config/prompts-default.json</file>
+        <file alias="prompts-default.json">config/prompts-default.json</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="tray-icon-16.png">icons/tray-icon-16.png</file>

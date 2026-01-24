@@ -175,8 +175,11 @@ bool App::initialize(bool startMinimized)
     }
     setLanguage(language);
 
+    // Set GroupsManager in PromptManager before loading prompts
+    m_promptManager->setGroupsManager(m_groupsManager.get());
+
     // Load prompts
-    if (!m_promptManager->loadPrompts()) {
+    if (!m_promptManager->loadPrompts(m_groupsManager.get())) {
         qWarning() << "Failed to load prompts, using defaults";
     }
 

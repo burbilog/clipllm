@@ -36,7 +36,8 @@ public:
     ~PromptManager();
 
     // Load prompts from configuration
-    bool loadPrompts();
+    bool loadPrompts(class GroupsManager* groupsManager = nullptr);
+    void setGroupsManager(class GroupsManager* groupsManager);
     bool loadPromptsFromFile(const QString& filePath);
     bool loadPromptsFromJson(const QJsonObject& json);
 
@@ -90,8 +91,10 @@ signals:
 private:
     QString getPromptsFilePath() const;
     bool ensurePromptsFileExists();
+    void ensureGroupExists(const QString& group);
 
     QVector<Models::Prompt> m_prompts;
+    class GroupsManager* m_groupsManager = nullptr;
 };
 
 } // namespace Core

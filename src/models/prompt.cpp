@@ -38,24 +38,14 @@ QJsonObject Prompt::toJson() const
     obj[QStringLiteral("system_prompt")] = m_systemPrompt;
     obj[QStringLiteral("user_prompt_template")] = m_userPromptTemplate;
     obj[QStringLiteral("content_type")] = contentTypeToString(m_contentType);
-    obj[QStringLiteral("model")] = m_model;
     obj[QStringLiteral("icon")] = iconToString(m_icon);
     obj[QStringLiteral("temperature")] = m_temperature;
     obj[QStringLiteral("max_tokens")] = m_maxTokens;
     obj[QStringLiteral("enabled")] = m_enabled;
-    obj[QStringLiteral("priority")] = m_priority;
     obj[QStringLiteral("override_temperature")] = m_overrideTemperature;
     obj[QStringLiteral("group")] = m_group;
-    obj[QStringLiteral("provider_id")] = m_providerId;
-    obj[QStringLiteral("override_provider")] = m_overrideProvider;
+    obj[QStringLiteral("override_provider_and_model")] = m_overrideProvider;
     obj[QStringLiteral("hotkey")] = m_hotkey;
-
-    // Convert metadata to JSON object
-    QJsonObject metadataObj;
-    for (auto it = m_metadata.constBegin(); it != m_metadata.constEnd(); ++it) {
-        metadataObj[it.key()] = QJsonValue::fromVariant(it.value());
-    }
-    obj[QStringLiteral("metadata")] = metadataObj;
 
     return obj;
 }

@@ -1,4 +1,4 @@
-.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer
+.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer windows-installer-nsis
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -105,3 +105,12 @@ test-windows-wine: windows-deploy
 	@echo "Testing Windows build with Wine..."
 	@which wine >/dev/null 2>&1 || (echo "Wine not installed. Install with: sudo apt install wine" && exit 1)
 	@wine deploy-windows/ClipAI.exe --version 2>/dev/null || echo "Note: Full Wine test requires a complete Wine setup"
+
+# Create Windows installer using NSIS (native Windows installer)
+windows-installer-nsis: windows-deploy
+	@echo "Creating Windows installer using NSIS..."
+	@which makensis >/dev/null 2>&1 || { echo "NSIS not found. Install with: sudo apt install nsis"; exit 1; }
+	@VERSION=$$(grep "^project(ClipAI VERSION" CMakeLists.txt | sed 's/project(ClipAI VERSION \([0-9.]*\).*/\1/'); \
+	echo "Building installer version $$VERSION..."; \
+	makensis -DPRODUCT_VERSION=$$VERSION -NOCD installer/clipai.nsi && \
+	ls -lh dist/ClipAI-$$VERSION-windows-x86_64-setup.exe

@@ -74,12 +74,30 @@ make windows
 # Deploy with DLLs and Qt plugins
 make windows-deploy
 
-# Create installer (optional, requires Qt IFW in MXE)
-make windows-installer
+# Create ZIP archive (portable, works on all Windows versions)
+make windows-zip
+
+# Create NSIS installer (recommended for Windows)
+make windows-installer-nsis
 
 # Test with Wine
 make test-windows-wine
 ```
+
+**Distribution Options:**
+
+1. **ZIP Archive** (`make windows-zip`):
+   - Portable, no installation required
+   - Works on all Windows versions
+   - Recommended for most users
+
+2. **NSIS Installer** (`make windows-installer-nsis`):
+   - Native Windows installer
+   - Creates shortcuts, registry entries
+   - Clean uninstall
+   - Requires: `sudo apt install nsis`
+
+**Note:** Qt IFW installer (`make windows-installer`) uses Linux-built tools and may have compatibility issues on Windows. Use NSIS instead for reliable Windows installation.
 
 **Build Types:**
 - `shared` (default) - Dynamic linking, requires DLLs, smaller executable, works with installer

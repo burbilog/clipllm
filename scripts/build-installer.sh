@@ -21,8 +21,8 @@ INSTALLER_DIR="${PROJECT_ROOT}/installer"
 PACKAGES_DIR="${PROJECT_ROOT}/packages"
 OUTPUT_DIR="${PROJECT_ROOT}/dist"
 MXE_PATH="${HOME}/mxe"
-BINARYCREATOR="${MXE_PATH}/usr/bin/binarycreator"
-ARCHIVEGEN="${MXE_PATH}/usr/bin/archivegen"
+BINARYCREATOR="${MXE_PATH}/usr/bin/x86_64-pc-linux-gnu-binarycreator"
+ARCHIVEGEN="${MXE_PATH}/usr/bin/x86_64-pc-linux-gnu-archivegen"
 
 # Get version from CMakeLists.txt
 VERSION=$(grep "^project(ClipAI VERSION" "${PROJECT_ROOT}/CMakeLists.txt" | sed 's/project(ClipAI VERSION \([0-9.]*\).*/\1/')
@@ -51,7 +51,7 @@ if [ ! -f "${BINARYCREATOR}" ]; then
     echo ""
     echo "To install Qt Installer Framework in MXE:"
     echo "  cd ~/mxe"
-    echo "  make ifw"
+    echo "  make qtifw"
     exit 1
 fi
 

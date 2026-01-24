@@ -80,11 +80,11 @@ windows-deploy: windows
 # Create Windows installer (requires Qt Installer Framework)
 windows-installer: windows-deploy
 	@echo "Creating Windows installer..."
-	@if [ -f "$(HOME)/mxe/usr/bin/binarycreator" ]; then \
+	@if [ -f "$(HOME)/mxe/usr/bin/x86_64-pc-linux-gnu-binarycreator" ]; then \
 		MXE_BUILD_TYPE=$(MXE_BUILD_TYPE) ./scripts/build-installer.sh; \
 	else \
 		echo "Qt Installer Framework not found. To install:"; \
-		echo "  cd ~/mxe && make ifw"; \
+		echo "  cd ~/mxe && make qtifw"; \
 		exit 1; \
 	fi
 

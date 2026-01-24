@@ -67,10 +67,10 @@ make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qtifw
 
 ### Standard Build (manual)
 
-**Build directory:** `/home/rm/clipllm/build` (or `$HOME/clipllm/build`)
+**Build directory:** `build/` in project root
 
 ```bash
-cd /home/rm/clipllm/build
+cd build
 cmake ..
 make -j$(nproc)
 ```

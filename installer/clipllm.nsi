@@ -24,6 +24,11 @@ RequestExecutionLevel admin
 ShowInstDetails show
 ShowUnInstDetails show
 
+; Variables for language selection
+Var dlg_Language
+Var cmb_Language
+Var hCtl_Language
+
 ; Set compression
 SetCompressor /SOLID lzma
 
@@ -33,6 +38,7 @@ SetCompressor /SOLID lzma
 !define MUI_UNICON "resources/icons/tray-icon.ico"
 
 ; Pages
+Page custom fnc_Language_Show fnc_Language_Leave
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "LICENSE.md"
 !insertmacro MUI_PAGE_DIRECTORY
@@ -54,37 +60,22 @@ Section "MainSection" SEC01
   ; Main executable
   File "deploy-windows\ClipLLM.exe"
 
-  ; Qt6 DLLs
-  File "deploy-windows\Qt6Core.dll"
-  File "deploy-windows\Qt6Gui.dll"
-  File "deploy-windows\Qt6Network.dll"
-  File "deploy-windows\Qt6Widgets.dll"
+  ; All DLLs (Qt6, ICU, PCRE, OpenSSL, etc. - copied by windeployqt)
+  ; /nonfatal for static builds where no DLLs are needed
+  File /nonfatal "deploy-windows\*.dll"
 
-  ; Runtime DLLs
-  File "deploy-windows\libgcc_s_seh-1.dll"
-  File "deploy-windows\libstdc++-6.dll"
-  File "deploy-windows\libwinpthread-1.dll"
-  File "deploy-windows\zlib1.dll"
+  ; Qt config (only for shared builds)
+  File /nonfatal "deploy-windows\qt.conf"
 
-  ; OpenSSL DLLs
-  File "deploy-windows\libcrypto-3-x64.dll"
-  File "deploy-windows\libssl-3-x64.dll"
-
-  ; Qt config
-  File "deploy-windows\qt.conf"
-
-  ; Plugins
+  ; Plugins (only for shared builds)
   SetOutPath $INSTDIR\platforms
-  File "deploy-windows\platforms\qwindows.dll"
+  File /nonfatal "deploy-windows\platforms\*.dll"
 
   SetOutPath $INSTDIR\imageformats
-  File "deploy-windows\imageformats\qico.dll"
-  File "deploy-windows\imageformats\qjpeg.dll"
-  File "deploy-windows\imageformats\qsvg.dll"
+  File /nonfatal "deploy-windows\imageformats\*.dll"
 
   SetOutPath $INSTDIR\tls
-  File "deploy-windows\tls\qcertonlybackend.dll"
-  File "deploy-windows\tls\qopensslbackend.dll"
+  File /nonfatal "deploy-windows\tls\*.dll"
 
   SetOutPath $INSTDIR\iconengines
   ; May be empty, but create directory anyway
@@ -106,6 +97,7 @@ Section "MainSection" SEC01
   ; Write registry keys
   WriteRegStr HKCU "Software\${APP_NAME}" "" $INSTDIR
   WriteRegStr HKCU "Software\${APP_NAME}" "Version" "${APP_VERSION}"
+  WriteRegStr HKCU "Software\${APP_NAME}" "language" $hCtl_Language
 
   ; Create uninstaller
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayName" "${APP_NAME}"
@@ -146,6 +138,9 @@ SectionEnd
 
 ; Functions
 Function .onInit
+  ; Initialize language selection (default: English)
+  StrCpy $hCtl_Language "en"
+
   ; Check if already installed
   ReadRegStr $R0 HKCU "Software\${APP_NAME}" ""
   StrCmp $R0 "" done
@@ -159,4 +154,66 @@ uninst:
   ExecWait '$R0\uninstall.exe _?=$INSTDIR'
   IfErrors done
   done:
+FunctionEnd
+
+Function fnc_Language_Show
+  !insertmacro MUI_HEADER_TEXT "Select Language" "Choose the interface language for ClipLLM"
+
+  nsDialogs::Create 1018
+  Pop $dlg_Language
+
+  ${If} $dlg_Language == error
+    Abort
+  ${EndIf}
+
+  ; Create label
+  ${NSD_CreateLabel} 0 0 100% 40u "Please select the language you want to use:"
+  Pop $0
+
+  ; Create dropdown
+  ${NSD_CreateDropList} 0 50u 100% 15u ""
+  Pop $cmb_Language
+
+  ; Add languages to dropdown (native names)
+  SendMessage $cmb_Language ${CB_ADDSTRING} 0 "STR:English"
+  SendMessage $cmb_Language ${CB_ADDSTRING} 0 "STR:Русский"
+  SendMessage $cmb_Language ${CB_ADDSTRING} 0 "STR:Deutsch"
+  SendMessage $cmb_Language ${CB_ADDSTRING} 0 "STR:Français"
+  SendMessage $cmb_Language ${CB_ADDSTRING} 0 "STR:Español"
+
+  ; Auto-select based on system locale
+  System::Call "kernel32::GetUserDefaultLangID() i .r0"
+  ${Switch} $0
+    ${Case} 0x0419  ; Russian (0419)
+      SendMessage $cmb_Language ${CB_SETCURSEL} 1 0
+    ${Case} 0x0407  ; German (0407)
+      SendMessage $cmb_Language ${CB_SETCURSEL} 2 0
+    ${Case} 0x040c  ; French (040c)
+      SendMessage $cmb_Language ${CB_SETCURSEL} 3 0
+    ${Case} 0x0c0a  ; Spanish (0c0a)
+      SendMessage $cmb_Language ${CB_SETCURSEL} 4 0
+    ${Default}
+      SendMessage $cmb_Language ${CB_SETCURSEL} 0 0  ; English default
+  ${EndSwitch}
+
+  nsDialogs::Show
+FunctionEnd
+
+Function fnc_Language_Leave
+  ; Get selected language index
+  SendMessage $cmb_Language ${CB_GETCURSEL} 0 0 $hCtl_Language
+
+  ; Map index to language code
+  ${Switch} $hCtl_Language
+    ${Case} 0
+      StrCpy $hCtl_Language "en"
+    ${Case} 1
+      StrCpy $hCtl_Language "ru"
+    ${Case} 2
+      StrCpy $hCtl_Language "de"
+    ${Case} 3
+      StrCpy $hCtl_Language "fr"
+    ${Case} 4
+      StrCpy $hCtl_Language "es"
+  ${EndSwitch}
 FunctionEnd

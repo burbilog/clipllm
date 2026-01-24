@@ -81,36 +81,61 @@ else
     mkdir -p "${DEPLOY_DIR}/imageformats"
     mkdir -p "${DEPLOY_DIR}/tls"
 
-    # Copy required Qt DLLs
-    echo "Copying Qt DLLs..."
-    DLLS=(
-        "libgcc_s_seh-1.dll"
-        "libstdc++-6.dll"
-        "libwinpthread-1.dll"
-        "Qt6Core.dll"
-        "Qt6Gui.dll"
-        "Qt6Widgets.dll"
-        "Qt6Network.dll"
-        "libcrypto-*.dll"
-        "libssl-*.dll"
-        "zlib1.dll"
-    )
+    # Use objdump to find exact DLL dependencies, then copy them
+    echo "Finding DLL dependencies..."
+    MXE_OBJDUMP="${MXE_PATH}/usr/bin/x86_64-w64-mingw32.shared-objdump"
 
-    for dll in "${DLLS[@]}"; do
-        # Handle wildcards - try both bin/ and qt6/bin/ for Qt6 DLLs
+    # Get list of all DLL dependencies from the executable
+    DEPS=$($MXE_OBJDUMP -p "${BUILD_DIR}/ClipLLM.exe" 2>/dev/null | \
+        grep "DLL Name:" | \
+        awk '{print tolower($3)}' | \
+        sed 's/\.dll$//' | \
+        sort -u)
+
+    echo "  Found dependencies: $(echo $DEPS | tr '\n' ' ')"
+
+    # Function to convert lowercase dependency name to DLL filename
+    # qt6core -> Qt6Core.dll, libgcc_s_seh-1 -> libgcc_s_seh-1.dll
+    dep_to_dll() {
+        local dep="$1"
+        local lower="$1"
+
+        # If it starts with "qt6", convert to Qt6*.dll format (qt6core -> Qt6Core.dll)
+        if [[ "$lower" == qt6* ]]; then
+            local rest="${lower#qt6}"
+            rest="$(echo "${rest:0:1}" | tr '[:lower:]' '[:upper:]')${rest:1}"
+            echo "Qt6${rest}.dll"
+        # If it starts with "lib", keep as lib*.dll
+        elif [[ "$lower" == lib* ]]; then
+            echo "${lower}.dll"
+        else
+            echo "${lower}.dll"
+        fi
+    }
+
+    # Copy each dependency DLL
+    echo "Copying dependency DLLs..."
+    for dep in $DEPS; do
+        # Skip Windows system DLLs
+        if [[ "$dep" =~ ^(kernel32|user32|gdi32|shell32|ole32|oleaut32|uuid|comdlg32|advapi32|winmm|ws2_32|shlwapi|version|wininet|crypt32|secur32|iphlpapi|netapi32|userenv|d3d9|ddraw|glu32|opengl32|msvcrt|imm32|wintrust|oleaut32)$ ]]; then
+            continue
+        fi
+
+        dll_name=$(dep_to_dll "$dep")
         found=false
-        for search_path in "${MXE_TARGET}/bin" "${MXE_TARGET}/qt6/bin"; do
-            for file in ${search_path}/${dll}; do
-                if [ -f "$file" ]; then
-                    echo "  Copying $(basename "$file")"
-                    cp "$file" "${DEPLOY_DIR}/"
-                    found=true
-                    break 2
-                fi
-            done
+
+        # Search in both bin and qt6/bin directories
+        for search_path in "${MXE_TARGET}/qt6/bin" "${MXE_TARGET}/bin"; do
+            if [ -f "${search_path}/${dll_name}" ]; then
+                echo "  Copying ${dll_name}"
+                cp "${search_path}/${dll_name}" "${DEPLOY_DIR}/"
+                found=true
+                break
+            fi
         done
+
         if [ "$found" = false ]; then
-            echo "  Warning: ${dll} not found in MXE target"
+            echo "  Warning: ${dll_name} not found"
         fi
     done
 
@@ -118,17 +143,19 @@ else
     echo "Copying Qt plugins..."
 
     # Platform plugin (required for Windows)
-    cp "${MXE_TARGET}/qt6/plugins/platforms/qwindows.dll" "${DEPLOY_DIR}/platforms/"
+    if [ -f "${MXE_TARGET}/qt6/plugins/platforms/qwindows.dll" ]; then
+        cp "${MXE_TARGET}/qt6/plugins/platforms/qwindows.dll" "${DEPLOY_DIR}/platforms/"
+    fi
 
     # Image formats (for PNG, ICO support)
-    for plugin in qico.dll qpng.dll qjpeg.dll qsvg.dll; do
+    for plugin in qico.dll qpng.dll qjpeg.dll qsvg.dll qicns.dll qtiff.dll qwbmp.dll qgif.dll; do
         if [ -f "${MXE_TARGET}/qt6/plugins/imageformats/${plugin}" ]; then
             cp "${MXE_TARGET}/qt6/plugins/imageformats/${plugin}" "${DEPLOY_DIR}/imageformats/"
         fi
     done
 
     # TLS/SSL plugins (for HTTPS connections)
-    for plugin in qopensslbackend.dll qcertonlybackend.dll qsecuretransportbackend.dll; do
+    for plugin in qopensslbackend.dll qcertonlybackend.dll qsecuretransportbackend.dll qbuiltinbackend.dll; do
         if [ -f "${MXE_TARGET}/qt6/plugins/tls/${plugin}" ]; then
             cp "${MXE_TARGET}/qt6/plugins/tls/${plugin}" "${DEPLOY_DIR}/tls/"
         fi
@@ -161,10 +188,13 @@ echo ""
 
 if [ "$MXE_BUILD_TYPE" = "shared" ]; then
     echo "Subdirectories:"
-    for dir in translations platforms imageformats tls; do
-        if [ -d "${DEPLOY_DIR}/${dir}" ] && [ "$(ls -A ${DEPLOY_DIR}/${dir})" ]; then
-            echo "  ${dir}/:"
-            ls -lh "${DEPLOY_DIR}/${dir}" | tail -n +2 | awk '{print "    " $9 " (" $5 ")"}'
+    for dir in "${DEPLOY_DIR}"/*; do
+        if [ -d "$dir" ]; then
+            dirname=$(basename "$dir")
+            if [ "$(ls -A "$dir")" ]; then
+                echo "  ${dirname}/:"
+                ls -lh "$dir" | tail -n +2 | awk '{print "    " $9 " (" $5 ")"}'
+            fi
         fi
     done
     echo ""

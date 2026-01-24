@@ -3,9 +3,9 @@
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
 
-# MXE build type: shared (default) or static
-# Override with: make windows MXE_BUILD_TYPE=static
-MXE_BUILD_TYPE ?= shared
+# MXE build type: static (default) or shared
+# Override with: make windows MXE_BUILD_TYPE=shared
+MXE_BUILD_TYPE ?= static
 
 build: translations
 	@echo "Building ClipLLM..."

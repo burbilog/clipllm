@@ -8,13 +8,16 @@ Cross-platform LLM clipboard utility - Process your clipboard content with AI pr
 - **Global Hotkey** - Activate processing from any application
 - **Text and Images** - Process both text content and images from clipboard
 - **Configurable Prompts** - Built-in prompts with support for custom prompts
-- **Multiple LLM Providers** - Support for OpenRouter, OpenAI, Anthropic, and custom endpoints
+- **Multiple LLM Providers** - Support for 7 provider templates: OpenRouter, OpenAI, Anthropic, Ollama, NanoGPT, llama.cpp, and custom endpoints
 - **Streaming Responses** - Real-time display of AI responses with Markdown rendering
 - **History Management** - View, search, and export your request history
 - **Priority System** - Set priority for prompts to control menu order
 - **Prompt Limits** - Configure maximum number of prompts in menu
 - **Prompt Editor** - Full UI for creating and editing custom prompts
 - **Multi-language** - Available in English, Russian, German, French, and Spanish
+- **Prompt Groups** - Organize prompts into hierarchical groups
+- **Provider Profiles** - Pre-configured templates for popular LLM providers
+- **Advanced Options** - Proxy support, timeout, top-p, stream toggle
 - **Cross-platform** - Works on Linux (X11/Wayland), Windows, and macOS
 
 ## Building
@@ -65,7 +68,7 @@ sudo apt install nsis
 
 ```bash
 # Clone ClipLLM (if not already done)
-git clone https://github.com/rm-isaeff/clipllm.git
+git clone https://github.com/burbilog/clipllm.git
 cd clipllm
 
 # Build for Windows (shared - default)
@@ -131,7 +134,7 @@ make -j$(sysctl -n hw.ncpu)
 1. Launch ClipLLM
 2. Click on the tray icon and select "Settings"
 3. Configure your LLM provider:
-   - Choose a provider (OpenRouter, OpenAI, Anthropic, or Custom)
+   - Choose a provider (OpenRouter, OpenAI, Anthropic, Ollama, NanoGPT, llama.cpp, or Custom)
    - Enter your API key
    - Select a model
 4. Set up your global hotkey
@@ -144,6 +147,9 @@ ClipLLM supports multiple LLM providers:
 - **OpenRouter** (https://openrouter.ai) - Access to multiple models
 - **OpenAI** - Direct GPT-4 access
 - **Anthropic** - Claude models
+- **Ollama** - Self-hosted local models
+- **NanoGPT** - Lightweight local models
+- **llama.cpp** - Local LLaMA models
 - **Custom** - Self-hosted or custom endpoints
 
 ## Usage
@@ -156,13 +162,18 @@ ClipLLM supports multiple LLM providers:
 
 ### Default Prompts
 
+Built-in prompts (15 total):
 - **Summary** - Generate a structured summary
-- **Translate** - Translate to English, Russian, German, French, or Spanish
+- **Translate** - Translate to English, Russian, German, French, or Spanish (5 prompts)
 - **Explain Code** - Get code explanations
 - **Code Review** - Review code for issues
-- **Refactor** - Suggest code improvements
+- **Refactor Code** - Suggest code improvements
 - **Describe Image** - Get image descriptions
-- **Extract Text** - OCR text extraction from images
+- **Extract Text (OCR)** - OCR text extraction from images
+- **Fix Grammar** - Correct grammar and spelling
+- **Improve Writing** - Enhance clarity and readability
+- **Extract Information** - Extract key facts and data
+- **Extract Keywords** - Extract keywords and tags
 
 ## Platform Notes
 

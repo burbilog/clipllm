@@ -12,7 +12,7 @@ After making code changes, build the project to verify everything compiles, but 
 
 ClipLLM is a cross-platform LLM clipboard utility written in C++ using Qt6. It runs as a system tray service and allows users to process clipboard content (text and images) with AI prompts using global hotkeys.
 
-**Key Statistics:** ~7,000+ lines of C++17 code across 3 modules (core, ui, models).
+**Key Statistics:** ~13,000+ lines of C++17 code across 3 modules (core, ui, models).
 
 ## Build Commands
 
@@ -38,7 +38,7 @@ make windows MXE_BUILD_TYPE=static
 # Deploy Windows build with DLLs and plugins
 make windows-deploy
 
-# Create Windows installer (requires Qt Installer Framework in MXE)
+# Create Windows installer (requires NSIS)
 make windows-installer
 
 # Test with Wine
@@ -57,8 +57,8 @@ make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qt6
 # Or build static (larger binaries, no DLLs needed)
 make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6
 
-# Optional: Build Qt Installer Framework for installers
-make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qtifw
+# Optional: Build NSIS in MXE for creating installers
+make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' nsis
 ```
 
 **MXE Build Types:**
@@ -153,7 +153,7 @@ The `App` class (inherits `QApplication`) is the central controller that:
 **LLMClient** (src/core/llmclient.h)
 - State machine: Idle → Connecting → Streaming → Completed/Error
 - Server-Sent Events (SSE) streaming with real-time parsing
-- Supports OpenRouter, OpenAI, Anthropic, and custom endpoints
+- Supports 7 provider templates: OpenRouter, OpenAI, Anthropic, Ollama, NanoGPT, llama.cpp, and custom endpoints
 - Provider-specific response parsing required for streaming
 
 **PromptManager** (src/core/promptmanager.h)
@@ -167,10 +167,8 @@ The `App` class (inherits `QApplication`) is the central controller that:
   - macOS: `~/Library/Preferences/com.ClipLLM.plist`
 
 **KeychainStore** (src/core/keychainstore.h)
-- Platform-specific secure credential storage:
-  - Linux: libsecret (GNOME Keyring) / KWallet
-  - Windows: Windows Credential Manager
-  - macOS: Keychain Services
+- Credential storage using QSettings with XOR obfuscation
+- TODO: Platform-specific keychain integration (libsecret/KWallet on Linux, Credential Manager on Windows, Keychain on macOS)
 
 ### Data Models (src/models/)
 
@@ -181,7 +179,7 @@ The `App` class (inherits `QApplication`) is the central controller that:
 ### UI Components (src/ui/)
 
 - **TrayIcon**: System tray with context menu, dynamic prompt generation
-- **SettingsDialog**: 5-tab interface (General, LLM, Hotkeys, Prompts, History)
+- **SettingsDialog**: 4-tab interface (General, LLM, Prompts, History)
 - **ResultDialog**: Real-time streaming display with Markdown/Raw toggle
 - **HotkeyEdit**: Custom widget for hotkey capture
 - **HistoryDialog**: Searchable history viewer with Markdown/Raw preview and export
@@ -189,7 +187,7 @@ The `App` class (inherits `QApplication`) is the central controller that:
 
 ## Configuration Files
 
-- **Default Prompts**: `resources/config/prompts-default.json` (16 built-in prompts)
+- **Default Prompts**: `resources/config/prompts-default.json` (15 built-in prompts)
 - **Qt Resources**: `resources/resources.qrc` - bundles prompts and icons into executable
 - **Desktop Entry**: `resources/clipllm.desktop.in` - Linux application launcher
 
@@ -205,7 +203,7 @@ The `App` class (inherits `QApplication`) is the central controller that:
 - **Build Types**: `shared` (default, requires DLLs) or `static` (standalone)
 - **Toolchain**: `cmake/windows-x86_64-mingw.cmake` with MXE wrappers
 - **Full Functionality**: All features supported including system tray and global hotkeys
-- **Installer**: Qt Installer Framework support via `make windows-installer`
+- **Installer**: NSIS (Nullsoft Scriptable Install System) support via `make windows-installer`
 - **See Also**: Windows Cross-Compilation section above for build details
 
 ### macOS

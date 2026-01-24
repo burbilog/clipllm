@@ -49,13 +49,13 @@
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="485"/>
-        <location filename="../src/core/app.cpp" line="579"/>
+        <location filename="../src/core/app.cpp" line="587"/>
         <source>Clipboard Empty</source>
         <translation>Clipboard Empty</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="486"/>
-        <location filename="../src/core/app.cpp" line="580"/>
+        <location filename="../src/core/app.cpp" line="588"/>
         <source>No content found in clipboard.</source>
         <translation>No content found in clipboard.</translation>
     </message>
@@ -94,17 +94,27 @@
         <translation>Default LLM provider not found. Please configure one in Settings.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="597"/>
+        <location filename="../src/core/app.cpp" line="568"/>
+        <source>Model Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="569"/>
+        <source>No model selected. Please select a model in Settings → LLM → Provider Profiles.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="605"/>
         <source>Incompatible Content</source>
         <translation>Incompatible Content</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="598"/>
+        <location filename="../src/core/app.cpp" line="606"/>
         <source>This prompt requires %1 content.</source>
         <translation>This prompt requires %1 content.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="631"/>
+        <location filename="../src/core/app.cpp" line="639"/>
         <source>[Image content]</source>
         <translation>[Image content]</translation>
     </message>
@@ -162,24 +172,34 @@
 <context>
     <name>ClipLLM::Core::LLMClient</name>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="172"/>
-        <location filename="../src/core/llmclient.cpp" line="277"/>
+        <location filename="../src/core/llmclient.cpp" line="274"/>
         <source>API key is not set</source>
         <translation>API key is not set</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="342"/>
-        <location filename="../src/core/llmclient.cpp" line="407"/>
+        <location filename="../src/core/llmclient.cpp" line="339"/>
+        <location filename="../src/core/llmclient.cpp" line="435"/>
         <source>Connection successful</source>
         <translation>Connection successful</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="410"/>
+        <location filename="../src/core/llmclient.cpp" line="372"/>
+        <source>HTTP %1: Authentication required. Please check your API key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/llmclient.cpp" line="388"/>
+        <location filename="../src/core/llmclient.cpp" line="438"/>
         <source>HTTP %1: %2</source>
         <translation>HTTP %1: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="477"/>
+        <location filename="../src/core/llmclient.cpp" line="483"/>
+        <source>HTTP %1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/llmclient.cpp" line="518"/>
         <source>SSL error: %1</source>
         <translation>SSL error: %1</translation>
     </message>
@@ -1469,20 +1489,20 @@
         <location filename="../src/ui/resultdialog.cpp" line="110"/>
         <location filename="../src/ui/resultdialog.cpp" line="114"/>
         <location filename="../src/ui/resultdialog.cpp" line="257"/>
-        <location filename="../src/ui/resultdialog.cpp" line="519"/>
+        <location filename="../src/ui/resultdialog.cpp" line="552"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="114"/>
         <location filename="../src/ui/resultdialog.cpp" line="257"/>
-        <location filename="../src/ui/resultdialog.cpp" line="519"/>
+        <location filename="../src/ui/resultdialog.cpp" line="552"/>
         <source>Raw</source>
         <translation>Raw</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="117"/>
-        <location filename="../src/ui/resultdialog.cpp" line="542"/>
+        <location filename="../src/ui/resultdialog.cpp" line="575"/>
         <source>Show Input</source>
         <translation>Show Input</translation>
     </message>
@@ -1512,37 +1532,51 @@
         <translation>Model: %1 / %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="432"/>
+        <location filename="../src/ui/resultdialog.cpp" line="333"/>
+        <location filename="../src/ui/resultdialog.cpp" line="361"/>
+        <source>API Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="334"/>
+        <location filename="../src/ui/resultdialog.cpp" line="362"/>
+        <source>An error occurred while communicating with the API:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="465"/>
         <source>Close During Generation</source>
         <translation>Close During Generation</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="433"/>
+        <location filename="../src/ui/resultdialog.cpp" line="466"/>
         <source>A response is still being generated. Close and cancel the request?</source>
         <translation>A response is still being generated. Close and cancel the request?</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="441"/>
+        <location filename="../src/ui/resultdialog.cpp" line="474"/>
         <source>Cancelling...</source>
         <translation>Cancelling...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="482"/>
+        <location filename="../src/ui/resultdialog.cpp" line="515"/>
         <source>Model is thinking...</source>
         <translation>Model is thinking...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="485"/>
+        <location filename="../src/ui/resultdialog.cpp" line="518"/>
         <source>Generating response...</source>
         <translation>Generating response...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="494"/>
+        <location filename="../src/ui/resultdialog.cpp" line="527"/>
         <source>Traffic: %1</source>
         <translation>Traffic: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="538"/>
+        <location filename="../src/ui/resultdialog.cpp" line="571"/>
         <source>Hide Input</source>
         <translation>Hide Input</translation>
     </message>
@@ -1606,8 +1640,8 @@
         <translation>Tokens: %1 input / %2 output</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="323"/>
-        <location filename="../src/ui/resultdialog.cpp" line="338"/>
+        <location filename="../src/ui/resultdialog.cpp" line="337"/>
+        <location filename="../src/ui/resultdialog.cpp" line="370"/>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
@@ -1620,7 +1654,7 @@
         <translation type="vanished">Completed</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="370"/>
+        <location filename="../src/ui/resultdialog.cpp" line="403"/>
         <source>Saved</source>
         <translation>Saved</translation>
     </message>
@@ -1880,6 +1914,11 @@
         <translation>Spanish</translation>
     </message>
     <message>
+        <location filename="../src/ui/settingsdialog.cpp" line="752"/>
+        <source>Error: No model selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>LLM Provider</source>
         <translation type="vanished">LLM Provider</translation>
     </message>
@@ -1996,13 +2035,13 @@
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="715"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1046"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1053"/>
         <source>No profile selected</source>
         <translation>No profile selected</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="724"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1052"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1059"/>
         <source>Profile not found</source>
         <translation>Profile not found</translation>
     </message>
@@ -2016,17 +2055,17 @@
         <translation type="vanished">Configuration valid</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="923"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="930"/>
         <source>Failed to open file: %1</source>
         <translation>Failed to open file: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="933"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="940"/>
         <source>Failed to parse JSON file: %1</source>
         <translation>Failed to parse JSON file: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="947"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="954"/>
         <source>Prompts imported successfully.</source>
         <translation>Prompts imported successfully.</translation>
     </message>
@@ -2035,48 +2074,48 @@
         <translation type="vanished">Model fetching not supported for this provider</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1245"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1332"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1405"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1260"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1365"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1438"/>
         <source> [Default]</source>
         <translation> [Default]</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1251"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1332"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1408"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1266"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1365"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1441"/>
         <source> (disabled)</source>
         <translation> (disabled)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1288"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1303"/>
         <source>Add Provider Profile</source>
         <translation>Add Provider Profile</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1289"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1304"/>
         <source>Select a template or create custom:</source>
         <translation>Select a template or create custom:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1336"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1369"/>
         <source>Remove Profile</source>
         <translation>Remove Profile</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1337"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1370"/>
         <source>Are you sure you want to remove the profile &quot;%1&quot;?</source>
         <translation>Are you sure you want to remove the profile &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1479"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1556"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1512"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1589"/>
         <source>API key set</source>
         <translation>API key set</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1479"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1556"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1512"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1589"/>
         <source>No API key</source>
         <translation>No API key</translation>
     </message>
@@ -2095,34 +2134,34 @@
         <translation type="vanished">Connected</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="815"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="851"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="822"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="858"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="816"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="823"/>
         <source>Failed to add prompt. ID may already exist.</source>
         <translation>Failed to add prompt. ID may already exist.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="852"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="859"/>
         <source>Failed to update prompt.</source>
         <translation>Failed to update prompt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1060"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1067"/>
         <source>No API URL set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1135"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1142"/>
         <source>Fetching models...</source>
         <translation>Fetching models...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="785"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1146"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="792"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1153"/>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
@@ -2131,22 +2170,22 @@
         <translation type="vanished">Error: LLM client not available</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="782"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="789"/>
         <source>Connection successful</source>
         <translation>Connection successful</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1156"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1163"/>
         <source>Error: Invalid response</source>
         <translation>Error: Invalid response</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1197"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1204"/>
         <source>No models found</source>
         <translation>No models found</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1221"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1236"/>
         <source>Loaded %1 models</source>
         <translation>Loaded %1 models</translation>
     </message>
@@ -2256,26 +2295,26 @@
         <translation type="vanished">Prompt editor will be implemented in a future version.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="876"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="883"/>
         <source>Delete Prompt</source>
         <translation>Delete Prompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="877"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="884"/>
         <source>Are you sure you want to delete this prompt?</source>
         <translation>Are you sure you want to delete this prompt?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="905"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="922"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="932"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="946"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="912"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="929"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="939"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="953"/>
         <source>Import Prompts</source>
         <translation>Import Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="907"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="961"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="914"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="968"/>
         <source>JSON Files (*.json)</source>
         <translation>JSON Files (*.json)</translation>
     </message>
@@ -2284,33 +2323,33 @@
         <translation type="vanished">Import will be implemented in a future version.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="959"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="975"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="966"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="982"/>
         <source>Export Prompts</source>
         <translation>Export Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="976"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="983"/>
         <source>Prompts exported to %1</source>
         <translation>Prompts exported to %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="983"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="990"/>
         <source>Reset Prompts</source>
         <translation>Reset Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="984"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="991"/>
         <source>Are you sure you want to reset prompts to defaults? All custom prompts will be lost.</source>
         <translation>Are you sure you want to reset prompts to defaults? All custom prompts will be lost.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1009"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1016"/>
         <source>Clear History</source>
         <translation>Clear History</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1010"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1017"/>
         <source>Are you sure you want to delete all history entries? This cannot be undone.</source>
         <translation>Are you sure you want to delete all history entries? This cannot be undone.</translation>
     </message>

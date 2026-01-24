@@ -168,10 +168,7 @@ void LLMClient::setStreamEnabled(bool enabled)
 
 void LLMClient::sendRequest(const LLMRequest& request)
 {
-    if (m_apiKey.isEmpty()) {
-        emit error(tr("API key is not set"));
-        return;
-    }
+    // Proceed without API key - let the API decide if it's required
 
     // Cancel any existing request
     if (m_currentReply) {
@@ -362,6 +359,37 @@ void LLMClient::onFinished()
         return;
     }
 
+    // Check HTTP status for all requests (not just connection test)
+    int httpStatus = m_currentReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+    // Check for authentication/authorization errors (401, 403)
+    if (httpStatus == 401 || httpStatus == 403) {
+        m_sseBuffer.clear();
+        m_currentReply->deleteLater();
+        m_currentReply = nullptr;
+        setState(LLMClientState::Error);
+
+        QString errorMsg = tr("HTTP %1: Authentication required. Please check your API key.")
+            .arg(httpStatus);
+        emit error(errorMsg);
+        return;
+    }
+
+    // Check for other HTTP errors (4xx, 5xx)
+    if (httpStatus >= 400) {
+        QByteArray data = m_currentReply->readAll();
+        QString serverError = QString::fromUtf8(data);
+
+        m_sseBuffer.clear();
+        m_currentReply->deleteLater();
+        m_currentReply = nullptr;
+        setState(LLMClientState::Error);
+
+        QString errorMsg = tr("HTTP %1: %2").arg(httpStatus).arg(serverError);
+        emit error(errorMsg);
+        return;
+    }
+
     // Handle non-streaming response
     if (m_state == LLMClientState::Connecting) {
         QByteArray data = m_currentReply->readAll();
@@ -436,11 +464,24 @@ void LLMClient::onFinished()
 
 void LLMClient::onErrorOccurred(QNetworkReply::NetworkError code)
 {
-    Q_UNUSED(code)
-
     QString errorMsg;
     if (m_currentReply) {
         errorMsg = m_currentReply->errorString();
+    }
+
+    // For authentication errors, add a standard marker for dialog detection
+    if (code == QNetworkReply::AuthenticationRequiredError) {
+        errorMsg = QStringLiteral("401 Unauthorized: ") + errorMsg;
+    }
+
+    // Also check HTTP status attribute for other auth errors
+    // (some APIs return 401/403 without triggering AuthenticationRequiredError)
+    if (m_currentReply) {
+        int httpStatus = m_currentReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        if ((httpStatus == 401 || httpStatus == 403) &&
+            !errorMsg.startsWith(QLatin1String("HTTP "))) {
+            errorMsg = tr("HTTP %1: ").arg(httpStatus) + errorMsg;
+        }
     }
 
     // Handle connection test error

@@ -320,7 +320,21 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
 
         emit responseReceived(response.content);
     } else if (!response.error.isEmpty()) {
-        m_statusLabel->setText(tr("Error: %1").arg(response.error));
+        QString error = response.error;
+
+        // Check if this is an API-level error
+        bool isApiError = error.contains(QLatin1String("HTTP 401")) ||
+                          error.contains(QLatin1String("HTTP 403")) ||
+                          error.contains(QLatin1String("Unauthorized"), Qt::CaseInsensitive) ||
+                          error.contains(QLatin1String("authentication"), Qt::CaseInsensitive) ||
+                          error.contains(QLatin1String("API key"), Qt::CaseInsensitive);
+
+        if (isApiError) {
+            QMessageBox::critical(this, tr("API Error"),
+                                tr("An error occurred while communicating with the API:\n\n%1").arg(error));
+        }
+
+        m_statusLabel->setText(tr("Error: %1").arg(error));
         m_statusLabel->setStyleSheet("color: red;");
         m_retryButton->setEnabled(true);
     }
@@ -335,9 +349,28 @@ void ResultDialog::onError(const QString& error)
     m_progressBar->setVisible(false);
     m_trafficLabel->setVisible(false);
 
-    m_statusLabel->setText(tr("Error: %1").arg(error));
-    m_statusLabel->setStyleSheet("color: red;");
-    m_retryButton->setEnabled(true);
+    // Check if this is an API-level error that should show a dialog
+    bool isApiError = error.contains(QLatin1String("HTTP 401")) ||
+                      error.contains(QLatin1String("HTTP 403")) ||
+                      error.contains(QLatin1String("Unauthorized"), Qt::CaseInsensitive) ||
+                      error.contains(QLatin1String("authentication"), Qt::CaseInsensitive) ||
+                      error.contains(QLatin1String("API key"), Qt::CaseInsensitive);
+
+    if (isApiError) {
+        // Show dialog for API errors
+        QMessageBox::critical(this, tr("API Error"),
+                            tr("An error occurred while communicating with the API:\n\n%1")
+                                .arg(error));
+
+        // Close the result dialog - authentication errors are fatal
+        closeDialog();
+        return;
+    } else {
+        // Show in result window for other errors
+        m_statusLabel->setText(tr("Error: %1").arg(error));
+        m_statusLabel->setStyleSheet("color: red;");
+        m_retryButton->setEnabled(true);
+    }
 
     updateState();
 }

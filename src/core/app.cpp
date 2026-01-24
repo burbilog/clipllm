@@ -104,6 +104,9 @@ App::~App()
         m_globalHotkey = nullptr;
     }
 
+    // Cleanup prompt hotkeys
+    unregisterPromptHotkeys();
+
     cleanupTranslations();
 
     if (g_sharedMemory) {
@@ -232,6 +235,9 @@ bool App::initialize(bool startMinimized)
     QString hotkeyString = m_configManager->hotkey();
     QKeySequence hotkeySeq = QKeySequence::fromString(hotkeyString);
     registerHotkey(hotkeySeq);
+
+    // Register prompt-specific hotkeys
+    registerPromptHotkeys();
 
     // Create prompt menu
     m_promptMenu = new UI::PromptMenu(m_promptManager.get(), m_clipboardManager.get(), m_configManager.get());
@@ -390,6 +396,74 @@ void App::registerHotkey(const QKeySequence& sequence)
     });
 }
 
+void App::registerPromptHotkeys()
+{
+    if (!QHotkey::isPlatformSupported()) {
+        return;
+    }
+    unregisterPromptHotkeys();
+
+    QVector<Models::Prompt> prompts = m_promptManager->getEnabledPrompts();
+    QKeySequence globalHotkeySeq = QKeySequence::fromString(m_configManager->hotkey());
+
+    for (const auto& prompt : prompts) {
+        QString hotkeyStr = prompt.hotkey();
+        if (hotkeyStr.isEmpty()) {
+            continue;
+        }
+
+        QKeySequence seq = QKeySequence::fromString(hotkeyStr);
+
+        // Skip if conflicts with global hotkey
+        if (!globalHotkeySeq.isEmpty() && seq == globalHotkeySeq) {
+            qWarning() << "Prompt hotkey" << hotkeyStr << "conflicts with global hotkey, skipping";
+            continue;
+        }
+
+        // Skip if conflicts with another prompt
+        bool conflict = false;
+        for (const auto& other : prompts) {
+            if (other.id() != prompt.id() && QKeySequence::fromString(other.hotkey()) == seq) {
+                qWarning() << "Prompt hotkey" << hotkeyStr << "conflicts with prompt" << other.name() << ", skipping";
+                conflict = true;
+                break;
+            }
+        }
+        if (conflict) {
+            continue;
+        }
+
+        // Create and register hotkey
+        QHotkey* hotkey = new QHotkey(seq, true, this);
+        if (!hotkey->isRegistered()) {
+            qWarning() << "Failed to register prompt hotkey:" << hotkeyStr;
+            delete hotkey;
+            continue;
+        }
+
+        m_promptHotkeys[prompt.id()] = hotkey;
+        connect(hotkey, &QHotkey::activated, this, [this, id = prompt.id()]() {
+            onPromptHotkeyTriggered(id);
+        });
+        qDebug() << "Registered prompt hotkey:" << hotkeyStr << "for prompt:" << prompt.name();
+    }
+}
+
+void App::unregisterPromptHotkeys()
+{
+    for (auto* hk : m_promptHotkeys) {
+        delete hk;
+    }
+    m_promptHotkeys.clear();
+}
+
+void App::onPromptHotkeyTriggered(const QString& promptId)
+{
+    qDebug() << "Prompt hotkey triggered for:" << promptId;
+    // Directly execute - clipboard check is in onPromptSelected()
+    onPromptSelected(promptId);
+}
+
 void App::showSettings()
 {
     if (!m_settingsDialog) {
@@ -428,6 +502,12 @@ void App::showSettings()
         connect(m_settingsDialog, &UI::SettingsDialog::hotkeyChanged, [this](const QKeySequence& sequence) {
             qDebug() << "Hotkey changed in settings, re-registering:" << sequence.toString();
             registerHotkey(sequence);
+        });
+
+        // Re-register prompt hotkeys when prompts are changed
+        connect(m_settingsDialog, &UI::SettingsDialog::promptsChanged, [this]() {
+            qDebug() << "Prompts changed, re-registering prompt hotkeys";
+            registerPromptHotkeys();
         });
     }
 
@@ -498,6 +578,15 @@ void App::onHotkeyTriggered()
 void App::onPromptSelected(const QString& promptId)
 {
     qDebug() << "Prompt selected:" << promptId;
+
+    // Check clipboard FIRST - applies to both hotkey and menu selection
+    auto clipboardContent = m_clipboardManager->getContent();
+    if (!clipboardContent.has_value()) {
+        QMessageBox::critical(nullptr,
+            tr("Clipboard Empty"),
+            tr("Cannot execute prompt: clipboard is empty.\n\nCopy some text or an image first."));
+        return;
+    }
 
     // Get prompt
     auto promptOpt = m_promptManager->getPrompt(promptId);
@@ -581,14 +670,7 @@ void App::onPromptSelected(const QString& promptId)
     // Also set API key explicitly since LLMClient checks m_apiKey separately
     m_llmClient->setApiKey(config.apiKey());
 
-    // Get clipboard content
-    auto clipboardContent = m_clipboardManager->getContent();
-    if (!clipboardContent.has_value()) {
-        showTrayMessage(tr("Clipboard Empty"),
-                       tr("No content found in clipboard."));
-        return;
-    }
-
+    // Reuse clipboardContent from the early check at the top of this function
     const ClipboardContent& content = clipboardContent.value();
 
     // Check content type compatibility

@@ -16,6 +16,7 @@
 
 #include "prompteditordialog.h"
 #include "promptpreviewdialog.h"
+#include "hotkeyedit.h"
 #include "core/promptmanager.h"
 #include "core/groupsmanager.h"
 #include "core/configmanager.h"
@@ -279,6 +280,25 @@ void PromptEditorDialog::setupUi()
     m_prioritySpin->setToolTip(tr("Higher priority prompts appear first in the menu"));
     settingsLayout->addRow(tr("Priority (higher = first):"), m_prioritySpin);
 
+    m_hotkeyEdit = new HotkeyEdit();
+    m_hotkeyEdit->setPlaceholderText(tr("None"));
+    m_hotkeyEdit->setToolTip(tr("Optional global hotkey to directly execute this prompt"));
+    connect(m_hotkeyEdit, &HotkeyEdit::keySequenceChanged, this, &PromptEditorDialog::onHotkeyChanged);
+    connect(m_hotkeyEdit, &HotkeyEdit::recordingStarted, this, [this]() {
+        // Unregister prompt hotkeys while recording to prevent accidental triggering
+        m_isRecordingHotkey = true;
+        App* app = qobject_cast<App*>(QApplication::instance());
+        if (app) {
+            app->unregisterPromptHotkeys();
+        }
+    });
+    connect(m_hotkeyEdit, &HotkeyEdit::recordingFinished,
+            this, &PromptEditorDialog::onHotkeyRecordingFinished);
+    settingsLayout->addRow(tr("Hotkey:"), m_hotkeyEdit);
+
+    // Initialize flag - prompt hotkeys are currently registered
+    m_isRecordingHotkey = false;
+
     mainLayout->addWidget(settingsGroup);
 
     // Validation label
@@ -385,6 +405,7 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
     m_maxTokensSpin->setValue(prompt.maxTokens());
     m_enabledCheck->setChecked(prompt.enabled());
     m_prioritySpin->setValue(prompt.priority());
+    m_hotkeyEdit->setHotkeyText(prompt.hotkey());
 }
 
 Models::Prompt PromptEditorDialog::buildPrompt() const
@@ -432,6 +453,7 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
     prompt.setMaxTokens(m_maxTokensSpin->value());
     prompt.setEnabled(m_enabledCheck->isChecked());
     prompt.setPriority(m_prioritySpin->value());
+    prompt.setHotkey(m_hotkeyEdit->hotkeyText());
 
     return prompt;
 }
@@ -734,6 +756,13 @@ void PromptEditorDialog::onExportClicked()
 
 void PromptEditorDialog::closeEvent(QCloseEvent* event)
 {
+    // Ensure prompt hotkeys are re-registered when dialog closes
+    // (in case they were left unregistered due to conflict or user pressed record then closed)
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (app) {
+        app->registerPromptHotkeys();
+    }
+
     // Save window geometry
     QSettings settings;
     settings.beginGroup("WindowGeometry");
@@ -900,6 +929,77 @@ void PromptEditorDialog::onModelsFetchFinished(QNetworkReply* reply)
     m_modelsStatusLabel->setStyleSheet("color: green; font-size: 10px;");
 
     reply->deleteLater();
+}
+
+void PromptEditorDialog::onHotkeyChanged(const QKeySequence& sequence)
+{
+    // Ignore changes during recording - we'll handle it in recordingFinished
+    if (m_isRecordingHotkey) {
+        return;
+    }
+    Q_UNUSED(sequence)
+}
+
+void PromptEditorDialog::onHotkeyRecordingFinished()
+{
+    m_isRecordingHotkey = false;
+
+    // Re-register prompt hotkeys first
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (app) {
+        app->registerPromptHotkeys();
+    }
+
+    QKeySequence seq = m_hotkeyEdit->keySequence();
+
+    if (seq.isEmpty()) {
+        return;
+    }
+
+    // Check for conflicts
+    if (checkHotkeyConflict(seq)) {
+        m_hotkeyEdit->blockSignals(true);
+        m_hotkeyEdit->setHotkeyText(QString());
+        m_hotkeyEdit->blockSignals(false);
+
+        QMessageBox::warning(this,
+            tr("Hotkey Conflict"),
+            tr("This hotkey is already in use by another prompt or the global hotkey.\n\nPlease choose a different hotkey."));
+        // Do NOT save - hotkey was cleared
+    }
+    // If no conflict, hotkey remains set and will be saved when user clicks OK
+}
+
+bool PromptEditorDialog::checkHotkeyConflict(const QKeySequence& seq) const
+{
+    if (!m_configManager || !m_promptManager) {
+        return false;
+    }
+
+    // Check conflict with global hotkey
+    QKeySequence globalHotkeySeq = QKeySequence::fromString(m_configManager->hotkey());
+    if (!globalHotkeySeq.isEmpty() && seq == globalHotkeySeq) {
+        return true;
+    }
+
+    // Check conflict with other prompts
+    QVector<Models::Prompt> allPrompts = m_promptManager->getAllPrompts();
+    for (const auto& prompt : allPrompts) {
+        // Skip current prompt when editing
+        if (m_editMode && prompt.id() == m_originalPrompt.id()) {
+            continue;
+        }
+
+        QString promptHotkey = prompt.hotkey();
+        if (!promptHotkey.isEmpty()) {
+            QKeySequence promptSeq = QKeySequence::fromString(promptHotkey);
+            if (seq == promptSeq) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 } // namespace UI

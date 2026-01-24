@@ -18,6 +18,7 @@
 #include "prompteditordialog.h"
 #include "groupsdialog.h"
 #include "hotkeyedit.h"
+#include "core/app.h"
 #include "core/configmanager.h"
 #include "core/keychainstore.h"
 #include "core/providerkeystore.h"
@@ -151,6 +152,16 @@ void SettingsDialog::setupGeneralTab()
     m_hotkeyEdit = new HotkeyEdit();
     connect(m_hotkeyEdit, &HotkeyEdit::keySequenceChanged,
             this, &SettingsDialog::onHotkeyChanged);
+    connect(m_hotkeyEdit, &HotkeyEdit::recordingStarted, this, [this]() {
+        // Unregister prompt hotkeys while recording global hotkey to prevent accidental triggering
+        m_isRecordingGlobalHotkey = true;
+        App* app = qobject_cast<App*>(QApplication::instance());
+        if (app) {
+            app->unregisterPromptHotkeys();
+        }
+    });
+    connect(m_hotkeyEdit, &HotkeyEdit::recordingFinished,
+            this, &SettingsDialog::onGlobalHotkeyRecordingFinished);
 
     hotkeyLayout->addRow(tr("Activate Clipboard Processing:"), m_hotkeyEdit);
 
@@ -355,9 +366,9 @@ void SettingsDialog::setupPromptsTab()
 
     // Prompts table
     m_promptsTable = new QTableWidget();
-    m_promptsTable->setColumnCount(6);
+    m_promptsTable->setColumnCount(7);
     m_promptsTable->setHorizontalHeaderLabels({
-        tr("Name"), tr("Description"), tr("Content Type"), tr("Model"), tr("Group"), tr("Priority")
+        tr("Name"), tr("Description"), tr("Content Type"), tr("Model"), tr("Group"), tr("Priority"), tr("Hotkey")
     });
     m_promptsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_promptsTable->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -643,6 +654,9 @@ void SettingsDialog::loadPrompts()
         m_promptsTable->setItem(i, 5, new QTableWidgetItem(
             QString::number(prompt.priority())
         ));
+        m_promptsTable->setItem(i, 6, new QTableWidgetItem(
+            prompt.hotkey().isEmpty() ? tr("(none)") : prompt.hotkey()
+        ));
     }
 
     m_promptsTable->resizeColumnsToContents();
@@ -802,6 +816,10 @@ void SettingsDialog::onConnectionTestResult(bool success, const QString& message
 
 void SettingsDialog::onHotkeyChanged(const QKeySequence& sequence)
 {
+    // Ignore changes during recording - we'll handle it in recordingFinished
+    if (m_isRecordingGlobalHotkey) {
+        return;
+    }
     emit hotkeyChanged(sequence);
 }
 
@@ -818,6 +836,7 @@ void SettingsDialog::onAddPromptClicked()
         if (app->promptManager()->addPrompt(prompt)) {
             loadPrompts();
             emit settingsChanged();
+            emit promptsChanged();
         } else {
             QMessageBox::warning(this, tr("Error"),
                                tr("Failed to add prompt. ID may already exist."));
@@ -854,6 +873,7 @@ void SettingsDialog::onEditPromptClicked()
         if (app->promptManager()->updatePrompt(promptId, updatedPrompt)) {
             loadPrompts();
             emit settingsChanged();
+            emit promptsChanged();
         } else {
             QMessageBox::warning(this, tr("Error"),
                                tr("Failed to update prompt."));
@@ -888,6 +908,7 @@ void SettingsDialog::onDeletePromptClicked()
     if (reply == QMessageBox::Yes) {
         app->promptManager()->removePrompt(promptId);
         loadPrompts();
+        emit promptsChanged();
     }
 }
 
@@ -1682,6 +1703,64 @@ void SettingsDialog::closeEvent(QCloseEvent* event)
     settings.sync();
 
     QDialog::closeEvent(event);
+}
+
+void SettingsDialog::onGlobalHotkeyRecordingFinished()
+{
+    m_isRecordingGlobalHotkey = false;
+
+    QKeySequence seq = m_hotkeyEdit->keySequence();
+
+    // Re-register prompt hotkeys first
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (app) {
+        app->registerPromptHotkeys();
+    }
+
+    if (seq.isEmpty()) {
+        // Empty hotkey - always valid
+        emit hotkeyChanged(seq);
+        return;
+    }
+
+    // Check for conflicts
+    if (checkGlobalHotkeyConflict(seq)) {
+        // Clear the conflicting hotkey
+        m_hotkeyEdit->blockSignals(true);
+        m_hotkeyEdit->setHotkeyText(QString());
+        m_hotkeyEdit->blockSignals(false);
+
+        // Show warning
+        QMessageBox::warning(this,
+            tr("Hotkey Conflict"),
+            tr("This hotkey is already in use by a prompt.\n\nPlease choose a different hotkey."));
+        // Do NOT emit hotkeyChanged - the hotkey was cleared
+    } else {
+        // No conflict - emit the change signal to save the new hotkey
+        emit hotkeyChanged(seq);
+    }
+}
+
+bool SettingsDialog::checkGlobalHotkeyConflict(const QKeySequence& seq) const
+{
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (!app || !app->promptManager()) {
+        return false;
+    }
+
+    // Check conflict with prompt hotkeys
+    QVector<Models::Prompt> allPrompts = app->promptManager()->getAllPrompts();
+    for (const auto& prompt : allPrompts) {
+        QString promptHotkey = prompt.hotkey();
+        if (!promptHotkey.isEmpty()) {
+            QKeySequence promptSeq = QKeySequence::fromString(promptHotkey);
+            if (seq == promptSeq) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 } // namespace UI

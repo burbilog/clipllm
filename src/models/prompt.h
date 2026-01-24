@@ -67,6 +67,7 @@ public:
     QString group() const { return m_group; }
     QString providerId() const { return m_providerId; }
     bool overrideProvider() const { return m_overrideProvider; }
+    QString hotkey() const { return m_hotkey; }
 
     // Setters
     void setId(const QString& id) { m_id = id; }
@@ -86,6 +87,7 @@ public:
     void setGroup(const QString& group) { m_group = group; }
     void setProviderId(const QString& providerId) { m_providerId = providerId; }
     void setOverrideProvider(bool override) { m_overrideProvider = override; }
+    void setHotkey(const QString& hotkey) { m_hotkey = hotkey; }
 
     // Serialization
     QJsonObject toJson() const;
@@ -124,6 +126,7 @@ private:
     QString m_group;
     QString m_providerId;
     bool m_overrideProvider = false;
+    QString m_hotkey;
 };
 
 } // namespace Models

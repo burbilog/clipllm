@@ -48,6 +48,7 @@ QJsonObject Prompt::toJson() const
     obj[QStringLiteral("group")] = m_group;
     obj[QStringLiteral("provider_id")] = m_providerId;
     obj[QStringLiteral("override_provider")] = m_overrideProvider;
+    obj[QStringLiteral("hotkey")] = m_hotkey;
 
     // Convert metadata to JSON object
     QJsonObject metadataObj;
@@ -80,6 +81,7 @@ bool Prompt::fromJson(const QJsonObject& json)
     m_group = json.value(QStringLiteral("group")).toString(QString());
     m_providerId = json.value(QStringLiteral("provider_id")).toString(QString());
     m_overrideProvider = json.value(QStringLiteral("override_provider")).toBool(false);
+    m_hotkey = json.value(QStringLiteral("hotkey")).toString(QString());
 
     // Load metadata
     QJsonObject metadataObj = json.value(QStringLiteral("metadata")).toObject();

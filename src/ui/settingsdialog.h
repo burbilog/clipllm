@@ -65,6 +65,7 @@ signals:
     void settingsChanged();
     void languageChanged(const QString& language);
     void hotkeyChanged(const QKeySequence& hotkey);
+    void promptsChanged();
 
 private slots:
     void onTabChanged(int index);
@@ -92,6 +93,7 @@ private slots:
 
     // Hotkeys tab
     void onHotkeyChanged(const QKeySequence& sequence);
+    void onGlobalHotkeyRecordingFinished();
 
     // Prompts tab
     void onAddPromptClicked();
@@ -136,6 +138,7 @@ private:
     // Legacy methods (for compatibility with old code)
     QString getCurrentProvider() const;
     QString getCurrentModel() const;
+    bool checkGlobalHotkeyConflict(const QKeySequence& seq) const;
 
     Core::ConfigManager* m_configManager = nullptr;
     Core::KeychainStore* m_keychainStore = nullptr;
@@ -180,6 +183,7 @@ private:
 
     // Hotkeys tab
     HotkeyEdit* m_hotkeyEdit = nullptr;
+    bool m_isRecordingGlobalHotkey = false;
 
     // Prompts tab
     QTableWidget* m_promptsTable = nullptr;

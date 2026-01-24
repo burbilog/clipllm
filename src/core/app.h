@@ -20,8 +20,9 @@
 #include <QApplication>
 #include <QSystemTrayIcon>
 #include <QTranslator>
-#include <memory>
+#include <QMap>
 #include <QKeySequence>
+#include <memory>
 
 // Forward declarations
 class QHotkey;
@@ -84,6 +85,8 @@ public:
 
     // Hotkey management
     void registerHotkey(const QKeySequence& sequence);
+    void registerPromptHotkeys();
+    void unregisterPromptHotkeys();
 
     // UI management
     void showSettings();
@@ -111,6 +114,9 @@ private:
     // Profile to LLM config conversion with cascade logic
     Models::LLMConfig profileToConfig(const Models::ProviderProfile& profile) const;
 
+    // Prompt hotkey trigger handler (private)
+    void onPromptHotkeyTriggered(const QString& promptId);
+
     // Core components
     std::unique_ptr<Core::ClipboardManager> m_clipboardManager;
     std::unique_ptr<Core::LLMClient> m_llmClient;
@@ -136,6 +142,9 @@ private:
 
     // Global hotkey
     QHotkey* m_globalHotkey = nullptr;
+
+    // Prompt hotkeys (prompt ID -> QHotkey)
+    QMap<QString, QHotkey*> m_promptHotkeys;
 
     // Single instance
     QByteArray m_instanceId;

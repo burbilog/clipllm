@@ -67,6 +67,8 @@ private slots:
     void onProviderChanged(int index);
     void onRefreshModelsClicked();
     void onTemperatureUseDefaultChanged(int state);
+    void onHotkeyChanged(const QKeySequence& sequence);
+    void onHotkeyRecordingFinished();
     void validateInput();
 
 private:
@@ -79,6 +81,7 @@ private:
     void fetchModelsFromAPI();
     void onModelsFetchFinished(QNetworkReply* reply);
     QString generateUniqueId() const;
+    bool checkHotkeyConflict(const QKeySequence& seq) const;
 
     Core::PromptManager* m_promptManager = nullptr;
     Core::GroupsManager* m_groupsManager = nullptr;
@@ -108,6 +111,10 @@ private:
     QSpinBox* m_maxTokensSpin = nullptr;
     QCheckBox* m_enabledCheck = nullptr;
     QSpinBox* m_prioritySpin = nullptr;
+    class HotkeyEdit* m_hotkeyEdit = nullptr;
+
+    // Recording state
+    bool m_isRecordingHotkey = false;
 
     // Network
     QNetworkAccessManager* m_networkManager = nullptr;

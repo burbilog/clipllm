@@ -353,6 +353,15 @@ void LLMClient::onFinished()
         return;
     }
 
+    // If an error already occurred, just clean up and return
+    // (onErrorOccurred was called first and set state to Error)
+    if (m_state == LLMClientState::Error) {
+        m_sseBuffer.clear();
+        m_currentReply->deleteLater();
+        m_currentReply = nullptr;
+        return;
+    }
+
     // Handle non-streaming response
     if (m_state == LLMClientState::Connecting) {
         QByteArray data = m_currentReply->readAll();

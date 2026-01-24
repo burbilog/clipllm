@@ -158,17 +158,17 @@
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="342"/>
-        <location filename="../src/core/llmclient.cpp" line="398"/>
+        <location filename="../src/core/llmclient.cpp" line="407"/>
         <source>Connection successful</source>
         <translation>Соединение успешно</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="401"/>
+        <location filename="../src/core/llmclient.cpp" line="410"/>
         <source>HTTP %1: %2</source>
         <translation>HTTP %1: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="468"/>
+        <location filename="../src/core/llmclient.cpp" line="477"/>
         <source>SSL error: %1</source>
         <translation>Ошибка SSL: %1</translation>
     </message>

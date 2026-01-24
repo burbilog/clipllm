@@ -15,6 +15,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "trayicon.h"
+#include "uiutils.h"
 #include "core/app.h"
 #include "core/version.h"
 #include "core/promptmanager.h"
@@ -87,15 +88,15 @@ TrayIcon::~TrayIcon() = default;
 void TrayIcon::createActions()
 {
     m_settingsAction = new QAction(tr("&Settings"), this);
-    m_settingsAction->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
+    m_settingsAction->setIcon(iconSettings());
     connect(m_settingsAction, &QAction::triggered, this, &TrayIcon::onSettingsTriggered);
 
     m_historyAction = new QAction(tr("&History"), this);
-    m_historyAction->setIcon(QIcon::fromTheme(QStringLiteral("document-open-recent")));
+    m_historyAction->setIcon(iconHistory());
     connect(m_historyAction, &QAction::triggered, this, &TrayIcon::onHistoryTriggered);
 
     m_aboutAction = new QAction(tr("&About"), this);
-    m_aboutAction->setIcon(QIcon::fromTheme(QStringLiteral("help-about")));
+    m_aboutAction->setIcon(iconAbout());
     connect(m_aboutAction, &QAction::triggered, this, &TrayIcon::onAboutTriggered);
 
     m_separator1 = new QAction(this);
@@ -105,7 +106,7 @@ void TrayIcon::createActions()
     m_separator2->setSeparator(true);
 
     m_quitAction = new QAction(tr("&Quit"), this);
-    m_quitAction->setIcon(QIcon::fromTheme(QStringLiteral("application-exit")));
+    m_quitAction->setIcon(iconQuit());
     connect(m_quitAction, &QAction::triggered, this, &TrayIcon::onQuitTriggered);
 }
 
@@ -113,7 +114,7 @@ void TrayIcon::createMenu()
 {
     m_menu = new QMenu();
     m_promptsMenu = new QMenu(tr("&Prompts"), m_menu);
-    m_promptsMenu->setIcon(QIcon::fromTheme(QStringLiteral("document-new")));
+    m_promptsMenu->setIcon(iconDocumentNew());
 
     m_menu->addMenu(m_promptsMenu);
     m_menu->addAction(m_historyAction);

@@ -15,6 +15,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "promptmenu.h"
+#include "uiutils.h"
 #include "core/clipboardmanager.h"
 #include "core/configmanager.h"
 #include "core/groupsmanager.h"
@@ -64,7 +65,7 @@ void PromptMenu::setupUi()
 
     // Add history button
     QToolButton* historyButton = new QToolButton();
-    historyButton->setIcon(QIcon::fromTheme(QStringLiteral("document-open-recent")));
+    historyButton->setIcon(iconHistory());
     historyButton->setToolTip(tr("History"));
     historyButton->setAutoRaise(true);
     connect(historyButton, &QToolButton::clicked, this, &PromptMenu::onHistoryClicked);
@@ -72,7 +73,7 @@ void PromptMenu::setupUi()
 
     // Add settings button
     QToolButton* settingsButton = new QToolButton();
-    settingsButton->setIcon(QIcon::fromTheme(QStringLiteral("preferences-system")));
+    settingsButton->setIcon(iconSettings());
     settingsButton->setToolTip(tr("Settings"));
     settingsButton->setAutoRaise(true);
     connect(settingsButton, &QToolButton::clicked, this, &PromptMenu::onSettingsClicked);

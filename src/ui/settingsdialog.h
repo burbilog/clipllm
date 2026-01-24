@@ -41,6 +41,7 @@ namespace Core {
 class ConfigManager;
 class KeychainStore;
 class ProviderKeyStore;
+class LLMClient;
 }
 }
 
@@ -173,6 +174,9 @@ private:
     QStringList m_currentSuggestedModels;
     Models::ProviderProfile m_currentEditingProfile;
     bool m_updatingProfileEditor = false;
+
+    // Temporary LLM client for connection testing (isolated from app's active client)
+    Core::LLMClient* m_testClient = nullptr;
 
     // Hotkeys tab
     HotkeyEdit* m_hotkeyEdit = nullptr;

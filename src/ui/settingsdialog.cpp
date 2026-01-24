@@ -75,7 +75,10 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     loadSettings();
 }
 
-SettingsDialog::~SettingsDialog() = default;
+SettingsDialog::~SettingsDialog()
+{
+    delete m_testClient;
+}
 
 void SettingsDialog::setupUi()
 {
@@ -745,36 +748,30 @@ void SettingsDialog::onTestConnectionClicked()
         return;
     }
 
-    // Perform real connection test using LLMClient
-    App* app = qobject_cast<App*>(QApplication::instance());
-    if (!app || !app->llmClient()) {
-        m_connectionStatusLabel->setText(tr("Error: LLM client not available"));
-        m_connectionStatusLabel->setStyleSheet("color: red;");
-        m_testConnectionButton->setEnabled(true);
-        return;
-    }
+    // Clean up any existing test client
+    delete m_testClient;
+    m_testClient = nullptr;
 
-    // Configure LLM client with current profile settings
-    auto* llmClient = app->llmClient();
+    // Create a temporary LLM client for connection testing (isolated from app's active client)
+    m_testClient = new Core::LLMClient(this);
 
     // Create a temporary config from the profile
     Models::LLMConfig config;
     config.setApiUrl(profile.apiUrl());
     config.setModel(profile.model().isEmpty() ? QStringLiteral("gpt-3.5-turbo") : profile.model());
 
-    llmClient->setConfig(config);
+    m_testClient->setConfig(config);
 
     QString apiKey = m_profileApiKeyEdit->text();
     if (!isLocalProvider && !apiKey.isEmpty()) {
-        llmClient->setApiKey(apiKey);
+        m_testClient->setApiKey(apiKey);
     }
 
     // Connect to result signal
-    connect(llmClient, &Core::LLMClient::connectionTestResult,
-            this, &SettingsDialog::onConnectionTestResult,
-            Qt::UniqueConnection);
+    connect(m_testClient, &Core::LLMClient::connectionTestResult,
+            this, &SettingsDialog::onConnectionTestResult);
 
-    llmClient->testConnection();
+    m_testClient->testConnection();
 }
 
 void SettingsDialog::onConnectionTestResult(bool success, const QString& message)
@@ -787,6 +784,12 @@ void SettingsDialog::onConnectionTestResult(bool success, const QString& message
     } else {
         m_connectionStatusLabel->setText(tr("Error: %1").arg(message));
         m_connectionStatusLabel->setStyleSheet("color: red;");
+    }
+
+    // Clean up the temporary test client
+    if (m_testClient) {
+        m_testClient->deleteLater();
+        m_testClient = nullptr;
     }
 }
 

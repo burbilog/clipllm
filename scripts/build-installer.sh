@@ -21,8 +21,9 @@ INSTALLER_DIR="${PROJECT_ROOT}/installer"
 PACKAGES_DIR="${PROJECT_ROOT}/packages"
 OUTPUT_DIR="${PROJECT_ROOT}/dist"
 MXE_PATH="${HOME}/mxe"
-BINARYCREATOR="${MXE_PATH}/usr/bin/x86_64-pc-linux-gnu-binarycreator"
-ARCHIVEGEN="${MXE_PATH}/usr/bin/x86_64-pc-linux-gnu-archivegen"
+# Use BINARYCREATOR from environment if set, otherwise use MXE path
+BINARYCREATOR="${BINARYCREATOR:-${MXE_PATH}/usr/bin/x86_64-pc-linux-gnu-binarycreator}"
+ARCHIVEGEN="${ARCHIVEGEN:-${MXE_PATH}/usr/bin/x86_64-pc-linux-gnu-archivegen}"
 
 # Get version from CMakeLists.txt
 VERSION=$(grep "^project(ClipAI VERSION" "${PROJECT_ROOT}/CMakeLists.txt" | sed 's/project(ClipAI VERSION \([0-9.]*\).*/\1/')
@@ -137,9 +138,6 @@ cat > "${INSTALLER_DIR}/config/config.xml" << EOF
     <!-- Control installation -->
     <RemoveTargetDir>true</RemoveTargetDir>
     <CreateLocalRepository>true</CreateLocalRepository>
-
-    <!-- Save default answers -->
-    <SaveDefaultAnswers>true</SaveDefaultAnswers>
 </Installer>
 EOF
 
@@ -149,11 +147,23 @@ echo ""
 echo "Building installer: ${INSTALLER_NAME}"
 echo ""
 
-"${BINARYCREATOR}" \
-    --offline-only \
-    -c "${INSTALLER_DIR}/config/config.xml" \
-    -p "${PACKAGES_DIR}" \
-    "${OUTPUT_DIR}/${INSTALLER_NAME}"
+# Use INSTALLER_BASE if provided, otherwise let binarycreator use default
+if [ -n "${INSTALLER_BASE}" ] && [ -f "${INSTALLER_BASE}" ]; then
+    echo "Using installerbase: ${INSTALLER_BASE}"
+    "${BINARYCREATOR}" \
+        --offline-only \
+        -c "${INSTALLER_DIR}/config/config.xml" \
+        -p "${PACKAGES_DIR}" \
+        -t "${INSTALLER_BASE}" \
+        "${OUTPUT_DIR}/${INSTALLER_NAME}"
+else
+    echo "Using default installerbase (may not be available)"
+    "${BINARYCREATOR}" \
+        --offline-only \
+        -c "${INSTALLER_DIR}/config/config.xml" \
+        -p "${PACKAGES_DIR}" \
+        "${OUTPUT_DIR}/${INSTALLER_NAME}"
+fi
 
 # Print summary
 echo ""

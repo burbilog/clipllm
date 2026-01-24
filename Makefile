@@ -1,4 +1,4 @@
-.PHONY: build translations clean test windows windows-deploy windows-installer
+.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -77,14 +77,26 @@ windows-deploy: windows
 	@echo "Deploying Windows build ($(MXE_BUILD_TYPE))..."
 	@MXE_BUILD_TYPE=$(MXE_BUILD_TYPE) ./scripts/deploy-windows.sh
 
-# Create Windows installer (requires Qt Installer Framework)
+# Create Windows ZIP archive
+windows-zip: windows-deploy
+	@echo "Creating Windows ZIP archive..."
+	@cd deploy-windows && \
+		VERSION=$$(grep "^project(ClipAI VERSION" ../CMakeLists.txt | sed 's/project(ClipAI VERSION \([0-9.]*\).*/\1/') && \
+		zip -r ../dist/clipai-$${VERSION}-windows-x86_64.zip . && \
+		cd .. && ls -lh dist/clipai-$${VERSION}-windows-x86_64.zip
+
+# Create Windows installer (requires Qt Installer Framework with installerbase)
 windows-installer: windows-deploy
 	@echo "Creating Windows installer..."
-	@if [ -f "$(HOME)/mxe/usr/bin/x86_64-pc-linux-gnu-binarycreator" ]; then \
-		MXE_BUILD_TYPE=$(MXE_BUILD_TYPE) ./scripts/build-installer.sh; \
+	@if [ -f "$(HOME)/mxe/qtifw-native/build/bin/installerbase" ]; then \
+		MXE_BUILD_TYPE=$(MXE_BUILD_TYPE) INSTALLER_BASE=$(HOME)/mxe/qtifw-native/build/bin/installerbase BINARYCREATOR=$(HOME)/mxe/qtifw-native/build/bin/binarycreator ./scripts/build-installer.sh; \
 	else \
-		echo "Qt Installer Framework not found. To install:"; \
-		echo "  cd ~/mxe && make qtifw"; \
+		echo "Qt Installer Framework installerbase not found."; \
+		echo "Please build Qt IFW natively:"; \
+		echo "  cd ~/mxe/qtifw-native"; \
+		echo "  /usr/lib/qt6/bin/qmake && make -j\$$(nproc)"; \
+		echo ""; \
+		echo "Or use: make windows-zip"; \
 		exit 1; \
 	fi
 

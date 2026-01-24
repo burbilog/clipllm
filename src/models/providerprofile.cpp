@@ -107,6 +107,12 @@ QList<ProviderProfile::ProviderTemplate> ProviderProfile::availableTemplates()
             {QStringLiteral("Click Refresh to fetch models...")}
         },
         {
+            QStringLiteral("DeepSeek"),
+            QStringLiteral("https://api.deepseek.com/chat/completions"),
+            QString(),
+            {QStringLiteral("Click Refresh to fetch models...")}
+        },
+        {
             QStringLiteral("Ollama"),
             QStringLiteral("http://localhost:11434/v1/chat/completions"),
             QString(),

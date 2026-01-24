@@ -40,18 +40,60 @@ make -j$(nproc)
 sudo make install
 ```
 
-### Windows
+### Windows (Cross-compiled from Linux)
 
-```cmd
-# Using vcpkg for dependencies
-vcpkg install qt6:x64-windows
+**Prerequisites:** MXE (M Cross Environment) for cross-compilation
 
-# Build
-mkdir build
-cd build
-cmake .. -DCMAKE_TOOLCHAIN_FILE=[vcpkg root]/scripts/buildsystems/vcpkg.cmake
-cmake --build . --config Release
+```bash
+# Install MXE system dependencies (Ubuntu/Debian)
+sudo apt-get install \
+    git cmake make autoconf libtool pkg-config bison flex gperf \
+    unzip p7zip curl wget bash patch perl python3 ruby ruby-json \
+    intltool gettext gtk-doc-tools libtool-bin xsltproc ccache \
+    g++ g++-multilib libc6-dev-i386
+
+# Clone and build MXE with Qt6 (~1-2 hours)
+git clone https://github.com/mxe/mxe.git ~/mxe
+cd ~/mxe
+make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qt6
+
+# Optional: Build Qt Installer Framework for creating installers
+make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qtifw
 ```
+
+**Building ClipAI for Windows:**
+
+```bash
+# Clone ClipAI (if not already done)
+git clone https://github.com/rm-isaeff/clipai.git
+cd clipai
+
+# Build for Windows (shared - default)
+make windows
+
+# Deploy with DLLs and Qt plugins
+make windows-deploy
+
+# Create installer (optional, requires Qt IFW in MXE)
+make windows-installer
+
+# Test with Wine
+make test-windows-wine
+```
+
+**Build Types:**
+- `shared` (default) - Dynamic linking, requires DLLs, smaller executable, works with installer
+- `static` - Static linking, standalone executable, larger file
+
+```bash
+# Build static version
+make windows MXE_BUILD_TYPE=static
+```
+
+**Output:**
+- `build-windows/ClipAI.exe` - Compiled executable
+- `deploy-windows/` - Deployed package with DLLs (shared build)
+- `dist/clipai-*-windows-x86_64-setup.exe` - Installer (if `make windows-installer` run)
 
 ### macOS
 
@@ -129,8 +171,13 @@ clipai/
 │   ├── core/           # Core application logic
 │   ├── ui/             # User interface components
 │   └── models/         # Data models
-├── resources/          # Icons and configuration
+├── resources/          # Icons, configuration, Qt resources
 ├── translations/       # i18n translation files
+├── cmake/              # CMake toolchain files (Windows cross-compilation)
+├── scripts/            # Build and deployment scripts
+├── packages/           # Qt Installer Framework package structure
+├── installer/          # Qt Installer Framework configuration
+├── tests/              # Unit tests
 └── CMakeLists.txt      # Build configuration
 ```
 

@@ -16,13 +16,54 @@ ClipAI is a cross-platform LLM clipboard utility written in C++ using Qt6. It ru
 
 ## Build Commands
 
-### Quick Build (from project root)
+### Linux Native Build
 
 ```bash
 make build          # Build the project (creates build/, runs cmake, compiles)
 make translations   # Update translation files using update-translations.sh
 make clean          # Remove build directory
 ```
+
+### Windows Cross-Compilation (from Linux)
+
+**Requirements:** MXE (M Cross Environment) installed with Qt6
+
+```bash
+# Build for Windows (shared by default - recommended for installer)
+make windows
+
+# Build static binary (no DLL dependencies, larger file)
+make windows MXE_BUILD_TYPE=static
+
+# Deploy Windows build with DLLs and plugins
+make windows-deploy
+
+# Create Windows installer (requires Qt Installer Framework in MXE)
+make windows-installer
+
+# Test with Wine
+make test-windows-wine
+```
+
+**MXE Installation:**
+```bash
+# Clone MXE
+git clone https://github.com/mxe/mxe.git ~/mxe
+cd ~/mxe
+
+# Build Qt6 for Windows (shared - recommended, ~1-2 hours)
+make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qt6
+
+# Or build static (larger binaries, no DLLs needed)
+make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6
+
+# Optional: Build Qt Installer Framework for installers
+make -j$(nproc) MXE_TARGETS='x86_64-w64-mingw32.shared' qtifw
+```
+
+**MXE Build Types:**
+- `shared` (default) - Dynamic linking, requires DLL deployment, smaller exe, supports installer creation
+- `static` - Static linking, standalone exe, larger file, installer creation problematic
 
 ### Standard Build (manual)
 
@@ -48,8 +89,7 @@ linguist translations/*.ts  # Edit translations in Qt Linguist
 
 ### Clean Build
 ```bash
-make clean          # Remove build directory
-# Then run: make build
+make clean          # Remove all build directories (including Windows)
 ```
 
 ## Architecture
@@ -138,9 +178,13 @@ The `App` class (inherits `QApplication`) is the central controller that:
 - **X11**: Full functionality including global hotkeys
 - **Wayland**: System tray works, global hotkeys have limitations
 
-### Windows
-- Built with vcpkg for Qt6 dependencies
-- Full functionality supported
+### Windows (Cross-compiled from Linux)
+- **Build Method**: MXE (M Cross Environment) cross-compilation
+- **Build Types**: `shared` (default, requires DLLs) or `static` (standalone)
+- **Toolchain**: `cmake/windows-x86_64-mingw.cmake` with MXE wrappers
+- **Full Functionality**: All features supported including system tray and global hotkeys
+- **Installer**: Qt Installer Framework support via `make windows-installer`
+- **See Also**: Windows Cross-Compilation section above for build details
 
 ### macOS
 - Qt6 via Homebrew: `brew install qt@6`

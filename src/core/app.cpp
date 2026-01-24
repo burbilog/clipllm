@@ -401,21 +401,28 @@ void App::registerHotkey(const QKeySequence& sequence)
 
 void App::registerPromptHotkeys()
 {
+    qDebug() << "=== registerPromptHotkeys() called ===";
     if (!QHotkey::isPlatformSupported()) {
+        qWarning() << "QHotkey not supported on this platform";
         return;
     }
     unregisterPromptHotkeys();
 
     QVector<Models::Prompt> prompts = m_promptManager->getEnabledPrompts();
+    qDebug() << "Total enabled prompts:" << prompts.size();
+
     QKeySequence globalHotkeySeq = QKeySequence::fromString(m_configManager->hotkey());
+    qDebug() << "Global hotkey:" << m_configManager->hotkey();
 
     for (const auto& prompt : prompts) {
         QString hotkeyStr = prompt.hotkey();
+        qDebug() << "Prompt" << prompt.id() << "hotkey:" << hotkeyStr;
         if (hotkeyStr.isEmpty()) {
             continue;
         }
 
         QKeySequence seq = QKeySequence::fromString(hotkeyStr);
+        qDebug() << "  KeySequence:" << seq.toString();
 
         // Skip if conflicts with global hotkey
         if (!globalHotkeySeq.isEmpty() && seq == globalHotkeySeq) {
@@ -438,6 +445,7 @@ void App::registerPromptHotkeys()
 
         // Create and register hotkey
         QHotkey* hotkey = new QHotkey(seq, true, this);
+        qDebug() << "  QHotkey created, registered:" << hotkey->isRegistered();
         if (!hotkey->isRegistered()) {
             qWarning() << "Failed to register prompt hotkey:" << hotkeyStr;
             delete hotkey;
@@ -445,11 +453,15 @@ void App::registerPromptHotkeys()
         }
 
         m_promptHotkeys[prompt.id()] = hotkey;
-        connect(hotkey, &QHotkey::activated, this, [this, id = prompt.id()]() {
+
+        // Connect with direct lambda for debugging
+        connect(hotkey, &QHotkey::activated, this, [this, id = prompt.id(), name = prompt.name()]() {
+            qDebug() << "LAMBDA: Hotkey activated for prompt:" << name << "id:" << id;
             onPromptHotkeyTriggered(id);
         });
         qDebug() << "Registered prompt hotkey:" << hotkeyStr << "for prompt:" << prompt.name();
     }
+    qDebug() << "=== registerPromptHotkeys() done, registered" << m_promptHotkeys.size() << "hotkeys ===";
 }
 
 void App::unregisterPromptHotkeys()

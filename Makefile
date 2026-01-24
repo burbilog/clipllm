@@ -1,4 +1,4 @@
-.PHONY: build translations clean test windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-tar
+.PHONY: build translations clean test web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-tar
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -19,6 +19,14 @@ build: translations
 translations:
 	@echo "Updating translations..."
 	@./update-translations.sh
+
+web:
+	@echo "Building web page..."
+	@VERSION=$$(grep "^project(ClipLLM VERSION" CMakeLists.txt | sed 's/project(ClipLLM VERSION \([0-9.]*\).*/\1/'); \
+		cp art/clipllm_hires.png docs/ && \
+		sed "s/@VERSION@/$$VERSION/" docs/index.html > docs/index.html.tmp && \
+		mv docs/index.html.tmp docs/index.html && \
+		echo "Web page updated with version $$VERSION"
 
 clean:
 	@echo "Cleaning build directories..."

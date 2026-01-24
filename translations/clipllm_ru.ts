@@ -1113,12 +1113,12 @@ Copy some text or an image first.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="285"/>
         <source>Optional global hotkey to directly execute this prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Опциональный глобальный хоткей для прямого запуска этого промпта</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="297"/>
         <source>Hotkey:</source>
-        <translation type="unfinished"></translation>
+        <translation>Хоткей:</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="314"/>
@@ -1213,14 +1213,16 @@ Copy some text or an image first.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="966"/>
         <source>Hotkey Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфликт хоткеев</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="967"/>
         <source>This hotkey is already in use by another prompt or the global hotkey.
 
 Please choose a different hotkey.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот хоткей уже используется другим промптом или глобальным хоткеем.
+
+Пожалуйста, выберите другой хоткей.</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="234"/>
@@ -1804,12 +1806,12 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="371"/>
         <source>Hotkey</source>
-        <translation type="unfinished"></translation>
+        <translation>Хоткей</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="658"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(нет)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="766"/>
@@ -1819,14 +1821,16 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1735"/>
         <source>Hotkey Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфликт хоткеев</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1736"/>
         <source>This hotkey is already in use by a prompt.
 
 Please choose a different hotkey.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот хоткей уже используется промптом.
+
+Пожалуйста, выберите другой хоткей.</translation>
     </message>
     <message>
         <source>Hotkeys</source>

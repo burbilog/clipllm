@@ -1089,12 +1089,12 @@ Copy some text or an image first.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="285"/>
         <source>Optional global hotkey to directly execute this prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Atajo de teclado global opcional para ejecutar directamente este prompt</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="297"/>
         <source>Hotkey:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atajo:</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="314"/>
@@ -1189,14 +1189,16 @@ Copy some text or an image first.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="966"/>
         <source>Hotkey Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>Conflicto de atajos</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="967"/>
         <source>This hotkey is already in use by another prompt or the global hotkey.
 
 Please choose a different hotkey.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este atajo ya está siendo usado por otro prompt o el atajo global.
+
+Por favor elija un atajo diferente.</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="234"/>
@@ -2183,12 +2185,12 @@ Ejemplos:
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="371"/>
         <source>Hotkey</source>
-        <translation type="unfinished"></translation>
+        <translation>Atajo</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="658"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(ninguno)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="729"/>
@@ -2220,14 +2222,16 @@ Ejemplos:
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1735"/>
         <source>Hotkey Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>Conflicto de atajos</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1736"/>
         <source>This hotkey is already in use by a prompt.
 
 Please choose a different hotkey.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este atajo ya está siendo usado por un prompt.
+
+Por favor elija un atajo diferente.</translation>
     </message>
     <message>
         <source>Connected</source>

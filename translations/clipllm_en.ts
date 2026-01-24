@@ -1172,12 +1172,12 @@ Copy some text or an image first.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="285"/>
         <source>Optional global hotkey to directly execute this prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Optional global hotkey to directly execute this prompt</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="297"/>
         <source>Hotkey:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hotkey:</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="314"/>
@@ -1272,14 +1272,16 @@ Copy some text or an image first.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="966"/>
         <source>Hotkey Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>Hotkey Conflict</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="967"/>
         <source>This hotkey is already in use by another prompt or the global hotkey.
 
 Please choose a different hotkey.</source>
-        <translation type="unfinished"></translation>
+        <translation>This hotkey is already in use by another prompt or the global hotkey.
+
+Please choose a different hotkey.</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="234"/>
@@ -1289,7 +1291,7 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="284"/>
         <source>None</source>
-        <translation type="unfinished">None</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Code Review</source>
@@ -1902,7 +1904,7 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="371"/>
         <source>Hotkey</source>
-        <translation type="unfinished"></translation>
+        <translation>Hotkey</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="449"/>
@@ -1952,7 +1954,7 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="658"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(none)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="766"/>
@@ -1962,14 +1964,16 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1735"/>
         <source>Hotkey Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>Hotkey Conflict</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="1736"/>
         <source>This hotkey is already in use by a prompt.
 
 Please choose a different hotkey.</source>
-        <translation type="unfinished"></translation>
+        <translation>This hotkey is already in use by a prompt.
+
+Please choose a different hotkey.</translation>
     </message>
     <message>
         <source>LLM Provider</source>

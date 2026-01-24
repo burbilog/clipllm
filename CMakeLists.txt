@@ -145,7 +145,7 @@ endif()
 # Create executable
 if(WIN32)
     # Windows: Add .rc file for version info and icon
-    add_executable(${PROJECT_NAME}
+    add_executable(${PROJECT_NAME} WIN32
         ${SOURCES}
         ${HEADERS}
         ${CMAKE_CURRENT_BINARY_DIR}/clipai.rc

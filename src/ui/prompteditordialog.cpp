@@ -60,6 +60,8 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
 
     // Create network manager for fetching models
     m_networkManager = new QNetworkAccessManager(this);
+    connect(m_networkManager, &QNetworkAccessManager::finished,
+            this, &PromptEditorDialog::onModelsFetchFinished);
 
     setupUi();
     loadProviders();
@@ -105,6 +107,8 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
 
     // Create network manager for fetching models
     m_networkManager = new QNetworkAccessManager(this);
+    connect(m_networkManager, &QNetworkAccessManager::finished,
+            this, &PromptEditorDialog::onModelsFetchFinished);
 
     setupUi();
     loadProviders();
@@ -851,10 +855,7 @@ void PromptEditorDialog::fetchModelsFromAPI()
     m_modelsStatusLabel->setStyleSheet("color: blue; font-size: 10px;");
     m_refreshModelsButton->setEnabled(false);
 
-    QNetworkReply* reply = m_networkManager->get(request);
-    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
-        onModelsFetchFinished(reply);
-    });
+    m_networkManager->get(request);
 }
 
 void PromptEditorDialog::onModelsFetchFinished(QNetworkReply* reply)
@@ -924,6 +925,9 @@ void PromptEditorDialog::onModelsFetchFinished(QNetworkReply* reply)
     if (!currentModel.isEmpty()) {
         m_modelCombo->setCurrentText(currentModel);
     }
+
+    // Expand the combo box to show models
+    m_modelCombo->showPopup();
 
     m_modelsStatusLabel->setText(tr("Loaded %1 models").arg(models.size()));
     m_modelsStatusLabel->setStyleSheet("color: green; font-size: 10px;");

@@ -44,8 +44,22 @@ QJsonObject Prompt::toJson() const
     obj[QStringLiteral("enabled")] = m_enabled;
     obj[QStringLiteral("override_temperature")] = m_overrideTemperature;
     obj[QStringLiteral("group")] = m_group;
-    obj[QStringLiteral("override_provider_and_model")] = m_overrideProvider;
+    obj[QStringLiteral("override_provider")] = m_overrideProvider;
     obj[QStringLiteral("hotkey")] = m_hotkey;
+    obj[QStringLiteral("priority")] = m_priority;
+    if (!m_model.isEmpty()) {
+        obj[QStringLiteral("model")] = m_model;
+    }
+    if (!m_providerId.isEmpty()) {
+        obj[QStringLiteral("provider_id")] = m_providerId;
+    }
+    if (!m_metadata.isEmpty()) {
+        QJsonObject metadataObj;
+        for (auto it = m_metadata.constBegin(); it != m_metadata.constEnd(); ++it) {
+            metadataObj[it.key()] = QJsonValue::fromVariant(it.value());
+        }
+        obj[QStringLiteral("metadata")] = metadataObj;
+    }
 
     return obj;
 }

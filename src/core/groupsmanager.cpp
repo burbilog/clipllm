@@ -15,6 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "groupsmanager.h"
+#include "debuglogger.h"
+#include "core/app.h"
+#include <QApplication>
 #include <QStandardPaths>
 #include <QDir>
 #include <QFile>
@@ -42,7 +45,7 @@ QStringList GroupsManager::loadGroups()
     }
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Failed to open groups file:" << filePath;
+        LOG_WARNING(QStringLiteral("Failed to open groups file: %1").arg(filePath));
         return QStringList();
     }
 
@@ -51,12 +54,12 @@ QStringList GroupsManager::loadGroups()
     file.close();
 
     if (error.error != QJsonParseError::NoError) {
-        qWarning() << "Failed to parse groups file:" << error.errorString();
+        LOG_WARNING(QStringLiteral("Failed to parse groups file: %1").arg(error.errorString()));
         return QStringList();
     }
 
     if (!doc.isArray()) {
-        qWarning() << "Groups file does not contain an array";
+        LOG_WARNING(QStringLiteral("Groups file does not contain an array"));
         return QStringList();
     }
 
@@ -91,7 +94,7 @@ bool GroupsManager::saveGroups(const QStringList& groups)
 
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly)) {
-        qWarning() << "Failed to open groups file for writing:" << filePath;
+        LOG_WARNING(QStringLiteral("Failed to open groups file for writing: %1").arg(filePath));
         return false;
     }
 

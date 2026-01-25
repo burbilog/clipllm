@@ -517,7 +517,7 @@ void LLMClient::onSslErrors(const QList<QSslError>& errors)
         errorStrings.append(error.errorString());
     }
 
-    qWarning() << "SSL errors:" << errorStrings.join(QStringLiteral(", "));
+    LOG_WARNING(QStringLiteral("SSL errors: %1").arg(errorStrings.join(QStringLiteral(", "))));
 
     // For connection test, SSL errors are considered a failure
     if (m_isTestingConnection && m_currentReply) {
@@ -608,7 +608,7 @@ void LLMClient::processOpenRouterChunk(const QString& data)
     QJsonDocument doc = QJsonDocument::fromJson(data.toUtf8(), &error);
 
     if (error.error != QJsonParseError::NoError) {
-        qWarning() << "Failed to parse streaming chunk:" << error.errorString();
+        LOG_WARNING(QStringLiteral("Failed to parse streaming chunk: %1").arg(error.errorString()));
         return;
     }
 

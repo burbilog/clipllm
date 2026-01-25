@@ -15,6 +15,9 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "hotkeyedit.h"
+#include "core/debuglogger.h"
+#include "core/app.h"
+#include <QApplication>
 #include <QKeyEvent>
 #include <QFocusEvent>
 #include <QStyle>
@@ -138,8 +141,8 @@ void HotkeyEdit::keyPressEvent(QKeyEvent* event)
     QString seqText = newSeq.toString(QKeySequence::NativeText);
     m_displayLabel->setText(seqText);
 
-    qDebug() << "HotkeyEdit: captured key=" << key << "modifiers=" << modifiers
-             << "combined=" << keyWithModifiers << "sequence=" << seqText;
+    LOG_DEBUG(QStringLiteral("HotkeyEdit: captured key=%1 modifiers=%2 combined=%3 sequence=%4")
+              .arg(key).arg(modifiers).arg(keyWithModifiers).arg(seqText));
 
     // Complete the recording
     setKeySequence(newSeq);

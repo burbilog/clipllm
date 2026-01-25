@@ -21,8 +21,13 @@
 #include <QTextStream>
 #include <QMutex>
 #include <QString>
+#include <QApplication>
 
+// Forward declarations
 namespace ClipLLM {
+
+class App;
+
 namespace Core {
 
 enum class DebugLevel {
@@ -62,5 +67,51 @@ private:
 
 } // namespace Core
 } // namespace ClipLLM
+
+// Convenience macros that use DebugLogger when enabled, fallback to qDebug/qWarning
+// These macros work even if DebugLogger is not yet initialized (early startup)
+#define LOG_DEBUG(msg) \
+    do { \
+        if (auto* _logger = ClipLLM::Core::DebugLogger::instance(); _logger && _logger->isEnabled()) { \
+            _logger->debug(msg); \
+        } else { \
+            qDebug() << msg; \
+        } \
+    } while (0)
+
+#define LOG_INFO(msg) \
+    do { \
+        if (auto* _logger = ClipLLM::Core::DebugLogger::instance(); _logger && _logger->isEnabled()) { \
+            _logger->info(msg); \
+        } else { \
+            qDebug() << msg; \
+        } \
+    } while (0)
+
+#define LOG_WARNING(msg) \
+    do { \
+        if (auto* _logger = ClipLLM::Core::DebugLogger::instance(); _logger && _logger->isEnabled()) { \
+            _logger->warning(msg); \
+        } else { \
+            qWarning() << msg; \
+        } \
+    } while (0)
+
+#define LOG_ERROR(msg) \
+    do { \
+        if (auto* _logger = ClipLLM::Core::DebugLogger::instance(); _logger && _logger->isEnabled()) { \
+            _logger->error(msg); \
+        } else { \
+            qCritical() << msg; \
+        } \
+    } while (0)
+
+// For trace-level logging (only in Trace mode)
+#define LOG_TRACE(msg) \
+    do { \
+        if (auto* _logger = ClipLLM::Core::DebugLogger::instance(); _logger && _logger->currentLevel() >= ClipLLM::Core::DebugLevel::Trace) { \
+            _logger->trace(msg); \
+        } \
+    } while (0)
 
 #endif // CLIPLLM_CORE_DEBUGLOGGER_H

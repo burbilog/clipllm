@@ -19,6 +19,9 @@
 #include "configmanager.h"
 #include "groupsmanager.h"
 #include "models/providerprofile.h"
+#include "debuglogger.h"
+#include "core/app.h"
+#include <QApplication>
 #include <QStandardPaths>
 #include <QDir>
 #include <QFile>
@@ -46,20 +49,20 @@ bool PromptManager::loadPrompts(GroupsManager* groupsManager)
     }
 
     QString customPath = getCustomPromptsFilePath();
-    qDebug() << "loadPrompts: customPath =" << customPath << "exists:" << QFile::exists(customPath);
+    LOG_DEBUG(QStringLiteral("loadPrompts: customPath = %1 exists: %2").arg(customPath).arg(QFile::exists(customPath)));
 
     if (QFile::exists(customPath)) {
         return loadPromptsFromFile(customPath);
     }
 
     // No prompts file found, create default from bundled resource
-    qDebug() << "No prompts file found, creating default prompts from resource";
+    LOG_DEBUG(QStringLiteral("No prompts file found, creating default prompts from resource"));
 
     // Load default prompts from resource
     QString resourcePath = QStringLiteral(":/config/prompts-default.json");
     QFile resourceFile(resourcePath);
     if (!resourceFile.open(QIODevice::ReadOnly)) {
-        qWarning() << "Failed to open default prompts resource:" << resourcePath;
+        LOG_WARNING(QStringLiteral("Failed to open default prompts resource: %1").arg(resourcePath));
         emit promptsLoadFailed(tr("Failed to load default prompts"));
         return false;
     }
@@ -69,7 +72,7 @@ bool PromptManager::loadPrompts(GroupsManager* groupsManager)
     resourceFile.close();
 
     if (error.error != QJsonParseError::NoError) {
-        qWarning() << "Failed to parse default prompts:" << error.errorString();
+        LOG_WARNING(QStringLiteral("Failed to parse default prompts: %1").arg(error.errorString()));
         // Fall back to hardcoded defaults
         m_prompts = getDefaultPrompts();
     } else {
@@ -95,7 +98,7 @@ bool PromptManager::loadPrompts(GroupsManager* groupsManager)
                 }
             }
             // Save merged groups
-            qDebug() << "Saving merged groups:" << existingGroups;
+            LOG_DEBUG(QStringLiteral("Saving merged groups: %1").arg(existingGroups.join(QStringLiteral(", "))));
             m_groupsManager->saveGroups(existingGroups);
             // Reload to ensure in-memory state is updated
             m_groupsManager->loadGroups();
@@ -104,7 +107,7 @@ bool PromptManager::loadPrompts(GroupsManager* groupsManager)
 
     savePromptsToFile(customPath);
     emit promptsLoaded();
-    qDebug() << "Prompts saved to:" << customPath << "exists:" << QFile::exists(customPath);
+    LOG_DEBUG(QStringLiteral("Prompts saved to: %1 exists: %2").arg(customPath).arg(QFile::exists(customPath)));
     return true;
 }
 
@@ -118,7 +121,7 @@ bool PromptManager::loadPromptsFromFile(const QString& filePath)
     QFile file(filePath);
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Failed to open prompts file:" << filePath;
+        LOG_WARNING(QStringLiteral("Failed to open prompts file: %1").arg(filePath));
         emit promptsLoadFailed(tr("Failed to open prompts file"));
         return false;
     }
@@ -128,7 +131,7 @@ bool PromptManager::loadPromptsFromFile(const QString& filePath)
     file.close();
 
     if (error.error != QJsonParseError::NoError) {
-        qWarning() << "Failed to parse prompts file:" << error.errorString();
+        LOG_WARNING(QStringLiteral("Failed to parse prompts file: %1").arg(error.errorString()));
         emit promptsLoadFailed(tr("Failed to parse prompts file"));
         return false;
     }
@@ -152,7 +155,7 @@ bool PromptManager::loadPromptsFromJson(const QJsonObject& json)
         }
     }
 
-    qDebug() << "Loaded" << m_prompts.size() << "prompts";
+    LOG_DEBUG(QStringLiteral("Loaded %1 prompts").arg(m_prompts.size()));
     emit promptsLoaded();
     return true;
 }
@@ -184,7 +187,7 @@ bool PromptManager::savePromptsToFile(const QString& filePath)
 
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly)) {
-        qWarning() << "Failed to open prompts file for writing:" << filePath;
+        LOG_WARNING(QStringLiteral("Failed to open prompts file for writing: %1").arg(filePath));
         return false;
     }
 
@@ -220,7 +223,7 @@ void PromptManager::ensureGroupExists(const QString& group)
         currentPath = currentPath.left(lastSlash);
     }
 
-    qDebug() << "Adding new groups from prompt:" << newGroups;
+    LOG_DEBUG(QStringLiteral("Adding new groups from prompt: %1").arg(newGroups.join(QStringLiteral(", "))));
     m_groupsManager->saveGroups(newGroups);
 }
 

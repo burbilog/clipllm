@@ -18,6 +18,7 @@
 #include "uiutils.h"
 #include "core/app.h"
 #include "core/version.h"
+#include "core/debuglogger.h"
 #include "core/configmanager.h"
 #include "core/promptmanager.h"
 #include "core/groupsmanager.h"
@@ -45,11 +46,11 @@ TrayIcon::TrayIcon(App* app)
     m_normalIcon.addFile(QStringLiteral(":/icons/tray-icon-64.png"));
     m_activeIcon = m_normalIcon;
 
-    qDebug() << "TrayIcon: Loaded" << m_normalIcon.availableSizes().size() << "sizes, isNull:" << m_normalIcon.isNull();
+    LOG_DEBUG(QStringLiteral("TrayIcon: Loaded %1 sizes, isNull: %2").arg(m_normalIcon.availableSizes().size()).arg(m_normalIcon.isNull()));
 
     // Fallback icon if resource not found
     if (m_normalIcon.isNull()) {
-        qWarning() << "TrayIcon: Icon resources not found, using fallback";
+        LOG_WARNING(QStringLiteral("TrayIcon: Icon resources not found, using fallback"));
         m_normalIcon = QApplication::style()->standardIcon(QStyle::SP_ComputerIcon);
         m_activeIcon = m_normalIcon;
     }

@@ -18,17 +18,20 @@
 qt_add_executable(TestHistoryManager
     tst_historymanager.cpp
     ../src/core/historymanager.cpp
+    ../src/core/debuglogger.cpp
 )
 
 target_link_libraries(TestHistoryManager
     PRIVATE
     Qt6::Core
+    Qt6::Widgets
     Qt6::Test
 )
 
 target_include_directories(TestHistoryManager
     PRIVATE
     ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_BINARY_DIR}/src
 )
 
 add_test(NAME TestHistoryManager COMMAND TestHistoryManager)
@@ -37,18 +40,21 @@ add_test(NAME TestHistoryManager COMMAND TestHistoryManager)
 qt_add_executable(TestConfigManager
     tst_configmanager.cpp
     ../src/core/configmanager.cpp
+    ../src/core/debuglogger.cpp
     ../src/models/providerprofile.cpp
 )
 
 target_link_libraries(TestConfigManager
     PRIVATE
     Qt6::Core
+    Qt6::Widgets
     Qt6::Test
 )
 
 target_include_directories(TestConfigManager
     PRIVATE
     ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_BINARY_DIR}/src
 )
 
 add_test(NAME TestConfigManager COMMAND TestConfigManager)

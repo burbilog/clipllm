@@ -18,6 +18,7 @@
 #include "promptpreviewdialog.h"
 #include "hotkeyedit.h"
 #include "core/promptmanager.h"
+#include "core/debuglogger.h"
 #include "core/groupsmanager.h"
 #include "core/configmanager.h"
 #include "core/app.h"
@@ -343,19 +344,19 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
 
     // Set group - explicitly handle empty group (root)
     QString group = prompt.group();
-    qDebug() << "Loading prompt with group:" << group << "(isEmpty:" << group.isEmpty() << ")";
+    LOG_DEBUG(QStringLiteral("Loading prompt with group: %1 (isEmpty: %2)").arg(group).arg(group.isEmpty()));
 
     if (group.isEmpty()) {
         m_groupCombo->setCurrentIndex(0); // root is always at index 0
-        qDebug() << "Set group combo to index 0 (root)";
+        LOG_DEBUG(QStringLiteral("Set group combo to index 0 (root)"));
     } else {
         int groupIndex = m_groupCombo->findData(group);
-        qDebug() << "Looking for group:" << group << "found at index:" << groupIndex;
+        LOG_DEBUG(QStringLiteral("Looking for group: %1 found at index: %2").arg(group).arg(groupIndex));
         if (groupIndex >= 0) {
             m_groupCombo->setCurrentIndex(groupIndex);
         } else {
             m_groupCombo->setCurrentIndex(0); // fallback to root
-            qDebug() << "Group not found, setting to root";
+            LOG_DEBUG(QStringLiteral("Group not found, setting to root"));
         }
     }
 
@@ -423,14 +424,14 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
     // Get group from combo - handle empty group case
     int comboIndex = m_groupCombo->currentIndex();
     QString group = m_groupCombo->currentData().toString();
-    qDebug() << "buildPrompt: comboIndex=" << comboIndex << "currentData=" << group;
+    LOG_DEBUG(QStringLiteral("buildPrompt: comboIndex=%1 currentData=%2").arg(comboIndex).arg(group));
 
     // If index is 0 (root), ensure group is empty string
     if (comboIndex == 0) {
         group.clear();
     }
     prompt.setGroup(group);
-    qDebug() << "buildPrompt: setting group to:" << group;
+    LOG_DEBUG(QStringLiteral("buildPrompt: setting group to: %1").arg(group));
 
     prompt.setSystemPrompt(m_systemPromptEdit->toPlainText());
     prompt.setUserPromptTemplate(m_userTemplateEdit->toPlainText());
@@ -819,10 +820,10 @@ void PromptEditorDialog::fetchModelsFromAPI()
     const auto& profile = profileOpt.value();
     QString apiUrl = profile.apiUrl().toString();
 
-    qDebug() << "=== PromptEditor: Fetching models ===";
-    qDebug() << "Provider ID:" << providerId;
-    qDebug() << "Provider name:" << profile.name();
-    qDebug() << "Original API URL:" << apiUrl;
+    LOG_DEBUG(QStringLiteral("=== PromptEditor: Fetching models ==="));
+    LOG_DEBUG(QStringLiteral("Provider ID: %1").arg(providerId));
+    LOG_DEBUG(QStringLiteral("Provider name: %1").arg(profile.name()));
+    LOG_DEBUG(QStringLiteral("Original API URL: %1").arg(apiUrl));
 
     // Build models endpoint URL - same logic as SettingsDialog
     QUrl url = QUrl(apiUrl);
@@ -842,7 +843,7 @@ void PromptEditorDialog::fetchModelsFromAPI()
     }
     url.setPath(path);
 
-    qDebug() << "Models URL:" << url.toString();
+    LOG_DEBUG(QStringLiteral("Models URL: %1").arg(url.toString()));
 
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("application/json"));
@@ -863,10 +864,10 @@ void PromptEditorDialog::onModelsFetchFinished(QNetworkReply* reply)
     m_refreshModelsButton->setEnabled(true);
 
     if (reply->error() != QNetworkReply::NoError) {
-        qDebug() << "PromptEditor: Model fetch error:" << reply->errorString();
-        qDebug() << "HTTP status:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        LOG_DEBUG(QStringLiteral("PromptEditor: Model fetch error: %1").arg(reply->errorString()));
+        LOG_DEBUG(QStringLiteral("HTTP status: %1").arg(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt()));
         QByteArray response = reply->readAll();
-        qDebug() << "Response body:" << response.left(500);
+        LOG_DEBUG(QStringLiteral("Response body: %1").arg(QString::fromUtf8(response.left(500))));
         m_modelsStatusLabel->setText(tr("Error: %1").arg(reply->errorString()));
         m_modelsStatusLabel->setStyleSheet("color: red; font-size: 10px;");
         reply->deleteLater();
@@ -874,12 +875,12 @@ void PromptEditorDialog::onModelsFetchFinished(QNetworkReply* reply)
     }
 
     QByteArray data = reply->readAll();
-    qDebug() << "PromptEditor: Received response, size:" << data.size();
+    LOG_DEBUG(QStringLiteral("PromptEditor: Received response, size: %1").arg(data.size()));
     QJsonDocument doc = QJsonDocument::fromJson(data);
 
     if (doc.isNull() || !doc.isObject()) {
-        qDebug() << "PromptEditor: Invalid JSON response";
-        qDebug() << "Response:" << data.left(500);
+        LOG_DEBUG(QStringLiteral("PromptEditor: Invalid JSON response"));
+        LOG_DEBUG(QStringLiteral("Response: %1").arg(QString::fromUtf8(data.left(500))));
         m_modelsStatusLabel->setText(tr("Error: Invalid response"));
         m_modelsStatusLabel->setStyleSheet("color: red; font-size: 10px;");
         reply->deleteLater();
@@ -889,7 +890,7 @@ void PromptEditorDialog::onModelsFetchFinished(QNetworkReply* reply)
     QJsonObject root = doc.object();
     QJsonArray modelArray = root.value(QStringLiteral("data")).toArray();
 
-    qDebug() << "PromptEditor: Found" << modelArray.size() << "models";
+    LOG_DEBUG(QStringLiteral("PromptEditor: Found %1 models").arg(modelArray.size()));
 
     if (modelArray.isEmpty()) {
         m_modelsStatusLabel->setText(tr("No models found"));

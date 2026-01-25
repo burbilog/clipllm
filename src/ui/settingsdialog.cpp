@@ -20,6 +20,7 @@
 #include "hotkeyedit.h"
 #include "core/app.h"
 #include "core/configmanager.h"
+#include "core/debuglogger.h"
 #include "core/keychainstore.h"
 #include "core/providerkeystore.h"
 #include "core/promptmanager.h"
@@ -623,10 +624,11 @@ void SettingsDialog::loadSettings()
 
     // Hotkeys
     QString hotkey = m_configManager->hotkey();
-    qDebug() << "SettingsDialog: loading hotkey from config:" << hotkey;
+    LOG_DEBUG(QStringLiteral("SettingsDialog: loading hotkey from config: %1").arg(hotkey));
     m_hotkeyEdit->setHotkeyText(hotkey);
-    qDebug() << "SettingsDialog: hotkeyEdit after load:" << m_hotkeyEdit->hotkeyText()
-             << "sequence:" << m_hotkeyEdit->keySequence().toString();
+    LOG_DEBUG(QStringLiteral("SettingsDialog: hotkeyEdit after load: %1 sequence: %2")
+              .arg(m_hotkeyEdit->hotkeyText())
+              .arg(m_hotkeyEdit->keySequence().toString()));
 
     // History
     m_historyLimitSpin->setValue(m_configManager->historyLimit());
@@ -681,7 +683,7 @@ void SettingsDialog::saveSettings()
 
     // Hotkeys
     QString hotkeyText = m_hotkeyEdit->hotkeyText();
-    qDebug() << "SettingsDialog: saving hotkey:" << hotkeyText;
+    LOG_DEBUG(QStringLiteral("SettingsDialog: saving hotkey: %1").arg(hotkeyText));
     m_configManager->setHotkey(hotkeyText);
 
     // History
@@ -1542,8 +1544,9 @@ void SettingsDialog::onSetAsDefaultClicked()
     m_configManager->setDefaultProviderId(profileId);
     m_configManager->sync();  // Ensure the setting is written immediately
 
-    qDebug() << "Default provider set to:" << profileId
-             << "current default:" << m_configManager->defaultProviderId();
+    LOG_DEBUG(QStringLiteral("Default provider set to: %1 current default: %2")
+              .arg(profileId)
+              .arg(m_configManager->defaultProviderId()));
 
     loadProviderProfiles();
 

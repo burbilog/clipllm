@@ -15,6 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "historymanager.h"
+#include "debuglogger.h"
+#include "core/app.h"
+#include <QApplication>
 #include <QStandardPaths>
 #include <QDir>
 #include <QFile>
@@ -475,12 +478,12 @@ bool HistoryManager::importFromJson(const QString& jsonData)
     QJsonDocument doc = QJsonDocument::fromJson(jsonData.toUtf8(), &error);
 
     if (error.error != QJsonParseError::NoError) {
-        qWarning() << "Failed to parse JSON for import:" << error.errorString();
+        LOG_WARNING(QStringLiteral("Failed to parse JSON for import: %1").arg(error.errorString()));
         return false;
     }
 
     if (!doc.isArray()) {
-        qWarning() << "Import JSON is not an array";
+        LOG_WARNING(QStringLiteral("Import JSON is not an array"));
         return false;
     }
 
@@ -496,7 +499,7 @@ bool HistoryManager::importFromJson(const QString& jsonData)
     }
 
     m_dirty = true;
-    qDebug() << "Imported" << imported << "history entries";
+    LOG_DEBUG(QStringLiteral("Imported %1 history entries").arg(imported));
     return true;
 }
 
@@ -529,12 +532,12 @@ bool HistoryManager::loadFromFile()
     QFile file(path);
 
     if (!file.exists()) {
-        qDebug() << "History file does not exist, starting with empty history";
+        LOG_DEBUG(QStringLiteral("History file does not exist, starting with empty history"));
         return true;
     }
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Failed to open history file:" << path;
+        LOG_WARNING(QStringLiteral("Failed to open history file: %1").arg(path));
         return false;
     }
 
@@ -543,12 +546,12 @@ bool HistoryManager::loadFromFile()
     file.close();
 
     if (error.error != QJsonParseError::NoError) {
-        qWarning() << "Failed to parse history file:" << error.errorString();
+        LOG_WARNING(QStringLiteral("Failed to parse history file: %1").arg(error.errorString()));
         return false;
     }
 
     if (!doc.isArray()) {
-        qWarning() << "History file is not an array";
+        LOG_WARNING(QStringLiteral("History file is not an array"));
         return false;
     }
 
@@ -561,7 +564,7 @@ bool HistoryManager::loadFromFile()
         }
     }
 
-    qDebug() << "Loaded" << m_entries.size() << "history entries";
+    LOG_DEBUG(QStringLiteral("Loaded %1 history entries").arg(m_entries.size()));
     m_dirty = false;
     return true;
 }
@@ -579,7 +582,7 @@ bool HistoryManager::saveToFile()
 
     QFile file(path);
     if (!file.open(QIODevice::WriteOnly)) {
-        qWarning() << "Failed to open history file for writing:" << path;
+        LOG_WARNING(QStringLiteral("Failed to open history file for writing: %1").arg(path));
         return false;
     }
 

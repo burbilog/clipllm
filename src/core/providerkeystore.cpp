@@ -15,9 +15,11 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "providerkeystore.h"
+#include "debuglogger.h"
+#include "core/app.h"
+#include <QApplication>
 #include <QStandardPaths>
 #include <QDir>
-#include <QDebug>
 
 namespace ClipLLM {
 namespace Core {
@@ -51,7 +53,7 @@ void ProviderKeyStore::setProviderKey(const QString& profileId, const QString& a
     m_settings->endGroup();
     m_settings->sync();
 
-    qDebug() << "Stored API key for profile:" << profileId;
+    LOG_DEBUG(QStringLiteral("Stored API key for profile: %1").arg(profileId));
 }
 
 QString ProviderKeyStore::providerKey(const QString& profileId) const
@@ -70,7 +72,7 @@ void ProviderKeyStore::removeProviderKey(const QString& profileId)
     m_settings->endGroup();
     m_settings->sync();
 
-    qDebug() << "Removed API key for profile:" << profileId;
+    LOG_DEBUG(QStringLiteral("Removed API key for profile: %1").arg(profileId));
 }
 
 bool ProviderKeyStore::hasProviderKey(const QString& profileId) const

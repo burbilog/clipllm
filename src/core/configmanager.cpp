@@ -16,6 +16,9 @@
 
 #include "configmanager.h"
 #include "models/providerprofile.h"
+#include "debuglogger.h"
+#include "core/app.h"
+#include <QApplication>
 #include <QStandardPaths>
 #include <QDir>
 #include <QCoreApplication>
@@ -448,7 +451,7 @@ std::optional<Models::ProviderProfile> ConfigManager::providerProfile(const QStr
     QJsonDocument doc = QJsonDocument::fromJson(jsonBytes, &error);
 
     if (error.error != QJsonParseError::NoError) {
-        qWarning() << "Failed to parse provider profile JSON:" << error.errorString();
+        LOG_WARNING(QStringLiteral("Failed to parse provider profile JSON: %1").arg(error.errorString()));
         return std::nullopt;
     }
 

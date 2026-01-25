@@ -16,7 +16,6 @@
 
 #include "app.h"
 #include "core/version.h"
-#include "debuglogger.h"
 #include "clipboardmanager.h"
 #include "llmclient.h"
 #include "promptmanager.h"
@@ -42,6 +41,8 @@
 #include <QRandomGenerator>
 #include <QLibraryInfo>
 #include <QCursor>
+
+#include "debuglogger.h"
 
 namespace ClipLLM {
 
@@ -146,13 +147,13 @@ bool App::initialize(bool startMinimized)
                            + QStringLiteral("/clipllm.lock");
     g_lockFile = new QLockFile(lockFilePath);
     if (!g_lockFile->tryLock(0)) {
-        qWarning() << "Another instance is already running";
+        LOG_WARNING(QStringLiteral("Another instance is already running"));
         return false;
     }
 
     // Setup translations
     if (!setupTranslations()) {
-        qWarning() << "Failed to setup translations";
+        LOG_WARNING(QStringLiteral("Failed to setup translations"));
     }
 
     // Create core components
@@ -170,7 +171,7 @@ bool App::initialize(bool startMinimized)
 
     // Initialize history manager
     if (!m_historyManager->initialize()) {
-        qWarning() << "Failed to initialize history manager";
+        LOG_WARNING(QStringLiteral("Failed to initialize history manager"));
     }
 
     // Load configuration
@@ -185,22 +186,22 @@ bool App::initialize(bool startMinimized)
 
     // Load prompts
     if (!m_promptManager->loadPrompts(m_groupsManager.get())) {
-        qWarning() << "Failed to load prompts, using defaults";
+        LOG_WARNING(QStringLiteral("Failed to load prompts, using defaults"));
     }
 
     // Load LLM configuration from provider profiles
     QString defaultProviderId = m_configManager->defaultProviderId();
     if (defaultProviderId.isEmpty()) {
-        qWarning() << "No provider configured - LLM features disabled";
+        LOG_WARNING(QStringLiteral("No provider configured - LLM features disabled"));
         // Set empty config - features will show error when used
         m_llmClient->setConfig(Models::LLMConfig());
     } else {
         auto profile = m_configManager->providerProfile(defaultProviderId);
         if (!profile.has_value()) {
-            qWarning() << "Default provider not found, falling back to first available";
+            LOG_WARNING(QStringLiteral("Default provider not found, falling back to first available"));
             auto profiles = m_configManager->providerProfiles();
             if (profiles.isEmpty()) {
-                qWarning() << "No providers configured at all";
+                LOG_WARNING(QStringLiteral("No providers configured at all"));
                 m_llmClient->setConfig(Models::LLMConfig());
                 QMessageBox::warning(nullptr,
                     tr("No LLM Provider Configured"),
@@ -212,15 +213,13 @@ bool App::initialize(bool startMinimized)
                 Models::LLMConfig config = profileToConfig(profile.value());
                 m_llmClient->setConfig(config);
                 m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
-                qDebug() << "LLM initialized: provider=" << profile->name()
-                         << "model=" << profile->model();
+                LOG_DEBUG(QStringLiteral("LLM initialized: provider=%1 model=%2").arg(profile->name()).arg(profile->model()));
             }
         } else {
             Models::LLMConfig config = profileToConfig(profile.value());
             m_llmClient->setConfig(config);
             m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
-            qDebug() << "LLM initialized: provider=" << profile->name()
-                     << "model=" << profile->model();
+            LOG_DEBUG(QStringLiteral("LLM initialized: provider=%1 model=%2").arg(profile->name()).arg(profile->model()));
         }
     }
 
@@ -257,7 +256,7 @@ bool App::initialize(bool startMinimized)
     connect(m_promptMenu, &UI::PromptMenu::settingsRequested, this, &App::showSettings);
     connect(m_promptMenu, &UI::PromptMenu::historyRequested, this, &App::showHistory);
     connect(m_promptMenu, &UI::PromptMenu::cancelled, []() {
-        qDebug() << "Prompt menu cancelled";
+        LOG_DEBUG(QStringLiteral("Prompt menu cancelled"));
     });
 
     // Show tray icon
@@ -319,7 +318,7 @@ void App::setLanguage(const QString& languageCode)
         installTranslator(appTranslator);
         m_translators.push_back(appTranslator);
     } else {
-        qWarning() << "Failed to load translation for" << languageCode << "from" << translationsPath;
+        LOG_WARNING(QStringLiteral("Failed to load translation for %1 from %2").arg(languageCode).arg(translationsPath));
         delete appTranslator;
     }
 
@@ -365,7 +364,7 @@ void App::registerHotkey(const QKeySequence& sequence)
 {
     // Check if platform supports global hotkeys
     if (!QHotkey::isPlatformSupported()) {
-        qWarning() << "Global hotkeys are not supported on this platform";
+        LOG_WARNING(QStringLiteral("Global hotkeys are not supported on this platform"));
         showTrayMessage(tr("Hotkey Not Supported"),
                        tr("Global hotkeys are not supported on this platform (Wayland?)."));
         return;
@@ -382,7 +381,7 @@ void App::registerHotkey(const QKeySequence& sequence)
 
     // Don't register empty hotkey
     if (sequence.isEmpty()) {
-        qDebug() << "Hotkey is empty, skipping registration";
+        LOG_DEBUG(QStringLiteral("Hotkey is empty, skipping registration"));
         return;
     }
 
@@ -391,7 +390,7 @@ void App::registerHotkey(const QKeySequence& sequence)
 
     // Check if registration succeeded
     if (!m_globalHotkey->isRegistered()) {
-        qWarning() << "Failed to register global hotkey:" << sequence.toString();
+        LOG_WARNING(QStringLiteral("Failed to register global hotkey: %1").arg(sequence.toString()));
         showTrayMessage(tr("Hotkey Registration Failed"),
                        tr("Could not register global hotkey: %1").arg(sequence.toString()));
         delete m_globalHotkey;
@@ -399,43 +398,43 @@ void App::registerHotkey(const QKeySequence& sequence)
         return;
     }
 
-    qDebug() << "Global hotkey registered:" << sequence.toString();
+    LOG_DEBUG(QStringLiteral("Global hotkey registered: %1").arg(sequence.toString()));
 
     // Connect hotkey signal
     connect(m_globalHotkey, &QHotkey::activated, this, [this]() {
-        qDebug() << "Global hotkey activated!";
+        LOG_DEBUG(QStringLiteral("Global hotkey activated!"));
         onHotkeyTriggered();
     });
 }
 
 void App::registerPromptHotkeys()
 {
-    qDebug() << "=== registerPromptHotkeys() called ===";
+    LOG_DEBUG(QStringLiteral("=== registerPromptHotkeys() called ==="));
     if (!QHotkey::isPlatformSupported()) {
-        qWarning() << "QHotkey not supported on this platform";
+        LOG_WARNING(QStringLiteral("QHotkey not supported on this platform"));
         return;
     }
     unregisterPromptHotkeys();
 
     QVector<Models::Prompt> prompts = m_promptManager->getEnabledPrompts();
-    qDebug() << "Total enabled prompts:" << prompts.size();
+    LOG_DEBUG(QStringLiteral("Total enabled prompts: %1").arg(prompts.size()));
 
     QKeySequence globalHotkeySeq = QKeySequence::fromString(m_configManager->hotkey());
-    qDebug() << "Global hotkey:" << m_configManager->hotkey();
+    LOG_DEBUG(QStringLiteral("Global hotkey: %1").arg(m_configManager->hotkey()));
 
     for (const auto& prompt : prompts) {
         QString hotkeyStr = prompt.hotkey();
-        qDebug() << "Prompt" << prompt.id() << "hotkey:" << hotkeyStr;
+        LOG_DEBUG(QStringLiteral("Prompt %1 hotkey: %2").arg(prompt.id()).arg(hotkeyStr));
         if (hotkeyStr.isEmpty()) {
             continue;
         }
 
         QKeySequence seq = QKeySequence::fromString(hotkeyStr);
-        qDebug() << "  KeySequence:" << seq.toString();
+        LOG_DEBUG(QStringLiteral("  KeySequence: %1").arg(seq.toString()));
 
         // Skip if conflicts with global hotkey
         if (!globalHotkeySeq.isEmpty() && seq == globalHotkeySeq) {
-            qWarning() << "Prompt hotkey" << hotkeyStr << "conflicts with global hotkey, skipping";
+            LOG_WARNING(QStringLiteral("Prompt hotkey %1 conflicts with global hotkey, skipping").arg(hotkeyStr));
             continue;
         }
 
@@ -443,7 +442,7 @@ void App::registerPromptHotkeys()
         bool conflict = false;
         for (const auto& other : prompts) {
             if (other.id() != prompt.id() && QKeySequence::fromString(other.hotkey()) == seq) {
-                qWarning() << "Prompt hotkey" << hotkeyStr << "conflicts with prompt" << other.name() << ", skipping";
+                LOG_WARNING(QStringLiteral("Prompt hotkey %1 conflicts with prompt %2, skipping").arg(hotkeyStr).arg(other.name()));
                 conflict = true;
                 break;
             }
@@ -454,9 +453,9 @@ void App::registerPromptHotkeys()
 
         // Create and register hotkey
         QHotkey* hotkey = new QHotkey(seq, true, this);
-        qDebug() << "  QHotkey created, registered:" << hotkey->isRegistered();
+        LOG_DEBUG(QStringLiteral("  QHotkey created, registered: %1").arg(hotkey->isRegistered()));
         if (!hotkey->isRegistered()) {
-            qWarning() << "Failed to register prompt hotkey:" << hotkeyStr;
+            LOG_WARNING(QStringLiteral("Failed to register prompt hotkey: %1").arg(hotkeyStr));
             delete hotkey;
             continue;
         }
@@ -465,12 +464,12 @@ void App::registerPromptHotkeys()
 
         // Connect with direct lambda for debugging
         connect(hotkey, &QHotkey::activated, this, [this, id = prompt.id(), name = prompt.name()]() {
-            qDebug() << "LAMBDA: Hotkey activated for prompt:" << name << "id:" << id;
+            LOG_DEBUG(QStringLiteral("LAMBDA: Hotkey activated for prompt: %1 id: %2").arg(name).arg(id));
             onPromptHotkeyTriggered(id);
         });
-        qDebug() << "Registered prompt hotkey:" << hotkeyStr << "for prompt:" << prompt.name();
+        LOG_DEBUG(QStringLiteral("Registered prompt hotkey: %1 for prompt: %2").arg(hotkeyStr).arg(prompt.name()));
     }
-    qDebug() << "=== registerPromptHotkeys() done, registered" << m_promptHotkeys.size() << "hotkeys ===";
+    LOG_DEBUG(QStringLiteral("=== registerPromptHotkeys() done, registered %1 hotkeys ===").arg(m_promptHotkeys.size()));
 }
 
 void App::unregisterPromptHotkeys()
@@ -483,7 +482,7 @@ void App::unregisterPromptHotkeys()
 
 void App::onPromptHotkeyTriggered(const QString& promptId)
 {
-    qDebug() << "Prompt hotkey triggered for:" << promptId;
+    LOG_DEBUG(QStringLiteral("Prompt hotkey triggered for: %1").arg(promptId));
     // Directly execute - clipboard check is in onPromptSelected()
     onPromptSelected(promptId);
 }
@@ -500,21 +499,20 @@ void App::showSettings()
         connect(m_settingsDialog, &UI::SettingsDialog::settingsChanged, [this]() {
             QString defaultProviderId = m_configManager->defaultProviderId();
             if (defaultProviderId.isEmpty()) {
-                qWarning() << "No provider configured in settings";
+                LOG_WARNING(QStringLiteral("No provider configured in settings"));
                 return;
             }
 
             auto profile = m_configManager->providerProfile(defaultProviderId);
             if (!profile.has_value()) {
-                qWarning() << "Default provider not found:" << defaultProviderId;
+                LOG_WARNING(QStringLiteral("Default provider not found: %1").arg(defaultProviderId));
                 return;
             }
 
             Models::LLMConfig config = profileToConfig(profile.value());
             m_llmClient->setConfig(config);
             m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
-            qDebug() << "LLM config updated: provider=" << profile->name()
-                     << "model=" << profile->model();
+            LOG_DEBUG(QStringLiteral("LLM config updated: provider=%1 model=%2").arg(profile->name()).arg(profile->model()));
         });
 
         // Apply language change immediately when selected in settings
@@ -524,13 +522,13 @@ void App::showSettings()
 
         // Re-register hotkey when changed
         connect(m_settingsDialog, &UI::SettingsDialog::hotkeyChanged, [this](const QKeySequence& sequence) {
-            qDebug() << "Hotkey changed in settings, re-registering:" << sequence.toString();
+            LOG_DEBUG(QStringLiteral("Hotkey changed in settings, re-registering: %1").arg(sequence.toString()));
             registerHotkey(sequence);
         });
 
         // Re-register prompt hotkeys when prompts are changed
         connect(m_settingsDialog, &UI::SettingsDialog::promptsChanged, [this]() {
-            qDebug() << "Prompts changed, re-registering prompt hotkeys";
+            LOG_DEBUG(QStringLiteral("Prompts changed, re-registering prompt hotkeys"));
             registerPromptHotkeys();
         });
     }
@@ -565,7 +563,7 @@ void App::showTrayMessage(const QString& title, const QString& message)
 void App::showPromptMenuAtTray()
 {
     if (!m_promptMenu) {
-        qWarning() << "PromptMenu not initialized";
+        LOG_WARNING(QStringLiteral("PromptMenu not initialized"));
         return;
     }
 
@@ -573,14 +571,14 @@ void App::showPromptMenuAtTray()
     QRect trayGeometry = m_trayIcon->geometry();
     QPoint trayCenter = trayGeometry.center();
 
-    qDebug() << "Showing prompt menu at tray position:" << trayCenter;
+    LOG_DEBUG(QStringLiteral("Showing prompt menu at tray position: (%1, %2)").arg(trayCenter.x()).arg(trayCenter.y()));
 
     m_promptMenu->showMenu(trayCenter);
 }
 
 void App::onHotkeyTriggered()
 {
-    qDebug() << "Hotkey triggered";
+    LOG_DEBUG(QStringLiteral("Hotkey triggered"));
 
     // Get clipboard content
     auto clipboardContent = m_clipboardManager->getContent();
@@ -595,13 +593,13 @@ void App::onHotkeyTriggered()
     if (m_promptMenu) {
         m_promptMenu->showMenu(QCursor::pos());
     } else {
-        qWarning() << "PromptMenu not created!";
+        LOG_WARNING(QStringLiteral("PromptMenu not created!"));
     }
 }
 
 void App::onPromptSelected(const QString& promptId)
 {
-    qDebug() << "Prompt selected:" << promptId;
+    LOG_DEBUG(QStringLiteral("Prompt selected: %1").arg(promptId));
 
     // Check clipboard FIRST - applies to both hotkey and menu selection
     auto clipboardContent = m_clipboardManager->getContent();
@@ -625,15 +623,14 @@ void App::onPromptSelected(const QString& promptId)
     // Determine provider profile to use
     Models::ProviderProfile profile;
     QString defaultProviderId = m_configManager->defaultProviderId();
-    qDebug() << "onPromptSelected: defaultProviderId from config:" << defaultProviderId;
+    LOG_DEBUG(QStringLiteral("onPromptSelected: defaultProviderId from config: %1").arg(defaultProviderId));
 
     if (prompt.overrideProvider() && !prompt.providerId().isEmpty()) {
         auto promptProfile = m_configManager->providerProfile(prompt.providerId());
         if (promptProfile.has_value()) {
             profile = promptProfile.value();
         } else {
-            qWarning() << "Prompt references non-existent profile:" << prompt.providerId()
-                       << ", using default";
+            LOG_WARNING(QStringLiteral("Prompt references non-existent profile: %1, using default").arg(prompt.providerId()));
             if (!defaultProviderId.isEmpty()) {
                 auto defaultProfile = m_configManager->providerProfile(defaultProviderId);
                 if (defaultProfile.has_value()) {
@@ -673,7 +670,7 @@ void App::onPromptSelected(const QString& promptId)
     QString modelToUse = profile.model();
     if (!prompt.model().isEmpty()) {
         modelToUse = prompt.model();
-        qDebug() << "Using model from prompt:" << modelToUse;
+        LOG_DEBUG(QStringLiteral("Using model from prompt: %1").arg(modelToUse));
     }
 
     // Validate that model is set
@@ -685,11 +682,12 @@ void App::onPromptSelected(const QString& promptId)
 
     config.setModel(modelToUse);
 
-    qDebug() << "Using provider:" << profile.name()
-             << "ID:" << profile.id()
-             << "URL:" << profile.apiUrl().toString()
-             << "model:" << modelToUse
-             << "proxy:" << profile.proxyUrl();
+    LOG_DEBUG(QStringLiteral("Using provider: %1 ID: %2 URL: %3 model: %4 proxy: %5")
+              .arg(profile.name())
+              .arg(profile.id())
+              .arg(profile.apiUrl().toString())
+              .arg(modelToUse)
+              .arg(profile.proxyUrl()));
     m_llmClient->setConfig(config);
     // Also set API key explicitly since LLMClient checks m_apiKey separately
     m_llmClient->setApiKey(config.apiKey());
@@ -756,13 +754,13 @@ void App::onPromptSelected(const QString& promptId)
     if (m_configManager->historyCleanupByCount()) {
         int removed = m_historyManager->cleanupByCount(m_configManager->historyLimit());
         if (removed > 0) {
-            qDebug() << "Auto-removed" << removed << "old history entries (by count)";
+            LOG_DEBUG(QStringLiteral("Auto-removed %1 old history entries (by count)").arg(removed));
         }
     }
     if (m_configManager->historyCleanupByDate()) {
         int removed = m_historyManager->cleanupByDate(m_configManager->historyDaysToKeep());
         if (removed > 0) {
-            qDebug() << "Auto-removed" << removed << "old history entries (by date)";
+            LOG_DEBUG(QStringLiteral("Auto-removed %1 old history entries (by date)").arg(removed));
         }
     }
 
@@ -798,12 +796,12 @@ void App::onResultDialogRetryRequested(const QString& promptId, const QString& p
                                         const QString& userPrompt, const QByteArray& imageData,
                                         double temperature)
 {
-    qDebug() << "Retry requested for prompt:" << promptId << "provider:" << providerId << "model:" << model;
+    LOG_DEBUG(QStringLiteral("Retry requested for prompt: %1 provider: %2 model: %3").arg(promptId).arg(providerId).arg(model));
 
     // Get provider profile
     auto profileOpt = m_configManager->providerProfile(providerId);
     if (!profileOpt.has_value()) {
-        qWarning() << "Provider profile not found for retry:" << providerId;
+        LOG_WARNING(QStringLiteral("Provider profile not found for retry: %1").arg(providerId));
         return;
     }
 

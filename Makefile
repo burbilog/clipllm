@@ -1,4 +1,4 @@
-.PHONY: build translations clean test web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-tar dist dist-linux dist-windows
+.PHONY: build translations clean test web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-tar dist dist-linux dist-windows cloc
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -42,6 +42,14 @@ regen-icons:
 test:
 	@echo "Running tests..."
 	@cd build && ctest --output-on-failure
+
+# Count lines of code (excludes build directories and other temporary files)
+cloc:
+	@echo "Counting lines of code..."
+	@which cloc >/dev/null 2>&1 || { echo "cloc not found. Install with: sudo apt install cloc"; exit 1; }
+	@cloc --exclude-dir=build,build-windows,deploy-linux,deploy-windows,dist,AppDir,.git \
+		--exclude-list-file=.gitignore \
+		src/ tests/ resources/ installer/ scripts/ CMakeLists.txt Makefile update-translations.sh
 
 # =============================================================================
 # Windows cross-compilation targets

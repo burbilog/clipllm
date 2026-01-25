@@ -641,6 +641,42 @@ Constraints:
             </div>
         </section>
 
+        <section class="section">
+            <h2 class="section-title">System Requirements</h2>
+            <div class="description">
+                <p>
+                    <strong>Windows:</strong> Windows 10/11 (x86_64)<br>
+                    <strong>Linux:</strong> Modern distribution (Ubuntu 22.04+, Fedora 38+, etc.) with X11 or Wayland<br>
+                    <strong>macOS:</strong> macOS 12+ (build from source)
+                </p>
+                <p style="margin-top: 12px; margin-bottom: 0;">
+                    <strong>Linux dependencies:</strong> Qt6 libraries are bundled with AppImage. For tar.gz version, install Qt6 via your package manager.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Quick Start</h2>
+            <div class="description">
+                <p>
+                    <strong>Linux (AppImage):</strong> Download and make executable:<br>
+                    <code style="background: var(--bg-primary); padding: 4px 8px; border-radius: 4px; font-family: monospace;">chmod +x clipllm-*.AppImage && ./clipllm-*.AppImage</code>
+                </p>
+                <p>
+                    <strong>Linux (tar.gz):</strong> Requires Qt6 (e.g., <code>sudo apt install qt6-base-dev</code> on Ubuntu or <code>sudo dnf install qt6-qtbase-gui</code> on Fedora). Then extract and run:<br>
+                    <code style="background: var(--bg-primary); padding: 4px 8px; border-radius: 4px; font-family: monospace;">./clipllm/ClipLLM</code><br>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Or install system-wide: <code>sudo ./install.sh && clipllm</code></span>
+                </p>
+                <p>
+                    <strong>Windows (Installer):</strong> Run the <code>.exe</code> installer and follow the prompts.<br>
+                    <strong>Windows (zip):</strong> Extract and run <code>ClipLLM.exe</code>.
+                </p>
+                <p style="margin-bottom: 0;">
+                    <strong>Note:</strong> Windows may show a SmartScreen warning for the unsigned binary. Click "More info" → "Run anyway" — this is normal for self-published software.
+                </p>
+            </div>
+        </section>
+
         <section class="github-section">
             <a href="https://github.com/burbilog/clipllm" class="github-link">
                 <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">

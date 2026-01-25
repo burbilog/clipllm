@@ -197,6 +197,10 @@ bool App::initialize(bool startMinimized)
             if (profiles.isEmpty()) {
                 qWarning() << "No providers configured at all";
                 m_llmClient->setConfig(Models::LLMConfig());
+                QMessageBox::warning(nullptr,
+                    tr("No LLM Provider Configured"),
+                    tr("No LLM provider profile has been configured.\n\n"
+                       "Please add at least one provider profile in Settings to use ClipLLM."));
             } else {
                 profile = profiles.first();
                 m_configManager->setDefaultProviderId(profile->id());

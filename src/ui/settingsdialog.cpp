@@ -1281,6 +1281,20 @@ void SettingsDialog::loadProviderProfiles()
     QList<Models::ProviderProfile> profiles = m_configManager->providerProfiles();
     QString defaultId = m_configManager->defaultProviderId();
 
+    // Add placeholder item when no profiles exist
+    if (profiles.isEmpty()) {
+        QListWidgetItem* placeholderItem = new QListWidgetItem();
+        placeholderItem->setText(tr("No provider profiles configured.\nClick '+ Add' to create one."));
+        placeholderItem->setFlags(placeholderItem->flags() & ~Qt::ItemIsEnabled & ~Qt::ItemIsSelectable);
+        QFont font = placeholderItem->font();
+        font.setItalic(true);
+        placeholderItem->setFont(font);
+        placeholderItem->setForeground(Qt::gray);
+        m_profilesList->addItem(placeholderItem);
+        onProfileSelectionChanged();
+        return;
+    }
+
     for (const auto& profile : profiles) {
         QListWidgetItem* item = new QListWidgetItem();
         QString displayText = profile.name();

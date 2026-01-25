@@ -357,8 +357,15 @@ project(ClipLLM VERSION X.Y.Z LANGUAGES CXX)
 ```bash
 make linux-appimage    # Creates dist/clipllm-X.Y.Z-linux-x86_64.AppImage
 make linux-tar         # Creates dist/clipllm-X.Y.Z-linux-x86_64.tar.gz
+make windows-zip       # Creates dist/clipllm-X.Y.Z-windows-x86_64.zip
 make windows-installer # Creates dist/ClipLLM-X.Y.Z-windows-x86_64-setup.exe
 ```
+
+**Binary release artifacts (4 files from `dist/`):**
+- `clipllm-X.Y.Z-linux-x86_64.AppImage` - Linux AppImage
+- `clipllm-X.Y.Z-linux-x86_64.tar.gz` - Linux portable tarball
+- `clipllm-X.Y.Z-windows-x86_64.zip` - Windows portable ZIP (with DLLs)
+- `ClipLLM-X.Y.Z-windows-x86_64-setup.exe` - Windows installer
 
 ### 3. Update web page
 ```bash
@@ -383,6 +390,7 @@ git push origin vX.Y.Z
 gh release create vX.Y.Z \
   dist/clipllm-X.Y.Z-linux-x86_64.AppImage \
   dist/clipllm-X.Y.Z-linux-x86_64.tar.gz \
+  dist/clipllm-X.Y.Z-windows-x86_64.zip \
   dist/ClipLLM-X.Y.Z-windows-x86_64-setup.exe \
   -n "Release X.Y.Z: brief description"
 ```

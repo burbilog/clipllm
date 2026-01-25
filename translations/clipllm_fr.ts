@@ -134,7 +134,7 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
         <translation>Ce prompt nécessite un contenu %1.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="740"/>
+        <location filename="../src/core/app.cpp" line="743"/>
         <source>[Image content]</source>
         <translation>[Contenu image]</translation>
     </message>
@@ -1464,7 +1464,7 @@ Veuillez choisir un autre raccourci.</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="85"/>
-        <location filename="../src/ui/resultdialog.cpp" line="236"/>
+        <location filename="../src/ui/resultdialog.cpp" line="248"/>
         <source>Model: -</source>
         <translation>Modèle : -</translation>
     </message>
@@ -1475,7 +1475,7 @@ Veuillez choisir un autre raccourci.</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="88"/>
-        <location filename="../src/ui/resultdialog.cpp" line="263"/>
+        <location filename="../src/ui/resultdialog.cpp" line="275"/>
         <source>Traffic: 0 B</source>
         <translation>Trafic : 0 o</translation>
     </message>
@@ -1491,21 +1491,21 @@ Veuillez choisir un autre raccourci.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="110"/>
         <location filename="../src/ui/resultdialog.cpp" line="114"/>
-        <location filename="../src/ui/resultdialog.cpp" line="257"/>
-        <location filename="../src/ui/resultdialog.cpp" line="552"/>
+        <location filename="../src/ui/resultdialog.cpp" line="269"/>
+        <location filename="../src/ui/resultdialog.cpp" line="566"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="114"/>
-        <location filename="../src/ui/resultdialog.cpp" line="257"/>
-        <location filename="../src/ui/resultdialog.cpp" line="552"/>
+        <location filename="../src/ui/resultdialog.cpp" line="269"/>
+        <location filename="../src/ui/resultdialog.cpp" line="566"/>
         <source>Raw</source>
         <translation>Brut</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="117"/>
-        <location filename="../src/ui/resultdialog.cpp" line="575"/>
+        <location filename="../src/ui/resultdialog.cpp" line="589"/>
         <source>Show Input</source>
         <translation>Afficher l&apos;entrée</translation>
     </message>
@@ -1565,45 +1565,45 @@ Veuillez choisir un autre raccourci.</translation>
         <translation>ClipLLM - %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="238"/>
-        <location filename="../src/ui/resultdialog.cpp" line="240"/>
+        <location filename="../src/ui/resultdialog.cpp" line="250"/>
+        <location filename="../src/ui/resultdialog.cpp" line="252"/>
         <source>Model: %1</source>
         <translation>Modèle : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="242"/>
+        <location filename="../src/ui/resultdialog.cpp" line="254"/>
         <source>Model: %1 / %2</source>
         <translation>Modèle : %1 / %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="264"/>
+        <location filename="../src/ui/resultdialog.cpp" line="276"/>
         <source>Connecting...</source>
         <translation>Connexion...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="292"/>
+        <location filename="../src/ui/resultdialog.cpp" line="304"/>
         <source>Tokens: ~%1</source>
         <translation>Jetons : ~%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="305"/>
+        <location filename="../src/ui/resultdialog.cpp" line="317"/>
         <source>Completed in %1 seconds</source>
         <translation>Terminé en %1 secondes</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="310"/>
+        <location filename="../src/ui/resultdialog.cpp" line="322"/>
         <source>Tokens: %1 input / %2 output</source>
         <translation>Jetons : %1 entrée / %2 sortie</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="333"/>
-        <location filename="../src/ui/resultdialog.cpp" line="361"/>
+        <location filename="../src/ui/resultdialog.cpp" line="345"/>
+        <location filename="../src/ui/resultdialog.cpp" line="373"/>
         <source>API Error</source>
         <translation>Erreur API</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="334"/>
-        <location filename="../src/ui/resultdialog.cpp" line="362"/>
+        <location filename="../src/ui/resultdialog.cpp" line="346"/>
+        <location filename="../src/ui/resultdialog.cpp" line="374"/>
         <source>An error occurred while communicating with the API:
 
 %1</source>
@@ -1612,48 +1612,48 @@ Veuillez choisir un autre raccourci.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="337"/>
-        <location filename="../src/ui/resultdialog.cpp" line="370"/>
+        <location filename="../src/ui/resultdialog.cpp" line="349"/>
+        <location filename="../src/ui/resultdialog.cpp" line="382"/>
         <source>Error: %1</source>
         <translation>Erreur : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="403"/>
+        <location filename="../src/ui/resultdialog.cpp" line="415"/>
         <source>Saved</source>
         <translation>Enregistré</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="465"/>
+        <location filename="../src/ui/resultdialog.cpp" line="479"/>
         <source>Close During Generation</source>
         <translation>Fermer pendant la génération</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="466"/>
+        <location filename="../src/ui/resultdialog.cpp" line="480"/>
         <source>A response is still being generated. Close and cancel the request?</source>
         <translation>Une réponse est encore en cours de génération. Fermer et annuler la requête ?</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="474"/>
+        <location filename="../src/ui/resultdialog.cpp" line="488"/>
         <source>Cancelling...</source>
         <translation>Annulation...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="515"/>
+        <location filename="../src/ui/resultdialog.cpp" line="529"/>
         <source>Model is thinking...</source>
         <translation>Le modèle réfléchit...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="518"/>
+        <location filename="../src/ui/resultdialog.cpp" line="532"/>
         <source>Generating response...</source>
         <translation>Génération de la réponse...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="527"/>
+        <location filename="../src/ui/resultdialog.cpp" line="541"/>
         <source>Traffic: %1</source>
         <translation>Trafic : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="571"/>
+        <location filename="../src/ui/resultdialog.cpp" line="585"/>
         <source>Hide Input</source>
         <translation>Masquer l&apos;entrée</translation>
     </message>

@@ -103,6 +103,10 @@ signals:
 private slots:
     void onHotkeyTriggered();
     void onPromptSelected(const QString& promptId);
+    void onResultDialogRetryRequested(const QString& promptId, const QString& providerId,
+                                      const QString& model, const QString& systemPrompt,
+                                      const QString& userPrompt, const QByteArray& imageData,
+                                      double temperature);
     void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onAboutToQuit();
 

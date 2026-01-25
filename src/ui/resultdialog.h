@@ -57,6 +57,9 @@ public:
     void setInput(const QString& input);
     void setProvider(const QString& provider);
     void setModel(const QString& model);
+    void setRetryContext(const QString& providerId, const QString& model,
+                         const QString& systemPrompt, const QString& userPrompt,
+                         const QByteArray& imageData, double temperature);
     void startRequest();
     void appendResponse(const QString& text);
 
@@ -64,6 +67,9 @@ signals:
     void responseReceived(const QString& response);
     void saveToHistoryRequested(const QString& promptId, const QString& promptName,
                                 const QString& input, const QString& output);
+    void retryRequested(const QString& promptId, const QString& providerId, const QString& model,
+                        const QString& systemPrompt, const QString& userPrompt,
+                        const QByteArray& imageData, double temperature);
 
 public slots:
     void closeDialog();
@@ -136,6 +142,14 @@ private:
     QString m_output;
     QString m_provider;
     QString m_model;
+
+    // Retry context
+    QString m_providerId;
+    QString m_modelForRetry;
+    QString m_systemPrompt;
+    QString m_userPrompt;
+    QByteArray m_imageData;
+    double m_temperature = -1.0;
 
     // State
     bool m_isStreaming = false;

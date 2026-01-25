@@ -61,7 +61,7 @@ bool Prompt::fromJson(const QJsonObject& json)
     m_contentType = contentTypeFromString(
         json.value(QStringLiteral("content_type")).toString(QStringLiteral("any"))
     );
-    m_model = json.value(QStringLiteral("model")).toString(QStringLiteral("openai/gpt-4"));
+    m_model = json.value(QStringLiteral("model")).toString();
     m_icon = iconFromString(json.value(QStringLiteral("icon")).toString());
     m_temperature = json.value(QStringLiteral("temperature")).toDouble(0.7);
     m_maxTokens = json.value(QStringLiteral("max_tokens")).toInt(131072);

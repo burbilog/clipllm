@@ -733,6 +733,9 @@ void App::onPromptSelected(const QString& promptId)
         connect(m_resultDialog, &QObject::destroyed, [this]() {
             m_resultDialog = nullptr;
         });
+        // Connect retry signal
+        connect(m_resultDialog, &UI::ResultDialog::retryRequested,
+                this, &App::onResultDialogRetryRequested);
     }
 
     // Configure dialog
@@ -774,10 +777,46 @@ void App::onPromptSelected(const QString& promptId)
         temperature = prompt.temperature();
     }
 
+    // Store retry context in dialog
+    m_resultDialog->setRetryContext(profile.id(), modelToUse, systemPrompt, userPrompt, imageData, temperature);
+
     if (!systemPrompt.isEmpty()) {
         m_llmClient->sendPrompt(systemPrompt, userPrompt, imageData, temperature);
     } else {
         // If no system prompt, send user prompt only
+        m_llmClient->sendPrompt(QString(), userPrompt, imageData, temperature);
+    }
+}
+
+void App::onResultDialogRetryRequested(const QString& promptId, const QString& providerId,
+                                        const QString& model, const QString& systemPrompt,
+                                        const QString& userPrompt, const QByteArray& imageData,
+                                        double temperature)
+{
+    qDebug() << "Retry requested for prompt:" << promptId << "provider:" << providerId << "model:" << model;
+
+    // Get provider profile
+    auto profileOpt = m_configManager->providerProfile(providerId);
+    if (!profileOpt.has_value()) {
+        qWarning() << "Provider profile not found for retry:" << providerId;
+        return;
+    }
+
+    const Models::ProviderProfile& profile = profileOpt.value();
+
+    // Configure LLM client with the provider profile
+    Models::LLMConfig config = profileToConfig(profile);
+    config.setModel(model);  // Use the exact model from the original request
+    m_llmClient->setConfig(config);
+    m_llmClient->setApiKey(config.apiKey());
+
+    // Reset the dialog for new request
+    m_resultDialog->startRequest();
+
+    // Re-send the request with the same parameters
+    if (!systemPrompt.isEmpty()) {
+        m_llmClient->sendPrompt(systemPrompt, userPrompt, imageData, temperature);
+    } else {
         m_llmClient->sendPrompt(QString(), userPrompt, imageData, temperature);
     }
 }

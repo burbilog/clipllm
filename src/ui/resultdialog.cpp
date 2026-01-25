@@ -230,6 +230,18 @@ void ResultDialog::setModel(const QString& model)
     updateModelLabel();
 }
 
+void ResultDialog::setRetryContext(const QString& providerId, const QString& model,
+                                   const QString& systemPrompt, const QString& userPrompt,
+                                   const QByteArray& imageData, double temperature)
+{
+    m_providerId = providerId;
+    m_modelForRetry = model;
+    m_systemPrompt = systemPrompt;
+    m_userPrompt = userPrompt;
+    m_imageData = imageData;
+    m_temperature = temperature;
+}
+
 void ResultDialog::updateModelLabel()
 {
     if (m_provider.isEmpty() && m_model.isEmpty()) {
@@ -409,7 +421,9 @@ void ResultDialog::onSaveClicked()
 void ResultDialog::onRetryClicked()
 {
     m_retryButton->setEnabled(false);
-    emit responseReceived(m_output); // Signal to retry
+    // Emit signal with all necessary context for retry
+    emit retryRequested(m_promptId, m_providerId, m_modelForRetry,
+                        m_systemPrompt, m_userPrompt, m_imageData, m_temperature);
 }
 
 void ResultDialog::onCloseClicked()

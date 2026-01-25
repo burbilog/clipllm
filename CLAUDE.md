@@ -141,6 +141,8 @@ The `App` class (inherits `QApplication`) is the central controller that:
 - `ConfigManager` - QSettings wrapper for configuration
 - `KeychainStore` - Platform keychain for API keys
 - `HistoryManager` - Request history and statistics
+- `GroupsManager` - Prompt group hierarchy management
+- `ProviderKeyStore` - Provider API key storage
 - `TrayIcon` - System tray integration
 
 ### Core Module Details
@@ -153,7 +155,7 @@ The `App` class (inherits `QApplication`) is the central controller that:
 **LLMClient** (src/core/llmclient.h)
 - State machine: Idle → Connecting → Streaming → Completed/Error
 - Server-Sent Events (SSE) streaming with real-time parsing
-- Supports 7 provider templates: OpenRouter, OpenAI, Anthropic, Ollama, NanoGPT, llama.cpp, and custom endpoints
+- Supports OpenAI-compatible APIs with 7 pre-configured provider templates (OpenRouter, OpenAI, DeepSeek, Ollama, NanoGPT, llama.cpp, Custom)
 - Provider-specific response parsing required for streaming
 
 **PromptManager** (src/core/promptmanager.h)
@@ -170,6 +172,16 @@ The `App` class (inherits `QApplication`) is the central controller that:
 - Credential storage using QSettings with XOR obfuscation
 - TODO: Platform-specific keychain integration (libsecret/KWallet on Linux, Credential Manager on Windows, Keychain on macOS)
 
+**GroupsManager** (src/core/groupsmanager.h)
+- CRUD operations for prompt groups
+- Tree structure with parent-child relationships
+- Group metadata: name, description, icon, enabled state
+
+**ProviderKeyStore** (src/core/providerkeystore.h)
+- Provider API key storage with XOR obfuscation
+- Per-profile key management
+- TODO: Platform-specific keychain integration
+
 ### Data Models (src/models/)
 
 - **Prompt**: `id`, `name`, `systemPrompt`, `userPromptTemplate`, `contentType` (Text/Image/Any), `model`, `icon`, `temperature`, `maxTokens`, `enabled`, `priority`, `overrideTemperature`, `metadata`
@@ -184,6 +196,11 @@ The `App` class (inherits `QApplication`) is the central controller that:
 - **HotkeyEdit**: Custom widget for hotkey capture
 - **HistoryDialog**: Searchable history viewer with Markdown/Raw preview and export
 - **PromptEditorDialog**: Full UI for creating and editing prompts
+- **PromptMenu**: Searchable menu with inline search and keyboard navigation
+- **PromptPreviewDialog**: Preview prompt with clipboard content before execution
+- **PromptConflictDialog**: Resolve conflicts when importing prompts
+- **ImageViewDialog**: View clipboard images
+- **GroupsDialog**: Manage prompt group hierarchy
 
 ## Debug Logging
 
@@ -249,9 +266,37 @@ level=2
 
 ## Configuration Files
 
-- **Default Prompts**: `resources/config/prompts-default.json` (15 built-in prompts)
+- **Default Prompts**: `resources/config/prompts-default.json` (17 built-in prompts)
 - **Qt Resources**: `resources/resources.qrc` - bundles prompts and icons into executable
 - **Desktop Entry**: `resources/clipllm.desktop.in` - Linux application launcher
+
+### Prompt Groups System
+
+**GroupsManager** (src/core/groupsmanager.h)
+- Hierarchical group organization for prompts
+- Tree-based structure with parent-child relationships
+- Groups can have icons and descriptions
+- Built-in "Languages" group for translation prompts
+
+**GroupsDialog** (src/ui/groupsdialog.h)
+- Full UI for creating, editing, and deleting groups
+- Tree view with drag-and-drop support
+- Group icons and descriptions
+- Assign prompts to groups via PromptEditorDialog
+
+### Provider Profiles
+
+**ProviderProfile** (src/models/providerprofile.h)
+- Pre-configured templates for LLM providers
+- 7 templates: OpenRouter, OpenAI, DeepSeek, Ollama, NanoGPT, llama.cpp, Custom
+- Per-profile settings: apiUrl, model, temperature, maxTokens, stream, topP
+- Profile enable/disable and default profile selection
+- Cascade fallback: profile settings → global defaults
+
+**ProviderKeyStore** (src/core/providerkeystore.h)
+- Separate storage for provider API keys
+- Per-profile key management
+- Designed for future platform keychain integration
 
 ## Platform-Specific Notes
 

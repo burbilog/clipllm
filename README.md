@@ -2,13 +2,22 @@
 
 Cross-platform LLM clipboard utility - Process your clipboard content with AI prompts using global hotkeys.
 
+## Use Cases
+
+- **Language Learning** - Copy Japanese text from a website or manga image, press a hotkey, and get detailed grammar breakdowns with readings, translations, and explanations
+- **Translation Workflow** - Quickly translate to 6 built-in languages (English, Russian, German, French, Spanish, Japanese); create custom prompts to translate to/from any language
+- **Code Review** - Copy a code snippet and instantly get explanations, reviews, or refactoring suggestions
+- **Content Enhancement** - Improve writing clarity, fix grammar, extract keywords, or summarize lengthy documents
+- **Image Analysis** - Extract text from screenshots, describe images, or analyze visual content with OCR
+- **Information Extraction** - Copy emails, articles, or documents and extract key facts, dates, and structured data
+
 ## Features
 
 - **System Tray Integration** - Runs in the background with a tray icon
 - **Global Hotkey** - Activate processing from any application
 - **Text and Images** - Process both text content and images from clipboard
 - **Configurable Prompts** - Built-in prompts with support for custom prompts
-- **Multiple LLM Providers** - Support for 7 provider templates: OpenRouter, OpenAI, Anthropic, Ollama, NanoGPT, llama.cpp, and custom endpoints
+- **Multiple LLM Providers** - Support for OpenAI-compatible APIs with 7 pre-configured templates: OpenRouter, OpenAI, DeepSeek, Ollama, NanoGPT, llama.cpp, and custom endpoints
 - **Streaming Responses** - Real-time display of AI responses with Markdown rendering
 - **History Management** - View, search, and export your request history
 - **Priority System** - Set priority for prompts to control menu order
@@ -16,7 +25,11 @@ Cross-platform LLM clipboard utility - Process your clipboard content with AI pr
 - **Prompt Editor** - Full UI for creating and editing custom prompts
 - **Multi-language** - Available in English, Russian, German, French, and Spanish
 - **Prompt Groups** - Organize prompts into hierarchical groups
-- **Provider Profiles** - Pre-configured templates for popular LLM providers
+- **Provider Profiles** - Pre-configured templates with per-profile settings and cascade fallback
+- **Prompt Hotkeys** - Assign individual global hotkeys to specific prompts
+- **Searchable Menu** - Quick prompt search with inline keyboard navigation
+- **Debug Logging** - Built-in debug logging with file output and multiple levels
+- **History Favorites** - Mark important requests as favorites in history
 - **Advanced Options** - Proxy support, timeout, top-p, stream toggle
 - **Cross-platform** - Works on Linux (X11/Wayland), Windows, and macOS
 
@@ -134,23 +147,32 @@ make -j$(sysctl -n hw.ncpu)
 1. Launch ClipLLM
 2. Click on the tray icon and select "Settings"
 3. Configure your LLM provider:
-   - Choose a provider (OpenRouter, OpenAI, Anthropic, Ollama, NanoGPT, llama.cpp, or Custom)
-   - Enter your API key
+   - Choose a provider template (OpenRouter, OpenAI, DeepSeek, Ollama, NanoGPT, llama.cpp, or Custom)
+   - Enter your API key (required for most providers; local providers like Ollama/llama.cpp may not need one)
+   - For **Custom** provider: specify the API URL (must be an OpenAI-compatible endpoint)
    - Select a model
 4. Set up your global hotkey
 5. Click "OK"
 
-### API Key Setup
+### LLM Provider Configuration
 
-ClipLLM supports multiple LLM providers:
+ClipLLM supports OpenAI-compatible APIs with pre-configured templates for:
 
-- **OpenRouter** (https://openrouter.ai) - Access to multiple models
-- **OpenAI** - Direct GPT-4 access
-- **Anthropic** - Claude models
-- **Ollama** - Self-hosted local models
-- **NanoGPT** - Lightweight local models
-- **llama.cpp** - Local LLaMA models
-- **Custom** - Self-hosted or custom endpoints
+| Provider | API URL | Notes |
+|----------|---------|-------|
+| **OpenRouter** | `https://openrouter.ai/api/v1/chat/completions` | Requires API key; access to multiple models |
+| **OpenAI** | `https://api.openai.com/v1/chat/completions` | Requires API key; direct GPT-4 access |
+| **DeepSeek** | `https://api.deepseek.com/chat/completions` | Requires API key |
+| **Ollama** | `http://localhost:11434/v1/chat/completions` | Local only; API key optional |
+| **NanoGPT** | `https://nano-gpt.com/api/v1/chat/completions` | Requires API key |
+| **llama.cpp** | `http://localhost:8080/v1/chat/completions` | Local only; API key optional |
+| **Custom** | *User-specified* | Any OpenAI-compatible endpoint; **API URL required** |
+
+**Custom Provider Setup:**
+1. Select "Custom" from the provider template dropdown
+2. Enter the full API URL (e.g., `https://your-provider.com/v1/chat/completions`)
+3. Enter your API key if required by the provider
+4. Select or enter the model name
 
 ## Usage
 
@@ -162,9 +184,10 @@ ClipLLM supports multiple LLM providers:
 
 ### Default Prompts
 
-Built-in prompts (15 total):
+Built-in prompts (17 total):
 - **Summary** - Generate a structured summary
-- **Translate** - Translate to English, Russian, German, French, or Spanish (5 prompts)
+- **Translate** - Translate to English, Russian, German, French, Spanish, or Japanese (6 prompts)
+- **Japanese Grammar** - Explain Japanese grammar from text or image
 - **Explain Code** - Get code explanations
 - **Code Review** - Review code for issues
 - **Refactor Code** - Suggest code improvements
@@ -240,6 +263,8 @@ To add or update translations:
 
 ```bash
 # Update translation files from source
+make translations
+# or
 lupdate src/ -ts translations/*.ts
 
 # Edit .ts files with Qt Linguist
@@ -248,6 +273,27 @@ linguist translations/*.ts
 # Generate .qm files
 lrelease translations/*.ts
 ```
+
+### Makefile Targets
+
+Additional build commands:
+
+```bash
+make cloc            # Count lines of code (excludes build dirs)
+make regen-icons     # Regenerate tray icons from source art
+make web             # Generate landing page from template
+```
+
+### Debug Logging
+
+ClipLLM includes a debug logging system that writes to `debug.log` in the configuration directory:
+- Linux: `~/.config/ClipLLM/debug.log`
+- Windows: Configuration directory + `debug.log`
+- macOS: `~/Library/Preferences/com.ClipLLM/debug.log`
+
+Enable via Settings → General tab → Debug group. Three levels available:
+- **Normal** - Basic debug messages (errors, warnings, lifecycle)
+- **Trace** - Full LLM request/response logging
 
 ## License
 
@@ -269,4 +315,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 ## Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues.
+
+**Project Repository:** https://github.com/burbilog/clipllm
 

@@ -312,6 +312,65 @@
             text-decoration: underline;
         }
 
+        /* Collapsible prompt */
+        .prompt-collapse {
+            margin-top: 12px;
+        }
+
+        .prompt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .prompt-toggle-icon {
+            transition: transform 0.2s ease;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        .prompt-toggle-icon.expanded {
+            transform: rotate(180deg);
+        }
+
+        .prompt-content {
+            max-height: 80px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .prompt-content.expanded {
+            max-height: 2000px;
+        }
+
+        .prompt-code {
+            background: var(--bg-primary);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            position: relative;
+        }
+
+        .prompt-code::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(transparent, var(--bg-primary));
+            pointer-events: none;
+        }
+
+        .prompt-content.expanded .prompt-code::after {
+            display: none;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -410,6 +469,92 @@
             </div>
         </section>
 
+        <section class="section">
+            <h2 class="section-title">Demo</h2>
+            <div class="description">
+                <p style="margin-bottom: 16px; color: var(--text-secondary);">Use case: learn Japanese grammar from favorite manga</p>
+                <div style="text-align: center;">
+                    <video
+                        src="video/clipllm-demo.mp4"
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        width="100%"
+                        style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); max-width: 800px;">
+                        Your browser does not support video.
+                    </video>
+                </div>
+                <div style="margin-top: 24px; font-size: 0.9rem; color: var(--text-muted);">
+                    <p><strong>Provider:</strong> openrouter.ai &nbsp;•&nbsp; <strong>Model:</strong> gemini-2.0-flash</p>
+
+                    <div class="prompt-collapse">
+                        <div class="prompt-header" onclick="togglePrompt()">
+                            <strong>Prompt:</strong>
+                            <span id="promptToggleText" style="color: var(--accent); font-size: 0.85rem;">Show more ▼</span>
+                        </div>
+                        <div class="prompt-content" id="promptContent">
+                            <div class="prompt-code">You are an expert Japanese language teacher known for clear and comprehensive grammar explanations. Your target language for all explanations and translations is {language}. Reply in {language} ONLY.
+
+Task:
+1. Analyze the Japanese text provided in the user's message or extract it from the attached image.
+2. First, output the full original Japanese text exactly as it appears (for preview purposes).
+3. Then, provide a detailed sentence-by-sentence breakdown.
+
+Output Structure:
+
+[Step 1: Preview Header]
+Output the complete original Japanese text immediately at the very beginning of your response.
+*   Do NOT add labels like "Original Text:", "Analysis:", or "Here is the text:".
+*   Just output the raw Japanese characters.
+*   If the input is an image, output the full OCR result here.
+
+---
+(Insert a horizontal rule here)
+
+[Step 2: Detailed Analysis]
+For each sentence, strictly follow this template:
+
+### Sentence [Number]
+
+**Original:**
+&lt;Original Japanese text of this specific sentence&gt;
+
+**Reading:**
+&lt;Hiragana transcription. IMPORTANT: Insert a wide Japanese space (U+3000 "　") between every distinct word or particle (bunsetsu) for clarity. Do NOT separate individual characters within a word.&gt;
+
+**Translation:**
+&lt;Natural and accurate translation in {language}&gt;
+
+**Grammar Breakdown:**
+&lt;Explain specific grammar points, particles, conjugations, and vocabulary nuances. Use markdown bullet points.&gt;
+*   **[Word/Particle]**: [Meaning/Function]. (If it is a conjugated verb/adjective, always provide the Dictionary Form).
+*   **[Grammar Structure]**: [Explanation of how it works].
+
+Constraints:
+1. If the input is an image, perform high-accuracy OCR.
+2. Ensure the "Reading" section accurately reflects the pronunciation (yomikata) of Kanji in context.
+3. Always use Hiragana for the reading section (unless the word is naturally Katakana).
+4. Do not output conversational filler. Start directly with the Japanese text.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function togglePrompt() {
+                        const content = document.getElementById('promptContent');
+                        const toggleText = document.getElementById('promptToggleText');
+                        content.classList.toggle('expanded');
+                        if (content.classList.contains('expanded')) {
+                            toggleText.textContent = 'Show less ▲';
+                        } else {
+                            toggleText.textContent = 'Show more ▼';
+                        }
+                    }
+                </script>
+            </div>
+        </section>
+
         <section class="download-section">
             <h2 class="section-title">Download</h2>
             <p style="color: var(--text-secondary);">Choose your platform to download the latest release</p>
@@ -428,8 +573,9 @@
                 <div class="download-card">
                     <div class="platform-icon">🪟</div>
                     <div class="platform-name">Windows</div>
-                    <div class="platform-arch">x86_64 • Installer</div>
-                    <a href="https://github.com/burbilog/clipllm/releases/download/v@VERSION@/ClipLLM-@VERSION@-windows-x86_64-setup.exe" class="btn btn-primary">Download</a>
+                    <div class="platform-arch">x86_64 • Installer, zip</div>
+                    <a href="https://github.com/burbilog/clipllm/releases/download/v@VERSION@/ClipLLM-@VERSION@-windows-x86_64-setup.exe" class="btn btn-primary">Installer</a>
+                    <a href="https://github.com/burbilog/clipllm/releases/download/v@VERSION@/clipllm-@VERSION@-windows-x86_64.zip" class="btn btn-secondary" style="margin-top: 8px;">zip</a>
                 </div>
 
                 <!-- macOS -->

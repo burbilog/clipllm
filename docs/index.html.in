@@ -370,7 +370,7 @@
                 <div class="feature-card">
                     <div class="feature-icon">⌨️</div>
                     <div class="feature-title">Global Hotkeys</div>
-                    <div class="feature-desc">Activate from any application with a customizable hotkey</div>
+                    <div class="feature-desc">Assign individual hotkeys to each prompt for instant activation from any application</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🖼️</div>

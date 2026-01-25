@@ -63,7 +63,9 @@
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось выполнить промпт: буфер обмена пуст.
+
+Сначала скопируйте текст или изображение.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="613"/>
@@ -218,7 +220,7 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="63"/>
         <source>Failed to load default prompts</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось загрузить стандартные промпты</translation>
     </message>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="122"/>
@@ -1830,12 +1832,12 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="653"/>
         <source>(custom)</source>
-        <translation type="unfinished"></translation>
+        <translation>(пользовательский)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="655"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(по умолчанию)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="665"/>

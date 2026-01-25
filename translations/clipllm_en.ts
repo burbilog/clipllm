@@ -63,7 +63,9 @@
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cannot execute prompt: clipboard is empty.
+
+Copy some text or an image first.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="613"/>
@@ -470,7 +472,7 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
     <message>
         <location filename="../src/core/promptmanager.cpp" line="63"/>
         <source>Failed to load default prompts</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to load default prompts</translation>
     </message>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="132"/>
@@ -1973,12 +1975,12 @@ Please choose a different hotkey.</translation>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="653"/>
         <source>(custom)</source>
-        <translation type="unfinished"></translation>
+        <translation>(custom)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="655"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(default)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="665"/>

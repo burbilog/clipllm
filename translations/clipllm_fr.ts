@@ -63,7 +63,9 @@
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;exécuter le prompt : le presse-papiers est vide.
+
+Copiez du texte ou une image d&apos;abord.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="613"/>
@@ -194,7 +196,7 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
     <message>
         <location filename="../src/core/promptmanager.cpp" line="63"/>
         <source>Failed to load default prompts</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement des prompts par défaut</translation>
     </message>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="122"/>
@@ -2216,12 +2218,12 @@ Cliquez sur &apos;+ Ajouter&apos; pour en créer un.</translation>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="653"/>
         <source>(custom)</source>
-        <translation type="unfinished"></translation>
+        <translation>(personnalisé)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="655"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(par défaut)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="665"/>

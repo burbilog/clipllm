@@ -63,7 +63,9 @@
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt kann nicht ausgeführt werden: Zwischenablage ist leer.
+
+Kopieren Sie zuerst Text oder ein Bild.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="613"/>
@@ -194,7 +196,7 @@ Bitte fügen Sie mindestens ein Anbieterprofil in den Einstellungen hinzu, um Cl
     <message>
         <location filename="../src/core/promptmanager.cpp" line="63"/>
         <source>Failed to load default prompts</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard-Prompts konnten nicht geladen werden</translation>
     </message>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="122"/>
@@ -2216,12 +2218,12 @@ Klicken Sie auf &apos;+ Hinzufügen&apos;, um eines zu erstellen.</translation>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="653"/>
         <source>(custom)</source>
-        <translation type="unfinished"></translation>
+        <translation>(benutzerdefiniert)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="655"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Standard)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="665"/>

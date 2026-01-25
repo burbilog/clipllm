@@ -63,7 +63,9 @@
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede ejecutar el prompt: el portapapeles está vacío.
+
+Copie texto o una imagen primero.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="613"/>
@@ -194,7 +196,7 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
     <message>
         <location filename="../src/core/promptmanager.cpp" line="63"/>
         <source>Failed to load default prompts</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al cargar los prompts predeterminados</translation>
     </message>
     <message>
         <location filename="../src/core/promptmanager.cpp" line="122"/>
@@ -2216,12 +2218,12 @@ Haga clic en &apos;+ Agregar&apos; para crear uno.</translation>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="653"/>
         <source>(custom)</source>
-        <translation type="unfinished"></translation>
+        <translation>(personalizado)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="655"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(predeterminado)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="665"/>

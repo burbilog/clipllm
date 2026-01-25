@@ -15,6 +15,10 @@
 ; Modern UI
 !include "MUI2.nsh"
 
+; nsProcess plugin for process detection
+!addplugindir "installer/plugins"
+!include "installer/plugins/nsProcess.nsh"
+
 ; General
 Name "${APP_NAME}"
 OutFile "dist\${APP_NAME}-${APP_VERSION}-windows-x86_64-setup.exe"
@@ -131,7 +135,15 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\${APP_NAME}\*.*"
   RMDir "$SMPROGRAMS\${APP_NAME}"
 
-  ; Delete files and directories
+  ; Delete main exe with explicit error check
+  ClearErrors
+  Delete "$INSTDIR\${APP_NAME}.exe"
+  IfErrors 0 +3
+  MessageBox MB_OK|MB_ICONSTOP \
+    "Could not delete ${APP_NAME}.exe.$\n$\nThe application may still be running.$\n$\nPlease close it and run the uninstaller again."
+  Abort
+
+  ; Delete other files and directories
   Delete "$INSTDIR\uninstall.exe"
   RMDir /r "$INSTDIR"
 SectionEnd
@@ -141,19 +153,52 @@ Function .onInit
   ; Initialize language selection (default: English)
   StrCpy $hCtl_Language "en"
 
+  ; Check if app is currently running (before installation) - with retry loop
+  check_running_installer:
+  Call IsAppRunning
+  Pop $R0
+  ${If} $R0 = 1
+    ; App is running - ask user to close
+    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION \
+      "${APP_NAME} is currently running.$\n$\nPlease close the application (right-click the tray icon and select Exit) before installing.$\n$\nClick Retry after closing the app, or Cancel to abort." \
+      IDRETRY check_running_installer
+    ; User clicked Cancel - abort installation
+    Abort
+  ${EndIf}
+
   ; Check if already installed
   ReadRegStr $R0 HKCU "Software\${APP_NAME}" ""
-  StrCmp $R0 "" done
+  StrCmp $R0 "" init_done
 
-  MessageBox MB_YESNO|MB_ICONQUESTION \
-    "${APP_NAME} is already installed. $\n$\nWould you like to uninstall the previous version before installing the new one?" \
-    IDYES uninst IDNO done
+  ; Ask user what to do with existing installation
+  MessageBox MB_YESNOCANCEL|MB_ICONQUESTION \
+    "${APP_NAME} is already installed. $\n$\nClick Yes to uninstall the old version, No to install over it, or Cancel to abort." \
+    /SD IDYES
+  Pop $R1  ; Result: IDYES=6, IDNO=7, IDCANCEL=2
+
+  ${If} $R1 = 6
+    ; User clicked Yes - uninstall old version
+    Goto uninst
+  ${ElseIf} $R1 = 2
+    ; User clicked Cancel - abort installation
+    Abort
+  ${EndIf}
+  ; User clicked No (7) - continue with installation
+  Goto init_done
 
 uninst:
   ClearErrors
-  ExecWait '$R0\uninstall.exe _?=$INSTDIR'
-  IfErrors done
-  done:
+  ExecWait '$R0\uninstall.exe _?=$INSTDIR' $R1
+  IfErrors init_done
+  ; Check if uninstall was aborted (return code != 0 means aborted or error)
+  ${If} $R1 != 0
+    MessageBox MB_YESNO|MB_ICONQUESTION \
+      "The uninstallation was cancelled or failed.$\n$\nDo you want to continue with the installation anyway?" \
+      IDYES init_done
+    ; User clicked No - abort installation
+    Abort
+  ${EndIf}
+  init_done:
 FunctionEnd
 
 Function fnc_Language_Show
@@ -216,4 +261,76 @@ Function fnc_Language_Leave
     ${Case} 4
       StrCpy $hCtl_Language "es"
   ${EndSwitch}
+FunctionEnd
+
+; ============================================================================
+; Process detection functions (using nsProcess plugin)
+; ============================================================================
+; nsProcess::_FindProcess returns:
+;   0 = process found
+;   603 = process not found
+;   601 = invalid parameter
+;   602 = process not found (alternate)
+
+; Function to check if app is running (for installer)
+; Returns 1 on stack if app is running, 0 if not running
+Function IsAppRunning
+  nsProcess::_FindProcess "${APP_NAME}.exe"
+  Pop $R0  ; Return code
+
+  ${If} $R0 = 0
+    ; Process found
+    Push 1
+  ${ElseIf} $R0 = 603
+    ; Process not found
+    Push 0
+  ${Else}
+    ; Error or other code - treat as not found
+    Push 0
+  ${EndIf}
+FunctionEnd
+
+; Function to check if app is running (for uninstaller)
+; Returns 1 on stack if app is running, 0 if not running
+Function un.IsAppRunning
+  nsProcess::_FindProcess "${APP_NAME}.exe"
+  Pop $R0  ; Return code
+
+  ${If} $R0 = 0
+    ; Process found
+    Push 1
+  ${ElseIf} $R0 = 603
+    ; Process not found
+    Push 0
+  ${Else}
+    ; Error or other code - treat as not found
+    Push 0
+  ${EndIf}
+FunctionEnd
+
+; Uninstaller initialization - check if app is running
+Function un.onInit
+  Call un.IsAppRunning
+  Pop $R0
+  ${If} $R0 = 1
+    ; App is running - ask user to close
+    MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+      "${APP_NAME} is currently running.$\n$\nPlease close the application (right-click the tray icon and select Exit) before uninstalling.$\n$\nClick OK after closing the app, or Cancel to abort." \
+      IDOK check_closed IDCANCEL uninst_abort
+
+    check_closed:
+    ; User clicked OK - check again if app is closed
+    Call un.IsAppRunning
+    Pop $R0
+    ${If} $R0 = 1
+      ; Still running - ask again
+      MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION \
+        "${APP_NAME} is still running.$\n$\nPlease right-click the tray icon and select Exit, then try again." \
+        IDRETRY check_closed IDCANCEL uninst_abort
+    ${EndIf}
+  ${EndIf}
+  Return
+
+  uninst_abort:
+  Abort
 FunctionEnd

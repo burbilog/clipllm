@@ -486,7 +486,7 @@
                     </video>
                 </div>
                 <div style="margin-top: 24px; font-size: 0.9rem; color: var(--text-muted);">
-                    <p><strong>Provider:</strong> openrouter.ai &nbsp;•&nbsp; <strong>Model:</strong> gemini-2.0-flash</p>
+                    <p><strong>Provider:</strong> openrouter.ai &nbsp;•&nbsp; <strong>Model:</strong> gemini-3-flash</p>
 
                     <div class="prompt-collapse">
                         <div class="prompt-header" onclick="togglePrompt()">

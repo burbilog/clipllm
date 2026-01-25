@@ -265,7 +265,11 @@ void PromptMenu::rebuildMenu()
 QAction* PromptMenu::createPromptAction(const Models::Prompt& prompt)
 {
     QString text = prompt.name();
-    if (!prompt.description().isEmpty()) {
+    bool showDescriptions = false;
+    if (m_configManager) {
+        showDescriptions = m_configManager->showDescriptionInPopup();
+    }
+    if (showDescriptions && !prompt.description().isEmpty()) {
         text += QStringLiteral(" — ") + prompt.description();
     }
 

@@ -149,6 +149,8 @@ private:
 
     // General tab
     QComboBox* m_languageCombo = nullptr;
+    QCheckBox* m_showDescriptionInMenuCheck = nullptr;
+    QCheckBox* m_showDescriptionInPopupCheck = nullptr;
     QCheckBox* m_autoSaveHistoryCheck = nullptr;
 
     // LLM tab - Provider Profiles

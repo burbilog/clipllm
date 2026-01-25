@@ -175,6 +175,20 @@ void SettingsDialog::setupGeneralTab()
     hotkeyLayout->addRow(infoLabel);
 
     layout->addWidget(hotkeyGroup);
+
+    // Miscellaneous group
+    QGroupBox* miscGroup = new QGroupBox(tr("Miscellaneous"));
+    QVBoxLayout* miscLayout = new QVBoxLayout(miscGroup);
+
+    m_showDescriptionInMenuCheck = new QCheckBox(tr("Show prompt descriptions in menu"));
+    m_showDescriptionInMenuCheck->setToolTip(tr("Show prompt descriptions in the tray menu (disabled by default for cleaner menu)"));
+    miscLayout->addWidget(m_showDescriptionInMenuCheck);
+
+    m_showDescriptionInPopupCheck = new QCheckBox(tr("Show prompt descriptions in popup"));
+    m_showDescriptionInPopupCheck->setToolTip(tr("Show prompt descriptions in the popup menu (disabled by default for cleaner popup)"));
+    miscLayout->addWidget(m_showDescriptionInPopupCheck);
+
+    layout->addWidget(miscGroup);
     layout->addStretch();
 
     m_tabWidget->addTab(widget, tr("General"));
@@ -517,6 +531,10 @@ void SettingsDialog::loadSettings()
 
     m_autoSaveHistoryCheck->setChecked(m_configManager->historyAutoSave());
 
+    // General - Miscellaneous
+    m_showDescriptionInMenuCheck->setChecked(m_configManager->showDescriptionInMenu());
+    m_showDescriptionInPopupCheck->setChecked(m_configManager->showDescriptionInPopup());
+
     // LLM - Global defaults
     if (m_configManager->defaultTemperature().has_value()) {
         m_globalTemperatureSpin->setValue(*m_configManager->defaultTemperature());
@@ -556,6 +574,8 @@ void SettingsDialog::saveSettings()
     // General
     m_configManager->setLanguage(m_languageCombo->currentData().toString());
     m_configManager->setHistoryAutoSave(m_autoSaveHistoryCheck->isChecked());
+    m_configManager->setShowDescriptionInMenu(m_showDescriptionInMenuCheck->isChecked());
+    m_configManager->setShowDescriptionInPopup(m_showDescriptionInPopupCheck->isChecked());
 
     // LLM - Save all profiles
     QList<Models::ProviderProfile> profiles;

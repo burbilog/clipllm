@@ -185,6 +185,68 @@ The `App` class (inherits `QApplication`) is the central controller that:
 - **HistoryDialog**: Searchable history viewer with Markdown/Raw preview and export
 - **PromptEditorDialog**: Full UI for creating and editing prompts
 
+## Debug Logging
+
+ClipLLM has a built-in debug logging system that writes to `debug.log` in the configuration directory:
+- Linux: `~/.config/ClipLLM/debug.log`
+- Windows: Registry key path + `debug.log`
+- macOS: `~/Library/Preferences/com.ClipLLM/debug.log`
+
+### Debug Levels
+
+- **Off** (0): Debug logging disabled (default)
+- **Normal** (1): Basic debug messages - application lifecycle, errors, warnings
+- **Trace** (2): Everything in Normal + full LLM request/response logging
+
+### Usage in Code
+
+**Include the header:**
+```cpp
+#include "core/debuglogger.h"
+```
+
+**Use the logging macros:**
+```cpp
+LOG_DEBUG(QStringLiteral("Processing item: %1").arg(item));
+LOG_INFO(QStringLiteral("Operation completed successfully"));
+LOG_WARNING(QStringLiteral("Unexpected value: %1").arg(value));
+LOG_ERROR(QStringLiteral("Failed to load file: %1").arg(filename));
+
+// Trace-level logging (only in Trace mode)
+LOG_TRACE(QStringLiteral("Request body: %1").arg(body));
+```
+
+**Important guidelines:**
+- Use `LOG_DEBUG` for general debugging information
+- Use `LOG_INFO` for informational messages about normal operation
+- Use `LOG_WARNING` for unexpected but recoverable situations
+- Use `LOG_ERROR` for errors and failures
+- Use `LOG_TRACE` for verbose debugging (full dumps, LLM request/response bodies)
+- **Never use `qDebug()`, `qWarning()`, or `qCritical()` directly** - they go to stdout instead of the log file
+- The macros automatically check if debug logging is enabled before writing (no performance impact when disabled)
+- Settings changes (enable/disable, level switching) take effect **immediately** - no restart required
+
+### Accessing DebugLogger Directly
+
+For advanced usage, you can access the logger instance:
+```cpp
+auto* logger = ClipLLM::Core::DebugLogger::instance();
+if (logger && logger->isEnabled()) {
+    logger->setLevel(ClipLLM::Core::DebugLevel::Trace);
+}
+```
+
+### Enabling Debug Logging
+
+**Via UI:** Settings → General tab → Debug group → Check "Record debug messages"
+
+**Or manually in config file:**
+```ini
+[debug]
+enabled=true
+level=2
+```
+
 ## Configuration Files
 
 - **Default Prompts**: `resources/config/prompts-default.json` (15 built-in prompts)

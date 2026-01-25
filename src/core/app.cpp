@@ -513,6 +513,18 @@ void App::showSettings()
             m_llmClient->setConfig(config);
             m_llmClient->setApiKey(config.apiKey()); // Also set API key explicitly
             LOG_DEBUG(QStringLiteral("LLM config updated: provider=%1 model=%2").arg(profile->name()).arg(profile->model()));
+
+            // Update debug logger settings in real-time
+            int newLevel = m_configManager->debugLevel();
+            if (newLevel == 0) {
+                // Log before turning off, so this message appears in the log
+                LOG_DEBUG(QStringLiteral("Debug logging turned off"));
+                m_debugLogger->setLevel(Core::DebugLevel::Off);
+            } else {
+                m_debugLogger->setLevel(static_cast<Core::DebugLevel>(newLevel));
+                const char* levelName = (newLevel == 1) ? "Normal" : "Trace";
+                LOG_DEBUG(QStringLiteral("Debug logging enabled: level=%1 (%2)").arg(newLevel).arg(QString::fromUtf8(levelName)));
+            }
         });
 
         // Apply language change immediately when selected in settings

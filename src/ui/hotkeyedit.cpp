@@ -142,7 +142,7 @@ void HotkeyEdit::keyPressEvent(QKeyEvent* event)
     m_displayLabel->setText(seqText);
 
     LOG_DEBUG(QStringLiteral("HotkeyEdit: captured key=%1 modifiers=%2 combined=%3 sequence=%4")
-              .arg(key).arg(modifiers).arg(keyWithModifiers).arg(seqText));
+              .arg(key).arg(static_cast<int>(modifiers)).arg(keyWithModifiers).arg(seqText));
 
     // Complete the recording
     setKeySequence(newSeq);

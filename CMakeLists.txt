@@ -72,6 +72,7 @@ set(SOURCES
     src/core/providerkeystore.cpp
     src/core/historymanager.cpp
     src/core/groupsmanager.cpp
+    src/core/debuglogger.cpp
     src/ui/trayicon.cpp
     src/ui/promptmenu.cpp
     src/ui/settingsdialog.cpp
@@ -100,6 +101,7 @@ set(HEADERS
     src/core/providerkeystore.h
     src/core/historymanager.h
     src/core/groupsmanager.h
+    src/core/debuglogger.h
     src/ui/trayicon.h
     src/ui/promptmenu.h
     src/ui/settingsdialog.h

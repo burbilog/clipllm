@@ -79,6 +79,8 @@ public:
     static const QString HISTORY_CLEANUP_BY_DATE_KEY;
     static const QString PROMPTS_FILE_KEY;
     static const QString CACHED_MODELS_KEY;
+    static const QString DEBUG_ENABLED_KEY;
+    static const QString DEBUG_LEVEL_KEY;
 
     // Convenience methods for common settings
     QString language() const;
@@ -153,6 +155,12 @@ public:
     // Cached models for providers
     QStringList cachedModels(const QString& provider) const;
     void setCachedModels(const QString& provider, const QStringList& models);
+
+    // Debug settings
+    bool debugEnabled() const;
+    void setDebugEnabled(bool enabled);
+    int debugLevel() const;  // Returns int for QSpinBox compatibility
+    void setDebugLevel(int level);
 
     // Provider profiles (new multi-provider system)
     QStringList providerProfileIds() const;

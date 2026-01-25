@@ -16,6 +16,7 @@
 
 #include "app.h"
 #include "core/version.h"
+#include "debuglogger.h"
 #include "clipboardmanager.h"
 #include "llmclient.h"
 #include "promptmanager.h"
@@ -73,6 +74,7 @@ Core::KeychainStore* App::keychainStore() const { return m_keychainStore.get(); 
 Core::HistoryManager* App::historyManager() const { return m_historyManager.get(); }
 Core::GroupsManager* App::groupsManager() const { return m_groupsManager.get(); }
 Core::ProviderKeyStore* App::providerKeyStore() const { return m_providerKeyStore.get(); }
+Core::DebugLogger* App::debugLogger() const { return m_debugLogger; }
 
 App::App(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -157,6 +159,9 @@ bool App::initialize(bool startMinimized)
     m_configManager = std::make_unique<ConfigManager>();
     m_keychainStore = std::make_unique<KeychainStore>();
     m_providerKeyStore = std::make_unique<ProviderKeyStore>();
+    // Get the DebugLogger singleton instance
+    m_debugLogger = Core::DebugLogger::instance();
+    m_debugLogger->setLevel(static_cast<Core::DebugLevel>(m_configManager->debugLevel()));
     m_historyManager = std::make_unique<HistoryManager>();
     m_promptManager = std::make_unique<PromptManager>();
     m_groupsManager = std::make_unique<Core::GroupsManager>();

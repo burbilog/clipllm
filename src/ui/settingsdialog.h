@@ -30,6 +30,8 @@
 #include <QLabel>
 #include <QGroupBox>
 #include <QNetworkAccessManager>
+#include <QButtonGroup>
+#include <QRadioButton>
 #include <QNetworkReply>
 #include <QListWidget>
 #include <QPushButton>
@@ -152,6 +154,10 @@ private:
     QCheckBox* m_showDescriptionInMenuCheck = nullptr;
     QCheckBox* m_showDescriptionInPopupCheck = nullptr;
     QCheckBox* m_autoSaveHistoryCheck = nullptr;
+    QCheckBox* m_debugEnabledCheck = nullptr;
+    QRadioButton* m_debugLevelNormalRadio = nullptr;
+    QRadioButton* m_debugLevelTraceRadio = nullptr;
+    QButtonGroup* m_debugLevelGroup = nullptr;
 
     // LLM tab - Provider Profiles
     QListWidget* m_profilesList = nullptr;

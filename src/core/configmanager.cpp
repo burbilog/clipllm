@@ -57,6 +57,8 @@ const QString ConfigManager::HISTORY_AUTO_CLEANUP_KEY = QStringLiteral("history/
 const QString ConfigManager::HISTORY_CLEANUP_BY_DATE_KEY = QStringLiteral("history/cleanup_by_date");
 const QString ConfigManager::PROMPTS_FILE_KEY = QStringLiteral("prompts/file");
 const QString ConfigManager::CACHED_MODELS_KEY = QStringLiteral("llm/cached_models/%1");
+const QString ConfigManager::DEBUG_ENABLED_KEY = QStringLiteral("debug/enabled");
+const QString ConfigManager::DEBUG_LEVEL_KEY = QStringLiteral("debug/level");
 
 ConfigManager::ConfigManager()
 {
@@ -520,6 +522,26 @@ bool ConfigManager::showDescriptionInPopup() const
 void ConfigManager::setShowDescriptionInPopup(bool enabled)
 {
     setValue(SHOW_DESCRIPTION_IN_POPUP_KEY, enabled);
+}
+
+bool ConfigManager::debugEnabled() const
+{
+    return value(DEBUG_ENABLED_KEY, false).toBool();
+}
+
+void ConfigManager::setDebugEnabled(bool enabled)
+{
+    setValue(DEBUG_ENABLED_KEY, enabled);
+}
+
+int ConfigManager::debugLevel() const
+{
+    return value(DEBUG_LEVEL_KEY, 0).toInt();
+}
+
+void ConfigManager::setDebugLevel(int level)
+{
+    setValue(DEBUG_LEVEL_KEY, level);
 }
 
 } // namespace Core

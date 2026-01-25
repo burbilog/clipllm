@@ -15,6 +15,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "llmclient.h"
+#include "debuglogger.h"
+#include "core/app.h"
 #include <QNetworkRequest>
 #include <QHttpMultiPart>
 #include <QJsonDocument>
@@ -190,15 +192,19 @@ void LLMClient::sendRequest(const LLMRequest& request)
     QNetworkRequest netRequest = createRequest(request);
     QByteArray body = createRequestBody(request);
 
-    qDebug() << "=== LLMClient Request ===";
-    qDebug() << "Config URL:" << m_config.apiUrl();
-    qDebug() << "Request URL:" << netRequest.url();
-    qDebug() << "Model:" << request.model;
-    qDebug() << "Messages:" << request.messages.size();
-    qDebug() << "Has API key:" << !m_apiKey.isEmpty();
-    qDebug() << "Proxy:" << m_networkManager->proxy().hostName() << ":" << m_networkManager->proxy().port();
-    qDebug() << "Proxy type:" << m_networkManager->proxy().type();
-    qDebug() << "=======================";
+    // Log with DebugLogger if enabled
+    if (auto* app = qobject_cast<App*>(QApplication::instance())) {
+        if (auto* logger = app->debugLogger(); logger && logger->isEnabled()) {
+            logger->debug(QStringLiteral("=== LLM Request ==="));
+            logger->debug(QStringLiteral("URL: %1").arg(m_config.apiUrl().toString()));
+            logger->debug(QStringLiteral("Model: %1").arg(request.model));
+            logger->debug(QStringLiteral("Messages: %1").arg(request.messages.size()));
+
+            if (logger->currentLevel() >= DebugLevel::Trace) {
+                logger->trace(QStringLiteral("Request body: %1").arg(QString::fromUtf8(body)));
+            }
+        }
+    }
 
     m_currentReply = m_networkManager->post(netRequest, body);
 
@@ -323,6 +329,13 @@ void LLMClient::onReadyRead()
     QByteArray data = m_currentReply->readAll();
     m_bytesReceived += data.size();
     emit bytesReceivedChanged(m_bytesReceived);
+
+    // Log raw response chunks at trace level
+    if (auto* app = qobject_cast<App*>(QApplication::instance())) {
+        if (auto* logger = app->debugLogger(); logger && logger->currentLevel() >= DebugLevel::Trace) {
+            logger->trace(QStringLiteral("Response chunk: %1").arg(QString::fromUtf8(data)));
+        }
+    }
 
     // For connection test, any data received means success
     if (m_isTestingConnection) {

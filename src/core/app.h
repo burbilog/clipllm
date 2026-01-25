@@ -45,6 +45,7 @@ class KeychainStore;
 class HistoryManager;
 class GroupsManager;
 class ProviderKeyStore;
+class DebugLogger;
 }
 
 namespace UI {
@@ -78,6 +79,7 @@ public:
     Core::HistoryManager* historyManager() const;
     Core::GroupsManager* groupsManager() const;
     Core::ProviderKeyStore* providerKeyStore() const;
+    Core::DebugLogger* debugLogger() const;
 
     // Language management
     void setLanguage(const QString& languageCode);
@@ -130,6 +132,8 @@ private:
     std::unique_ptr<Core::HistoryManager> m_historyManager;
     std::unique_ptr<Core::GroupsManager> m_groupsManager;
     std::unique_ptr<Core::ProviderKeyStore> m_providerKeyStore;
+    // Raw pointer for singleton (DebugLogger manages its own lifetime)
+    Core::DebugLogger* m_debugLogger = nullptr;
 
     // UI components
     std::unique_ptr<UI::TrayIcon> m_trayIcon;

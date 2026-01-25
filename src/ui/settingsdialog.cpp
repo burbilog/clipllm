@@ -51,6 +51,10 @@
 #include <QUrlQuery>
 #include <QSettings>
 #include <QListWidget>
+#include <QButtonGroup>
+#include <QRadioButton>
+#include <QStandardPaths>
+#include <QClipboard>
 
 namespace ClipLLM {
 namespace UI {
@@ -189,6 +193,64 @@ void SettingsDialog::setupGeneralTab()
     miscLayout->addWidget(m_showDescriptionInPopupCheck);
 
     layout->addWidget(miscGroup);
+
+    // Debug group
+    QGroupBox* debugGroup = new QGroupBox(tr("Debug"));
+    QVBoxLayout* debugLayout = new QVBoxLayout(debugGroup);
+
+    m_debugEnabledCheck = new QCheckBox(tr("Record debug messages"));
+    m_debugEnabledCheck->setToolTip(tr("Write debug information to debug.log file in the configuration directory"));
+    debugLayout->addWidget(m_debugEnabledCheck);
+
+    QWidget* levelWidget = new QWidget();
+    QHBoxLayout* levelLayout = new QHBoxLayout(levelWidget);
+    levelLayout->setContentsMargins(0, 0, 0, 0);
+
+    m_debugLevelGroup = new QButtonGroup(this);
+    m_debugLevelNormalRadio = new QRadioButton(tr("Normal"));
+    m_debugLevelNormalRadio->setToolTip(tr("Basic debug information"));
+    m_debugLevelTraceRadio = new QRadioButton(tr("Trace"));
+    m_debugLevelTraceRadio->setToolTip(tr("Full request/response logging for LLM"));
+
+    m_debugLevelGroup->addButton(m_debugLevelNormalRadio, 1);
+    m_debugLevelGroup->addButton(m_debugLevelTraceRadio, 2);
+    m_debugLevelNormalRadio->setChecked(true);
+
+    m_debugLevelNormalRadio->setEnabled(false);
+    m_debugLevelTraceRadio->setEnabled(false);
+
+    levelLayout->addWidget(new QLabel(tr("Debug Level:")));
+    levelLayout->addWidget(m_debugLevelNormalRadio);
+    levelLayout->addWidget(m_debugLevelTraceRadio);
+    levelLayout->addStretch();
+    debugLayout->addWidget(levelWidget);
+
+    // Log file path
+    QString logPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + QStringLiteral("/debug.log");
+    QWidget* pathWidget = new QWidget();
+    QHBoxLayout* pathLayout = new QHBoxLayout(pathWidget);
+    pathLayout->setContentsMargins(0, 0, 0, 0);
+    QLabel* pathLabel = new QLabel(tr("Log file:"));
+    QLineEdit* pathEdit = new QLineEdit(logPath);
+    pathEdit->setReadOnly(true);
+    QPushButton* copyButton = new QPushButton(tr("Copy"));
+    copyButton->setMaximumWidth(80);
+    connect(copyButton, &QPushButton::clicked, this, [logPath]() {
+        QApplication::clipboard()->setText(logPath);
+    });
+    pathLayout->addWidget(pathLabel);
+    pathLayout->addWidget(pathEdit);
+    pathLayout->addWidget(copyButton);
+    debugLayout->addWidget(pathWidget);
+
+    connect(m_debugEnabledCheck, &QCheckBox::checkStateChanged,
+        this, [this](Qt::CheckState state) {
+            bool enabled = (state == Qt::Checked);
+            m_debugLevelNormalRadio->setEnabled(enabled);
+            m_debugLevelTraceRadio->setEnabled(enabled);
+        });
+
+    layout->addWidget(debugGroup);
     layout->addStretch();
 
     m_tabWidget->addTab(widget, tr("General"));
@@ -535,6 +597,17 @@ void SettingsDialog::loadSettings()
     m_showDescriptionInMenuCheck->setChecked(m_configManager->showDescriptionInMenu());
     m_showDescriptionInPopupCheck->setChecked(m_configManager->showDescriptionInPopup());
 
+    // Debug
+    m_debugEnabledCheck->setChecked(m_configManager->debugEnabled());
+    int level = m_configManager->debugLevel();
+    QAbstractButton* checkedButton = m_debugLevelGroup->button(level);
+    if (checkedButton) {
+        checkedButton->setChecked(true);
+    }
+    bool enabled = m_debugEnabledCheck->isChecked();
+    m_debugLevelNormalRadio->setEnabled(enabled);
+    m_debugLevelTraceRadio->setEnabled(enabled);
+
     // LLM - Global defaults
     if (m_configManager->defaultTemperature().has_value()) {
         m_globalTemperatureSpin->setValue(*m_configManager->defaultTemperature());
@@ -576,6 +649,10 @@ void SettingsDialog::saveSettings()
     m_configManager->setHistoryAutoSave(m_autoSaveHistoryCheck->isChecked());
     m_configManager->setShowDescriptionInMenu(m_showDescriptionInMenuCheck->isChecked());
     m_configManager->setShowDescriptionInPopup(m_showDescriptionInPopupCheck->isChecked());
+
+    // Debug
+    m_configManager->setDebugEnabled(m_debugEnabledCheck->isChecked());
+    m_configManager->setDebugLevel(m_debugLevelGroup->checkedId());
 
     // LLM - Save all profiles
     QList<Models::ProviderProfile> profiles;

@@ -626,13 +626,13 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="73"/>
-        <location filename="../src/ui/historydialog.cpp" line="280"/>
+        <location filename="../src/ui/historydialog.cpp" line="294"/>
         <source>All Models</source>
         <translation>All Models</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="78"/>
-        <location filename="../src/ui/historydialog.cpp" line="287"/>
+        <location filename="../src/ui/historydialog.cpp" line="301"/>
         <source>All Prompts</source>
         <translation>All Prompts</translation>
     </message>
@@ -667,13 +667,13 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
     <message>
         <location filename="../src/ui/historydialog.cpp" line="133"/>
         <location filename="../src/ui/historydialog.cpp" line="137"/>
-        <location filename="../src/ui/historydialog.cpp" line="586"/>
+        <location filename="../src/ui/historydialog.cpp" line="600"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="137"/>
-        <location filename="../src/ui/historydialog.cpp" line="586"/>
+        <location filename="../src/ui/historydialog.cpp" line="600"/>
         <source>Raw</source>
         <translation>Raw</translation>
     </message>
@@ -726,49 +726,61 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="566"/>
+        <location filename="../src/ui/historydialog.cpp" line="264"/>
+        <source>No history entries.
+Enable &apos;Automatically save to history&apos; in Settings
+or save prompts manually to populate this list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/historydialog.cpp" line="270"/>
+        <source>Total entries: 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/historydialog.cpp" line="580"/>
         <source>Prompt: %1
 </source>
         <translation>Prompt: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="567"/>
+        <location filename="../src/ui/historydialog.cpp" line="581"/>
         <source>Model: %1
 </source>
         <translation>Model: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="568"/>
+        <location filename="../src/ui/historydialog.cpp" line="582"/>
         <source>Date: %1
 </source>
         <translation>Date: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="569"/>
+        <location filename="../src/ui/historydialog.cpp" line="583"/>
         <source>Duration: %1
 </source>
         <translation>Duration: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="570"/>
+        <location filename="../src/ui/historydialog.cpp" line="584"/>
         <source>Tokens: %1 input / %2 output
 </source>
         <translation>Tokens: %1 input / %2 output
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="574"/>
+        <location filename="../src/ui/historydialog.cpp" line="588"/>
         <source>Input:
 </source>
         <translation>Input:
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="576"/>
+        <location filename="../src/ui/historydialog.cpp" line="590"/>
         <source>Output:
 </source>
         <translation>Output:
@@ -790,7 +802,7 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="163"/>
-        <location filename="../src/ui/historydialog.cpp" line="413"/>
+        <location filename="../src/ui/historydialog.cpp" line="427"/>
         <source>Favorite</source>
         <translation>Favorite</translation>
     </message>
@@ -810,23 +822,23 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
         <translation>Clear All</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="537"/>
-        <location filename="../src/ui/historydialog.cpp" line="546"/>
+        <location filename="../src/ui/historydialog.cpp" line="551"/>
+        <location filename="../src/ui/historydialog.cpp" line="560"/>
         <source>Unknown</source>
         <translation>Unknown</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="413"/>
+        <location filename="../src/ui/historydialog.cpp" line="427"/>
         <source>Unfavorite</source>
         <translation>Unfavorite</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="429"/>
+        <location filename="../src/ui/historydialog.cpp" line="443"/>
         <source>Delete Entry</source>
         <translation>Delete Entry</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="430"/>
+        <location filename="../src/ui/historydialog.cpp" line="444"/>
         <source>Are you sure you want to delete this entry?</source>
         <translation>Are you sure you want to delete this entry?</translation>
     </message>
@@ -835,44 +847,48 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
         <translation type="vanished">Copied to clipboard</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="492"/>
+        <location filename="../src/ui/historydialog.cpp" line="506"/>
         <source>Clear All History</source>
         <translation>Clear All History</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="493"/>
+        <location filename="../src/ui/historydialog.cpp" line="507"/>
         <source>Are you sure you want to delete all history entries? This cannot be undone.</source>
         <translation>Are you sure you want to delete all history entries? This cannot be undone.</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="458"/>
+        <location filename="../src/ui/historydialog.cpp" line="472"/>
         <source>Export History</source>
         <translation>Export History</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="460"/>
+        <location filename="../src/ui/historydialog.cpp" line="474"/>
         <source>JSON Files (*.json)</source>
         <translation>JSON Files (*.json)</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="481"/>
+        <location filename="../src/ui/historydialog.cpp" line="495"/>
         <source>Exported to %1</source>
         <translation>Exported to %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="483"/>
+        <location filename="../src/ui/historydialog.cpp" line="497"/>
         <source>Export Failed</source>
         <translation>Export Failed</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="484"/>
+        <location filename="../src/ui/historydialog.cpp" line="498"/>
         <source>Failed to write to file: %1</source>
         <translation>Failed to write to file: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="305"/>
+        <location filename="../src/ui/historydialog.cpp" line="319"/>
         <source>Total entries: %1</source>
         <translation>Total entries: %1</translation>
+    </message>
+    <message>
+        <source>No history entries.\nEnable &apos;Automatically save to history&apos; in Settings\nor save prompts manually to populate this list.</source>
+        <translation type="vanished">No history entries.\nEnable &apos;Automatically save to history&apos; in Settings\nor save prompts manually to populate this list.</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="105"/>
@@ -895,7 +911,7 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
         <translation>Model</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="355"/>
+        <location filename="../src/ui/historydialog.cpp" line="369"/>
         <source>Showing %1 entries</source>
         <translation>Showing %1 entries</translation>
     </message>
@@ -928,17 +944,17 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
         <translation type="vanished">&lt;b&gt;Output:&lt;/b&gt;&lt;br&gt;%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="524"/>
+        <location filename="../src/ui/historydialog.cpp" line="538"/>
         <source>%1 ms</source>
         <translation>%1 ms</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="526"/>
+        <location filename="../src/ui/historydialog.cpp" line="540"/>
         <source>%1 s</source>
         <translation>%1 s</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="530"/>
+        <location filename="../src/ui/historydialog.cpp" line="544"/>
         <source>%1m %2s</source>
         <translation>%1m %2s</translation>
     </message>

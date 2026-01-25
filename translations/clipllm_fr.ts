@@ -552,13 +552,13 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="73"/>
-        <location filename="../src/ui/historydialog.cpp" line="280"/>
+        <location filename="../src/ui/historydialog.cpp" line="294"/>
         <source>All Models</source>
         <translation>Tous les modèles</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="78"/>
-        <location filename="../src/ui/historydialog.cpp" line="287"/>
+        <location filename="../src/ui/historydialog.cpp" line="301"/>
         <source>All Prompts</source>
         <translation>Tous les prompts</translation>
     </message>
@@ -599,13 +599,13 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
     <message>
         <location filename="../src/ui/historydialog.cpp" line="133"/>
         <location filename="../src/ui/historydialog.cpp" line="137"/>
-        <location filename="../src/ui/historydialog.cpp" line="586"/>
+        <location filename="../src/ui/historydialog.cpp" line="600"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="137"/>
-        <location filename="../src/ui/historydialog.cpp" line="586"/>
+        <location filename="../src/ui/historydialog.cpp" line="600"/>
         <source>Raw</source>
         <translation>Brut</translation>
     </message>
@@ -620,7 +620,7 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="163"/>
-        <location filename="../src/ui/historydialog.cpp" line="413"/>
+        <location filename="../src/ui/historydialog.cpp" line="427"/>
         <source>Favorite</source>
         <translation>Favori</translation>
     </message>
@@ -698,65 +698,81 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="305"/>
+        <location filename="../src/ui/historydialog.cpp" line="319"/>
         <source>Total entries: %1</source>
         <translation>Total des entrées : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="537"/>
-        <location filename="../src/ui/historydialog.cpp" line="546"/>
+        <source>No history entries.\nEnable &apos;Automatically save to history&apos; in Settings\nor save prompts manually to populate this list.</source>
+        <translation type="vanished">Aucune entrée d&apos;historique.\nActivez &apos;Sauvegarder automatiquement dans l&apos;historique&apos; dans les Paramètres\nou enregistrez manuellement des prompts pour remplir cette liste.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/historydialog.cpp" line="551"/>
+        <location filename="../src/ui/historydialog.cpp" line="560"/>
         <source>Unknown</source>
         <translation>Inconnu</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="355"/>
+        <location filename="../src/ui/historydialog.cpp" line="369"/>
         <source>Showing %1 entries</source>
         <translation>Affichage de %1 entrées</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="566"/>
+        <location filename="../src/ui/historydialog.cpp" line="264"/>
+        <source>No history entries.
+Enable &apos;Automatically save to history&apos; in Settings
+or save prompts manually to populate this list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/historydialog.cpp" line="270"/>
+        <source>Total entries: 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/historydialog.cpp" line="580"/>
         <source>Prompt: %1
 </source>
         <translation>Prompt : %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="567"/>
+        <location filename="../src/ui/historydialog.cpp" line="581"/>
         <source>Model: %1
 </source>
         <translation>Modèle : %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="568"/>
+        <location filename="../src/ui/historydialog.cpp" line="582"/>
         <source>Date: %1
 </source>
         <translation>Date : %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="569"/>
+        <location filename="../src/ui/historydialog.cpp" line="583"/>
         <source>Duration: %1
 </source>
         <translation>Durée : %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="570"/>
+        <location filename="../src/ui/historydialog.cpp" line="584"/>
         <source>Tokens: %1 input / %2 output
 </source>
         <translation>Jetons : %1 entrée / %2 sortie
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="574"/>
+        <location filename="../src/ui/historydialog.cpp" line="588"/>
         <source>Input:
 </source>
         <translation>Entrée :
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="576"/>
+        <location filename="../src/ui/historydialog.cpp" line="590"/>
         <source>Output:
 </source>
         <translation>Sortie :
@@ -791,7 +807,7 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
         <translation type="vanished">&lt;b&gt;Sortie :&lt;/b&gt;&lt;br&gt;%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="413"/>
+        <location filename="../src/ui/historydialog.cpp" line="427"/>
         <source>Unfavorite</source>
         <translation>Retirer des favoris</translation>
     </message>
@@ -800,62 +816,62 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
         <translation type="vanished">Copié dans le presse-papiers</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="429"/>
+        <location filename="../src/ui/historydialog.cpp" line="443"/>
         <source>Delete Entry</source>
         <translation>Supprimer l&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="430"/>
+        <location filename="../src/ui/historydialog.cpp" line="444"/>
         <source>Are you sure you want to delete this entry?</source>
         <translation>Voulez-vous vraiment supprimer cette entrée ?</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="458"/>
+        <location filename="../src/ui/historydialog.cpp" line="472"/>
         <source>Export History</source>
         <translation>Exporter l&apos;historique</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="460"/>
+        <location filename="../src/ui/historydialog.cpp" line="474"/>
         <source>JSON Files (*.json)</source>
         <translation>Fichiers JSON (*.json)</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="481"/>
+        <location filename="../src/ui/historydialog.cpp" line="495"/>
         <source>Exported to %1</source>
         <translation>Exporté vers %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="483"/>
+        <location filename="../src/ui/historydialog.cpp" line="497"/>
         <source>Export Failed</source>
         <translation>Échec de l&apos;export</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="484"/>
+        <location filename="../src/ui/historydialog.cpp" line="498"/>
         <source>Failed to write to file: %1</source>
         <translation>Échec de l&apos;écriture dans le fichier : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="492"/>
+        <location filename="../src/ui/historydialog.cpp" line="506"/>
         <source>Clear All History</source>
         <translation>Effacer tout l&apos;historique</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="493"/>
+        <location filename="../src/ui/historydialog.cpp" line="507"/>
         <source>Are you sure you want to delete all history entries? This cannot be undone.</source>
         <translation>Voulez-vous vraiment supprimer toutes les entrées de l&apos;historique ? Cela ne peut pas être annulé.</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="524"/>
+        <location filename="../src/ui/historydialog.cpp" line="538"/>
         <source>%1 ms</source>
         <translation>%1 ms</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="526"/>
+        <location filename="../src/ui/historydialog.cpp" line="540"/>
         <source>%1 s</source>
         <translation>%1 s</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="530"/>
+        <location filename="../src/ui/historydialog.cpp" line="544"/>
         <source>%1m %2s</source>
         <translation>%1m %2s</translation>
     </message>

@@ -258,6 +258,20 @@ void HistoryDialog::refreshHistory()
 
     QVector<Core::HistoryEntry> entries = m_historyManager->getAllEntries();
 
+    // Check if history is empty
+    if (entries.isEmpty()) {
+        QList<QStandardItem*> placeholderRow;
+        QString placeholderText = tr("No history entries.\nEnable 'Automatically save to history' in Settings\nor save prompts manually to populate this list.");
+        placeholderRow.append(new QStandardItem(placeholderText));
+        for (int i = 1; i < m_model->columnCount(); ++i) {
+            placeholderRow.append(new QStandardItem(QString()));
+        }
+        m_model->appendRow(placeholderRow);
+        m_statusLabel->setText(tr("Total entries: 0"));
+
+        return;
+    }
+
     // Populate model combos
     QStringList models;
     QStringList prompts;

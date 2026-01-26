@@ -660,7 +660,7 @@ Constraints:
             <div class="description">
                 <p>
                     <strong>Linux (AppImage):</strong> Download and make executable:<br>
-                    <code style="background: var(--bg-primary); padding: 4px 8px; border-radius: 4px; font-family: monospace;">chmod +x clipllm-*.AppImage && ./clipllm-*.AppImage</code>
+                    <code style="background: var(--bg-primary); padding: 4px 8px; border-radius: 4px; font-family: monospace;">chmod +x clipllm-@VERSION@-linux-x86_64.AppImage &amp;&amp; ./clipllm-@VERSION@-linux-x86_64.AppImage</code>
                 </p>
                 <p>
                     <strong>Linux (tar.gz):</strong> Requires Qt6 (e.g., <code>sudo apt install qt6-base-dev</code> on Ubuntu or <code>sudo dnf install qt6-qtbase-gui</code> on Fedora). Then extract and run:<br>

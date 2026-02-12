@@ -89,6 +89,7 @@ private slots:
     void onInputToggleClicked();
     void onZoomOutClicked();
     void onZoomInClicked();
+    void onSaveAsClicked();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -125,6 +126,7 @@ private:
     QPushButton* m_inputToggleBtn = nullptr;
     QPushButton* m_zoomOutButton = nullptr;
     QPushButton* m_zoomInButton = nullptr;
+    QPushButton* m_saveAsButton = nullptr;
 
     // Markdown state
     bool m_markdownMode = true;

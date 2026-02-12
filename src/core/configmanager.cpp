@@ -62,6 +62,7 @@ const QString ConfigManager::PROMPTS_FILE_KEY = QStringLiteral("prompts/file");
 const QString ConfigManager::CACHED_MODELS_KEY = QStringLiteral("llm/cached_models/%1");
 const QString ConfigManager::DEBUG_ENABLED_KEY = QStringLiteral("debug/enabled");
 const QString ConfigManager::DEBUG_LEVEL_KEY = QStringLiteral("debug/level");
+const QString ConfigManager::LAST_SAVE_DIRECTORY_KEY = QStringLiteral("file_dialog/last_save_directory");
 
 ConfigManager::ConfigManager()
 {
@@ -545,6 +546,24 @@ int ConfigManager::debugLevel() const
 void ConfigManager::setDebugLevel(int level)
 {
     setValue(DEBUG_LEVEL_KEY, level);
+}
+
+QString ConfigManager::lastSaveDirectory() const
+{
+    QString dir = value(LAST_SAVE_DIRECTORY_KEY).toString();
+    // Verify directory still exists, otherwise return empty to use home
+    if (!dir.isEmpty()) {
+        QDir d(dir);
+        if (!d.exists()) {
+            return QString();
+        }
+    }
+    return dir;
+}
+
+void ConfigManager::setLastSaveDirectory(const QString& path)
+{
+    setValue(LAST_SAVE_DIRECTORY_KEY, path);
 }
 
 } // namespace Core

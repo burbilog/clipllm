@@ -814,7 +814,7 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="270"/>
         <source>Total entries: 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Всего записей: 0</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="580"/>
@@ -1563,24 +1563,24 @@ Please choose a different hotkey.</source>
 <context>
     <name>ClipLLM::UI::ResultDialog</name>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="44"/>
+        <location filename="../src/ui/resultdialog.cpp" line="49"/>
         <source>ClipLLM - Result</source>
         <translation>ClipLLM — Результат</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="85"/>
-        <location filename="../src/ui/resultdialog.cpp" line="248"/>
+        <location filename="../src/ui/resultdialog.cpp" line="90"/>
+        <location filename="../src/ui/resultdialog.cpp" line="260"/>
         <source>Model: -</source>
         <translation>Модель: -</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="87"/>
+        <location filename="../src/ui/resultdialog.cpp" line="92"/>
         <source>Tokens: 0 / 0</source>
         <translation>Токены: 0 / 0</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="88"/>
-        <location filename="../src/ui/resultdialog.cpp" line="275"/>
+        <location filename="../src/ui/resultdialog.cpp" line="93"/>
+        <location filename="../src/ui/resultdialog.cpp" line="287"/>
         <source>Traffic: 0 B</source>
         <translation>Трафик: 0 Б</translation>
     </message>
@@ -1589,126 +1589,136 @@ Please choose a different hotkey.</source>
         <translation type="obsolete">Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="105"/>
+        <location filename="../src/ui/resultdialog.cpp" line="110"/>
         <source>Ready</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="110"/>
-        <location filename="../src/ui/resultdialog.cpp" line="114"/>
-        <location filename="../src/ui/resultdialog.cpp" line="269"/>
-        <location filename="../src/ui/resultdialog.cpp" line="566"/>
+        <location filename="../src/ui/resultdialog.cpp" line="115"/>
+        <location filename="../src/ui/resultdialog.cpp" line="119"/>
+        <location filename="../src/ui/resultdialog.cpp" line="281"/>
+        <location filename="../src/ui/resultdialog.cpp" line="639"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="114"/>
-        <location filename="../src/ui/resultdialog.cpp" line="269"/>
-        <location filename="../src/ui/resultdialog.cpp" line="566"/>
+        <location filename="../src/ui/resultdialog.cpp" line="119"/>
+        <location filename="../src/ui/resultdialog.cpp" line="281"/>
+        <location filename="../src/ui/resultdialog.cpp" line="639"/>
         <source>Raw</source>
         <translation>Исходный</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="117"/>
-        <location filename="../src/ui/resultdialog.cpp" line="589"/>
+        <location filename="../src/ui/resultdialog.cpp" line="122"/>
+        <location filename="../src/ui/resultdialog.cpp" line="662"/>
         <source>Show Input</source>
         <translation>Показать ввод</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="132"/>
+        <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <source>Input</source>
         <translation>Ввод</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="142"/>
+        <location filename="../src/ui/resultdialog.cpp" line="147"/>
         <source>Output</source>
         <translation>Вывод</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="159"/>
+        <location filename="../src/ui/resultdialog.cpp" line="164"/>
         <source>Copy &amp;&amp; close</source>
         <translation>Копировать и &amp;закрыть</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="164"/>
+        <location filename="../src/ui/resultdialog.cpp" line="169"/>
         <source>Save to History</source>
         <translation>Сохранить в историю</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="169"/>
+        <location filename="../src/ui/resultdialog.cpp" line="174"/>
+        <source>Save as...</source>
+        <translation>Сохранить как...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="177"/>
+        <source>Save output to a file</source>
+        <translation>Сохранить вывод в файл</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="180"/>
         <source>Retry</source>
         <translation>Повторить</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="174"/>
+        <location filename="../src/ui/resultdialog.cpp" line="185"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="179"/>
+        <location filename="../src/ui/resultdialog.cpp" line="190"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="180"/>
+        <location filename="../src/ui/resultdialog.cpp" line="191"/>
         <source>Zoom out</source>
         <translation>Уменьшить</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="184"/>
+        <location filename="../src/ui/resultdialog.cpp" line="195"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="185"/>
+        <location filename="../src/ui/resultdialog.cpp" line="196"/>
         <source>Zoom in</source>
         <translation>Увеличить</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="211"/>
+        <location filename="../src/ui/resultdialog.cpp" line="223"/>
         <source>ClipLLM - %1</source>
         <translation>ClipLLM — %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="250"/>
-        <location filename="../src/ui/resultdialog.cpp" line="252"/>
+        <location filename="../src/ui/resultdialog.cpp" line="262"/>
+        <location filename="../src/ui/resultdialog.cpp" line="264"/>
         <source>Model: %1</source>
         <translation>Модель: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="254"/>
+        <location filename="../src/ui/resultdialog.cpp" line="266"/>
         <source>Model: %1 / %2</source>
         <translation>Модель: %1 / %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="276"/>
+        <location filename="../src/ui/resultdialog.cpp" line="288"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="304"/>
+        <location filename="../src/ui/resultdialog.cpp" line="317"/>
         <source>Tokens: ~%1</source>
         <translation>Токены: ~%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="317"/>
+        <location filename="../src/ui/resultdialog.cpp" line="330"/>
         <source>Completed in %1 seconds</source>
         <translation>Выполнено за %1 секунд</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="322"/>
+        <location filename="../src/ui/resultdialog.cpp" line="335"/>
         <source>Tokens: %1 input / %2 output</source>
         <translation>Токены: %1 на входе / %2 на выходе</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="345"/>
-        <location filename="../src/ui/resultdialog.cpp" line="373"/>
+        <location filename="../src/ui/resultdialog.cpp" line="359"/>
+        <location filename="../src/ui/resultdialog.cpp" line="387"/>
         <source>API Error</source>
         <translation>Ошибка API</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="346"/>
-        <location filename="../src/ui/resultdialog.cpp" line="374"/>
+        <location filename="../src/ui/resultdialog.cpp" line="360"/>
+        <location filename="../src/ui/resultdialog.cpp" line="388"/>
         <source>An error occurred while communicating with the API:
 
 %1</source>
@@ -1717,48 +1727,75 @@ Please choose a different hotkey.</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="349"/>
-        <location filename="../src/ui/resultdialog.cpp" line="382"/>
+        <location filename="../src/ui/resultdialog.cpp" line="363"/>
+        <location filename="../src/ui/resultdialog.cpp" line="396"/>
         <source>Error: %1</source>
         <translation>Ошибка: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="415"/>
+        <location filename="../src/ui/resultdialog.cpp" line="429"/>
         <source>Saved</source>
         <translation>Сохранено</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="479"/>
+        <location filename="../src/ui/resultdialog.cpp" line="453"/>
+        <source>Save Output As</source>
+        <translation>Сохранить вывод как</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="455"/>
+        <source>Text Files (*.txt);;All Files (*)</source>
+        <translation>Текстовые файлы (*.txt);;Все файлы (*)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="482"/>
+        <source>Saved to %1</source>
+        <translation>Сохранено в %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="488"/>
+        <source>Save Failed</source>
+        <translation>Ошибка сохранения</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="489"/>
+        <source>Could not write to file:
+%1</source>
+        <translation>Не удалось записать в файл:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/resultdialog.cpp" line="552"/>
         <source>Close During Generation</source>
         <translation>Закрыть во время генерации</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="480"/>
+        <location filename="../src/ui/resultdialog.cpp" line="553"/>
         <source>A response is still being generated. Close and cancel the request?</source>
         <translation>Ответ все еще генерируется. Закрыть и отменить запрос?</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="488"/>
+        <location filename="../src/ui/resultdialog.cpp" line="561"/>
         <source>Cancelling...</source>
         <translation>Отмена...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="529"/>
+        <location filename="../src/ui/resultdialog.cpp" line="602"/>
         <source>Model is thinking...</source>
         <translation>Модель думает...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="532"/>
+        <location filename="../src/ui/resultdialog.cpp" line="605"/>
         <source>Generating response...</source>
         <translation>Генерация ответа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="541"/>
+        <location filename="../src/ui/resultdialog.cpp" line="614"/>
         <source>Traffic: %1</source>
         <translation>Трафик: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="585"/>
+        <location filename="../src/ui/resultdialog.cpp" line="658"/>
         <source>Hide Input</source>
         <translation>Скрыть ввод</translation>
     </message>
@@ -1999,57 +2036,57 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="193"/>
         <source>Show prompt descriptions in the popup menu (disabled by default for cleaner popup)</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать описания промптов во всплывающем меню (по умолчанию отключено для более чистого меню)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="199"/>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Отладка</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="202"/>
         <source>Record debug messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Записывать отладочные сообщения</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="203"/>
         <source>Write debug information to debug.log file in the configuration directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Записывать отладочную информацию в файл debug.log в каталоге конфигурации</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="211"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычный</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="212"/>
         <source>Basic debug information</source>
-        <translation type="unfinished"></translation>
+        <translation>Базовая отладочная информация</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="213"/>
         <source>Trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Трассировка</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="214"/>
         <source>Full request/response logging for LLM</source>
-        <translation type="unfinished"></translation>
+        <translation>Полное логирование запросов/ответов LLM</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="223"/>
         <source>Debug Level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Уровень отладки:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="234"/>
         <source>Log file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл журнала:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="237"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="520"/>

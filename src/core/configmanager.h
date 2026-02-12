@@ -81,6 +81,7 @@ public:
     static const QString CACHED_MODELS_KEY;
     static const QString DEBUG_ENABLED_KEY;
     static const QString DEBUG_LEVEL_KEY;
+    static const QString LAST_SAVE_DIRECTORY_KEY;
 
     // Convenience methods for common settings
     QString language() const;
@@ -161,6 +162,10 @@ public:
     void setDebugEnabled(bool enabled);
     int debugLevel() const;  // Returns int for QSpinBox compatibility
     void setDebugLevel(int level);
+
+    // File dialog directory persistence
+    QString lastSaveDirectory() const;
+    void setLastSaveDirectory(const QString& path);
 
     // Provider profiles (new multi-provider system)
     QStringList providerProfileIds() const;

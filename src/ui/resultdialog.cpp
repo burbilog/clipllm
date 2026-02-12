@@ -29,6 +29,11 @@
 #include <QSettings>
 #include <QWheelEvent>
 #include <QKeyEvent>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QDir>
+#include <QFile>
+#include <QTextStream>
 
 namespace ClipLLM {
 namespace UI {
@@ -166,6 +171,12 @@ void ResultDialog::setupUi()
     m_saveButton->setEnabled(false);
     connect(m_saveButton, &QPushButton::clicked, this, &ResultDialog::onSaveClicked);
 
+    m_saveAsButton = new QPushButton(tr("Save as..."));
+    m_saveAsButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogSaveButton));
+    m_saveAsButton->setEnabled(false);
+    m_saveAsButton->setToolTip(tr("Save output to a file"));
+    connect(m_saveAsButton, &QPushButton::clicked, this, &ResultDialog::onSaveAsClicked);
+
     m_retryButton = new QPushButton(tr("Retry"));
     m_retryButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_BrowserReload));
     m_retryButton->setEnabled(false);
@@ -188,6 +199,7 @@ void ResultDialog::setupUi()
 
     buttonLayout->addWidget(m_copyButton);
     buttonLayout->addWidget(m_saveButton);
+    buttonLayout->addWidget(m_saveAsButton);
     buttonLayout->addStretch();
 
     // Add zoom buttons
@@ -277,6 +289,7 @@ void ResultDialog::startRequest()
     m_statusLabel->setStyleSheet("");
     m_copyButton->setEnabled(false);
     m_saveButton->setEnabled(false);
+    m_saveAsButton->setEnabled(false);
     m_retryButton->setEnabled(false);
 }
 
@@ -328,6 +341,7 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
         if (!m_configManager || !m_configManager->historyAutoSave()) {
             m_saveButton->setEnabled(true);
         }
+        m_saveAsButton->setEnabled(true);
         m_retryButton->setEnabled(true);
 
         emit responseReceived(response.content);
@@ -415,6 +429,65 @@ void ResultDialog::onSaveClicked()
         m_saveButton->setText(tr("Saved"));
 
         emit saveToHistoryRequested(m_promptId, m_promptName, m_input, m_output);
+    }
+}
+
+void ResultDialog::onSaveAsClicked()
+{
+    // Get the last used directory from config, or use home directory
+    QString startDir;
+    if (m_configManager) {
+        startDir = m_configManager->lastSaveDirectory();
+    }
+    if (startDir.isEmpty()) {
+        startDir = QDir::homePath();
+    }
+
+    // Generate default filename with timestamp
+    QString defaultFileName = QStringLiteral("clipllm-result-%1.txt")
+        .arg(QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd-HHmmss")));
+
+    // Show file save dialog
+    QString fileName = QFileDialog::getSaveFileName(
+        this,
+        tr("Save Output As"),
+        startDir + QLatin1Char('/') + defaultFileName,
+        tr("Text Files (*.txt);;All Files (*)")
+    );
+
+    // User cancelled
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    // Save the directory for next time
+    if (m_configManager) {
+        QFileInfo fileInfo(fileName);
+        m_configManager->setLastSaveDirectory(fileInfo.absolutePath());
+    }
+
+    // Write the file
+    QFile file(fileName);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        out.setEncoding(QStringConverter::Utf8);
+#else
+        out.setCodec("UTF-8");
+#endif
+        out << m_output;
+        file.close();
+
+        // Show success message in status label
+        m_statusLabel->setText(tr("Saved to %1").arg(fileName));
+        m_statusLabel->setStyleSheet("color: green;");
+    } else {
+        // Show error dialog
+        QMessageBox::warning(
+            this,
+            tr("Save Failed"),
+            tr("Could not write to file:\n%1").arg(fileName)
+        );
     }
 }
 

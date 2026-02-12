@@ -60,6 +60,7 @@ public:
     void setRetryContext(const QString& providerId, const QString& model,
                          const QString& systemPrompt, const QString& userPrompt,
                          const QByteArray& imageData, double temperature);
+    void setChainInfo(const QStringList& chainNames, const QString& nextPromptId, bool autoContinue);
     void startRequest();
     void appendResponse(const QString& text);
 
@@ -70,6 +71,7 @@ signals:
     void retryRequested(const QString& promptId, const QString& providerId, const QString& model,
                         const QString& systemPrompt, const QString& userPrompt,
                         const QByteArray& imageData, double temperature);
+    void chainContinueRequested(const QString& nextPromptId, const QString& output);
 
 public slots:
     void closeDialog();
@@ -90,6 +92,7 @@ private slots:
     void onZoomOutClicked();
     void onZoomInClicked();
     void onSaveAsClicked();
+    void onChainContinueClicked();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -127,6 +130,8 @@ private:
     QPushButton* m_zoomOutButton = nullptr;
     QPushButton* m_zoomInButton = nullptr;
     QPushButton* m_saveAsButton = nullptr;
+    QLabel* m_chainIndicator = nullptr;
+    QPushButton* m_continueButton = nullptr;
 
     // Markdown state
     bool m_markdownMode = true;
@@ -158,6 +163,12 @@ private:
     bool m_isThinking = false;
     bool m_wasSaved = false;
     bool m_closing = false;
+
+    // Chain info
+    QStringList m_chainNames;
+    QString m_nextPromptId;
+    bool m_autoContinue = false;
+
     QElapsedTimer m_timer;
     qint64 m_bytesReceived = 0;
 

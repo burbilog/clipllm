@@ -53,6 +53,12 @@ QJsonObject Prompt::toJson() const
     if (!m_providerId.isEmpty()) {
         obj[QStringLiteral("provider_id")] = m_providerId;
     }
+    if (!m_nextPromptId.isEmpty()) {
+        obj[QStringLiteral("next_prompt_id")] = m_nextPromptId;
+    }
+    if (m_autoContinue) {
+        obj[QStringLiteral("auto_continue")] = m_autoContinue;
+    }
     if (!m_metadata.isEmpty()) {
         QJsonObject metadataObj;
         for (auto it = m_metadata.constBegin(); it != m_metadata.constEnd(); ++it) {
@@ -86,6 +92,8 @@ bool Prompt::fromJson(const QJsonObject& json)
     m_providerId = json.value(QStringLiteral("provider_id")).toString(QString());
     m_overrideProvider = json.value(QStringLiteral("override_provider")).toBool(false);
     m_hotkey = json.value(QStringLiteral("hotkey")).toString(QString());
+    m_nextPromptId = json.value(QStringLiteral("next_prompt_id")).toString(QString());
+    m_autoContinue = json.value(QStringLiteral("auto_continue")).toBool(false);
 
     // Load metadata
     QJsonObject metadataObj = json.value(QStringLiteral("metadata")).toObject();

@@ -167,6 +167,10 @@ public:
     QString lastSaveDirectory() const;
     void setLastSaveDirectory(const QString& path);
 
+    // Chain settings
+    int chainMaxDepth() const;
+    void setChainMaxDepth(int depth);
+
     // Provider profiles (new multi-provider system)
     QStringList providerProfileIds() const;
     QList<Models::ProviderProfile> providerProfiles() const;

@@ -195,6 +195,18 @@ void SettingsDialog::setupGeneralTab()
 
     layout->addWidget(miscGroup);
 
+    // Chain settings group
+    QGroupBox* chainGroup = new QGroupBox(tr("Prompt Chains"));
+    QFormLayout* chainLayout = new QFormLayout(chainGroup);
+
+    m_chainMaxDepthSpin = new QSpinBox();
+    m_chainMaxDepthSpin->setRange(1, 50);
+    m_chainMaxDepthSpin->setValue(3);
+    m_chainMaxDepthSpin->setToolTip(tr("Maximum number of prompts in a chain to prevent infinite loops"));
+    chainLayout->addRow(tr("Maximum Chain Depth:"), m_chainMaxDepthSpin);
+
+    layout->addWidget(chainGroup);
+
     // Debug group
     QGroupBox* debugGroup = new QGroupBox(tr("Debug"));
     QVBoxLayout* debugLayout = new QVBoxLayout(debugGroup);
@@ -598,6 +610,9 @@ void SettingsDialog::loadSettings()
     m_showDescriptionInMenuCheck->setChecked(m_configManager->showDescriptionInMenu());
     m_showDescriptionInPopupCheck->setChecked(m_configManager->showDescriptionInPopup());
 
+    // Chain settings
+    m_chainMaxDepthSpin->setValue(m_configManager->chainMaxDepth());
+
     // Debug
     m_debugEnabledCheck->setChecked(m_configManager->debugEnabled());
     int level = m_configManager->debugLevel();
@@ -651,6 +666,9 @@ void SettingsDialog::saveSettings()
     m_configManager->setHistoryAutoSave(m_autoSaveHistoryCheck->isChecked());
     m_configManager->setShowDescriptionInMenu(m_showDescriptionInMenuCheck->isChecked());
     m_configManager->setShowDescriptionInPopup(m_showDescriptionInPopupCheck->isChecked());
+
+    // Chain settings
+    m_configManager->setChainMaxDepth(m_chainMaxDepthSpin->value());
 
     // Debug
     m_configManager->setDebugEnabled(m_debugEnabledCheck->isChecked());

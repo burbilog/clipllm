@@ -240,7 +240,9 @@ bool App::initialize(bool startMinimized)
     connect(m_trayIcon.get(), &UI::TrayIcon::hotkeyTriggered,
             this, &App::onHotkeyTriggered);
     connect(m_trayIcon.get(), &UI::TrayIcon::promptSelected,
-            this, &App::onPromptSelected);
+            this, [this](const QString& promptId) {
+                onPromptSelected(promptId);
+            });
 
     // Register global hotkey
     QString hotkeyString = m_configManager->hotkey();
@@ -252,7 +254,9 @@ bool App::initialize(bool startMinimized)
 
     // Create prompt menu
     m_promptMenu = new UI::PromptMenu(m_promptManager.get(), m_clipboardManager.get(), m_configManager.get());
-    connect(m_promptMenu, &UI::PromptMenu::promptSelected, this, &App::onPromptSelected);
+    connect(m_promptMenu, &UI::PromptMenu::promptSelected, this, [this](const QString& promptId) {
+        onPromptSelected(promptId);
+    });
     connect(m_promptMenu, &UI::PromptMenu::settingsRequested, this, &App::showSettings);
     connect(m_promptMenu, &UI::PromptMenu::historyRequested, this, &App::showHistory);
     connect(m_promptMenu, &UI::PromptMenu::cancelled, []() {
@@ -609,17 +613,56 @@ void App::onHotkeyTriggered()
     }
 }
 
-void App::onPromptSelected(const QString& promptId)
+void App::onPromptSelected(const QString& promptId,
+                           const QString& overrideInput,
+                           const ChainContext& chainContext)
 {
-    LOG_DEBUG(QStringLiteral("Prompt selected: %1").arg(promptId));
+    LOG_DEBUG(QStringLiteral("Prompt selected: %1 (chain depth: %2, override input: %3)")
+              .arg(promptId)
+              .arg(chainContext.history.size())
+              .arg(overrideInput.isEmpty() ? "no" : "yes"));
 
-    // Check clipboard FIRST - applies to both hotkey and menu selection
-    auto clipboardContent = m_clipboardManager->getContent();
-    if (!clipboardContent.has_value()) {
-        QMessageBox::critical(nullptr,
-            tr("Clipboard Empty"),
-            tr("Cannot execute prompt: clipboard is empty.\n\nCopy some text or an image first."));
+    // Check for chain cycle (runtime protection)
+    if (chainContext.history.contains(promptId)) {
+        QMessageBox::warning(nullptr, tr("Chain Cycle Detected"),
+                           tr("The prompt chain would create a cycle. Execution stopped.\n\n"
+                              "Prompt '%1' was already executed in this chain.").arg(promptId));
         return;
+    }
+
+    // Check chain depth limit
+    int maxDepth = m_configManager->chainMaxDepth();
+    if (chainContext.history.size() >= maxDepth) {
+        QMessageBox::warning(nullptr, tr("Chain Depth Limit"),
+                           tr("Maximum chain depth (%1) reached. Execution stopped.\n\n"
+                              "You can increase this limit in Settings → General → Prompt Chains.")
+                           .arg(maxDepth));
+        return;
+    }
+
+    // Determine input source
+    QString inputText;
+    QByteArray imageData;
+
+    if (!overrideInput.isEmpty()) {
+        // Use override input from chain execution
+        inputText = overrideInput;
+    } else {
+        // Check clipboard FIRST - applies to both hotkey and menu selection
+        auto clipboardContent = m_clipboardManager->getContent();
+        if (!clipboardContent.has_value()) {
+            QMessageBox::critical(nullptr,
+                tr("Clipboard Empty"),
+                tr("Cannot execute prompt: clipboard is empty.\n\nCopy some text or an image first."));
+            return;
+        }
+
+        const ClipboardContent& content = clipboardContent.value();
+        if (content.isText() || content.isHtml()) {
+            inputText = content.text;
+        } else if (content.isImage()) {
+            imageData = content.imageData;
+        }
     }
 
     // Get prompt
@@ -704,41 +747,15 @@ void App::onPromptSelected(const QString& promptId)
     // Also set API key explicitly since LLMClient checks m_apiKey separately
     m_llmClient->setApiKey(config.apiKey());
 
-    // Reuse clipboardContent from the early check at the top of this function
-    const ClipboardContent& content = clipboardContent.value();
-
-    // Check content type compatibility
-    if (prompt.contentType() != Models::ContentType::Any) {
-        bool compatible = false;
-        // Html content is also compatible with Text prompts (it contains plain text)
-        if (prompt.contentType() == Models::ContentType::Text && (content.isText() || content.isHtml())) {
-            compatible = true;
-        } else if (prompt.contentType() == Models::ContentType::Image && content.isImage()) {
-            compatible = true;
-        }
-
-        if (!compatible) {
-            showTrayMessage(tr("Incompatible Content"),
-                           tr("This prompt requires %1 content.")
-                           .arg(Models::Prompt::contentTypeToString(prompt.contentType())));
-            return;
-        }
+    // Check content type compatibility (only for text input from chain)
+    if (!imageData.isEmpty() && prompt.contentType() == Models::ContentType::Text) {
+        showTrayMessage(tr("Incompatible Content"),
+                       tr("This prompt requires text content."));
+        return;
     }
 
-    // Format the user prompt with clipboard content
-    QString clipboardText;
-    if (content.isText()) {
-        clipboardText = content.text;
-    } else if (content.isHtml()) {
-        clipboardText = content.text; // Html content also has plain text
-    }
-    QString userPrompt = prompt.formatUserPrompt(clipboardText, m_configManager->language());
-
-    // Get image data if present
-    QByteArray imageData;
-    if (content.isImage()) {
-        imageData = content.imageData;
-    }
+    // Format the user prompt with input text
+    QString userPrompt = prompt.formatUserPrompt(inputText, m_configManager->language());
 
     // Create or reuse result dialog
     if (!m_resultDialog) {
@@ -751,11 +768,14 @@ void App::onPromptSelected(const QString& promptId)
         // Connect retry signal
         connect(m_resultDialog, &UI::ResultDialog::retryRequested,
                 this, &App::onResultDialogRetryRequested);
+        // Connect chain continue signal
+        connect(m_resultDialog, &UI::ResultDialog::chainContinueRequested,
+                this, &App::onChainContinueRequested);
     }
 
     // Configure dialog
     m_resultDialog->setPrompt(promptId, prompt.name());
-    m_resultDialog->setInput(clipboardText.isEmpty() ? tr("[Image content]") : clipboardText);
+    m_resultDialog->setInput(inputText.isEmpty() ? tr("[Image content]") : inputText);
 
     // Set provider and model (model from prompt takes precedence)
     QString displayModel = modelToUse;
@@ -778,13 +798,29 @@ void App::onPromptSelected(const QString& promptId)
 
     m_resultDialog->startRequest();
 
+    // Set chain info for the dialog
+    QStringList chainNames = chainContext.names;
+    chainNames.append(prompt.name());
+    QString nextPromptId = prompt.nextPromptId();
+    bool autoContinue = prompt.autoContinue();
+    m_resultDialog->setChainInfo(chainNames, nextPromptId, autoContinue);
+
+    // Store chain context for potential continue
+    m_currentChainContext = chainContext;
+    m_currentChainContext.history.insert(promptId);
+    m_currentChainContext.names.append(prompt.name());
+    // Store original input if this is the first prompt in chain
+    if (m_currentChainContext.originalInput.isEmpty()) {
+        m_currentChainContext.originalInput = inputText;
+    }
+
     // Show dialog
     m_resultDialog->show();
     m_resultDialog->raise();
     m_resultDialog->activateWindow();
 
     // Send request to LLM
-    QString systemPrompt = prompt.formatSystemPrompt(clipboardText, m_configManager->language());
+    QString systemPrompt = prompt.formatSystemPrompt(inputText, m_configManager->language());
 
     // Determine temperature to use
     double temperature = -1.0;  // -1 means use config default
@@ -800,6 +836,12 @@ void App::onPromptSelected(const QString& promptId)
     } else {
         // If no system prompt, send user prompt only
         m_llmClient->sendPrompt(QString(), userPrompt, imageData, temperature);
+    }
+
+    // Auto-continue if enabled and there's a next prompt
+    if (autoContinue && !nextPromptId.isEmpty()) {
+        // We'll handle auto-continue after the response is complete
+        // via the chainContinueRequested signal
     }
 }
 
@@ -834,6 +876,14 @@ void App::onResultDialogRetryRequested(const QString& promptId, const QString& p
     } else {
         m_llmClient->sendPrompt(QString(), userPrompt, imageData, temperature);
     }
+}
+
+void App::onChainContinueRequested(const QString& nextPromptId, const QString& output)
+{
+    LOG_DEBUG(QStringLiteral("Chain continue requested: nextPromptId=%1").arg(nextPromptId));
+
+    // Execute the next prompt with the current output as input
+    onPromptSelected(nextPromptId, output, m_currentChainContext);
 }
 
 void App::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason)

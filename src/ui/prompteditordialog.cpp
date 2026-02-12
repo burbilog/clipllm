@@ -66,6 +66,7 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
 
     setupUi();
     loadProviders();
+    loadNextPromptCombo();  // Load available prompts for chaining
     setWindowTitle(tr("Add Prompt"));
 
     // Generate a unique ID for new prompts
@@ -113,6 +114,7 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
 
     setupUi();
     loadProviders();
+    loadNextPromptCombo(prompt.id());  // Load available prompts for chaining, exclude current
     setWindowTitle(tr("Edit Prompt"));
 
     loadPrompt(prompt);
@@ -301,6 +303,24 @@ void PromptEditorDialog::setupUi()
             this, &PromptEditorDialog::onHotkeyRecordingFinished);
     settingsLayout->addRow(tr("Hotkey:"), m_hotkeyEdit);
 
+    // Chain settings
+    m_nextPromptCombo = new QComboBox();
+    m_nextPromptCombo->setToolTip(tr("Select next prompt in the chain (only text prompts available)"));
+    connect(m_nextPromptCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &PromptEditorDialog::onNextPromptChanged);
+    settingsLayout->addRow(tr("Next Prompt:"), m_nextPromptCombo);
+
+    m_autoContinueCheck = new QCheckBox(tr("Auto-continue to next prompt"));
+    m_autoContinueCheck->setToolTip(tr("Automatically run the next prompt after this one completes"));
+    m_autoContinueCheck->setEnabled(false);
+    settingsLayout->addRow(m_autoContinueCheck);
+
+    m_chainWarningLabel = new QLabel();
+    m_chainWarningLabel->setWordWrap(true);
+    m_chainWarningLabel->setStyleSheet("color: red; font-size: 10px;");
+    m_chainWarningLabel->hide();
+    settingsLayout->addRow(m_chainWarningLabel);
+
     // Initialize flag - prompt hotkeys are currently registered
     m_isRecordingHotkey = false;
 
@@ -411,6 +431,21 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
     m_enabledCheck->setChecked(prompt.enabled());
     m_prioritySpin->setValue(prompt.priority());
     m_hotkeyEdit->setHotkeyText(prompt.hotkey());
+
+    // Chain settings
+    QString nextPromptId = prompt.nextPromptId();
+    if (nextPromptId.isEmpty()) {
+        m_nextPromptCombo->setCurrentIndex(0);  // "(None)"
+    } else {
+        int nextIndex = m_nextPromptCombo->findData(nextPromptId);
+        if (nextIndex >= 0) {
+            m_nextPromptCombo->setCurrentIndex(nextIndex);
+        } else {
+            m_nextPromptCombo->setCurrentIndex(0);  // Not found, set to none
+        }
+    }
+    m_autoContinueCheck->setChecked(prompt.autoContinue());
+    updateChainWarning();
 }
 
 Models::Prompt PromptEditorDialog::buildPrompt() const
@@ -459,6 +494,11 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
     prompt.setEnabled(m_enabledCheck->isChecked());
     prompt.setPriority(m_prioritySpin->value());
     prompt.setHotkey(m_hotkeyEdit->hotkeyText());
+
+    // Chain settings
+    QString nextPromptId = m_nextPromptCombo->currentData().toString();
+    prompt.setNextPromptId(nextPromptId);
+    prompt.setAutoContinue(m_autoContinueCheck->isChecked());
 
     return prompt;
 }
@@ -685,6 +725,18 @@ void PromptEditorDialog::validateInput()
 void PromptEditorDialog::onOkClicked()
 {
     Models::Prompt prompt = buildPrompt();
+
+    // Check for chain cycle
+    QString nextId = prompt.nextPromptId();
+    if (!nextId.isEmpty()) {
+        QString currentId = prompt.id();
+        if (detectChainCycle(currentId, nextId)) {
+            QMessageBox::warning(this, tr("Chain Cycle Detected"),
+                               tr("This prompt would create a cycle in the chain.\n\n"
+                                  "Please select a different 'Next Prompt' or set it to '(None)'."));
+            return;
+        }
+    }
 
     // Additional validation via PromptManager
     if (m_promptManager && !m_promptManager->validatePrompt(prompt)) {
@@ -1005,6 +1057,147 @@ bool PromptEditorDialog::checkHotkeyConflict(const QKeySequence& seq) const
     }
 
     return false;
+}
+
+void PromptEditorDialog::loadNextPromptCombo(const QString& currentId)
+{
+    m_nextPromptCombo->blockSignals(true);
+    m_nextPromptCombo->clear();
+
+    // Add "(None)" option
+    m_nextPromptCombo->addItem(tr("(None)"), QString());
+
+    if (!m_promptManager) {
+        m_nextPromptCombo->blockSignals(false);
+        return;
+    }
+
+    // Get all prompts and filter
+    QVector<Models::Prompt> allPrompts = m_promptManager->getAllPrompts();
+
+    // Sort by name
+    std::sort(allPrompts.begin(), allPrompts.end(),
+              [](const Models::Prompt& a, const Models::Prompt& b) {
+                  return a.name().toLower() < b.name().toLower();
+              });
+
+    // Add only text prompts, excluding current
+    for (const auto& prompt : allPrompts) {
+        // Skip current prompt (when editing)
+        if (!currentId.isEmpty() && prompt.id() == currentId) {
+            continue;
+        }
+
+        // Only include text prompts (chains don't work with image prompts)
+        if (prompt.contentType() == Models::ContentType::Image) {
+            continue;
+        }
+
+        QString display = prompt.name();
+        if (!prompt.enabled()) {
+            display += tr(" (disabled)");
+        }
+        m_nextPromptCombo->addItem(display, prompt.id());
+    }
+
+    m_nextPromptCombo->blockSignals(false);
+}
+
+void PromptEditorDialog::onNextPromptChanged(int index)
+{
+    Q_UNUSED(index)
+
+    QString nextId = m_nextPromptCombo->currentData().toString();
+    bool hasSelection = !nextId.isEmpty();
+
+    // Enable/disable auto-continue checkbox
+    m_autoContinueCheck->setEnabled(hasSelection);
+    if (!hasSelection) {
+        m_autoContinueCheck->setChecked(false);
+    }
+
+    // Update chain warning
+    updateChainWarning();
+}
+
+bool PromptEditorDialog::detectChainCycle(const QString& startId, const QString& targetId) const
+{
+    if (!m_promptManager || targetId.isEmpty()) {
+        return false;
+    }
+
+    // Build a set of all prompts that would be in the chain
+    QSet<QString> visited;
+    QString currentId = targetId;
+
+    // Walk the chain starting from target
+    while (!currentId.isEmpty()) {
+        // If we reach startId, we have a cycle
+        if (currentId == startId) {
+            return true;
+        }
+
+        // If already visited, there's an existing cycle in the chain
+        if (visited.contains(currentId)) {
+            return true;
+        }
+
+        visited.insert(currentId);
+
+        // Get next prompt in chain
+        auto promptOpt = m_promptManager->getPrompt(currentId);
+        if (!promptOpt.has_value()) {
+            break;
+        }
+        currentId = promptOpt->nextPromptId();
+    }
+
+    return false;
+}
+
+void PromptEditorDialog::updateChainWarning()
+{
+    QString currentId = m_editMode ? m_originalPrompt.id() : m_idEdit->text().trimmed();
+    QString nextId = m_nextPromptCombo->currentData().toString();
+
+    if (nextId.isEmpty()) {
+        m_chainWarningLabel->hide();
+        m_chainWarningLabel->clear();
+        return;
+    }
+
+    // Check for cycle
+    if (detectChainCycle(currentId, nextId)) {
+        m_chainWarningLabel->setText(tr("Warning: This would create a cycle in the chain!"));
+        m_chainWarningLabel->show();
+        return;
+    }
+
+    // Check for existing cycle in target chain
+    auto nextPromptOpt = m_promptManager ? m_promptManager->getPrompt(nextId) : std::nullopt;
+    if (nextPromptOpt.has_value()) {
+        QSet<QString> visited;
+        QString checkId = nextPromptOpt->nextPromptId();
+        while (!checkId.isEmpty()) {
+            if (visited.contains(checkId)) {
+                m_chainWarningLabel->setText(tr("Warning: Target prompt is part of an existing cycle!"));
+                m_chainWarningLabel->show();
+                return;
+            }
+            if (checkId == currentId) {
+                // This would create a cycle
+                m_chainWarningLabel->setText(tr("Warning: This would create a cycle in the chain!"));
+                m_chainWarningLabel->show();
+                return;
+            }
+            visited.insert(checkId);
+            auto pOpt = m_promptManager->getPrompt(checkId);
+            if (!pOpt.has_value()) break;
+            checkId = pOpt->nextPromptId();
+        }
+    }
+
+    m_chainWarningLabel->hide();
 }
 
 } // namespace UI

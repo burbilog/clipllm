@@ -111,6 +111,13 @@ void ResultDialog::setupUi()
     m_statusLabel->setWordWrap(true);
     mainLayout->addWidget(m_statusLabel);
 
+    // Chain indicator
+    m_chainIndicator = new QLabel();
+    m_chainIndicator->setWordWrap(true);
+    m_chainIndicator->setStyleSheet("color: #666; font-style: italic; font-size: 10px;");
+    m_chainIndicator->hide();
+    mainLayout->addWidget(m_chainIndicator);
+
     // Markdown toggle button
     m_markdownToggle = new QPushButton(tr("Markdown"));
     m_markdownToggle->setCheckable(true);
@@ -182,6 +189,12 @@ void ResultDialog::setupUi()
     m_retryButton->setEnabled(false);
     connect(m_retryButton, &QPushButton::clicked, this, &ResultDialog::onRetryClicked);
 
+    m_continueButton = new QPushButton(tr("Continue"));
+    m_continueButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaSeekForward));
+    m_continueButton->setEnabled(false);
+    m_continueButton->hide();  // Hidden by default, shown when chain has next step
+    connect(m_continueButton, &QPushButton::clicked, this, &ResultDialog::onChainContinueClicked);
+
     m_closeButton = new QPushButton(tr("Close"));
     m_closeButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCloseButton));
     connect(m_closeButton, &QPushButton::clicked, this, &ResultDialog::onCloseClicked);
@@ -208,6 +221,7 @@ void ResultDialog::setupUi()
     zoomLayout->addWidget(m_zoomInButton);
     buttonLayout->addLayout(zoomLayout);
 
+    buttonLayout->addWidget(m_continueButton);
     buttonLayout->addWidget(m_retryButton);
     buttonLayout->addWidget(m_closeButton);
 
@@ -291,6 +305,8 @@ void ResultDialog::startRequest()
     m_saveButton->setEnabled(false);
     m_saveAsButton->setEnabled(false);
     m_retryButton->setEnabled(false);
+    m_continueButton->setEnabled(false);
+    m_continueButton->hide();
 }
 
 void ResultDialog::appendResponse(const QString& text)
@@ -343,6 +359,20 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
         }
         m_saveAsButton->setEnabled(true);
         m_retryButton->setEnabled(true);
+
+        // Show continue button if there's a next prompt in the chain (and not auto-continue)
+        if (!m_nextPromptId.isEmpty() && !m_autoContinue) {
+            m_continueButton->setEnabled(true);
+            m_continueButton->show();
+        }
+
+        // Auto-continue if enabled and there's a next prompt
+        if (m_autoContinue && !m_nextPromptId.isEmpty()) {
+            // Use QTimer to allow the UI to update before continuing
+            QTimer::singleShot(100, this, [this]() {
+                emit chainContinueRequested(m_nextPromptId, m_output);
+            });
+        }
 
         emit responseReceived(response.content);
     } else if (!response.error.isEmpty()) {
@@ -752,6 +782,29 @@ void ResultDialog::loadFontSize()
     settings.beginGroup("ResultDialog");
     m_fontSize = settings.value("fontSize", 10).toInt();
     settings.endGroup();
+}
+
+void ResultDialog::setChainInfo(const QStringList& chainNames, const QString& nextPromptId, bool autoContinue)
+{
+    m_chainNames = chainNames;
+    m_nextPromptId = nextPromptId;
+    m_autoContinue = autoContinue;
+
+    // Update chain indicator
+    if (!chainNames.isEmpty()) {
+        QString chainText = tr("Chain: %1").arg(chainNames.join(QStringLiteral(" → ")));
+        m_chainIndicator->setText(chainText);
+        m_chainIndicator->show();
+    } else {
+        m_chainIndicator->hide();
+    }
+}
+
+void ResultDialog::onChainContinueClicked()
+{
+    if (!m_nextPromptId.isEmpty()) {
+        emit chainContinueRequested(m_nextPromptId, m_output);
+    }
 }
 
 } // namespace UI

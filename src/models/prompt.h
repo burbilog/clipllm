@@ -68,6 +68,8 @@ public:
     QString providerId() const { return m_providerId; }
     bool overrideProvider() const { return m_overrideProvider; }
     QString hotkey() const { return m_hotkey; }
+    QString nextPromptId() const { return m_nextPromptId; }
+    bool autoContinue() const { return m_autoContinue; }
 
     // Setters
     void setId(const QString& id) { m_id = id; }
@@ -88,6 +90,8 @@ public:
     void setProviderId(const QString& providerId) { m_providerId = providerId; }
     void setOverrideProvider(bool override) { m_overrideProvider = override; }
     void setHotkey(const QString& hotkey) { m_hotkey = hotkey; }
+    void setNextPromptId(const QString& id) { m_nextPromptId = id; }
+    void setAutoContinue(bool enabled) { m_autoContinue = enabled; }
 
     // Serialization
     QJsonObject toJson() const;
@@ -127,6 +131,8 @@ private:
     QString m_providerId;
     bool m_overrideProvider = false;
     QString m_hotkey;
+    QString m_nextPromptId;
+    bool m_autoContinue = false;
 };
 
 } // namespace Models

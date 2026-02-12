@@ -63,6 +63,7 @@ const QString ConfigManager::CACHED_MODELS_KEY = QStringLiteral("llm/cached_mode
 const QString ConfigManager::DEBUG_ENABLED_KEY = QStringLiteral("debug/enabled");
 const QString ConfigManager::DEBUG_LEVEL_KEY = QStringLiteral("debug/level");
 const QString ConfigManager::LAST_SAVE_DIRECTORY_KEY = QStringLiteral("file_dialog/last_save_directory");
+static const QString CHAIN_MAX_DEPTH_KEY = QStringLiteral("chain/max_depth");
 
 ConfigManager::ConfigManager()
 {
@@ -564,6 +565,16 @@ QString ConfigManager::lastSaveDirectory() const
 void ConfigManager::setLastSaveDirectory(const QString& path)
 {
     setValue(LAST_SAVE_DIRECTORY_KEY, path);
+}
+
+int ConfigManager::chainMaxDepth() const
+{
+    return value(CHAIN_MAX_DEPTH_KEY, 3).toInt();
+}
+
+void ConfigManager::setChainMaxDepth(int depth)
+{
+    setValue(CHAIN_MAX_DEPTH_KEY, depth);
 }
 
 } // namespace Core

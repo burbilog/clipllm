@@ -70,6 +70,7 @@ private slots:
     void onHotkeyChanged(const QKeySequence& sequence);
     void onHotkeyRecordingFinished();
     void validateInput();
+    void onNextPromptChanged(int index);
 
 private:
     void setupUi();
@@ -82,6 +83,9 @@ private:
     void onModelsFetchFinished(QNetworkReply* reply);
     QString generateUniqueId() const;
     bool checkHotkeyConflict(const QKeySequence& seq) const;
+    void loadNextPromptCombo(const QString& currentId = QString());
+    bool detectChainCycle(const QString& startId, const QString& targetId) const;
+    void updateChainWarning();
 
     Core::PromptManager* m_promptManager = nullptr;
     Core::GroupsManager* m_groupsManager = nullptr;
@@ -112,6 +116,11 @@ private:
     QCheckBox* m_enabledCheck = nullptr;
     QSpinBox* m_prioritySpin = nullptr;
     class HotkeyEdit* m_hotkeyEdit = nullptr;
+
+    // Chain fields
+    QComboBox* m_nextPromptCombo = nullptr;
+    QCheckBox* m_autoContinueCheck = nullptr;
+    QLabel* m_chainWarningLabel = nullptr;
 
     // Recording state
     bool m_isRecordingHotkey = false;

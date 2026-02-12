@@ -22,6 +22,8 @@
 #include <QTranslator>
 #include <QMap>
 #include <QKeySequence>
+#include <QSet>
+#include <QStringList>
 #include <memory>
 
 // Forward declarations
@@ -55,6 +57,13 @@ class HistoryDialog;
 class ResultDialog;
 class PromptMenu;
 }
+
+// Chain execution context
+struct ChainContext {
+    QString originalInput;
+    QSet<QString> history;
+    QStringList names;
+};
 
 class App : public QApplication
 {
@@ -104,11 +113,14 @@ signals:
 
 private slots:
     void onHotkeyTriggered();
-    void onPromptSelected(const QString& promptId);
+    void onPromptSelected(const QString& promptId,
+                          const QString& overrideInput = QString(),
+                          const ChainContext& chainContext = ChainContext());
     void onResultDialogRetryRequested(const QString& promptId, const QString& providerId,
                                       const QString& model, const QString& systemPrompt,
                                       const QString& userPrompt, const QByteArray& imageData,
                                       double temperature);
+    void onChainContinueRequested(const QString& nextPromptId, const QString& output);
     void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onAboutToQuit();
 
@@ -153,6 +165,9 @@ private:
 
     // Prompt hotkeys (prompt ID -> QHotkey)
     QMap<QString, QHotkey*> m_promptHotkeys;
+
+    // Chain execution context
+    ChainContext m_currentChainContext;
 
     // Single instance
     QByteArray m_instanceId;

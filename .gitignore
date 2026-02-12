@@ -51,3 +51,4 @@ qrc_*.cpp
 
 # macOS
 .DS_Store
+.cecli*

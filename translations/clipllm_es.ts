@@ -124,26 +124,30 @@ Copie texto o una imagen primero.</translation>
     <message>
         <location filename="../src/core/app.cpp" line="627"/>
         <source>Chain Cycle Detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciclo de cadena detectado</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="628"/>
         <source>The prompt chain would create a cycle. Execution stopped.
 
 Prompt &apos;%1&apos; was already executed in this chain.</source>
-        <translation type="unfinished"></translation>
+        <translation>La cadena de prompts crearía un ciclo. Ejecución detenida.
+
+El prompt &apos;%1&apos; ya fue ejecutado en esta cadena.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="636"/>
         <source>Chain Depth Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Límite de profundidad de cadena</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="637"/>
         <source>Maximum chain depth (%1) reached. Execution stopped.
 
 You can increase this limit in Settings → General → Prompt Chains.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profundidad máxima de cadena (%1) alcanzada. Ejecución detenida.
+
+Puede aumentar este límite en Configuración → General → Cadenas de prompts.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="656"/>
@@ -191,7 +195,7 @@ Copie texto o una imagen primero.</translation>
     <message>
         <location filename="../src/core/app.cpp" line="753"/>
         <source>This prompt requires text content.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este prompt requiere contenido de texto.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="207"/>
@@ -813,7 +817,9 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <source>No history entries.
 Enable &apos;Automatically save to history&apos; in Settings
 or save prompts manually to populate this list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sin entradas de historial.
+Active &apos;Guardar automáticamente en historial&apos; en Configuración
+o guarde prompts manualmente para llenar esta lista.</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="270"/>
@@ -1227,22 +1233,22 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="308"/>
         <source>Select next prompt in the chain (only text prompts available)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar siguiente prompt en la cadena (solo prompts de texto disponibles)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="311"/>
         <source>Next Prompt:</source>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente prompt:</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="313"/>
         <source>Auto-continue to next prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuar automáticamente al siguiente prompt</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="314"/>
         <source>Automatically run the next prompt after this one completes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecutar automáticamente el siguiente prompt después de que este termine</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="339"/>
@@ -1269,14 +1275,16 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="734"/>
         <source>Chain Cycle Detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciclo de cadena detectado</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="735"/>
         <source>This prompt would create a cycle in the chain.
 
 Please select a different &apos;Next Prompt&apos; or set it to &apos;(None)&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este prompt crearía un ciclo en la cadena.
+
+Por favor seleccione un &apos;Siguiente prompt&apos; diferente o establézcalo en &apos;(Ninguno)&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="768"/>
@@ -1363,23 +1371,23 @@ Por favor elija un atajo diferente.</translation>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1068"/>
         <source>(None)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Ninguno)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1098"/>
         <source> (disabled)</source>
-        <translation type="unfinished"> (deshabilitado)</translation>
+        <translation> (deshabilitado)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1171"/>
         <location filename="../src/ui/prompteditordialog.cpp" line="1189"/>
         <source>Warning: This would create a cycle in the chain!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Advertencia: Esto crearía un ciclo en la cadena!</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1183"/>
         <source>Warning: Target prompt is part of an existing cycle!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Advertencia: El prompt objetivo es parte de un ciclo existente!</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="241"/>
@@ -1709,7 +1717,7 @@ Por favor elija un atajo diferente.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="192"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuar</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="198"/>
@@ -1864,7 +1872,7 @@ Por favor elija un atajo diferente.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="795"/>
         <source>Chain: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cadena: %1</translation>
     </message>
 </context>
 <context>
@@ -1903,17 +1911,17 @@ Por favor elija un atajo diferente.</translation>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="199"/>
         <source>Prompt Chains</source>
-        <translation type="unfinished"></translation>
+        <translation>Cadenas de prompts</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="205"/>
         <source>Maximum number of prompts in a chain to prevent infinite loops</source>
-        <translation type="unfinished"></translation>
+        <translation>Número máximo de prompts en una cadena para evitar bucles infinitos</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="206"/>
         <source>Maximum Chain Depth:</source>
-        <translation type="unfinished"></translation>
+        <translation>Profundidad máxima de cadena:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="211"/>

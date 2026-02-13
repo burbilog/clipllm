@@ -124,26 +124,30 @@ Copy some text or an image first.</translation>
     <message>
         <location filename="../src/core/app.cpp" line="627"/>
         <source>Chain Cycle Detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Chain Cycle Detected</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="628"/>
         <source>The prompt chain would create a cycle. Execution stopped.
 
 Prompt &apos;%1&apos; was already executed in this chain.</source>
-        <translation type="unfinished"></translation>
+        <translation>The prompt chain would create a cycle. Execution stopped.
+
+Prompt &apos;%1&apos; was already executed in this chain.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="636"/>
         <source>Chain Depth Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Chain Depth Limit</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="637"/>
         <source>Maximum chain depth (%1) reached. Execution stopped.
 
 You can increase this limit in Settings → General → Prompt Chains.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximum chain depth (%1) reached. Execution stopped.
+
+You can increase this limit in Settings → General → Prompt Chains.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="656"/>
@@ -191,7 +195,7 @@ Copy some text or an image first.</translation>
     <message>
         <location filename="../src/core/app.cpp" line="753"/>
         <source>This prompt requires text content.</source>
-        <translation type="unfinished"></translation>
+        <translation>This prompt requires text content.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="207"/>
@@ -821,12 +825,14 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
         <source>No history entries.
 Enable &apos;Automatically save to history&apos; in Settings
 or save prompts manually to populate this list.</source>
-        <translation type="unfinished"></translation>
+        <translation>No history entries.
+Enable &apos;Automatically save to history&apos; in Settings
+or save prompts manually to populate this list.</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="270"/>
         <source>Total entries: 0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="580"/>
@@ -1310,22 +1316,22 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="308"/>
         <source>Select next prompt in the chain (only text prompts available)</source>
-        <translation type="unfinished"></translation>
+        <translation>Select next prompt in the chain (only text prompts available)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="311"/>
         <source>Next Prompt:</source>
-        <translation type="unfinished"></translation>
+        <translation>Next Prompt:</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="313"/>
         <source>Auto-continue to next prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-continue to next prompt</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="314"/>
         <source>Automatically run the next prompt after this one completes</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatically run the next prompt after this one completes</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="339"/>
@@ -1352,14 +1358,16 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="734"/>
         <source>Chain Cycle Detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Chain Cycle Detected</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="735"/>
         <source>This prompt would create a cycle in the chain.
 
 Please select a different &apos;Next Prompt&apos; or set it to &apos;(None)&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>This prompt would create a cycle in the chain.
+
+Please select a different &apos;Next Prompt&apos; or set it to &apos;(None)&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="768"/>
@@ -1446,23 +1454,23 @@ Please choose a different hotkey.</translation>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1068"/>
         <source>(None)</source>
-        <translation type="unfinished"></translation>
+        <translation>(None)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1098"/>
         <source> (disabled)</source>
-        <translation type="unfinished"> (disabled)</translation>
+        <translation>(disabled)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1171"/>
         <location filename="../src/ui/prompteditordialog.cpp" line="1189"/>
         <source>Warning: This would create a cycle in the chain!</source>
-        <translation type="unfinished"></translation>
+        <translation>Warning: This would create a cycle in the chain!</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1183"/>
         <source>Warning: Target prompt is part of an existing cycle!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="241"/>
@@ -1721,17 +1729,17 @@ Please choose a different hotkey.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="181"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="184"/>
         <source>Save output to a file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="192"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="203"/>
@@ -1777,28 +1785,28 @@ Please choose a different hotkey.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="483"/>
         <source>Save Output As</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="485"/>
         <source>Text Files (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="512"/>
         <source>Saved to %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="518"/>
         <source>Save Failed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="519"/>
         <source>Could not write to file:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="582"/>
@@ -1838,7 +1846,7 @@ Please choose a different hotkey.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="795"/>
         <source>Chain: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Processing...</source>
@@ -2003,92 +2011,92 @@ Please choose a different hotkey.</translation>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="185"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="188"/>
         <source>Show prompt descriptions in menu</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="189"/>
         <source>Show prompt descriptions in the tray menu (disabled by default for cleaner menu)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="192"/>
         <source>Show prompt descriptions in popup</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="193"/>
         <source>Show prompt descriptions in the popup menu (disabled by default for cleaner popup)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="199"/>
         <source>Prompt Chains</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="205"/>
         <source>Maximum number of prompts in a chain to prevent infinite loops</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="206"/>
         <source>Maximum Chain Depth:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="211"/>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="214"/>
         <source>Record debug messages</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="215"/>
         <source>Write debug information to debug.log file in the configuration directory</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="223"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="224"/>
         <source>Basic debug information</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="225"/>
         <source>Trace</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="226"/>
         <source>Full request/response logging for LLM</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="235"/>
         <source>Debug Level:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="246"/>
         <source>Log file:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="249"/>
         <source>Copy</source>
-        <translation type="unfinished">Copy</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="283"/>

@@ -124,26 +124,30 @@ Copy some text or an image first.</source>
     <message>
         <location filename="../src/core/app.cpp" line="627"/>
         <source>Chain Cycle Detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Обнаружен цикл в цепочке</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="628"/>
         <source>The prompt chain would create a cycle. Execution stopped.
 
 Prompt &apos;%1&apos; was already executed in this chain.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цепочка промптов создала бы цикл. Выполнение остановлено.
+
+Промпт &apos;%1&apos; уже был выполнен в этой цепочке.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="636"/>
         <source>Chain Depth Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Лимит глубины цепочки</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="637"/>
         <source>Maximum chain depth (%1) reached. Execution stopped.
 
 You can increase this limit in Settings → General → Prompt Chains.</source>
-        <translation type="unfinished"></translation>
+        <translation>Достигнута максимальная глубина цепочки (%1). Выполнение остановлено.
+
+Вы можете увеличить этот лимит в Настройки → Общие → Цепочки промптов.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="656"/>
@@ -191,7 +195,7 @@ Copy some text or an image first.</source>
     <message>
         <location filename="../src/core/app.cpp" line="753"/>
         <source>This prompt requires text content.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот промпт требует текстовое содержимое.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="207"/>
@@ -837,7 +841,9 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
         <source>No history entries.
 Enable &apos;Automatically save to history&apos; in Settings
 or save prompts manually to populate this list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет записей истории.
+Включите &apos;Автоматически сохранять в историю&apos; в Настройках
+или сохраняйте промпты вручную, чтобы заполнить этот список.</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="270"/>
@@ -1251,22 +1257,22 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="308"/>
         <source>Select next prompt in the chain (only text prompts available)</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите следующий промпт в цепочке (доступны только текстовые промпты)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="311"/>
         <source>Next Prompt:</source>
-        <translation type="unfinished"></translation>
+        <translation>Следующий промпт:</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="313"/>
         <source>Auto-continue to next prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Автопродолжение к следующему промпту</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="314"/>
         <source>Automatically run the next prompt after this one completes</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматически запустить следующий промпт после завершения текущего</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="339"/>
@@ -1293,14 +1299,16 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="734"/>
         <source>Chain Cycle Detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Обнаружен цикл в цепочке</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="735"/>
         <source>This prompt would create a cycle in the chain.
 
 Please select a different &apos;Next Prompt&apos; or set it to &apos;(None)&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот промпт создал бы цикл в цепочке.
+
+Пожалуйста, выберите другой &apos;Следующий промпт&apos; или установите &apos;(Нет)&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="768"/>
@@ -1387,23 +1395,23 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1068"/>
         <source>(None)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Нет)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1098"/>
         <source> (disabled)</source>
-        <translation type="unfinished"> (отключено)</translation>
+        <translation> (отключено)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1171"/>
         <location filename="../src/ui/prompteditordialog.cpp" line="1189"/>
         <source>Warning: This would create a cycle in the chain!</source>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение: Это создало бы цикл в цепочке!</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1183"/>
         <source>Warning: Target prompt is part of an existing cycle!</source>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение: Целевой промпт является частью существующего цикла!</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="241"/>
@@ -1733,7 +1741,7 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="192"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Продолжить</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="198"/>
@@ -1888,7 +1896,7 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="795"/>
         <source>Chain: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Цепочка: %1</translation>
     </message>
 </context>
 <context>
@@ -2132,17 +2140,17 @@ Please choose a different hotkey.</source>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="199"/>
         <source>Prompt Chains</source>
-        <translation type="unfinished"></translation>
+        <translation>Цепочки промптов</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="205"/>
         <source>Maximum number of prompts in a chain to prevent infinite loops</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимальное количество промптов в цепочке для предотвращения бесконечных циклов</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="206"/>
         <source>Maximum Chain Depth:</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимальная глубина цепочки:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="211"/>

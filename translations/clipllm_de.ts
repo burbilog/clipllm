@@ -124,26 +124,30 @@ Kopieren Sie zuerst Text oder ein Bild.</translation>
     <message>
         <location filename="../src/core/app.cpp" line="627"/>
         <source>Chain Cycle Detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Kettenzyklus erkannt</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="628"/>
         <source>The prompt chain would create a cycle. Execution stopped.
 
 Prompt &apos;%1&apos; was already executed in this chain.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Prompt-Kette würde einen Zyklus erstellen. Ausführung gestoppt.
+
+Prompt &apos;%1&apos; wurde bereits in dieser Kette ausgeführt.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="636"/>
         <source>Chain Depth Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kettentiefenlimit</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="637"/>
         <source>Maximum chain depth (%1) reached. Execution stopped.
 
 You can increase this limit in Settings → General → Prompt Chains.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale Kettentiefe (%1) erreicht. Ausführung gestoppt.
+
+Sie können dieses Limit unter Einstellungen → Allgemein → Prompt-Ketten erhöhen.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="656"/>
@@ -191,7 +195,7 @@ Kopieren Sie zuerst Text oder ein Bild.</translation>
     <message>
         <location filename="../src/core/app.cpp" line="753"/>
         <source>This prompt requires text content.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Prompt erfordert Textinhalt.</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="207"/>
@@ -813,7 +817,9 @@ Bitte fügen Sie mindestens ein Anbieterprofil in den Einstellungen hinzu, um Cl
         <source>No history entries.
 Enable &apos;Automatically save to history&apos; in Settings
 or save prompts manually to populate this list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Historieneinträge.
+Aktivieren Sie &apos;Automatisch in Historie speichern&apos; in Einstellungen
+oder speichern Sie Prompts manuell, um diese Liste zu füllen.</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="270"/>
@@ -1227,22 +1233,22 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="308"/>
         <source>Select next prompt in the chain (only text prompts available)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächsten Prompt in der Kette auswählen (nur Text-Prompts verfügbar)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="311"/>
         <source>Next Prompt:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächster Prompt:</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="313"/>
         <source>Auto-continue to next prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisch zum nächsten Prompt fortfahren</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="314"/>
         <source>Automatically run the next prompt after this one completes</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisch den nächsten Prompt ausführen, nachdem dieser abgeschlossen ist</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="339"/>
@@ -1269,14 +1275,16 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="734"/>
         <source>Chain Cycle Detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Kettenzyklus erkannt</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="735"/>
         <source>This prompt would create a cycle in the chain.
 
 Please select a different &apos;Next Prompt&apos; or set it to &apos;(None)&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Prompt würde einen Zyklus in der Kette erstellen.
+
+Bitte wählen Sie einen anderen &apos;Nächsten Prompt&apos; oder setzen Sie ihn auf &apos;(Keiner)&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="768"/>
@@ -1363,23 +1371,23 @@ Bitte wählen Sie einen anderen Hotkey.</translation>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1068"/>
         <source>(None)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Keiner)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1098"/>
         <source> (disabled)</source>
-        <translation type="unfinished"> (deaktiviert)</translation>
+        <translation> (deaktiviert)</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1171"/>
         <location filename="../src/ui/prompteditordialog.cpp" line="1189"/>
         <source>Warning: This would create a cycle in the chain!</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Dies würde einen Zyklus in der Kette erstellen!</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1183"/>
         <source>Warning: Target prompt is part of an existing cycle!</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Der Ziel-Prompt ist Teil eines bestehenden Zyklus!</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="241"/>
@@ -1709,7 +1717,7 @@ Bitte wählen Sie einen anderen Hotkey.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="192"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortfahren</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="198"/>
@@ -1864,7 +1872,7 @@ Bitte wählen Sie einen anderen Hotkey.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="795"/>
         <source>Chain: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kette: %1</translation>
     </message>
 </context>
 <context>
@@ -1903,17 +1911,17 @@ Bitte wählen Sie einen anderen Hotkey.</translation>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="199"/>
         <source>Prompt Chains</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt-Ketten</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="205"/>
         <source>Maximum number of prompts in a chain to prevent infinite loops</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale Anzahl von Prompts in einer Kette zur Verhinderung von Endlosschleifen</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="206"/>
         <source>Maximum Chain Depth:</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale Kettentiefe:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="211"/>

@@ -27,6 +27,7 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QLabel>
+#include <QTabWidget>
 #include "models/prompt.h"
 #include "models/providerprofile.h"
 
@@ -74,6 +75,8 @@ private slots:
 
 private:
     void setupUi();
+    void setupPromptsTab();
+    void setupSettingsTab();
     void loadPrompt(const Models::Prompt& prompt);
     Models::Prompt buildPrompt() const;
     void updateTemperatureFieldState();
@@ -92,6 +95,9 @@ private:
     Core::ConfigManager* m_configManager = nullptr;
     Models::Prompt m_originalPrompt;
     bool m_editMode = false;
+
+    // Tab widget
+    QTabWidget* m_tabWidget = nullptr;
 
     // Basic info fields
     QLineEdit* m_idEdit = nullptr;

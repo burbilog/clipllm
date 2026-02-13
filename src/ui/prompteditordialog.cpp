@@ -140,9 +140,82 @@ Models::Prompt PromptEditorDialog::getPrompt() const
 
 void PromptEditorDialog::setupUi()
 {
-    resize(600, 700);
+    resize(550, 500);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
+
+    // Create tab widget
+    m_tabWidget = new QTabWidget();
+
+    // Create tabs
+    setupPromptsTab();
+    setupSettingsTab();
+
+    mainLayout->addWidget(m_tabWidget);
+
+    // Validation label
+    m_validationLabel = new QLabel();
+    m_validationLabel->setWordWrap(true);
+    m_validationLabel->setStyleSheet("color: red;");
+    mainLayout->addWidget(m_validationLabel);
+
+    // Buttons
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    buttonLayout->addStretch();
+
+    QPushButton* exportButton = new QPushButton(tr("Export"));
+    connect(exportButton, &QPushButton::clicked, this, &PromptEditorDialog::onExportClicked);
+    buttonLayout->addWidget(exportButton);
+
+    QPushButton* previewButton = new QPushButton(tr("Prompt Preview"));
+    connect(previewButton, &QPushButton::clicked, this, &PromptEditorDialog::onPreviewClicked);
+    buttonLayout->addWidget(previewButton);
+
+    m_okButton = new QPushButton(tr("OK"));
+    m_okButton->setDefault(true);
+    connect(m_okButton, &QPushButton::clicked, this, &PromptEditorDialog::onOkClicked);
+    buttonLayout->addWidget(m_okButton);
+
+    QPushButton* cancelButton = new QPushButton(tr("Cancel"));
+    connect(cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    buttonLayout->addWidget(cancelButton);
+
+    mainLayout->addLayout(buttonLayout);
+}
+
+void PromptEditorDialog::setupPromptsTab()
+{
+    QWidget* promptsTab = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout(promptsTab);
+
+    layout->addWidget(new QLabel(tr("System Prompt:")));
+    m_systemPromptEdit = new QTextEdit();
+    m_systemPromptEdit->setPlaceholderText(
+        tr("You are a helpful assistant...")
+    );
+    layout->addWidget(m_systemPromptEdit, 1);
+
+    layout->addWidget(new QLabel(tr("User Prompt Template:")));
+    m_userTemplateEdit = new QTextEdit();
+    m_userTemplateEdit->setPlaceholderText(
+        tr("Process the following text:\n\n{clipboard}")
+    );
+    connect(m_userTemplateEdit, &QTextEdit::textChanged, this, &PromptEditorDialog::validateInput);
+    layout->addWidget(m_userTemplateEdit, 2);
+
+    QLabel* placeholderHint = new QLabel(
+        tr("Use {clipboard} to insert clipboard content, {clipboard:1000} for truncated content, {language} for user's language.")
+    );
+    placeholderHint->setStyleSheet("color: gray; font-size: 10px;");
+    layout->addWidget(placeholderHint);
+
+    m_tabWidget->addTab(promptsTab, tr("Prompts"));
+}
+
+void PromptEditorDialog::setupSettingsTab()
+{
+    QWidget* settingsTab = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout(settingsTab);
 
     // Basic Information group
     QGroupBox* basicGroup = new QGroupBox(tr("Basic Information"));
@@ -186,59 +259,57 @@ void PromptEditorDialog::setupUi()
 
     basicLayout->addRow(tr("Group:"), m_groupCombo);
 
-    mainLayout->addWidget(basicGroup);
-
-    // Prompts group
-    QGroupBox* promptsGroup = new QGroupBox(tr("Prompts"));
-    QVBoxLayout* promptsLayout = new QVBoxLayout(promptsGroup);
-
-    promptsLayout->addWidget(new QLabel(tr("System Prompt:")));
-    m_systemPromptEdit = new QTextEdit();
-    m_systemPromptEdit->setPlaceholderText(
-        tr("You are a helpful assistant...")
-    );
-    m_systemPromptEdit->setMaximumHeight(100);
-    promptsLayout->addWidget(m_systemPromptEdit);
-
-    promptsLayout->addWidget(new QLabel(tr("User Prompt Template:")));
-    m_userTemplateEdit = new QTextEdit();
-    m_userTemplateEdit->setPlaceholderText(
-        tr("Process the following text:\n\n{clipboard}")
-    );
-    m_userTemplateEdit->setMaximumHeight(100);
-    connect(m_userTemplateEdit, &QTextEdit::textChanged, this, &PromptEditorDialog::validateInput);
-    promptsLayout->addWidget(m_userTemplateEdit);
-
-    QLabel* placeholderHint = new QLabel(
-        tr("Use {clipboard} to insert clipboard content, {clipboard:1000} for truncated content, {language} for user's language.")
-    );
-    placeholderHint->setStyleSheet("color: gray; font-size: 10px;");
-    promptsLayout->addWidget(placeholderHint);
-
-    mainLayout->addWidget(promptsGroup);
-
-    // Settings group
-    QGroupBox* settingsGroup = new QGroupBox(tr("Settings"));
-    QFormLayout* settingsLayout = new QFormLayout(settingsGroup);
-
     m_contentTypeCombo = new QComboBox();
     m_contentTypeCombo->addItem(tr("Text"), QStringLiteral("text"));
     m_contentTypeCombo->addItem(tr("Image"), QStringLiteral("image"));
     m_contentTypeCombo->addItem(tr("Any"), QStringLiteral("any"));
-    settingsLayout->addRow(tr("Content Type:"), m_contentTypeCombo);
+    basicLayout->addRow(tr("Content Type:"), m_contentTypeCombo);
+
+    m_enabledCheck = new QCheckBox(tr("Enabled"));
+    m_enabledCheck->setChecked(true);
+    basicLayout->addRow(m_enabledCheck);
+
+    m_prioritySpin = new QSpinBox();
+    m_prioritySpin->setRange(0, 1000);
+    m_prioritySpin->setSingleStep(10);
+    m_prioritySpin->setValue(0);
+    m_prioritySpin->setToolTip(tr("Higher priority prompts appear first in the menu"));
+    basicLayout->addRow(tr("Priority (higher = first):"), m_prioritySpin);
+
+    m_hotkeyEdit = new HotkeyEdit();
+    m_hotkeyEdit->setPlaceholderText(tr("None"));
+    m_hotkeyEdit->setToolTip(tr("Optional global hotkey to directly execute this prompt"));
+    connect(m_hotkeyEdit, &HotkeyEdit::keySequenceChanged, this, &PromptEditorDialog::onHotkeyChanged);
+    connect(m_hotkeyEdit, &HotkeyEdit::recordingStarted, this, [this]() {
+        // Unregister prompt hotkeys while recording to prevent accidental triggering
+        m_isRecordingHotkey = true;
+        App* app = qobject_cast<App*>(QApplication::instance());
+        if (app) {
+            app->unregisterPromptHotkeys();
+        }
+    });
+    connect(m_hotkeyEdit, &HotkeyEdit::recordingFinished,
+            this, &PromptEditorDialog::onHotkeyRecordingFinished);
+    basicLayout->addRow(tr("Hotkey:"), m_hotkeyEdit);
+
+    layout->addWidget(basicGroup);
+
+    // LLM Settings group
+    QGroupBox* llmGroup = new QGroupBox(tr("LLM Settings"));
+    QFormLayout* llmLayout = new QFormLayout(llmGroup);
 
     // Unified provider and model override
     m_overrideProviderAndModelCheck = new QCheckBox(tr("Override provider and model"));
     m_overrideProviderAndModelCheck->setToolTip(tr("When checked, use specific provider and model instead of defaults"));
     connect(m_overrideProviderAndModelCheck, &QCheckBox::checkStateChanged,
             this, &PromptEditorDialog::onOverrideProviderAndModelChanged);
-    settingsLayout->addRow(m_overrideProviderAndModelCheck);
+    llmLayout->addRow(m_overrideProviderAndModelCheck);
 
     m_providerCombo = new QComboBox();
     m_providerCombo->setToolTip(tr("Select provider for this prompt"));
     connect(m_providerCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &PromptEditorDialog::onProviderChanged);
-    settingsLayout->addRow(tr("Provider:"), m_providerCombo);
+    llmLayout->addRow(tr("Provider:"), m_providerCombo);
 
     // Model combo with refresh button
     QHBoxLayout* modelLayout = new QHBoxLayout();
@@ -258,102 +329,56 @@ void PromptEditorDialog::setupUi()
     m_modelsStatusLabel->setStyleSheet("color: gray; font-size: 10px;");
     modelLayout->addWidget(m_modelsStatusLabel);
 
-    settingsLayout->addRow(tr("Model:"), modelLayout);
+    llmLayout->addRow(tr("Model:"), modelLayout);
 
     // Temperature field with checkbox
     m_temperatureUseDefaultCheck = new QCheckBox(tr("Use default temperature from settings"));
     connect(m_temperatureUseDefaultCheck, &QCheckBox::checkStateChanged,
             this, &PromptEditorDialog::onTemperatureUseDefaultChanged);
-    settingsLayout->addRow(m_temperatureUseDefaultCheck);
+    llmLayout->addRow(m_temperatureUseDefaultCheck);
 
     m_temperatureSpin = new QDoubleSpinBox();
     m_temperatureSpin->setRange(0.0, 2.0);
     m_temperatureSpin->setSingleStep(0.1);
-    settingsLayout->addRow(tr("Temperature:"), m_temperatureSpin);
+    llmLayout->addRow(tr("Temperature:"), m_temperatureSpin);
 
     m_maxTokensSpin = new QSpinBox();
     m_maxTokensSpin->setRange(1, 128000);
     m_maxTokensSpin->setSingleStep(512);
-    settingsLayout->addRow(tr("Max Tokens:"), m_maxTokensSpin);
+    llmLayout->addRow(tr("Max Tokens:"), m_maxTokensSpin);
 
-    m_enabledCheck = new QCheckBox(tr("Enabled"));
-    m_enabledCheck->setChecked(true);
-    settingsLayout->addRow(m_enabledCheck);
+    layout->addWidget(llmGroup);
 
-    m_prioritySpin = new QSpinBox();
-    m_prioritySpin->setRange(0, 1000);
-    m_prioritySpin->setSingleStep(10);
-    m_prioritySpin->setValue(0);
-    m_prioritySpin->setToolTip(tr("Higher priority prompts appear first in the menu"));
-    settingsLayout->addRow(tr("Priority (higher = first):"), m_prioritySpin);
+    // Chain Settings group
+    QGroupBox* chainGroup = new QGroupBox(tr("Chain Settings"));
+    QFormLayout* chainLayout = new QFormLayout(chainGroup);
 
-    m_hotkeyEdit = new HotkeyEdit();
-    m_hotkeyEdit->setPlaceholderText(tr("None"));
-    m_hotkeyEdit->setToolTip(tr("Optional global hotkey to directly execute this prompt"));
-    connect(m_hotkeyEdit, &HotkeyEdit::keySequenceChanged, this, &PromptEditorDialog::onHotkeyChanged);
-    connect(m_hotkeyEdit, &HotkeyEdit::recordingStarted, this, [this]() {
-        // Unregister prompt hotkeys while recording to prevent accidental triggering
-        m_isRecordingHotkey = true;
-        App* app = qobject_cast<App*>(QApplication::instance());
-        if (app) {
-            app->unregisterPromptHotkeys();
-        }
-    });
-    connect(m_hotkeyEdit, &HotkeyEdit::recordingFinished,
-            this, &PromptEditorDialog::onHotkeyRecordingFinished);
-    settingsLayout->addRow(tr("Hotkey:"), m_hotkeyEdit);
-
-    // Chain settings
     m_nextPromptCombo = new QComboBox();
     m_nextPromptCombo->setToolTip(tr("Select next prompt in the chain (only text prompts available)"));
     connect(m_nextPromptCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &PromptEditorDialog::onNextPromptChanged);
-    settingsLayout->addRow(tr("Next Prompt:"), m_nextPromptCombo);
+    chainLayout->addRow(tr("Next Prompt:"), m_nextPromptCombo);
 
     m_autoContinueCheck = new QCheckBox(tr("Auto-continue to next prompt"));
     m_autoContinueCheck->setToolTip(tr("Automatically run the next prompt after this one completes"));
     m_autoContinueCheck->setEnabled(false);
-    settingsLayout->addRow(m_autoContinueCheck);
+    chainLayout->addRow(m_autoContinueCheck);
 
     m_chainWarningLabel = new QLabel();
     m_chainWarningLabel->setWordWrap(true);
     m_chainWarningLabel->setStyleSheet("color: red; font-size: 10px;");
     m_chainWarningLabel->hide();
-    settingsLayout->addRow(m_chainWarningLabel);
+    chainLayout->addRow(m_chainWarningLabel);
+
+    layout->addWidget(chainGroup);
+
+    // Add stretch to push groups to top
+    layout->addStretch();
 
     // Initialize flag - prompt hotkeys are currently registered
     m_isRecordingHotkey = false;
 
-    mainLayout->addWidget(settingsGroup);
-
-    // Validation label
-    m_validationLabel = new QLabel();
-    m_validationLabel->setWordWrap(true);
-    m_validationLabel->setStyleSheet("color: red;");
-    mainLayout->addWidget(m_validationLabel);
-
-    // Buttons
-    QHBoxLayout* buttonLayout = new QHBoxLayout();
-    buttonLayout->addStretch();
-
-    QPushButton* exportButton = new QPushButton(tr("Export"));
-    connect(exportButton, &QPushButton::clicked, this, &PromptEditorDialog::onExportClicked);
-    buttonLayout->addWidget(exportButton);
-
-    QPushButton* previewButton = new QPushButton(tr("Prompt Preview"));
-    connect(previewButton, &QPushButton::clicked, this, &PromptEditorDialog::onPreviewClicked);
-    buttonLayout->addWidget(previewButton);
-
-    m_okButton = new QPushButton(tr("OK"));
-    m_okButton->setDefault(true);
-    connect(m_okButton, &QPushButton::clicked, this, &PromptEditorDialog::onOkClicked);
-    buttonLayout->addWidget(m_okButton);
-
-    QPushButton* cancelButton = new QPushButton(tr("Cancel"));
-    connect(cancelButton, &QPushButton::clicked, this, &QDialog::reject);
-    buttonLayout->addWidget(cancelButton);
-
-    mainLayout->addLayout(buttonLayout);
+    m_tabWidget->addTab(settingsTab, tr("Settings"));
 }
 
 void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)

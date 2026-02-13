@@ -29,6 +29,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMessageBox>
+#include <QInputDialog>
 #include <QRegularExpression>
 #include <QSet>
 #include <QSettings>
@@ -121,6 +122,8 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
 
     // ID field is read-only when editing
     m_idEdit->setReadOnly(true);
+    // Show Rename ID button in edit mode
+    m_renameIdButton->setVisible(true);
 
     validateInput();
 
@@ -224,7 +227,18 @@ void PromptEditorDialog::setupSettingsTab()
     m_idEdit = new QLineEdit();
     m_idEdit->setPlaceholderText(tr("e.g., custom_prompt"));
     connect(m_idEdit, &QLineEdit::textChanged, this, &PromptEditorDialog::validateInput);
-    basicLayout->addRow(tr("ID:"), m_idEdit);
+
+    // Create Rename ID button
+    m_renameIdButton = new QPushButton(tr("Rename ID"));
+    m_renameIdButton->setToolTip(tr("Change the prompt ID"));
+    m_renameIdButton->setVisible(false); // Hidden by default, shown in edit mode
+    connect(m_renameIdButton, &QPushButton::clicked, this, &PromptEditorDialog::onRenameIdClicked);
+
+    // ID row with button
+    QHBoxLayout* idLayout = new QHBoxLayout();
+    idLayout->addWidget(m_idEdit, 1);
+    idLayout->addWidget(m_renameIdButton);
+    basicLayout->addRow(tr("ID:"), idLayout);
 
     m_nameEdit = new QLineEdit();
     m_nameEdit->setPlaceholderText(tr("e.g., My Custom Prompt"));
@@ -767,6 +781,8 @@ void PromptEditorDialog::onOkClicked()
         return;
     }
 
+    // If prompt was renamed, it's already saved - just accept
+    // Otherwise, let SettingsDialog handle the save
     accept();
 }
 
@@ -829,6 +845,88 @@ void PromptEditorDialog::onExportClicked()
 
     QMessageBox::information(this, tr("Export Prompt"),
                            tr("Prompt exported to %1").arg(fileName));
+}
+
+void PromptEditorDialog::onRenameIdClicked()
+{
+    if (!m_promptManager) {
+        return;
+    }
+
+    QString oldId = m_idEdit->text().trimmed();
+
+    bool ok;
+    QString newId = QInputDialog::getText(
+        this,
+        tr("Rename Prompt ID"),
+        tr("Enter new ID for this prompt:"),
+        QLineEdit::Normal,
+        oldId,
+        &ok
+    );
+
+    if (!ok || newId.trimmed().isEmpty()) {
+        return; // User cancelled or entered empty ID
+    }
+
+    newId = newId.trimmed();
+
+    // Check if new ID is the same as old ID
+    if (newId == oldId) {
+        QMessageBox::information(this, tr("Rename ID"),
+                                   tr("New ID is the same as the current ID."));
+        return;
+    }
+
+    // Check if ID already exists
+    auto existing = m_promptManager->getPrompt(newId);
+    if (existing.has_value()) {
+        QMessageBox::warning(this, tr("Rename ID"),
+                              tr("ID already exists: %1").arg(newId));
+        return;
+    }
+
+    // Show warning about history
+    auto result = QMessageBox::warning(
+        this,
+        tr("Rename ID - Historical Records"),
+        tr("Historical records of this prompt will remain with the old ID \"%1\".\n\n"
+           "When re-running prompts from history, they will use the old ID.\n\n"
+           "Continue with renaming?").arg(oldId),
+        QMessageBox::Yes | QMessageBox::No,
+        QMessageBox::No
+    );
+
+    if (result != QMessageBox::Yes) {
+        return;
+    }
+
+    // Perform the rename:
+    // 1. Update the current prompt's ID
+    // 2. Update all nextPromptId references in other prompts
+    // 3. Update internal state and close dialog
+
+    // Update all prompts that reference the old ID in their nextPromptId
+    QVector<Models::Prompt> allPrompts = m_promptManager->getAllPrompts();
+    for (const auto& p : allPrompts) {
+        if (p.nextPromptId() == oldId) {
+            Models::Prompt updated = p;
+            updated.setNextPromptId(newId);
+            m_promptManager->updatePrompt(p.id(), updated);
+        }
+    }
+
+    // Rebuild prompt from current form state and set new ID
+    m_originalPrompt = buildPrompt();
+    m_originalPrompt.setId(newId);
+
+    // Update UI
+    m_idEdit->setText(newId);
+
+    QMessageBox::information(this, tr("Rename ID"),
+                              tr("Prompt ID has been renamed from \"%1\" to \"%2\".\n\n"
+                                 "All chain references have been updated.\n\n"
+                                 "Click OK to save the changes.").arg(oldId, newId));
 }
 
 void PromptEditorDialog::closeEvent(QCloseEvent* event)

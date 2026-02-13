@@ -975,6 +975,7 @@ void SettingsDialog::onEditPromptClicked()
     PromptEditorDialog dialog(app->promptManager(), app->groupsManager(), promptOpt.value(), this);
     if (dialog.exec() == QDialog::Accepted) {
         Models::Prompt updatedPrompt = dialog.getPrompt();
+        // Use the original promptId from the table (in case ID was renamed)
         if (app->promptManager()->updatePrompt(promptId, updatedPrompt)) {
             loadPrompts();
             emit settingsChanged();

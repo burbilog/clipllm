@@ -64,6 +64,7 @@ private slots:
     void onOkClicked();
     void onPreviewClicked();
     void onExportClicked();
+    void onRenameIdClicked();
     void onOverrideProviderAndModelChanged(int state);
     void onProviderChanged(int index);
     void onRefreshModelsClicked();
@@ -101,6 +102,7 @@ private:
 
     // Basic info fields
     QLineEdit* m_idEdit = nullptr;
+    QPushButton* m_renameIdButton = nullptr;
     QLineEdit* m_nameEdit = nullptr;
     QComboBox* m_groupCombo = nullptr;
 
@@ -129,6 +131,7 @@ private:
 
     // Recording state
     bool m_isRecordingHotkey = false;
+    bool m_wasRenamed = false;
 
     // Network
     QNetworkAccessManager* m_networkManager = nullptr;

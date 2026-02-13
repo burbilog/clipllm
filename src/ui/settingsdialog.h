@@ -151,8 +151,6 @@ private:
 
     // General tab
     QComboBox* m_languageCombo = nullptr;
-    QCheckBox* m_showDescriptionInMenuCheck = nullptr;
-    QCheckBox* m_showDescriptionInPopupCheck = nullptr;
     QCheckBox* m_autoSaveHistoryCheck = nullptr;
     QCheckBox* m_debugEnabledCheck = nullptr;
     QRadioButton* m_debugLevelNormalRadio = nullptr;

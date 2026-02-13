@@ -181,19 +181,7 @@ void SettingsDialog::setupGeneralTab()
 
     layout->addWidget(hotkeyGroup);
 
-    // Miscellaneous group
-    QGroupBox* miscGroup = new QGroupBox(tr("Miscellaneous"));
-    QVBoxLayout* miscLayout = new QVBoxLayout(miscGroup);
-
-    m_showDescriptionInMenuCheck = new QCheckBox(tr("Show prompt descriptions in menu"));
-    m_showDescriptionInMenuCheck->setToolTip(tr("Show prompt descriptions in the tray menu (disabled by default for cleaner menu)"));
-    miscLayout->addWidget(m_showDescriptionInMenuCheck);
-
-    m_showDescriptionInPopupCheck = new QCheckBox(tr("Show prompt descriptions in popup"));
-    m_showDescriptionInPopupCheck->setToolTip(tr("Show prompt descriptions in the popup menu (disabled by default for cleaner popup)"));
-    miscLayout->addWidget(m_showDescriptionInPopupCheck);
-
-    layout->addWidget(miscGroup);
+    layout->addStretch();
 
     // Chain settings group
     QGroupBox* chainGroup = new QGroupBox(tr("Prompt Chains"));
@@ -455,9 +443,9 @@ void SettingsDialog::setupPromptsTab()
 
     // Prompts table
     m_promptsTable = new QTableWidget();
-    m_promptsTable->setColumnCount(7);
+    m_promptsTable->setColumnCount(6);
     m_promptsTable->setHorizontalHeaderLabels({
-        tr("Name"), tr("Description"), tr("Content Type"), tr("Model"), tr("Group"), tr("Priority"), tr("Hotkey")
+        tr("Name"), tr("Content Type"), tr("Model"), tr("Group"), tr("Priority"), tr("Hotkey")
     });
     m_promptsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_promptsTable->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -606,10 +594,6 @@ void SettingsDialog::loadSettings()
 
     m_autoSaveHistoryCheck->setChecked(m_configManager->historyAutoSave());
 
-    // General - Miscellaneous
-    m_showDescriptionInMenuCheck->setChecked(m_configManager->showDescriptionInMenu());
-    m_showDescriptionInPopupCheck->setChecked(m_configManager->showDescriptionInPopup());
-
     // Chain settings
     m_chainMaxDepthSpin->setValue(m_configManager->chainMaxDepth());
 
@@ -664,8 +648,6 @@ void SettingsDialog::saveSettings()
     // General
     m_configManager->setLanguage(m_languageCombo->currentData().toString());
     m_configManager->setHistoryAutoSave(m_autoSaveHistoryCheck->isChecked());
-    m_configManager->setShowDescriptionInMenu(m_showDescriptionInMenuCheck->isChecked());
-    m_configManager->setShowDescriptionInPopup(m_showDescriptionInPopupCheck->isChecked());
 
     // Chain settings
     m_configManager->setChainMaxDepth(m_chainMaxDepthSpin->value());
@@ -760,8 +742,7 @@ void SettingsDialog::loadPrompts()
         QTableWidgetItem* nameItem = new QTableWidgetItem(prompt.name());
         nameItem->setData(Qt::UserRole, prompt.id());
         m_promptsTable->setItem(i, 0, nameItem);
-        m_promptsTable->setItem(i, 1, new QTableWidgetItem(prompt.description()));
-        m_promptsTable->setItem(i, 2, new QTableWidgetItem(
+        m_promptsTable->setItem(i, 1, new QTableWidgetItem(
             Models::Prompt::contentTypeToString(prompt.contentType())
         ));
         // Show model only if override is enabled, otherwise show "(default)"
@@ -771,14 +752,14 @@ void SettingsDialog::loadPrompts()
         } else {
             modelText = tr("(default)");
         }
-        m_promptsTable->setItem(i, 3, new QTableWidgetItem(modelText));
-        m_promptsTable->setItem(i, 4, new QTableWidgetItem(
+        m_promptsTable->setItem(i, 2, new QTableWidgetItem(modelText));
+        m_promptsTable->setItem(i, 3, new QTableWidgetItem(
             prompt.group().isEmpty() ? tr("(root)") : prompt.group()
         ));
-        m_promptsTable->setItem(i, 5, new QTableWidgetItem(
+        m_promptsTable->setItem(i, 4, new QTableWidgetItem(
             QString::number(prompt.priority())
         ));
-        m_promptsTable->setItem(i, 6, new QTableWidgetItem(
+        m_promptsTable->setItem(i, 5, new QTableWidgetItem(
             prompt.hotkey().isEmpty() ? tr("(none)") : prompt.hotkey()
         ));
     }

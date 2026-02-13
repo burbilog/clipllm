@@ -142,12 +142,6 @@ void TrayIcon::rebuildPromptsMenu()
         return;
     }
 
-    // Check if descriptions should be shown in menu
-    bool showDescriptions = false;
-    if (m_app->configManager()) {
-        showDescriptions = m_app->configManager()->showDescriptionInMenu();
-    }
-
     QVector<Models::Prompt> prompts = m_app->promptManager()->getEnabledPrompts();
 
     if (prompts.isEmpty()) {
@@ -223,9 +217,6 @@ void TrayIcon::rebuildPromptsMenu()
 
         for (const auto& prompt : groupPrompts) {
             QString text = prompt.name();
-            if (showDescriptions && !prompt.description().isEmpty()) {
-                text += QStringLiteral(" - ") + prompt.description();
-            }
 
             QAction* action = currentMenu->addAction(text);
             action->setData(prompt.id());
@@ -246,9 +237,6 @@ void TrayIcon::rebuildPromptsMenu()
 
         for (const auto& prompt : rootPrompts) {
             QString text = prompt.name();
-            if (showDescriptions && !prompt.description().isEmpty()) {
-                text += QStringLiteral(" - ") + prompt.description();
-            }
 
             QAction* action = m_promptsMenu->addAction(text);
             action->setData(prompt.id());

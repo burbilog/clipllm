@@ -102,7 +102,6 @@ private:
     // Basic info fields
     QLineEdit* m_idEdit = nullptr;
     QLineEdit* m_nameEdit = nullptr;
-    QLineEdit* m_descriptionEdit = nullptr;
     QComboBox* m_groupCombo = nullptr;
 
     // Prompt fields

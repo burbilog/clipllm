@@ -54,8 +54,6 @@ const QString ConfigManager::HISTORY_LIMIT_KEY = QStringLiteral("history/limit")
 const QString ConfigManager::HISTORY_AUTO_CLEANUP_KEY = QStringLiteral("history/auto_cleanup");
     const QString ConfigManager::HISTORY_DAYS_TO_KEEP_KEY = QStringLiteral("history/days_to_keep");
     const QString ConfigManager::HISTORY_AUTO_SAVE_KEY = QStringLiteral("history/auto_save");
-    const QString ConfigManager::SHOW_DESCRIPTION_IN_MENU_KEY = QStringLiteral("ui/show_description_in_menu");
-    const QString ConfigManager::SHOW_DESCRIPTION_IN_POPUP_KEY = QStringLiteral("ui/show_description_in_popup");
     const QString ConfigManager::HISTORY_CLEANUP_BY_COUNT_KEY = QStringLiteral("history/cleanup_by_count");
 const QString ConfigManager::HISTORY_CLEANUP_BY_DATE_KEY = QStringLiteral("history/cleanup_by_date");
 const QString ConfigManager::PROMPTS_FILE_KEY = QStringLiteral("prompts/file");
@@ -509,25 +507,6 @@ void ConfigManager::setDefaultMaxTokens(std::optional<int> tokens)
     }
 }
 
-bool ConfigManager::showDescriptionInMenu() const
-{
-    return value(SHOW_DESCRIPTION_IN_MENU_KEY, false).toBool();
-}
-
-void ConfigManager::setShowDescriptionInMenu(bool enabled)
-{
-    setValue(SHOW_DESCRIPTION_IN_MENU_KEY, enabled);
-}
-
-bool ConfigManager::showDescriptionInPopup() const
-{
-    return value(SHOW_DESCRIPTION_IN_POPUP_KEY, false).toBool();
-}
-
-void ConfigManager::setShowDescriptionInPopup(bool enabled)
-{
-    setValue(SHOW_DESCRIPTION_IN_POPUP_KEY, enabled);
-}
 
 bool ConfigManager::debugEnabled() const
 {

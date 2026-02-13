@@ -34,7 +34,6 @@ QJsonObject Prompt::toJson() const
     QJsonObject obj;
     obj[QStringLiteral("id")] = m_id;
     obj[QStringLiteral("name")] = m_name;
-    obj[QStringLiteral("description")] = m_description;
     obj[QStringLiteral("system_prompt")] = m_systemPrompt;
     obj[QStringLiteral("user_prompt_template")] = m_userPromptTemplate;
     obj[QStringLiteral("content_type")] = contentTypeToString(m_contentType);
@@ -74,7 +73,6 @@ bool Prompt::fromJson(const QJsonObject& json)
 {
     m_id = json.value(QStringLiteral("id")).toString();
     m_name = json.value(QStringLiteral("name")).toString();
-    m_description = json.value(QStringLiteral("description")).toString();
     m_systemPrompt = json.value(QStringLiteral("system_prompt")).toString();
     m_userPromptTemplate = json.value(QStringLiteral("user_prompt_template"))
                            .toString(QStringLiteral("{clipboard}"));

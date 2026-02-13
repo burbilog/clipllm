@@ -231,9 +231,6 @@ void PromptEditorDialog::setupSettingsTab()
     connect(m_nameEdit, &QLineEdit::textChanged, this, &PromptEditorDialog::validateInput);
     basicLayout->addRow(tr("Name:"), m_nameEdit);
 
-    m_descriptionEdit = new QLineEdit();
-    m_descriptionEdit->setPlaceholderText(tr("e.g., Does something useful"));
-    basicLayout->addRow(tr("Description:"), m_descriptionEdit);
 
     m_groupCombo = new QComboBox();
     m_groupCombo->addItem(tr("(root)"), QString());
@@ -385,7 +382,6 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
 {
     m_idEdit->setText(prompt.id());
     m_nameEdit->setText(prompt.name());
-    m_descriptionEdit->setText(prompt.description());
 
     // Set group - explicitly handle empty group (root)
     QString group = prompt.group();
@@ -479,7 +475,6 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
 
     prompt.setId(m_idEdit->text().trimmed());
     prompt.setName(m_nameEdit->text().trimmed());
-    prompt.setDescription(m_descriptionEdit->text().trimmed());
 
     // Get group from combo - handle empty group case
     int comboIndex = m_groupCombo->currentIndex();

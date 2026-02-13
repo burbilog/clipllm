@@ -328,42 +328,41 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
         <translation>Не удалось разобрать файл промптов</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="355"/>
+        <location filename="../src/core/promptmanager.cpp" line="354"/>
         <source>ID is required</source>
         <translation>ID обязателен</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="359"/>
+        <location filename="../src/core/promptmanager.cpp" line="358"/>
         <source>Name is required</source>
         <translation>Имя обязательно</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="374"/>
+        <location filename="../src/core/promptmanager.cpp" line="373"/>
         <source>Invalid placeholder in user template: %1</source>
         <translation>Неверный плейсхолдер в шаблоне пользователя: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="384"/>
+        <location filename="../src/core/promptmanager.cpp" line="383"/>
         <source>Invalid placeholder in system prompt: %1</source>
         <translation>Неверный плейсхолдер в системном промпте: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="452"/>
+        <location filename="../src/core/promptmanager.cpp" line="451"/>
         <source>Summary</source>
         <translation>Резюме</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="453"/>
         <source>Generate a structured summary of the text</source>
-        <translation>Создать структурированное резюме текста</translation>
+        <translation type="vanished">Создать структурированное резюме текста</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="455"/>
+        <location filename="../src/core/promptmanager.cpp" line="453"/>
         <source>You are a professional analyst. Create a clear, structured summary.</source>
         <translation>Вы профессиональный аналитик. Создайте четкое, структурированное резюме.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="456"/>
+        <location filename="../src/core/promptmanager.cpp" line="454"/>
         <source>Please provide a comprehensive summary of the following text:
 
 {clipboard}</source>
@@ -372,58 +371,55 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
 {clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="467"/>
+        <location filename="../src/core/promptmanager.cpp" line="465"/>
         <source>Translate to Russian</source>
         <translation>Перевести на русский</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="468"/>
         <source>Translate the text to Russian</source>
-        <translation>Перевести текст на русский язык</translation>
+        <translation type="vanished">Перевести текст на русский язык</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="470"/>
+        <location filename="../src/core/promptmanager.cpp" line="467"/>
         <source>Ты — профессиональный переводчик. Переведи текст на русский язык, сохраняя стиль и смысл.</source>
         <translation>Ты — профессиональный переводчик. Переведи текст на русский язык, сохраняя стиль и смысл.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="471"/>
-        <location filename="../src/core/promptmanager.cpp" line="486"/>
+        <location filename="../src/core/promptmanager.cpp" line="468"/>
+        <location filename="../src/core/promptmanager.cpp" line="482"/>
         <source>{clipboard}</source>
         <translation>{clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="482"/>
+        <location filename="../src/core/promptmanager.cpp" line="479"/>
         <source>Translate to English</source>
         <translation>Перевести на английский</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="483"/>
         <source>Translate the text to English</source>
-        <translation>Перевести текст на английский язык</translation>
+        <translation type="vanished">Перевести текст на английский язык</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="485"/>
+        <location filename="../src/core/promptmanager.cpp" line="481"/>
         <source>You are a professional translator. Translate the text to English, preserving style and meaning.</source>
         <translation>Вы профессиональный переводчик. Переведите текст на английский язык, сохраняя стиль и смысл.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="497"/>
+        <location filename="../src/core/promptmanager.cpp" line="493"/>
         <source>Explain Code</source>
         <translation>Объяснить код</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="498"/>
         <source>Explain what the code does</source>
-        <translation>Объяснить, что делает код</translation>
+        <translation type="vanished">Объяснить, что делает код</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="500"/>
+        <location filename="../src/core/promptmanager.cpp" line="495"/>
         <source>You are an expert programmer. Explain the code clearly and concisely.</source>
         <translation>Вы эксперт-программист. Четко и кратко объясните код.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="501"/>
+        <location filename="../src/core/promptmanager.cpp" line="496"/>
         <source>Explain the following code:
 
 {clipboard}</source>
@@ -432,22 +428,21 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
 {clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="512"/>
+        <location filename="../src/core/promptmanager.cpp" line="507"/>
         <source>Code Review</source>
         <translation>Ревизия кода</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="513"/>
         <source>Review code and suggest improvements</source>
-        <translation>Проверить код и предложить улучшения</translation>
+        <translation type="vanished">Проверить код и предложить улучшения</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="515"/>
+        <location filename="../src/core/promptmanager.cpp" line="509"/>
         <source>You are a code reviewer. Analyze the code for bugs, security issues, and suggest improvements.</source>
         <translation>Вы ревьюер кода. Проанализируйте код на наличие ошибок, проблем с безопасностью и предложите улучшения.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="516"/>
+        <location filename="../src/core/promptmanager.cpp" line="510"/>
         <source>Review the following code:
 
 {clipboard}</source>
@@ -456,22 +451,21 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
 {clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="527"/>
+        <location filename="../src/core/promptmanager.cpp" line="521"/>
         <source>Refactor Code</source>
         <translation>Рефакторинг кода</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="528"/>
         <source>Suggest refactoring improvements</source>
-        <translation>Предложить улучшения рефакторинга</translation>
+        <translation type="vanished">Предложить улучшения рефакторинга</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="530"/>
+        <location filename="../src/core/promptmanager.cpp" line="523"/>
         <source>You are a code optimization expert. Suggest refactoring to improve readability, maintainability, and performance.</source>
         <translation>Вы эксперт по оптимизации кода. Предложите рефакторинг для улучшения читаемости, поддерживаемости и производительности.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="531"/>
+        <location filename="../src/core/promptmanager.cpp" line="524"/>
         <source>Refactor the following code:
 
 {clipboard}</source>
@@ -480,42 +474,40 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
 {clipboard}</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="542"/>
+        <location filename="../src/core/promptmanager.cpp" line="535"/>
         <source>Describe Image</source>
         <translation>Описать изображение</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="543"/>
         <source>Generate a detailed description of the image</source>
-        <translation>Создать подробное описание изображения</translation>
+        <translation type="vanished">Создать подробное описание изображения</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="545"/>
+        <location filename="../src/core/promptmanager.cpp" line="537"/>
         <source>You are a visual analyst. Provide a detailed description of the image.</source>
         <translation>Вы визуальный аналитик. Предоставьте подробное описание изображения.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="546"/>
+        <location filename="../src/core/promptmanager.cpp" line="538"/>
         <source>Describe this image in detail.</source>
         <translation>Опишите это изображение подробно.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="557"/>
+        <location filename="../src/core/promptmanager.cpp" line="549"/>
         <source>Extract Text</source>
         <translation>Извлечь текст</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="558"/>
         <source>Extract all text from the image</source>
-        <translation>Извлечь весь текст из изображения</translation>
+        <translation type="vanished">Извлечь весь текст из изображения</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="560"/>
+        <location filename="../src/core/promptmanager.cpp" line="551"/>
         <source>Extract all text from the image, preserving formatting where possible.</source>
         <translation>Извлеките весь текст из изображения, сохраняя форматирование, где это возможно.</translation>
     </message>
     <message>
-        <location filename="../src/core/promptmanager.cpp" line="561"/>
+        <location filename="../src/core/promptmanager.cpp" line="552"/>
         <source>Extract all text from this image.</source>
         <translation>Извлеките весь текст из этого изображения.</translation>
     </message>
@@ -1141,22 +1133,20 @@ or save prompts manually to populate this list.</source>
         <translation>Имя:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="235"/>
         <source>e.g., Does something useful</source>
-        <translation>например, Делает что-то полезное</translation>
+        <translation type="vanished">например, Делает что-то полезное</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="vanished">Описание:</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="236"/>
-        <source>Description:</source>
-        <translation>Описание:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="239"/>
         <source>(root)</source>
         <translation>(корень)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="260"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="257"/>
         <source>Group:</source>
         <translation>Группа:</translation>
     </message>
@@ -1195,82 +1185,82 @@ or save prompts manually to populate this list.</source>
         <translation>Используйте {clipboard} для вставки содержимого буфера обмена, {clipboard:1000} для сокращенного содержимого, {language} для языка пользователя.</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="381"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="378"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="263"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="260"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="264"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="261"/>
         <source>Image</source>
         <translation>Изображение</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="265"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="262"/>
         <source>Any</source>
         <translation>Любой</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="266"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="263"/>
         <source>Content Type:</source>
         <translation>Тип содержимого:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="302"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="299"/>
         <source>Override provider and model</source>
         <translation>Переопределить провайдера и модель</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="303"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="300"/>
         <source>When checked, use specific provider and model instead of defaults</source>
         <translation>Если отмечено, использовать указанного провайдера и модель вместо настроек по умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="309"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="306"/>
         <source>Select provider for this prompt</source>
         <translation>Выберите провайдера для этого промпта</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="318"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="315"/>
         <source>Select or enter model name</source>
         <translation>Выберите или введите имя модели</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="321"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="318"/>
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="281"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="278"/>
         <source>Optional global hotkey to directly execute this prompt</source>
         <translation>Опциональный глобальный хоткей для прямого запуска этого промпта</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="293"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="290"/>
         <source>Hotkey:</source>
         <translation>Хоткей:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="357"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="354"/>
         <source>Select next prompt in the chain (only text prompts available)</source>
         <translation>Выберите следующий промпт в цепочке (доступны только текстовые промпты)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="360"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="357"/>
         <source>Next Prompt:</source>
         <translation>Следующий промпт:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="362"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="359"/>
         <source>Auto-continue to next prompt</source>
         <translation>Автопродолжение к следующему промпту</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="363"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="360"/>
         <source>Automatically run the next prompt after this one completes</source>
         <translation>Автоматически запустить следующий промпт после завершения текущего</translation>
     </message>
@@ -1280,39 +1270,39 @@ or save prompts manually to populate this list.</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="298"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="295"/>
         <source>LLM Settings</source>
         <translation>Настройки LLM</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="353"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="350"/>
         <source>Chain Settings</source>
         <translation>Настройки цепочки</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="566"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="561"/>
         <source>(Select provider first)</source>
         <translation>(сначала выберите провайдера)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="573"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="568"/>
         <source>(Provider not found)</source>
         <translation>(провайдер не найден)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="591"/>
-        <location filename="../src/ui/prompteditordialog.cpp" line="602"/>
-        <location filename="../src/ui/prompteditordialog.cpp" line="984"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="586"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="597"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="979"/>
         <source>(Custom model...)</source>
         <translation>(Пользовательская модель...)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="759"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="754"/>
         <source>Chain Cycle Detected</source>
         <translation>Обнаружен цикл в цепочке</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="760"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="755"/>
         <source>This prompt would create a cycle in the chain.
 
 Please select a different &apos;Next Prompt&apos; or set it to &apos;(None)&apos;.</source>
@@ -1321,80 +1311,80 @@ Please select a different &apos;Next Prompt&apos; or set it to &apos;(None)&apos
 Пожалуйста, выберите другой &apos;Следующий промпт&apos; или установите &apos;(Нет)&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="793"/>
-        <location filename="../src/ui/prompteditordialog.cpp" line="805"/>
-        <location filename="../src/ui/prompteditordialog.cpp" line="827"/>
-        <location filename="../src/ui/prompteditordialog.cpp" line="835"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="788"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="800"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="822"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="830"/>
         <source>Export Prompt</source>
         <translation>Экспорт промпта</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="794"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="789"/>
         <source>Cannot export: prompt is not valid.</source>
         <translation>Не удалось экспортировать: промпт некорректен.</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="807"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="802"/>
         <source>JSON Files (*.json)</source>
         <translation>Файлы JSON (*.json)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="828"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="823"/>
         <source>Failed to open file for writing: %1</source>
         <translation>Не удалось открыть файл для записи: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="836"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="831"/>
         <source>Prompt exported to %1</source>
         <translation>Промпт экспортирован в %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="862"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="857"/>
         <source>No provider selected</source>
         <translation>Провайдер не выбран</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="869"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="864"/>
         <source>Provider not found</source>
         <translation>Провайдер не найден</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="877"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="872"/>
         <source>Model fetching not supported for this provider</source>
         <translation>Получение моделей не поддерживается для этого провайдера</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="932"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="927"/>
         <source>Fetching models...</source>
         <translation>Получение моделей...</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="948"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="943"/>
         <source>Error: %1</source>
         <translation>Ошибка: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="961"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="956"/>
         <source>Error: Invalid response</source>
         <translation>Ошибка: неверный ответ</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="973"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="968"/>
         <source>No models found</source>
         <translation>Модели не найдены</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="1010"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="1005"/>
         <source>Loaded %1 models</source>
         <translation>Загружено моделей: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="1048"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="1043"/>
         <source>Hotkey Conflict</source>
         <translation>Конфликт хоткеев</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="1049"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="1044"/>
         <source>This hotkey is already in use by another prompt or the global hotkey.
 
 Please choose a different hotkey.</source>
@@ -1403,33 +1393,33 @@ Please choose a different hotkey.</source>
 Пожалуйста, выберите другой хоткей.</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="1093"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="1088"/>
         <source>(None)</source>
         <translation>(Нет)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="1123"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="1118"/>
         <source> (disabled)</source>
         <translation> (отключено)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="1196"/>
-        <location filename="../src/ui/prompteditordialog.cpp" line="1214"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="1191"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="1209"/>
         <source>Warning: This would create a cycle in the chain!</source>
         <translation>Предупреждение: Это создало бы цикл в цепочке!</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="1208"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="1203"/>
         <source>Warning: Target prompt is part of an existing cycle!</source>
         <translation>Предупреждение: Целевой промпт является частью существующего цикла!</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="312"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="309"/>
         <source>Provider:</source>
         <translation>Провайдер:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="280"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="277"/>
         <source>None</source>
         <translation>Нет</translation>
     </message>
@@ -1470,37 +1460,37 @@ Please choose a different hotkey.</source>
         <translation type="vanished">например, openai/gpt-4, anthropic/claude-3-opus</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="332"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="329"/>
         <source>Model:</source>
         <translation>Модель:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="335"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="332"/>
         <source>Use default temperature from settings</source>
         <translation>Использовать температуру по умолчанию из настроек</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="343"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="340"/>
         <source>Temperature:</source>
         <translation>Температура:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="348"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="345"/>
         <source>Max Tokens:</source>
         <translation>Макс. токенов:</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="268"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="265"/>
         <source>Enabled</source>
         <translation>Включено</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="276"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="273"/>
         <source>Higher priority prompts appear first in the menu</source>
         <translation>Промпты с более высоким приоритетом появляются первыми в меню</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="277"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="274"/>
         <source>Priority (higher = first):</source>
         <translation>Приоритет (выше = раньше):</translation>
     </message>
@@ -1524,47 +1514,47 @@ Please choose a different hotkey.</source>
         <translation type="vanished">Использует глобальную модель по умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="620"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="615"/>
         <source>(No providers available)</source>
         <translation>(нет доступных провайдеров)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="629"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="624"/>
         <source>(No providers configured)</source>
         <translation>(нет настроенных провайдеров)</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="696"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="691"/>
         <source>Name is required</source>
         <translation>Имя обязательно</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="700"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="695"/>
         <source>ID is required</source>
         <translation>ID обязателен</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="715"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="710"/>
         <source>Invalid placeholder in user template: %1</source>
         <translation>Неверный плейсхолдер в шаблоне пользователя: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="725"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="720"/>
         <source>Invalid placeholder in system prompt: %1</source>
         <translation>Неверный плейсхолдер в системном промпте: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="735"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="730"/>
         <source>ID already exists: %1</source>
         <translation>ID уже существует: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="769"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="764"/>
         <source>Validation Error</source>
         <translation>Ошибка валидации</translation>
     </message>
     <message>
-        <location filename="../src/ui/prompteditordialog.cpp" line="770"/>
+        <location filename="../src/ui/prompteditordialog.cpp" line="765"/>
         <source>The prompt has validation errors:
 
 %1</source>
@@ -1917,194 +1907,190 @@ Please choose a different hotkey.</source>
         <translation>ClipLLM — Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="185"/>
         <source>Miscellaneous</source>
-        <translation>Разное</translation>
+        <translation type="vanished">Разное</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="188"/>
         <source>Show prompt descriptions in menu</source>
-        <translation>Показывать описания промптов в меню</translation>
+        <translation type="vanished">Показывать описания промптов в меню</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="189"/>
         <source>Show prompt descriptions in the tray menu (disabled by default for cleaner menu)</source>
-        <translation>Показывать описания промптов в меню в трее (отключено по умолчанию для более чистого меню)</translation>
+        <translation type="vanished">Показывать описания промптов в меню в трее (отключено по умолчанию для более чистого меню)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="192"/>
         <source>Show prompt descriptions in popup</source>
-        <translation>Показывать описания промптов во всплывающем меню</translation>
+        <translation type="vanished">Показывать описания промптов во всплывающем меню</translation>
     </message>
     <message>
         <source>Show prompt descriptions in popup menu (disabled by default for cleaner popup)</source>
         <translation type="vanished">Показывать описания промптов во всплывающем меню (отключено по умолчанию для более чистого всплывающего меню)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="269"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="257"/>
         <source>General</source>
         <translation>Общие</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="278"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="266"/>
         <source>Provider Profiles</source>
         <translation>Профили провайдеров</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="283"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="271"/>
         <source>Available Profiles:</source>
         <translation>Доступные профили:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="287"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="275"/>
         <source>+ Add</source>
         <translation>+ Добавить</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="288"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="276"/>
         <source>Add a new provider profile</source>
         <translation>Добавить новый профиль провайдера</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="292"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="280"/>
         <source>- Remove</source>
         <translation>- Удалить</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="293"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="281"/>
         <source>Remove selected profile</source>
         <translation>Удалить выбранный профиль</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="297"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="285"/>
         <source>Set as Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="298"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="286"/>
         <source>Set selected profile as default</source>
         <translation>Установить выбранный профиль как профиль по умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="313"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="301"/>
         <source>Profile Configuration</source>
         <translation>Конфигурация профиля</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="317"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="305"/>
         <source>e.g., OpenRouter (Main)</source>
         <translation>например, OpenRouter (Основной)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="319"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="307"/>
         <source>Profile Name:</source>
         <translation>Имя профиля:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="324"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="312"/>
         <source>Select template or enter custom URL (e.g., http://.../v1/chat/completions)</source>
         <translation>Выберите шаблон или введите пользовательский URL (например, http://.../v1/chat/completions)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="336"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="324"/>
         <source>Template...</source>
         <translation>Шаблон...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="342"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="330"/>
         <source>API URL:</source>
         <translation>API URL:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="363"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="351"/>
         <source>Leave empty for local providers (e.g., Ollama)</source>
         <translation>Оставьте пустым для локальных провайдеров (например, Ollama)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="368"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="356"/>
         <source>http://host:port or socks5://host:port (optional)</source>
         <translation>http://host:port или socks5://host:port (опционально)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="377"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="365"/>
         <source>Proxy:</source>
         <translation>Прокси:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="380"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="368"/>
         <source>Override Global Defaults (optional, leave empty for default)</source>
         <translation>Переопределить глобальные настройки (опционально, оставьте пустым для настроек по умолчанию)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="386"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="393"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="374"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="381"/>
         <source>(use global)</source>
         <translation>(использовать глобальные)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="400"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="388"/>
         <source>Enabled</source>
         <translation>Включено</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="410"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="398"/>
         <source>Global Defaults (optional, leave empty for provider defaults)</source>
         <translation>Глобальные настройки (опционально, оставьте пустым для настроек провайдера)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="416"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="426"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="404"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="414"/>
         <source>(provider default)</source>
         <translation>(настройки провайдера)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="418"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="428"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="406"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="416"/>
         <source>Recommended: Leave empty to let provider use its defaults</source>
         <translation>Рекомендуется: оставьте пустым, чтобы провайдер использовал свои настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="437"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="425"/>
         <source>Test Model Connection</source>
         <translation>Проверить соединение с моделью</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="448"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="436"/>
         <source>LLM</source>
         <translation>LLM</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="460"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="448"/>
         <source>Hotkey</source>
         <translation>Хоткей</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="770"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="751"/>
         <source>(custom)</source>
         <translation>(пользовательский)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="772"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="753"/>
         <source>(default)</source>
         <translation>(по умолчанию)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="782"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="763"/>
         <source>(none)</source>
         <translation>(нет)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="890"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="871"/>
         <source>Error: No model selected</source>
         <translation>Ошибка: Модель не выбрана</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1874"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1855"/>
         <source>Hotkey Conflict</source>
         <translation>Конфликт хоткеев</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1875"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1856"/>
         <source>This hotkey is already in use by a prompt.
 
 Please choose a different hotkey.</source>
@@ -2117,18 +2103,18 @@ Please choose a different hotkey.</source>
         <translation type="vanished">Горячие клавиши</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="523"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="511"/>
         <source>Prompts</source>
         <translation>Промпты</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="584"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="572"/>
         <source>History</source>
         <translation>История</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="124"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="513"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="501"/>
         <source>Reset to Defaults</source>
         <translation>Сбросить настройки</translation>
     </message>
@@ -2143,77 +2129,76 @@ Please choose a different hotkey.</source>
         <translation>Язык интерфейса:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="193"/>
         <source>Show prompt descriptions in the popup menu (disabled by default for cleaner popup)</source>
-        <translation>Показывать описания промптов во всплывающем меню (по умолчанию отключено для более чистого меню)</translation>
+        <translation type="vanished">Показывать описания промптов во всплывающем меню (по умолчанию отключено для более чистого меню)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="199"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="187"/>
         <source>Prompt Chains</source>
         <translation>Цепочки промптов</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="205"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="193"/>
         <source>Maximum number of prompts in a chain to prevent infinite loops</source>
         <translation>Максимальное количество промптов в цепочке для предотвращения бесконечных циклов</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="206"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="194"/>
         <source>Maximum Chain Depth:</source>
         <translation>Максимальная глубина цепочки:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="211"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="199"/>
         <source>Debug</source>
         <translation>Отладка</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="214"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="202"/>
         <source>Record debug messages</source>
         <translation>Записывать отладочные сообщения</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="215"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="203"/>
         <source>Write debug information to debug.log file in the configuration directory</source>
         <translation>Записывать отладочную информацию в файл debug.log в каталоге конфигурации</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="223"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="211"/>
         <source>Normal</source>
         <translation>Обычный</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="224"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="212"/>
         <source>Basic debug information</source>
         <translation>Базовая отладочная информация</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="225"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="213"/>
         <source>Trace</source>
         <translation>Трассировка</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="226"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="214"/>
         <source>Full request/response logging for LLM</source>
         <translation>Полное логирование запросов/ответов LLM</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="235"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="223"/>
         <source>Debug Level:</source>
         <translation>Уровень отладки:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="246"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="234"/>
         <source>Log file:</source>
         <translation>Файл журнала:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="249"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="237"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="532"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="520"/>
         <source>Automatically save to history after generation</source>
         <translation>Автоматически сохранять в историю после генерации</translation>
     </message>
@@ -2226,22 +2211,22 @@ Please choose a different hotkey.</source>
         <translation type="vanished">Провайдер:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="348"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="336"/>
         <source>Select or enter model name...</source>
         <translation>Выберите или введите имя модели...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="353"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="341"/>
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="359"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="347"/>
         <source>Model:</source>
         <translation>Модель:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="365"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="353"/>
         <source>API Key:</source>
         <translation>API ключ:</translation>
     </message>
@@ -2280,8 +2265,8 @@ Examples:
         <translation type="vanished">Опции</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="388"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="421"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="376"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="409"/>
         <source>Temperature:</source>
         <translation>Температура:</translation>
     </message>
@@ -2290,8 +2275,8 @@ Examples:
         <translation type="vanished">Переопределить температуру</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="395"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="431"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="383"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="419"/>
         <source>Max Tokens:</source>
         <translation>Макс. токенов:</translation>
     </message>
@@ -2331,77 +2316,76 @@ Examples:
         <translation type="vanished">Макс. промптов в меню:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="460"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="448"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="460"/>
         <source>Description</source>
-        <translation>Описание</translation>
+        <translation type="vanished">Описание</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="460"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="448"/>
         <source>Content Type</source>
         <translation>Тип содержимого</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="460"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="448"/>
         <source>Model</source>
         <translation>Модель</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="460"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="448"/>
         <source>Priority</source>
         <translation>Приоритет</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="460"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="448"/>
         <source>Group</source>
         <translation>Группа</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="477"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="465"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="481"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="469"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="486"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="474"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="491"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="479"/>
         <source>Manage Groups...</source>
         <translation>Управление группами...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="505"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="493"/>
         <source>Import</source>
         <translation>Импорт</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="509"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="497"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="535"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="523"/>
         <source>History Settings</source>
         <translation>Настройки истории</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="547"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="535"/>
         <source>Unlimited</source>
         <translation>Без ограничений</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="551"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="539"/>
         <source>Maximum entries:</source>
         <translation>Макс. записей:</translation>
     </message>
@@ -2410,62 +2394,62 @@ Examples:
         <translation type="vanished">Автоматически очищать старые записи</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="538"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="526"/>
         <source>Auto-cleanup by max entries</source>
         <translation>Автоочистка по лимиту записей</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="539"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="527"/>
         <source>Automatically remove oldest entries when limit is exceeded</source>
         <translation>Автоматически удалять самые старые записи при превышении лимита</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="553"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="541"/>
         <source>Auto-cleanup by date</source>
         <translation>Автоочистка по дате</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="554"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="542"/>
         <source>Automatically remove entries older than the specified number of days</source>
         <translation>Автоматически удалять записи старше указанного количества дней</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="565"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="553"/>
         <source>Days to keep:</source>
         <translation>Дней для хранения:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="569"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="557"/>
         <source>Actions</source>
         <translation>Действия</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="572"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="560"/>
         <source>Clear All History</source>
         <translation>Очистить всю историю</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="722"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="704"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="723"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="705"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="724"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="706"/>
         <source>German</source>
         <translation>Немецкий</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="725"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="707"/>
         <source>French</source>
         <translation>Французский</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="726"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="708"/>
         <source>Spanish</source>
         <translation>Испанский</translation>
     </message>
@@ -2486,44 +2470,44 @@ Examples:
         <translation type="vanished">Пользовательский</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="776"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="757"/>
         <source>(root)</source>
         <translation>(корень)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="814"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="795"/>
         <source>Reset Settings</source>
         <translation>Сбросить настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="815"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="796"/>
         <source>Are you sure you want to reset all settings to defaults?</source>
         <translation>Вы уверены, что хотите сбросить все настройки к значениям по умолчанию?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="840"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="821"/>
         <source>Language Changed</source>
         <translation>Язык изменён</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="841"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="822"/>
         <source>The language will be changed after you restart the application.</source>
         <translation>Язык будет изменён после перезапуска приложения.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="853"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1198"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="834"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1179"/>
         <source>No profile selected</source>
         <translation>Профиль не выбран</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="862"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1204"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="843"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1185"/>
         <source>Profile not found</source>
         <translation>Профиль не найден</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="870"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="851"/>
         <source>Invalid API URL</source>
         <translation>Неверный API URL</translation>
     </message>
@@ -2532,85 +2516,85 @@ Examples:
         <translation type="vanished">Конфигурация верна</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1075"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1056"/>
         <source>Failed to open file: %1</source>
         <translation>Не удалось открыть файл: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1085"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1066"/>
         <source>Failed to parse JSON file: %1</source>
         <translation>Не удалось разобрать файл JSON: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1099"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1080"/>
         <source>Prompts imported successfully.</source>
         <translation>Промпты успешно импортированы.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1212"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1193"/>
         <source>No API URL set</source>
         <translation>URL API не задан</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1404"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1385"/>
         <source>No provider profiles configured.
 Click &apos;+ Add&apos; to create one.</source>
         <translation>Профили провайдеров не настроены.
 Нажмите &apos;+ Добавить&apos; для создания.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1419"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1524"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1598"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1400"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1505"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1579"/>
         <source> [Default]</source>
         <translation> [По умолчанию]</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1425"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1524"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1601"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1406"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1505"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1582"/>
         <source> (disabled)</source>
         <translation> (отключено)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1462"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1443"/>
         <source>Add Provider Profile</source>
         <translation>Добавить профиль провайдера</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1463"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1444"/>
         <source>Select a template or create custom:</source>
         <translation>Выберите шаблон или создайте свой:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1528"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1509"/>
         <source>Remove Profile</source>
         <translation>Удалить профиль</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1529"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1510"/>
         <source>Are you sure you want to remove the profile &quot;%1&quot;?</source>
         <translation>Вы уверены, что хотите удалить профиль &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1672"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1749"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1653"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1730"/>
         <source>API key set</source>
         <translation>API ключ установлен</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1672"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1749"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1653"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1730"/>
         <source>No API key</source>
         <translation>Нет API ключа</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="847"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="828"/>
         <source>Testing...</source>
         <translation>Проверка...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="883"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="864"/>
         <source>Error: No API key</source>
         <translation>Ошибка: Нет API ключа</translation>
     </message>
@@ -2619,42 +2603,42 @@ Click &apos;+ Add&apos; to create one.</source>
         <translation type="vanished">Подключено</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="965"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1002"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="946"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="983"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="966"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="947"/>
         <source>Failed to add prompt. ID may already exist.</source>
         <translation>Не удалось добавить промпт. ID может уже существовать.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1003"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="984"/>
         <source>Failed to update prompt.</source>
         <translation>Не удалось обновить промпт.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1027"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1008"/>
         <source>Delete Prompt</source>
         <translation>Удалить промпт</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1028"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1009"/>
         <source>Are you sure you want to delete this prompt?</source>
         <translation>Вы уверены, что хотите удалить этот промпт?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1057"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1074"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1084"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1098"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1038"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1055"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1065"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1079"/>
         <source>Import Prompts</source>
         <translation>Импорт промптов</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1059"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1113"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1040"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1094"/>
         <source>JSON Files (*.json)</source>
         <translation>JSON файлы (*.json)</translation>
     </message>
@@ -2663,33 +2647,33 @@ Click &apos;+ Add&apos; to create one.</source>
         <translation type="vanished">Импорт будет реализован в будущей версии.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1111"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1127"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1092"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1108"/>
         <source>Export Prompts</source>
         <translation>Экспорт промптов</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1128"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1109"/>
         <source>Prompts exported to %1</source>
         <translation>Промпты экспортированы в %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1135"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1116"/>
         <source>Reset Prompts</source>
         <translation>Сбросить промпты</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1136"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1117"/>
         <source>Are you sure you want to reset prompts to defaults? All custom prompts will be lost.</source>
         <translation>Вы уверены, что хотите сбросить промпты к значениям по умолчанию? Все пользовательские промпты будут потеряны.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1161"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1142"/>
         <source>Clear History</source>
         <translation>Очистить историю</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1162"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1143"/>
         <source>Are you sure you want to delete all history entries? This cannot be undone.</source>
         <translation>Вы уверены, что хотите удалить все записи истории? Это действие нельзя отменить.</translation>
     </message>
@@ -2702,13 +2686,13 @@ Click &apos;+ Add&apos; to create one.</source>
         <translation type="vanished">Получение не поддерживается для этого провайдера</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1287"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1268"/>
         <source>Fetching models...</source>
         <translation>Получение моделей...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="930"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1298"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="911"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1279"/>
         <source>Error: %1</source>
         <translation>Ошибка: %1</translation>
     </message>
@@ -2717,22 +2701,22 @@ Click &apos;+ Add&apos; to create one.</source>
         <translation type="vanished">Ошибка: Клиент LLM недоступен</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="927"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="908"/>
         <source>Connection successful</source>
         <translation>Соединение успешно</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1308"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1289"/>
         <source>Error: Invalid response</source>
         <translation>Ошибка: Неверный ответ</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1349"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1330"/>
         <source>No models found</source>
         <translation>Модели не найдены</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1381"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1362"/>
         <source>Loaded %1 models</source>
         <translation>Загружено моделей: %1</translation>
     </message>
@@ -2755,31 +2739,31 @@ Click &apos;+ Add&apos; to create one.</source>
     <name>ClipLLM::UI::TrayIcon</name>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="59"/>
-        <location filename="../src/ui/trayicon.cpp" line="269"/>
-        <location filename="../src/ui/trayicon.cpp" line="380"/>
+        <location filename="../src/ui/trayicon.cpp" line="257"/>
+        <location filename="../src/ui/trayicon.cpp" line="368"/>
         <source>ClipLLM - LLM Clipboard Utility</source>
         <translation>ClipLLM — Утилита для буфера обмена LLM</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="92"/>
-        <location filename="../src/ui/trayicon.cpp" line="384"/>
+        <location filename="../src/ui/trayicon.cpp" line="372"/>
         <source>&amp;Settings</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="96"/>
-        <location filename="../src/ui/trayicon.cpp" line="387"/>
+        <location filename="../src/ui/trayicon.cpp" line="375"/>
         <source>&amp;History</source>
         <translation>&amp;История</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="118"/>
-        <location filename="../src/ui/trayicon.cpp" line="398"/>
+        <location filename="../src/ui/trayicon.cpp" line="386"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Промпты</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="333"/>
+        <location filename="../src/ui/trayicon.cpp" line="321"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Project website:&lt;/b&gt; &lt;a href=&apos;https://burbilog.github.io/clipllm/&apos;&gt;https://burbilog.github.io/clipllm/&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Версия %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; — кроссплатформенная утилита для работы с буфером обмена, интегрирующая большие языковые модели (LLM) непосредственно в ваш рабочий процесс. Работая как служба в системном трее, она позволяет обрабатывать содержимое буфера обмена (текст и изображения) с помощью настраиваемых AI-промптов, используя глобальные горячие клавиши.&lt;/p&gt;&lt;p&gt;Нужно ли вам суммировать текст, перевести содержимое, переписать код, извлечь информацию из изображений или выполнить любое другое AI-преобразование — ClipLLM делает это мгновенно доступным с помощью одного нажатия клавиши. Скопируйте содержимое, нажмите горячую клавишу и получите AI-результат обратно в буфер обмена.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Сайт проекта:&lt;/b&gt; &lt;a href=&apos;https://burbilog.github.io/clipllm/&apos;&gt;https://burbilog.github.io/clipllm/&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
@@ -2789,24 +2773,24 @@ Click &apos;+ Add&apos; to create one.</source>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="100"/>
-        <location filename="../src/ui/trayicon.cpp" line="390"/>
+        <location filename="../src/ui/trayicon.cpp" line="378"/>
         <source>&amp;About</source>
         <translation>&amp;О программе</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="110"/>
-        <location filename="../src/ui/trayicon.cpp" line="393"/>
+        <location filename="../src/ui/trayicon.cpp" line="381"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
         <location filename="../src/ui/trayicon.cpp" line="140"/>
-        <location filename="../src/ui/trayicon.cpp" line="154"/>
+        <location filename="../src/ui/trayicon.cpp" line="148"/>
         <source>No prompts available</source>
         <translation>Нет доступных промптов</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="271"/>
+        <location filename="../src/ui/trayicon.cpp" line="259"/>
         <source>Hotkey: </source>
         <translation>Горячая клавиша: </translation>
     </message>
@@ -2815,7 +2799,7 @@ Click &apos;+ Add&apos; to create one.</source>
         <translation type="vanished">&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Версия 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; — это кроссплатформенная утилита для работы с буфером обмена, которая интегрирует большие языковые модели (LLM) непосредственно в ваш рабочий процесс. Работая как служба в системном трее, она позволяет обрабатывать содержимое буфера обмена (текст и изображения) с помощью настраиваемых AI промптов, используя глобальные горячие клавиши.&lt;/p&gt;&lt;p&gt;Нужно ли вам резюмировать текст, переводить содержимое, переписывать код, извлекать информацию из изображений или выполнять любое другое AI-преобразование, ClipLLM делает это мгновенно доступным с помощью нажатия одной клавиши. Скопируйте содержимое, нажмите горячую клавишу и получите AI-результат обратно в буфере обмена.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="355"/>
+        <location filename="../src/ui/trayicon.cpp" line="343"/>
         <source>About ClipLLM</source>
         <translation>О ClipLLM</translation>
     </message>

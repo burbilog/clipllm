@@ -323,7 +323,6 @@ QVector<Models::Prompt> PromptManager::searchPrompts(const QString& query) const
 
     for (const auto& prompt : m_prompts) {
         if (prompt.name().toLower().contains(queryLower) ||
-            prompt.description().toLower().contains(queryLower) ||
             prompt.id().toLower().contains(queryLower)) {
             result.append(prompt);
         }
@@ -450,7 +449,6 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         Models::Prompt p;
         p.setId(QStringLiteral("summary"));
         p.setName(tr("Summary"));
-        p.setDescription(tr("Generate a structured summary of the text"));
         p.setIcon(Models::PromptIcon::TextSummary);
         p.setSystemPrompt(tr("You are a professional analyst. Create a clear, structured summary."));
         p.setUserPromptTemplate(tr("Please provide a comprehensive summary of the following text:\n\n{clipboard}"));
@@ -465,7 +463,6 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         Models::Prompt p;
         p.setId(QStringLiteral("translate-ru"));
         p.setName(tr("Translate to Russian"));
-        p.setDescription(tr("Translate the text to Russian"));
         p.setIcon(Models::PromptIcon::Translate);
         p.setSystemPrompt(tr("Ты — профессиональный переводчик. Переведи текст на русский язык, сохраняя стиль и смысл."));
         p.setUserPromptTemplate(tr("{clipboard}"));
@@ -480,7 +477,6 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         Models::Prompt p;
         p.setId(QStringLiteral("translate-en"));
         p.setName(tr("Translate to English"));
-        p.setDescription(tr("Translate the text to English"));
         p.setIcon(Models::PromptIcon::Translate);
         p.setSystemPrompt(tr("You are a professional translator. Translate the text to English, preserving style and meaning."));
         p.setUserPromptTemplate(tr("{clipboard}"));
@@ -495,7 +491,6 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         Models::Prompt p;
         p.setId(QStringLiteral("explain-code"));
         p.setName(tr("Explain Code"));
-        p.setDescription(tr("Explain what the code does"));
         p.setIcon(Models::PromptIcon::Explain);
         p.setSystemPrompt(tr("You are an expert programmer. Explain the code clearly and concisely."));
         p.setUserPromptTemplate(tr("Explain the following code:\n\n{clipboard}"));
@@ -510,7 +505,6 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         Models::Prompt p;
         p.setId(QStringLiteral("code-review"));
         p.setName(tr("Code Review"));
-        p.setDescription(tr("Review code and suggest improvements"));
         p.setIcon(Models::PromptIcon::CodeReview);
         p.setSystemPrompt(tr("You are a code reviewer. Analyze the code for bugs, security issues, and suggest improvements."));
         p.setUserPromptTemplate(tr("Review the following code:\n\n{clipboard}"));
@@ -525,7 +519,6 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         Models::Prompt p;
         p.setId(QStringLiteral("refactor"));
         p.setName(tr("Refactor Code"));
-        p.setDescription(tr("Suggest refactoring improvements"));
         p.setIcon(Models::PromptIcon::Refactor);
         p.setSystemPrompt(tr("You are a code optimization expert. Suggest refactoring to improve readability, maintainability, and performance."));
         p.setUserPromptTemplate(tr("Refactor the following code:\n\n{clipboard}"));
@@ -540,7 +533,6 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         Models::Prompt p;
         p.setId(QStringLiteral("describe-image"));
         p.setName(tr("Describe Image"));
-        p.setDescription(tr("Generate a detailed description of the image"));
         p.setIcon(Models::PromptIcon::Custom);
         p.setSystemPrompt(tr("You are a visual analyst. Provide a detailed description of the image."));
         p.setUserPromptTemplate(tr("Describe this image in detail."));
@@ -555,7 +547,6 @@ QVector<Models::Prompt> PromptManager::getDefaultPrompts()
         Models::Prompt p;
         p.setId(QStringLiteral("ocr"));
         p.setName(tr("Extract Text"));
-        p.setDescription(tr("Extract all text from the image"));
         p.setIcon(Models::PromptIcon::Custom);
         p.setSystemPrompt(tr("Extract all text from the image, preserving formatting where possible."));
         p.setUserPromptTemplate(tr("Extract all text from this image."));
@@ -672,8 +663,8 @@ bool PromptManager::importPromptsFromJson(const QJsonObject& json,
                 action = PromptConflictDialog::Action::No;
             } else {
                 // Show conflict dialog
-                QString existingDetails = QStringLiteral("%1").arg(existing.description());
-                QString newDetails = QStringLiteral("%1").arg(importedPrompt.description());
+                QString existingDetails = QStringLiteral("ID: %1").arg(existing.id());
+                QString newDetails = QStringLiteral("ID: %1").arg(importedPrompt.id());
 
                 PromptConflictDialog dialog(importedPrompt.name(),
                                            existingDetails,

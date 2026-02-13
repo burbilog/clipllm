@@ -52,7 +52,6 @@ public:
     // Getters
     QString id() const { return m_id; }
     QString name() const { return m_name; }
-    QString description() const { return m_description; }
     QString systemPrompt() const { return m_systemPrompt; }
     QString userPromptTemplate() const { return m_userPromptTemplate; }
     ContentType contentType() const { return m_contentType; }
@@ -74,7 +73,6 @@ public:
     // Setters
     void setId(const QString& id) { m_id = id; }
     void setName(const QString& name) { m_name = name; }
-    void setDescription(const QString& description) { m_description = description; }
     void setSystemPrompt(const QString& prompt) { m_systemPrompt = prompt; }
     void setUserPromptTemplate(const QString& template_) { m_userPromptTemplate = template_; }
     void setContentType(ContentType type) { m_contentType = type; }
@@ -115,7 +113,6 @@ public:
 private:
     QString m_id;
     QString m_name;
-    QString m_description;
     QString m_systemPrompt;
     QString m_userPromptTemplate;
     ContentType m_contentType = ContentType::Any;

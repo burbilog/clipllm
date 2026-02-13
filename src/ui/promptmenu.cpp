@@ -182,7 +182,7 @@ void PromptMenu::rebuildMenu()
     if (!searchEmpty) {
         QVector<Models::Prompt> searchFiltered;
         for (const auto& prompt : filteredPrompts) {
-            QString text = prompt.name() + prompt.description() + prompt.id();
+            QString text = prompt.name() + prompt.id();
             if (text.toLower().contains(searchText)) {
                 searchFiltered.append(prompt);
             }
@@ -265,13 +265,6 @@ void PromptMenu::rebuildMenu()
 QAction* PromptMenu::createPromptAction(const Models::Prompt& prompt)
 {
     QString text = prompt.name();
-    bool showDescriptions = false;
-    if (m_configManager) {
-        showDescriptions = m_configManager->showDescriptionInPopup();
-    }
-    if (showDescriptions && !prompt.description().isEmpty()) {
-        text += QStringLiteral(" — ") + prompt.description();
-    }
 
     QAction* action = new QAction(text, this);
     action->setData(prompt.id());

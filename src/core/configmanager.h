@@ -73,8 +73,6 @@ public:
     static const QString HISTORY_AUTO_CLEANUP_KEY;
     static const QString HISTORY_DAYS_TO_KEEP_KEY;
     static const QString HISTORY_AUTO_SAVE_KEY;
-    static const QString SHOW_DESCRIPTION_IN_MENU_KEY;
-    static const QString SHOW_DESCRIPTION_IN_POPUP_KEY;
     static const QString HISTORY_CLEANUP_BY_COUNT_KEY;
     static const QString HISTORY_CLEANUP_BY_DATE_KEY;
     static const QString PROMPTS_FILE_KEY;
@@ -137,11 +135,6 @@ public:
     bool historyAutoSave() const;
     void setHistoryAutoSave(bool enabled);
 
-    bool showDescriptionInMenu() const;
-    void setShowDescriptionInMenu(bool enabled);
-
-    bool showDescriptionInPopup() const;
-    void setShowDescriptionInPopup(bool enabled);
 
     bool historyCleanupByCount() const;
     void setHistoryCleanupByCount(bool enabled);

@@ -32,6 +32,7 @@
 #include "models/providerprofile.h"
 #include <QApplication>
 #include <QMessageBox>
+#include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QShowEvent>
 #include <QGroupBox>
@@ -448,7 +449,7 @@ void SettingsDialog::setupPromptsTab()
         tr("Name"), tr("Content Type"), tr("Model"), tr("Group"), tr("Priority"), tr("Hotkey")
     });
     m_promptsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-    m_promptsTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_promptsTable->setSelectionMode(QAbstractItemView::ExtendedSelection);
     m_promptsTable->horizontalHeader()->setStretchLastSection(true);
     m_promptsTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -476,14 +477,29 @@ void SettingsDialog::setupPromptsTab()
     m_deletePromptButton->setEnabled(false);
     connect(m_deletePromptButton, &QPushButton::clicked, this, &SettingsDialog::onDeletePromptClicked);
 
+    m_changeGroupButton = new QPushButton(tr("Change Group"));
+    m_changeGroupButton->setEnabled(false);
+    connect(m_changeGroupButton, &QPushButton::clicked, this, &SettingsDialog::onChangeGroupClicked);
+
+    m_changePriorityButton = new QPushButton(tr("Change Priority"));
+    m_changePriorityButton->setEnabled(false);
+    connect(m_changePriorityButton, &QPushButton::clicked, this, &SettingsDialog::onChangePriorityClicked);
+
     m_manageGroupsButton = new QPushButton(tr("Manage Groups..."));
     connect(m_manageGroupsButton, &QPushButton::clicked, this, &SettingsDialog::onManageGroupsClicked);
 
     buttonLayout->addWidget(m_addPromptButton);
     buttonLayout->addWidget(m_editPromptButton);
     buttonLayout->addWidget(m_deletePromptButton);
+    buttonLayout->addWidget(m_changeGroupButton);
+    buttonLayout->addWidget(m_changePriorityButton);
     buttonLayout->addWidget(m_manageGroupsButton);
     buttonLayout->addStretch();
+
+    // Selected count label
+    m_promptsSelectedLabel = new QLabel();
+    m_promptsSelectedLabel->hide();
+    layout->addWidget(m_promptsSelectedLabel);
 
     layout->addLayout(buttonLayout);
 
@@ -994,25 +1010,79 @@ void SettingsDialog::onDeletePromptClicked()
         return;
     }
 
-    int row = m_promptsTable->currentRow();
-    if (row < 0) {
+    // Собрать ID выделенных промптов
+    QSet<int> selectedRows;
+    QList<QTableWidgetItem*> selectedItems = m_promptsTable->selectedItems();
+    for (QTableWidgetItem* item : selectedItems) {
+        selectedRows.insert(item->row());
+    }
+
+    QVector<QString> promptIds;
+    for (int row : selectedRows) {
+        QTableWidgetItem* nameItem = m_promptsTable->item(row, 0);
+        if (nameItem) {
+            QString id = nameItem->data(Qt::UserRole).toString();
+            if (!id.isEmpty()) {
+                promptIds.append(id);
+            }
+        }
+    }
+
+    if (promptIds.isEmpty()) {
         return;
     }
 
-    QString promptId = m_promptsTable->item(row, 0)->data(Qt::UserRole).toString();
-    if (promptId.isEmpty()) {
-        return;
+    // Проверить ссылки в цепочках
+    QVector<QString> affectedPrompts;
+    QVector<Models::Prompt> allPrompts = app->promptManager()->getAllPrompts();
+    for (const Models::Prompt& prompt : allPrompts) {
+        if (!promptIds.contains(prompt.id()) && promptIds.contains(prompt.nextPromptId())) {
+            // Этот промпт ссылается на удаляемый
+            QString refName = prompt.name();
+            if (const auto refPrompt = app->promptManager()->getPrompt(prompt.nextPromptId())) {
+                refName = refPrompt->name();
+            }
+            affectedPrompts.append(tr("• %1 (references %2)").arg(prompt.name(), refName));
+        }
+    }
+
+    // Сформировать сообщение подтверждения
+    QString confirmationMessage;
+    if (promptIds.size() == 1) {
+        int row = *selectedRows.begin();
+        QString name = m_promptsTable->item(row, 0)->text();
+        confirmationMessage = tr("Delete prompt \"%1\"?").arg(name);
+    } else {
+        confirmationMessage = tr("Delete %1 prompts?").arg(promptIds.size());
+    }
+
+    if (!affectedPrompts.isEmpty()) {
+        confirmationMessage += tr("\n\nWarning: The following prompts reference the deleted prompts in their chains:\n%1\nThese references will be cleared.")
+            .arg(affectedPrompts.join('\n'));
     }
 
     auto reply = QMessageBox::question(
         this,
-        tr("Delete Prompt"),
-        tr("Are you sure you want to delete this prompt?"),
+        promptIds.size() == 1 ? tr("Delete Prompt") : tr("Delete Prompts"),
+        confirmationMessage,
         QMessageBox::Yes | QMessageBox::No
     );
 
     if (reply == QMessageBox::Yes) {
-        app->promptManager()->removePrompt(promptId);
+        // Очистить ссылки на удаляемые промпты
+        for (Models::Prompt& prompt : allPrompts) {
+            if (promptIds.contains(prompt.nextPromptId())) {
+                Models::Prompt updated = prompt;
+                updated.setNextPromptId(QString());
+                app->promptManager()->updatePrompt(prompt.id(), updated);
+            }
+        }
+
+        // Удалить выделенные промпты
+        for (const QString& id : promptIds) {
+            app->promptManager()->removePrompt(id);
+        }
+
         loadPrompts();
         emit promptsChanged();
     }
@@ -1030,6 +1100,144 @@ void SettingsDialog::onManageGroupsClicked()
 
     // Reload prompts as groups may have changed
     loadPrompts();
+}
+
+void SettingsDialog::onChangeGroupClicked()
+{
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (!app || !app->groupsManager() || !app->promptManager()) {
+        return;
+    }
+
+    // Собрать ID выделенных промптов
+    QSet<int> selectedRows;
+    QList<QTableWidgetItem*> selectedItems = m_promptsTable->selectedItems();
+    for (QTableWidgetItem* item : selectedItems) {
+        selectedRows.insert(item->row());
+    }
+
+    QVector<QString> promptIds;
+    for (int row : selectedRows) {
+        QTableWidgetItem* nameItem = m_promptsTable->item(row, 0);
+        if (nameItem) {
+            QString id = nameItem->data(Qt::UserRole).toString();
+            if (!id.isEmpty()) {
+                promptIds.append(id);
+            }
+        }
+    }
+
+    if (promptIds.isEmpty()) {
+        return;
+    }
+
+    // Диалог выбора группы
+    QDialog groupDialog(this);
+    groupDialog.setWindowTitle(tr("Move to Group"));
+
+    QVBoxLayout* layout = new QVBoxLayout(&groupDialog);
+
+    QComboBox* groupCombo = new QComboBox();
+    groupCombo->addItem(tr("(root)"), QString());
+
+    QStringList groups = app->groupsManager()->loadGroups();
+    groups.sort(Qt::CaseInsensitive);
+    for (const QString& group : groups) {
+        int depth = group.count(QLatin1Char('/'));
+        QString indent = QString(depth * 2, QLatin1Char(' '));
+        QString display = group;
+        display.replace(QLatin1Char('/'), QStringLiteral(" → "));
+        groupCombo->addItem(indent + display, group);
+    }
+
+    layout->addWidget(new QLabel(tr("Select new group for %1 prompts:").arg(promptIds.size())));
+    layout->addWidget(groupCombo);
+
+    QDialogButtonBox* buttons = new QDialogButtonBox(
+        QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &groupDialog);
+    layout->addWidget(buttons);
+
+    connect(buttons, &QDialogButtonBox::accepted, &groupDialog, &QDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, &groupDialog, &QDialog::reject);
+
+    if (groupDialog.exec() != QDialog::Accepted) {
+        return;
+    }
+
+    QString newGroup = groupCombo->currentData().toString();
+
+    // Переместить все выделенные промпты
+    QVector<Models::Prompt> allPrompts = app->promptManager()->getAllPrompts();
+    for (Models::Prompt& prompt : allPrompts) {
+        if (promptIds.contains(prompt.id())) {
+            Models::Prompt updated = prompt;
+            updated.setGroup(newGroup);
+            app->promptManager()->updatePrompt(prompt.id(), updated);
+        }
+    }
+
+    loadPrompts();
+    emit promptsChanged();
+}
+
+void SettingsDialog::onChangePriorityClicked()
+{
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (!app || !app->promptManager()) {
+        return;
+    }
+
+    // Собрать ID выделенных промптов
+    QSet<int> selectedRows;
+    QList<QTableWidgetItem*> selectedItems = m_promptsTable->selectedItems();
+    for (QTableWidgetItem* item : selectedItems) {
+        selectedRows.insert(item->row());
+    }
+
+    QVector<QString> promptIds;
+    for (int row : selectedRows) {
+        QTableWidgetItem* nameItem = m_promptsTable->item(row, 0);
+        if (nameItem) {
+            QString id = nameItem->data(Qt::UserRole).toString();
+            if (!id.isEmpty()) {
+                promptIds.append(id);
+            }
+        }
+    }
+
+    if (promptIds.isEmpty()) {
+        return;
+    }
+
+    // Диалог ввода приоритета
+    bool ok;
+    int newPriority = QInputDialog::getInt(
+        this,
+        tr("Change Priority"),
+        tr("New priority for %1 prompts (0-1000):").arg(promptIds.size()),
+        0,  // value
+        0,  // min
+        1000,  // max
+        1,  // step
+        &ok
+    );
+
+    if (!ok) {
+        return;
+    }
+
+    // Изменить приоритет всем выделенным промптам
+    QVector<Models::Prompt> allPrompts = app->promptManager()->getAllPrompts();
+    for (Models::Prompt& prompt : allPrompts) {
+        if (promptIds.contains(prompt.id())) {
+            Models::Prompt updated = prompt;
+            updated.setPriority(newPriority);
+            app->promptManager()->updatePrompt(prompt.id(), updated);
+        }
+    }
+
+    loadPrompts();
+    emit promptsChanged();
 }
 
 void SettingsDialog::onImportPromptsClicked()
@@ -1088,10 +1296,47 @@ void SettingsDialog::onImportPromptsClicked()
 
 void SettingsDialog::onExportPromptsClicked()
 {
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (!app || !app->promptManager()) {
+        return;
+    }
+
+    // Проверить есть ли выделение
+    QSet<int> selectedRows;
+    QList<QTableWidgetItem*> selectedItems = m_promptsTable->selectedItems();
+    for (QTableWidgetItem* item : selectedItems) {
+        selectedRows.insert(item->row());
+    }
+
+    QVector<QString> selectedIds;
+    for (int row : selectedRows) {
+        QTableWidgetItem* nameItem = m_promptsTable->item(row, 0);
+        if (nameItem) {
+            QString id = nameItem->data(Qt::UserRole).toString();
+            if (!id.isEmpty()) {
+                selectedIds.append(id);
+            }
+        }
+    }
+
+    QString defaultFilename;
+    QString dialogTitle;
+    if (!selectedIds.isEmpty()) {
+        // Экспортировать только выделенные
+        defaultFilename = QStringLiteral("prompts_selected_%1.json")
+            .arg(QDateTime::currentDateTime().toString("yyyyMMdd"));
+        dialogTitle = tr("Export Selected Prompts");
+    } else {
+        // Экспортировать все (старое поведение)
+        defaultFilename = QStringLiteral("prompts_%1.json")
+            .arg(QDateTime::currentDateTime().toString("yyyyMMdd"));
+        dialogTitle = tr("Export All Prompts");
+    }
+
     QString fileName = QFileDialog::getSaveFileName(
         this,
-        tr("Export Prompts"),
-        QStringLiteral("prompts_%1.json").arg(QDateTime::currentDateTime().toString("yyyyMMdd")),
+        dialogTitle,
+        defaultFilename,
         tr("JSON Files (*.json)")
     );
 
@@ -1099,15 +1344,41 @@ void SettingsDialog::onExportPromptsClicked()
         return;
     }
 
-    App* app = qobject_cast<App*>(QApplication::instance());
-    if (!app || !app->promptManager()) {
-        return;
+    if (!selectedIds.isEmpty()) {
+        // Экспортировать только выделенные промпты
+        QVector<Models::Prompt> allPrompts = app->promptManager()->getAllPrompts();
+
+        QJsonObject root;
+        root[QStringLiteral("version")] = QStringLiteral("1.0");
+
+        QJsonArray promptsArray;
+        for (const Models::Prompt& prompt : allPrompts) {
+            if (selectedIds.contains(prompt.id())) {
+                promptsArray.append(prompt.toJson());
+            }
+        }
+        root[QStringLiteral("prompts")] = promptsArray;
+
+        QJsonDocument doc(root);
+
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly)) {
+            QMessageBox::warning(this, tr("Export Prompts"),
+                               tr("Failed to open file for writing: %1").arg(fileName));
+            return;
+        }
+        file.write(doc.toJson(QJsonDocument::Indented));
+        file.close();
+
+        QMessageBox::information(this, dialogTitle,
+                               tr("Exported %1 prompts to %2").arg(selectedIds.size()).arg(fileName));
+    } else {
+        // Экспортировать все промпты (старый метод)
+        app->promptManager()->savePromptsToFile(fileName);
+
+        QMessageBox::information(this, dialogTitle,
+                               tr("Exported %1 prompts to %2").arg(app->promptManager()->getAllPrompts().size()).arg(fileName));
     }
-
-    app->promptManager()->savePromptsToFile(fileName);
-
-    QMessageBox::information(this, tr("Export Prompts"),
-                           tr("Prompts exported to %1").arg(fileName));
 }
 
 void SettingsDialog::onResetPromptsClicked()
@@ -1131,9 +1402,30 @@ void SettingsDialog::onResetPromptsClicked()
 
 void SettingsDialog::onPromptSelectionChanged()
 {
-    bool hasSelection = m_promptsTable->currentRow() >= 0;
-    m_editPromptButton->setEnabled(hasSelection);
+    QList<QTableWidgetItem*> selectedItems = m_promptsTable->selectedItems();
+    QSet<int> selectedRows;
+    for (QTableWidgetItem* item : selectedItems) {
+        selectedRows.insert(item->row());
+    }
+
+    int selectedCount = selectedRows.size();
+    bool hasSelection = selectedCount > 0;
+
+    // Edit работает только с одним выделенным промптом
+    m_editPromptButton->setEnabled(hasSelection && selectedCount == 1);
+    // Delete, Export, Change Group, Change Priority работают с любым выделением
     m_deletePromptButton->setEnabled(hasSelection);
+    m_exportPromptsButton->setEnabled(hasSelection);
+    m_changeGroupButton->setEnabled(hasSelection);
+    m_changePriorityButton->setEnabled(hasSelection);
+
+    // Показываем количество выделенных промптов если их больше одного
+    if (selectedCount > 1) {
+        m_promptsSelectedLabel->setText(tr("Selected: %1").arg(selectedCount));
+        m_promptsSelectedLabel->show();
+    } else {
+        m_promptsSelectedLabel->hide();
+    }
 }
 
 void SettingsDialog::onClearHistoryClicked()

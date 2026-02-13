@@ -18,6 +18,7 @@
 #define CLIPLLM_UI_SETTINGSDIALOG_H
 
 #include <QDialog>
+#include <QDialogButtonBox>
 #include <QCloseEvent>
 #include <QTabWidget>
 #include <QLineEdit>
@@ -106,6 +107,8 @@ private slots:
     void onResetPromptsClicked();
     void onPromptSelectionChanged();
     void onManageGroupsClicked();
+    void onChangeGroupClicked();
+    void onChangePriorityClicked();
 
     // History tab
     void onClearHistoryClicked();
@@ -200,7 +203,10 @@ private:
     QPushButton* m_manageGroupsButton = nullptr;
     QPushButton* m_importPromptsButton = nullptr;
     QPushButton* m_exportPromptsButton = nullptr;
+    QPushButton* m_changeGroupButton = nullptr;
+    QPushButton* m_changePriorityButton = nullptr;
     QPushButton* m_resetPromptsButton = nullptr;
+    QLabel* m_promptsSelectedLabel = nullptr;
 
     // History tab
     QSpinBox* m_historyLimitSpin = nullptr;

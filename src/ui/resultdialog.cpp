@@ -39,6 +39,9 @@
 namespace ClipLLM {
 namespace UI {
 
+// Rough approximation: average characters per token (for display estimation)
+constexpr int CHARS_PER_TOKEN_ESTIMATE = 4;
+
 ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* historyManager,
                              Core::ConfigManager* configManager, QWidget* parent)
     : QDialog(parent)
@@ -326,8 +329,8 @@ void ResultDialog::onStreaming(const QString& content)
 {
     appendResponse(content);
 
-    // Update token estimate (rough approximation: 4 chars per token)
-    int estimatedTokens = m_output.length() / 4;
+    // Update token estimate (rough approximation)
+    int estimatedTokens = m_output.length() / CHARS_PER_TOKEN_ESTIMATE;
     m_tokensLabel->setText(tr("Tokens: ~%1").arg(estimatedTokens));
 }
 

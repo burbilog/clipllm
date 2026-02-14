@@ -30,6 +30,9 @@
 namespace ClipLLM {
 namespace UI {
 
+// Minimum selection size to distinguish from click (in pixels)
+constexpr int MIN_SELECTION_SIZE = 5;
+
 ScreenshotSelector::ScreenshotSelector(const QImage& screenshot, QWidget* parent)
     : QWidget(parent)
     , m_screenshot(screenshot)
@@ -270,7 +273,7 @@ void ScreenshotSelector::mouseReleaseEvent(QMouseEvent* event)
     m_isDragging = false;
 
     // If selection is too small (just a click), treat as cancel
-    if (m_selectedRect.width() < 5 || m_selectedRect.height() < 5) {
+    if (m_selectedRect.width() < MIN_SELECTION_SIZE || m_selectedRect.height() < MIN_SELECTION_SIZE) {
         m_selectedRect = QRect();
         update();
         return;

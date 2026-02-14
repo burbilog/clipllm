@@ -30,6 +30,9 @@
 namespace ClipLLM {
 namespace Core {
 
+// Constants
+constexpr int CONNECTION_TEST_MAX_TOKENS = 10;  // Very short response for connection test
+
 // LLMMessage implementation
 QJsonObject LLMMessage::toJson() const
 {
@@ -296,7 +299,7 @@ void LLMClient::testConnection()
     LLMRequest request;
     request.model = m_config.model();
     request.temperature = 0.0;
-    request.maxTokens = 10;  // Very short response
+    request.maxTokens = CONNECTION_TEST_MAX_TOKENS;
     request.stream = false;  // Non-streaming for simpler handling
 
     // Simple "hi" message

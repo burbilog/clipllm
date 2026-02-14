@@ -38,8 +38,8 @@
 
 ### Низкий приоритет (код-стайл)
 
-- [ ] **N13: Magic numbers**
-  - Вынести в именованные константы
+- [x] **N13: Magic numbers**
+  - Вынесены в именованные константы: CONNECTION_TEST_MAX_TOKENS, DEFAULT_MAX_HISTORY_ENTRIES, MIN_SELECTION_SIZE, CHARS_PER_TOKEN_ESTIMATE
 
 - [ ] **N14: Несогласованное именование**
   - promptId vs prompt_id

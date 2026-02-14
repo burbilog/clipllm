@@ -27,6 +27,9 @@
 namespace ClipLLM {
 namespace Core {
 
+// Constants
+constexpr int DEFAULT_MAX_HISTORY_ENTRIES = 1000;
+
 enum class HistoryEntryType {
     Text,
     Image,
@@ -130,7 +133,7 @@ private:
 
     QVector<HistoryEntry> m_entries;
     bool m_dirty = false;
-    int m_maxEntries = 1000;
+    int m_maxEntries = DEFAULT_MAX_HISTORY_ENTRIES;
     QString m_customPath;
 };
 

@@ -159,14 +159,13 @@
  ---
  🟢 Низкий приоритет (код-стайл, рефакторинг)
 
- 13. [ ] Magic numbers
+ 13. [x] Magic numbers — ИСПРАВЛЕНО
 
- - llmclient.cpp:299: maxTokens = 10
- - historymanager.cpp: m_maxEntries = 1000
- - screenshotselector.cpp:272: 5 pixels threshold
- - resultdialog.cpp:332: length() / 4 для оценки токенов
-
- Рекомендация: Определить как константы.
+   Вынесены в именованные константы:
+   - llmclient.cpp: `CONNECTION_TEST_MAX_TOKENS = 10`
+   - historymanager.h: `DEFAULT_MAX_HISTORY_ENTRIES = 1000`
+   - screenshotselector.cpp: `MIN_SELECTION_SIZE = 5`
+   - resultdialog.cpp: `CHARS_PER_TOKEN_ESTIMATE = 4`
 
  14. [ ] Несогласованное именование
 

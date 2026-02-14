@@ -74,6 +74,7 @@ set(SOURCES
     src/core/groupsmanager.cpp
     src/core/debuglogger.cpp
     src/core/screenshotmanager.cpp
+    src/core/ipcserver.cpp
     src/ui/trayicon.cpp
     src/ui/promptmenu.cpp
     src/ui/settingsdialog.cpp
@@ -105,6 +106,7 @@ set(HEADERS
     src/core/groupsmanager.h
     src/core/debuglogger.h
     src/core/screenshotmanager.h
+    src/core/ipcserver.h
     src/ui/trayicon.h
     src/ui/promptmenu.h
     src/ui/settingsdialog.h

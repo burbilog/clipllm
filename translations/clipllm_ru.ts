@@ -67,17 +67,17 @@ Copy some text or an image first.</source>
 <context>
     <name>ClipLLM::App</name>
     <message>
-        <location filename="../src/core/app.cpp" line="273"/>
+        <location filename="../src/core/app.cpp" line="266"/>
         <source>System Tray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="274"/>
+        <location filename="../src/core/app.cpp" line="267"/>
         <source>Couldn&apos;t detect any system tray on this system.</source>
         <translation>Не удалось обнаружить системный трей.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="284"/>
+        <location filename="../src/core/app.cpp" line="277"/>
         <source>Welcome to ClipLLM</source>
         <translation>Добро пожаловать в ClipLLM</translation>
     </message>
@@ -86,58 +86,58 @@ Copy some text or an image first.</source>
         <translation type="vanished">ClipLLM запущен в системном трее. Нажмите глобальную горячую клавишу для начала работы.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="285"/>
+        <location filename="../src/core/app.cpp" line="278"/>
         <source>ClipLLM is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
         <translation>ClipLLM работает в системном трее. Щёлкните по значку в трее или настройте горячую клавишу в настройках.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="377"/>
+        <location filename="../src/core/app.cpp" line="370"/>
         <source>Hotkey Not Supported</source>
         <translation>Горячие клавиши не поддерживаются</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="378"/>
+        <location filename="../src/core/app.cpp" line="371"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
         <translation>Глобальные горячие клавиши не поддерживаются на этой платформе (Wayland?).</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="403"/>
+        <location filename="../src/core/app.cpp" line="396"/>
         <source>Hotkey Registration Failed</source>
         <translation>Не удалось зарегистрировать горячую клавишу</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="404"/>
+        <location filename="../src/core/app.cpp" line="397"/>
         <source>Could not register global hotkey: %1</source>
         <translation>Не удалось зарегистрировать глобальную горячую клавишу: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="571"/>
+        <location filename="../src/core/app.cpp" line="564"/>
         <source>Screenshot Failed</source>
         <translation>Ошибка скриншота</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="571"/>
+        <location filename="../src/core/app.cpp" line="564"/>
         <source>Could not capture screen</source>
         <translation>Не удалось захватить экран</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="747"/>
-        <location filename="../src/core/app.cpp" line="799"/>
+        <location filename="../src/core/app.cpp" line="740"/>
+        <location filename="../src/core/app.cpp" line="792"/>
         <source>Clipboard Empty</source>
         <translation>Буфер обмена пуст</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="748"/>
+        <location filename="../src/core/app.cpp" line="741"/>
         <source>No content found in clipboard.</source>
         <translation>В буфере обмена нет содержимого.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="771"/>
+        <location filename="../src/core/app.cpp" line="764"/>
         <source>Chain Cycle Detected</source>
         <translation>Обнаружен цикл в цепочке</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="772"/>
+        <location filename="../src/core/app.cpp" line="765"/>
         <source>The prompt chain would create a cycle. Execution stopped.
 
 Prompt &apos;%1&apos; was already executed in this chain.</source>
@@ -146,12 +146,12 @@ Prompt &apos;%1&apos; was already executed in this chain.</source>
 Промпт &apos;%1&apos; уже был выполнен в этой цепочке.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="780"/>
+        <location filename="../src/core/app.cpp" line="773"/>
         <source>Chain Depth Limit</source>
         <translation>Лимит глубины цепочки</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="781"/>
+        <location filename="../src/core/app.cpp" line="774"/>
         <source>Maximum chain depth (%1) reached. Execution stopped.
 
 You can increase this limit in Settings → General → Prompt Chains.</source>
@@ -160,7 +160,7 @@ You can increase this limit in Settings → General → Prompt Chains.</source>
 Вы можете увеличить этот лимит в Настройки → Общие → Цепочки промптов.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="800"/>
+        <location filename="../src/core/app.cpp" line="793"/>
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
@@ -169,26 +169,36 @@ Copy some text or an image first.</source>
 Сначала скопируйте текст или изображение.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="815"/>
+        <location filename="../src/core/app.cpp" line="808"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="816"/>
+        <location filename="../src/core/app.cpp" line="809"/>
         <source>Prompt not found: %1</source>
         <translation>Промпт не найден: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="825"/>
+        <location filename="../src/core/app.cpp" line="818"/>
         <source>Provider Error</source>
         <translation>Ошибка провайдера</translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="1112"/>
+        <source>Prompt Not Found</source>
+        <translation>Промпт не найден</translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="1113"/>
+        <source>Prompt with ID &apos;%1&apos; not found.</source>
+        <translation>Промпт с идентификатором &apos;%1&apos; не найден.</translation>
     </message>
     <message>
         <source>No valid LLM provider configured.</source>
         <translation type="vanished">Не настроен ни один корректный провайдер LLM.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="826"/>
+        <location filename="../src/core/app.cpp" line="819"/>
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation>Провайдер LLM не настроен. Настройте его в настройках.</translation>
     </message>
@@ -197,17 +207,17 @@ Copy some text or an image first.</source>
         <translation type="vanished">Провайдер LLM по умолчанию не найден. Настройте его в настройках.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="863"/>
+        <location filename="../src/core/app.cpp" line="856"/>
         <source>This prompt requires text content.</source>
         <translation>Этот промпт требует текстовое содержимое.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="214"/>
+        <location filename="../src/core/app.cpp" line="207"/>
         <source>No LLM Provider Configured</source>
         <translation>Провайдер LLM не настроен</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="215"/>
+        <location filename="../src/core/app.cpp" line="208"/>
         <source>No LLM provider profile has been configured.
 
 Please add at least one provider profile in Settings to use ClipLLM.</source>
@@ -216,17 +226,17 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
 Пожалуйста, добавьте хотя бы один профиль провайдера в Настройки для использования ClipLLM.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="843"/>
+        <location filename="../src/core/app.cpp" line="836"/>
         <source>Model Error</source>
         <translation>Ошибка модели</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="844"/>
+        <location filename="../src/core/app.cpp" line="837"/>
         <source>No model selected. Please select a model in Settings → LLM → Provider Profiles.</source>
         <translation>Модель не выбрана. Выберите модель в Настройки → LLM → Профили провайдеров.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="862"/>
+        <location filename="../src/core/app.cpp" line="855"/>
         <source>Incompatible Content</source>
         <translation>Несовместимое содержимое</translation>
     </message>
@@ -235,7 +245,7 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
         <translation type="vanished">Этот промпт требует содержимое типа %1.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="888"/>
+        <location filename="../src/core/app.cpp" line="881"/>
         <source>[Image content]</source>
         <translation>[Изображение]</translation>
     </message>
@@ -3019,14 +3029,84 @@ Click &apos;+ Add&apos; to create one.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="32"/>
+        <location filename="../src/main.cpp" line="48"/>
+        <source>Cannot open prompts file: %1</source>
+        <translation>Не удалось открыть файл промптов: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="59"/>
+        <source>Invalid JSON in prompts file: %1</source>
+        <translation>Некорректный JSON в файле промптов: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="65"/>
+        <source>No prompts found</source>
+        <translation>Промпты не найдены</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="99"/>
+        <source>Cannot connect to ClipLLM. Is it running?</source>
+        <translation>Не удалось подключиться к ClipLLM. Приложение запущено?</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="110"/>
+        <source>No response from ClipLLM</source>
+        <translation>Нет ответа от ClipLLM</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="123"/>
+        <source>Error: %1</source>
+        <translation>Ошибка: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="137"/>
         <source>ClipLLM - Cross-platform LLM clipboard utility</source>
         <translation>ClipLLM — Кроссплатформенная утилита для работы с буфером обмена через LLM</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="38"/>
+        <location filename="../src/main.cpp" line="143"/>
         <source>Start minimized to system tray</source>
         <translation>Запустить свернутым в системный трей</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="148"/>
+        <source>Show prompt popup menu (requires running instance)</source>
+        <translation>Показать меню промптов (требуется запущенный экземпляр)</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="152"/>
+        <source>Execute prompt by ID with clipboard content (requires running instance)</source>
+        <translation>Выполнить промпт по ID с содержимым буфера обмена (требуется запущенный экземпляр)</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="153"/>
+        <source>prompt-id</source>
+        <translation>id-промпта</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="157"/>
+        <source>List available prompts with their IDs</source>
+        <translation>Показать список доступных промптов с их ID</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="177"/>
+        <source>--run requires a prompt ID</source>
+        <translation>--run требует указания ID промпта</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="184"/>
+        <source>Another instance of ClipLLM is already running</source>
+        <translation>Уже запущен другой экземпляр ClipLLM</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="190"/>
+        <source>Failed to initialize application</source>
+        <translation>Не удалось инициализировать приложение</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="196"/>
+        <source>Failed to start IPC server - CLI commands will not work</source>
+        <translation>Не удалось запустить IPC-сервер — команды CLI не будут работать</translation>
     </message>
 </context>
 </TS>

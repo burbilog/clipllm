@@ -25,6 +25,7 @@
 #include "groupsmanager.h"
 #include "providerkeystore.h"
 #include "screenshotmanager.h"
+#include "ipcserver.h"
 #include "models/providerprofile.h"
 #include "ui/trayicon.h"
 #include "ui/settingsdialog.h"
@@ -37,7 +38,6 @@
 #include <QDir>
 #include <QDebug>
 #include <QMutex>
-#include <QSharedMemory>
 #include <QLockFile>
 #include <QMessageBox>
 #include <QRandomGenerator>
@@ -56,7 +56,6 @@ namespace {
     const QString ORGANIZATION_DOMAIN = QStringLiteral("clipllm.org");
 
     // Single instance management
-    QSharedMemory* g_sharedMemory = nullptr;
     QLockFile* g_lockFile = nullptr;
 }
 
@@ -116,12 +115,6 @@ App::~App()
     unregisterPromptHotkeys();
 
     cleanupTranslations();
-
-    if (g_sharedMemory) {
-        g_sharedMemory->detach();
-        delete g_sharedMemory;
-        g_sharedMemory = nullptr;
-    }
 
     if (g_lockFile) {
         g_lockFile->unlock();
@@ -1075,6 +1068,54 @@ void App::onAboutToQuit()
     if (m_configManager) {
         m_configManager->sync();
     }
+}
+
+bool App::startIpcServer()
+{
+    Core::IPCServer* ipc = Core::IPCServer::instance();
+
+    if (!ipc->start()) {
+        LOG_WARNING(QStringLiteral("Failed to start IPC server"));
+        return false;
+    }
+
+    // Connect IPC signals
+    connect(ipc, &Core::IPCServer::popupRequested,
+            this, &App::showPromptMenuAtCursor);
+    connect(ipc, &Core::IPCServer::runRequested,
+            this, &App::runPromptById);
+
+    LOG_DEBUG(QStringLiteral("IPC server started successfully"));
+    return true;
+}
+
+void App::showPromptMenuAtCursor()
+{
+    LOG_DEBUG(QStringLiteral("IPC: showPromptMenuAtCursor requested"));
+
+    if (!m_promptMenu) {
+        LOG_WARNING(QStringLiteral("PromptMenu not initialized"));
+        return;
+    }
+
+    // Show menu at cursor position (for Wayland CLI invocation)
+    m_promptMenu->showMenu(QCursor::pos());
+}
+
+void App::runPromptById(const QString& promptId)
+{
+    LOG_DEBUG(QStringLiteral("IPC: runPromptById requested: %1").arg(promptId));
+
+    // Verify prompt exists
+    auto promptOpt = m_promptManager->getPrompt(promptId);
+    if (!promptOpt.has_value()) {
+        showTrayMessage(tr("Prompt Not Found"),
+                       tr("Prompt with ID '%1' not found.").arg(promptId));
+        return;
+    }
+
+    // Execute the prompt with clipboard content
+    onPromptSelected(promptId);
 }
 
 } // namespace ClipLLM

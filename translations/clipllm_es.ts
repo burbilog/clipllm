@@ -67,17 +67,17 @@ Copie texto o una imagen primero.</translation>
 <context>
     <name>ClipLLM::App</name>
     <message>
-        <location filename="../src/core/app.cpp" line="273"/>
+        <location filename="../src/core/app.cpp" line="266"/>
         <source>System Tray</source>
         <translation>Bandeja del sistema</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="274"/>
+        <location filename="../src/core/app.cpp" line="267"/>
         <source>Couldn&apos;t detect any system tray on this system.</source>
         <translation>No se pudo detectar ninguna bandeja del sistema en este sistema.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="284"/>
+        <location filename="../src/core/app.cpp" line="277"/>
         <source>Welcome to ClipLLM</source>
         <translation>Bienvenido a ClipLLM</translation>
     </message>
@@ -86,58 +86,58 @@ Copie texto o una imagen primero.</translation>
         <translation type="vanished">ClipLLM se está ejecutando en la bandeja del sistema. Presione el atajo global para comenzar.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="285"/>
+        <location filename="../src/core/app.cpp" line="278"/>
         <source>ClipLLM is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
         <translation>ClipLLM se ejecuta en la bandeja del sistema. Haga clic en el icono o configure un atajo en la configuración.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="377"/>
+        <location filename="../src/core/app.cpp" line="370"/>
         <source>Hotkey Not Supported</source>
         <translation>Atajo de teclado no compatible</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="378"/>
+        <location filename="../src/core/app.cpp" line="371"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
         <translation>Los atajos de teclado globales no son compatibles con esta plataforma (¿Wayland?).</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="403"/>
+        <location filename="../src/core/app.cpp" line="396"/>
         <source>Hotkey Registration Failed</source>
         <translation>Error en el registro del atajo de teclado</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="404"/>
+        <location filename="../src/core/app.cpp" line="397"/>
         <source>Could not register global hotkey: %1</source>
         <translation>No se pudo registrar el atajo de teclado global: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="571"/>
+        <location filename="../src/core/app.cpp" line="564"/>
         <source>Screenshot Failed</source>
         <translation>Captura de pantalla fallida</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="571"/>
+        <location filename="../src/core/app.cpp" line="564"/>
         <source>Could not capture screen</source>
         <translation>No se pudo capturar la pantalla</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="747"/>
-        <location filename="../src/core/app.cpp" line="799"/>
+        <location filename="../src/core/app.cpp" line="740"/>
+        <location filename="../src/core/app.cpp" line="792"/>
         <source>Clipboard Empty</source>
         <translation>Portapapeles vacío</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="748"/>
+        <location filename="../src/core/app.cpp" line="741"/>
         <source>No content found in clipboard.</source>
         <translation>No se encontró contenido en el portapapeles.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="771"/>
+        <location filename="../src/core/app.cpp" line="764"/>
         <source>Chain Cycle Detected</source>
         <translation>Ciclo de cadena detectado</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="772"/>
+        <location filename="../src/core/app.cpp" line="765"/>
         <source>The prompt chain would create a cycle. Execution stopped.
 
 Prompt &apos;%1&apos; was already executed in this chain.</source>
@@ -146,12 +146,12 @@ Prompt &apos;%1&apos; was already executed in this chain.</source>
 El prompt &apos;%1&apos; ya fue ejecutado en esta cadena.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="780"/>
+        <location filename="../src/core/app.cpp" line="773"/>
         <source>Chain Depth Limit</source>
         <translation>Límite de profundidad de cadena</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="781"/>
+        <location filename="../src/core/app.cpp" line="774"/>
         <source>Maximum chain depth (%1) reached. Execution stopped.
 
 You can increase this limit in Settings → General → Prompt Chains.</source>
@@ -160,7 +160,7 @@ You can increase this limit in Settings → General → Prompt Chains.</source>
 Puede aumentar este límite en Configuración → General → Cadenas de prompts.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="800"/>
+        <location filename="../src/core/app.cpp" line="793"/>
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
@@ -169,26 +169,36 @@ Copy some text or an image first.</source>
 Copie texto o una imagen primero.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="815"/>
+        <location filename="../src/core/app.cpp" line="808"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="816"/>
+        <location filename="../src/core/app.cpp" line="809"/>
         <source>Prompt not found: %1</source>
         <translation>Prompt no encontrado: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="825"/>
+        <location filename="../src/core/app.cpp" line="818"/>
         <source>Provider Error</source>
         <translation>Error de proveedor</translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="1112"/>
+        <source>Prompt Not Found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="1113"/>
+        <source>Prompt with ID &apos;%1&apos; not found.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No valid LLM provider configured.</source>
         <translation type="vanished">No hay ningún proveedor LLM válido configurado.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="826"/>
+        <location filename="../src/core/app.cpp" line="819"/>
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation>No hay ningún proveedor LLM configurado. Configure uno en Configuración.</translation>
     </message>
@@ -197,17 +207,17 @@ Copie texto o una imagen primero.</translation>
         <translation type="vanished">No se encontró el proveedor LLM predeterminado. Configure uno en Configuración.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="863"/>
+        <location filename="../src/core/app.cpp" line="856"/>
         <source>This prompt requires text content.</source>
         <translation>Este prompt requiere contenido de texto.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="214"/>
+        <location filename="../src/core/app.cpp" line="207"/>
         <source>No LLM Provider Configured</source>
         <translation>No hay proveedor LLM configurado</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="215"/>
+        <location filename="../src/core/app.cpp" line="208"/>
         <source>No LLM provider profile has been configured.
 
 Please add at least one provider profile in Settings to use ClipLLM.</source>
@@ -216,17 +226,17 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
 Por favor, agregue al menos un perfil de proveedor en Configuración para usar ClipLLM.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="843"/>
+        <location filename="../src/core/app.cpp" line="836"/>
         <source>Model Error</source>
         <translation>Error de modelo</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="844"/>
+        <location filename="../src/core/app.cpp" line="837"/>
         <source>No model selected. Please select a model in Settings → LLM → Provider Profiles.</source>
         <translation>No hay modelo seleccionado. Seleccione un modelo en Configuración → LLM → Perfiles de proveedores.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="862"/>
+        <location filename="../src/core/app.cpp" line="855"/>
         <source>Incompatible Content</source>
         <translation>Contenido incompatible</translation>
     </message>
@@ -235,7 +245,7 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <translation type="vanished">Este prompt requiere contenido %1.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="888"/>
+        <location filename="../src/core/app.cpp" line="881"/>
         <source>[Image content]</source>
         <translation>[Contenido de imagen]</translation>
     </message>
@@ -2988,14 +2998,84 @@ Por favor elija un atajo diferente.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="32"/>
+        <location filename="../src/main.cpp" line="48"/>
+        <source>Cannot open prompts file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="59"/>
+        <source>Invalid JSON in prompts file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="65"/>
+        <source>No prompts found</source>
+        <translation type="unfinished">No se encontraron prompts</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="99"/>
+        <source>Cannot connect to ClipLLM. Is it running?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="110"/>
+        <source>No response from ClipLLM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="123"/>
+        <source>Error: %1</source>
+        <translation type="unfinished">Error: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="137"/>
         <source>ClipLLM - Cross-platform LLM clipboard utility</source>
         <translation>ClipLLM - Utilidad de portapapeles LLM multiplataforma</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="38"/>
+        <location filename="../src/main.cpp" line="143"/>
         <source>Start minimized to system tray</source>
         <translation>Iniciar minimizado en la bandeja del sistema</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="148"/>
+        <source>Show prompt popup menu (requires running instance)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="152"/>
+        <source>Execute prompt by ID with clipboard content (requires running instance)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="153"/>
+        <source>prompt-id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="157"/>
+        <source>List available prompts with their IDs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="177"/>
+        <source>--run requires a prompt ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="184"/>
+        <source>Another instance of ClipLLM is already running</source>
+        <translation type="unfinished">Otra instancia de ClipLLM ya se está ejecutando</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="190"/>
+        <source>Failed to initialize application</source>
+        <translation type="unfinished">Error al inicializar la aplicación</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="196"/>
+        <source>Failed to start IPC server - CLI commands will not work</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -51,6 +51,7 @@ class GroupsManager;
 class ProviderKeyStore;
 class DebugLogger;
 class ScreenshotManager;
+class IPCServer;
 }
 
 namespace UI {
@@ -82,6 +83,11 @@ public:
 
     // Check if this is a secondary instance
     bool isSecondary() const;
+
+    // IPC support for CLI commands
+    bool startIpcServer();
+    void showPromptMenuAtCursor();
+    void runPromptById(const QString& promptId);
 
     // Get component instances
     Core::ClipboardManager* clipboardManager() const;

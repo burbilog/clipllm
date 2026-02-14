@@ -48,9 +48,9 @@
 - [ ] **N15: HistoryEntry — struct vs class**
   - Рассмотреть рефакторинг
 
-- [ ] **N16: Длинные функции**
-  - app.cpp:onPromptSelected() — 230 строк
-  - Рассмотреть декомпозицию
+- [x] **N16: Длинные функции**
+  - onPromptSelected() сокращён, выделен resolveProviderProfile()
+  - onRenameIdClicked() оставлен (81 строка — умеренно)
 
 - [ ] **N17: Мёртвый код**
   - app.cpp:onTrayIconActivated() с Q_UNUSED(reason)

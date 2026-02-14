@@ -25,6 +25,9 @@
 #include <QSet>
 #include <QStringList>
 #include <memory>
+#include <optional>
+#include "models/prompt.h"
+#include "models/providerprofile.h"
 
 // Forward declarations
 class QHotkey;
@@ -34,7 +37,6 @@ namespace ClipLLM {
 class App;
 
 namespace Models {
-class ProviderProfile;
 class LLMConfig;
 }
 
@@ -139,6 +141,9 @@ private:
 
     // Profile to LLM config conversion with cascade logic
     Models::LLMConfig profileToConfig(const Models::ProviderProfile& profile) const;
+
+    // Resolve provider profile for a prompt (returns empty optional on error)
+    std::optional<Models::ProviderProfile> resolveProviderProfile(const Models::Prompt& prompt);
 
     // Prompt hotkey trigger handler (private)
     void onPromptHotkeyTriggered(const QString& promptId);

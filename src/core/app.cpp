@@ -820,48 +820,14 @@ void App::onPromptSelected(const QString& promptId,
 
     const Models::Prompt& prompt = promptOpt.value();
 
-    // Determine provider profile to use
-    Models::ProviderProfile profile;
-    QString defaultProviderId = m_configManager->defaultProviderId();
-    LOG_DEBUG(QStringLiteral("onPromptSelected: defaultProviderId from config: %1").arg(defaultProviderId));
-
-    if (prompt.overrideProvider() && !prompt.providerId().isEmpty()) {
-        auto promptProfile = m_configManager->providerProfile(prompt.providerId());
-        if (promptProfile.has_value()) {
-            profile = promptProfile.value();
-        } else {
-            LOG_WARNING(QStringLiteral("Prompt references non-existent profile: %1, using default").arg(prompt.providerId()));
-            if (!defaultProviderId.isEmpty()) {
-                auto defaultProfile = m_configManager->providerProfile(defaultProviderId);
-                if (defaultProfile.has_value()) {
-                    profile = defaultProfile.value();
-                } else {
-                    showTrayMessage(tr("Provider Error"),
-                                   tr("No valid LLM provider configured."));
-                    return;
-                }
-            } else {
-                showTrayMessage(tr("Provider Error"),
-                               tr("No LLM provider configured. Please configure one in Settings."));
-                return;
-            }
-        }
-    } else {
-        if (!defaultProviderId.isEmpty()) {
-            auto defaultProfile = m_configManager->providerProfile(defaultProviderId);
-            if (defaultProfile.has_value()) {
-                profile = defaultProfile.value();
-            } else {
-                showTrayMessage(tr("Provider Error"),
-                               tr("Default LLM provider not found. Please configure one in Settings."));
-                return;
-            }
-        } else {
-            showTrayMessage(tr("Provider Error"),
-                           tr("No LLM provider configured. Please configure one in Settings."));
-            return;
-        }
+    // Resolve provider profile
+    auto profileOpt = resolveProviderProfile(prompt);
+    if (!profileOpt.has_value()) {
+        showTrayMessage(tr("Provider Error"),
+                       tr("No LLM provider configured. Please configure one in Settings."));
+        return;
     }
+    Models::ProviderProfile profile = profileOpt.value();
 
     // Configure LLM client with selected profile
     Models::LLMConfig config = profileToConfig(profile);
@@ -1078,6 +1044,32 @@ Models::LLMConfig App::profileToConfig(const Models::ProviderProfile& profile) c
     llmConfig.setApiKey(apiKey);
 
     return llmConfig;
+}
+
+std::optional<Models::ProviderProfile> App::resolveProviderProfile(const Models::Prompt& prompt)
+{
+    QString defaultProviderId = m_configManager->defaultProviderId();
+    Models::ProviderProfile profile;
+
+    if (prompt.overrideProvider() && !prompt.providerId().isEmpty()) {
+        // Use prompt's provider
+        auto promptProfile = m_configManager->providerProfile(prompt.providerId());
+        if (promptProfile.has_value()) {
+            return promptProfile.value();
+        }
+        LOG_WARNING(QStringLiteral("Prompt references non-existent profile: %1, using default").arg(prompt.providerId()));
+    }
+
+    // Use default provider
+    if (!defaultProviderId.isEmpty()) {
+        auto defaultProfile = m_configManager->providerProfile(defaultProviderId);
+        if (defaultProfile.has_value()) {
+            return defaultProfile.value();
+        }
+    }
+
+    // No valid provider
+    return std::nullopt;
 }
 
 void App::onAboutToQuit()

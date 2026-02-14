@@ -21,6 +21,11 @@
 #include <QApplication>
 #include <QScreen>
 #include <QGuiApplication>
+#include <QTimer>
+
+#ifdef Q_OS_LINUX
+#include <xcb/xcb.h>
+#endif
 
 namespace ClipLLM {
 namespace UI {
@@ -42,9 +47,46 @@ ScreenshotSelector::ScreenshotSelector(const QImage& screenshot, QWidget* parent
         virtualGeometry = virtualGeometry.united(screen->geometry());
     }
     setGeometry(virtualGeometry);
+
+    // Grab keyboard using Qt
+    grabKeyboard();
+    setFocus();
 }
 
-ScreenshotSelector::~ScreenshotSelector() = default;
+ScreenshotSelector::~ScreenshotSelector()
+{
+    releaseKeyboard();
+}
+
+#ifdef Q_OS_LINUX
+bool ScreenshotSelector::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
+{
+    Q_UNUSED(result)
+
+    if (eventType == "xcb_generic_event_t") {
+        xcb_generic_event_t* event = static_cast<xcb_generic_event_t*>(message);
+        uint8_t responseType = event->response_type & ~0x80;
+
+        // Intercept all key events and eat them
+        if (responseType == XCB_KEY_PRESS || responseType == XCB_KEY_RELEASE) {
+            xcb_key_press_event_t* keyEvent = reinterpret_cast<xcb_key_press_event_t*>(event);
+
+            // Handle Escape and Enter keys
+            if (responseType == XCB_KEY_PRESS) {
+                // Get keysym - we need to check keycode
+                // Escape is typically keycode 9, Enter is typically keycode 36
+                // But we'll handle this in keyPressEvent instead
+                // Just eat all key events here
+            }
+
+            // Return true to eat the event
+            return true;
+        }
+    }
+
+    return QWidget::nativeEvent(eventType, message, result);
+}
+#endif
 
 void ScreenshotSelector::paintEvent(QPaintEvent* event)
 {
@@ -147,21 +189,34 @@ void ScreenshotSelector::paintEvent(QPaintEvent* event)
 
 void ScreenshotSelector::keyPressEvent(QKeyEvent* event)
 {
+    // Eat ALL key events to prevent them from reaching other apps
+    event->accept();
+
     switch (event->key()) {
     case Qt::Key_Return:
     case Qt::Key_Enter:
         // Accept whole screen
         emit wholeScreenRequested();
-        close();
+        // Hide immediately, then delay close
+        hide();
+        QTimer::singleShot(100, this, &QWidget::close);
         break;
     case Qt::Key_Escape:
         // Cancel
         emit cancelled();
-        close();
+        // Hide immediately, then delay close
+        hide();
+        QTimer::singleShot(100, this, &QWidget::close);
         break;
     default:
-        QWidget::keyPressEvent(event);
+        break;
     }
+}
+
+void ScreenshotSelector::keyReleaseEvent(QKeyEvent* event)
+{
+    // Also eat all key release events
+    event->accept();
 }
 
 void ScreenshotSelector::mousePressEvent(QMouseEvent* event)

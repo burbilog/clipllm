@@ -27,6 +27,7 @@ Cross-platform LLM clipboard utility - Process your clipboard content with AI pr
 - **Prompt Groups** - Organize prompts into hierarchical groups
 - **Provider Profiles** - Pre-configured templates with per-profile settings and cascade fallback
 - **Prompt Hotkeys** - Assign individual global hotkeys to specific prompts
+- **Screenshot Hotkeys** - Capture screen regions and process with AI via hotkey
 - **Searchable Menu** - Quick prompt search with inline keyboard navigation
 - **Debug Logging** - Built-in debug logging with file output and multiple levels
 - **History Favorites** - Mark important requests as favorites in history

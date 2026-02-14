@@ -191,7 +191,7 @@ The `App` class (inherits `QApplication`) is the central controller that:
 
 ### Data Models (src/models/)
 
-- **Prompt**: `id`, `name`, `systemPrompt`, `userPromptTemplate`, `contentType` (Text/Image/Any), `model`, `icon`, `temperature`, `maxTokens`, `enabled`, `priority`, `overrideTemperature`, `metadata`
+- **Prompt**: `id`, `name`, `systemPrompt`, `userPromptTemplate`, `contentType` (Text/Image/Any), `model`, `icon`, `temperature`, `maxTokens`, `enabled`, `priority`, `overrideTemperature`, `metadata`, `group`, `providerId`, `overrideProvider`, `hotkey`, `screenshotHotkey`, `nextPromptId`, `autoContinue`
 - **LLMConfig**: `provider` (enum), `apiKey`, `model`, `apiUrl`, `temperature`, `maxTokens`, `topP`, `stream`, `proxyUrl`, `timeoutSeconds`
 - **HistoryEntry**: `id`, `promptId`, `timestamp`, `contentType`, input/output text, base64 images, token counts, duration, favorite, tags
 
@@ -206,7 +206,9 @@ The `App` class (inherits `QApplication`) is the central controller that:
 - **PromptMenu**: Searchable menu with inline search and keyboard navigation
 - **PromptPreviewDialog**: Preview prompt with clipboard content before execution
 - **PromptConflictDialog**: Resolve conflicts when importing prompts
+- **PromptConfirmDialog**: Confirmation dialog for prompt execution
 - **ImageViewDialog**: View clipboard images
+- **ScreenshotSelector**: Fullscreen overlay for selecting screen area to capture
 - **GroupsDialog**: Manage prompt group hierarchy
 
 ## Debug Logging

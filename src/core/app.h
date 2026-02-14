@@ -131,7 +131,6 @@ private slots:
                                       const QString& userPrompt, const QByteArray& imageData,
                                       double temperature);
     void onChainContinueRequested(const QString& nextPromptId, const QString& output);
-    void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onAboutToQuit();
 
 private:

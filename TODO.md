@@ -52,5 +52,5 @@
   - onPromptSelected() сокращён, выделен resolveProviderProfile()
   - onRenameIdClicked() оставлен (81 строка — умеренно)
 
-- [ ] **N17: Мёртвый код**
-  - app.cpp:onTrayIconActivated() с Q_UNUSED(reason)
+- [x] **N17: Мёртвый код**
+  - Удалён пустой слот onTrayIconActivated() — TrayIcon уже обрабатывает всё сам

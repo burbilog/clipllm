@@ -233,8 +233,6 @@ bool App::initialize(bool startMinimized)
     m_trayIcon = std::make_unique<UI::TrayIcon>(this);
 
     // Connect signals
-    connect(m_trayIcon.get(), &UI::TrayIcon::activated,
-            this, &App::onTrayIconActivated);
     connect(m_trayIcon.get(), &UI::TrayIcon::showSettingsRequested,
             this, &App::showSettings);
     connect(m_trayIcon.get(), &UI::TrayIcon::showPromptMenuRequested,
@@ -995,12 +993,6 @@ void App::onChainContinueRequested(const QString& nextPromptId, const QString& o
 
     // Execute the next prompt with the current output as input
     onPromptSelected(nextPromptId, output, m_currentChainContext);
-}
-
-void App::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
-{
-    Q_UNUSED(reason)
-    // Could show settings or history on double click
 }
 
 Models::LLMConfig App::profileToConfig(const Models::ProviderProfile& profile) const

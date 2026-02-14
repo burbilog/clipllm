@@ -45,6 +45,7 @@ QJsonObject Prompt::toJson() const
     obj[QStringLiteral("group")] = m_group;
     obj[QStringLiteral("override_provider")] = m_overrideProvider;
     obj[QStringLiteral("hotkey")] = m_hotkey;
+    obj[QStringLiteral("screenshot_hotkey")] = m_screenshotHotkey;
     obj[QStringLiteral("priority")] = m_priority;
     if (!m_model.isEmpty()) {
         obj[QStringLiteral("model")] = m_model;
@@ -90,6 +91,7 @@ bool Prompt::fromJson(const QJsonObject& json)
     m_providerId = json.value(QStringLiteral("provider_id")).toString(QString());
     m_overrideProvider = json.value(QStringLiteral("override_provider")).toBool(false);
     m_hotkey = json.value(QStringLiteral("hotkey")).toString(QString());
+    m_screenshotHotkey = json.value(QStringLiteral("screenshot_hotkey")).toString(QString());
     m_nextPromptId = json.value(QStringLiteral("next_prompt_id")).toString(QString());
     m_autoContinue = json.value(QStringLiteral("auto_continue")).toBool(false);
 

@@ -73,6 +73,7 @@ set(SOURCES
     src/core/historymanager.cpp
     src/core/groupsmanager.cpp
     src/core/debuglogger.cpp
+    src/core/screenshotmanager.cpp
     src/ui/trayicon.cpp
     src/ui/promptmenu.cpp
     src/ui/settingsdialog.cpp
@@ -84,6 +85,7 @@ set(SOURCES
     src/ui/promptconfirmdialog.cpp
     src/ui/imageviewdialog.cpp
     src/ui/groupsdialog.cpp
+    src/ui/screenshotselector.cpp
     src/models/prompt.cpp
     src/models/llmconfig.cpp
     src/models/providerprofile.cpp
@@ -102,6 +104,7 @@ set(HEADERS
     src/core/historymanager.h
     src/core/groupsmanager.h
     src/core/debuglogger.h
+    src/core/screenshotmanager.h
     src/ui/trayicon.h
     src/ui/promptmenu.h
     src/ui/settingsdialog.h
@@ -113,6 +116,7 @@ set(HEADERS
     src/ui/promptconfirmdialog.h
     src/ui/imageviewdialog.h
     src/ui/groupsdialog.h
+    src/ui/screenshotselector.h
     src/models/prompt.h
     src/models/llmconfig.h
     src/models/providerprofile.h

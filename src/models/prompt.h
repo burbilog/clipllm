@@ -67,6 +67,7 @@ public:
     QString providerId() const { return m_providerId; }
     bool overrideProvider() const { return m_overrideProvider; }
     QString hotkey() const { return m_hotkey; }
+    QString screenshotHotkey() const { return m_screenshotHotkey; }
     QString nextPromptId() const { return m_nextPromptId; }
     bool autoContinue() const { return m_autoContinue; }
 
@@ -88,6 +89,7 @@ public:
     void setProviderId(const QString& providerId) { m_providerId = providerId; }
     void setOverrideProvider(bool override) { m_overrideProvider = override; }
     void setHotkey(const QString& hotkey) { m_hotkey = hotkey; }
+    void setScreenshotHotkey(const QString& hotkey) { m_screenshotHotkey = hotkey; }
     void setNextPromptId(const QString& id) { m_nextPromptId = id; }
     void setAutoContinue(bool enabled) { m_autoContinue = enabled; }
 
@@ -128,6 +130,7 @@ private:
     QString m_providerId;
     bool m_overrideProvider = false;
     QString m_hotkey;
+    QString m_screenshotHotkey;
     QString m_nextPromptId;
     bool m_autoContinue = false;
 };

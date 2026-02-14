@@ -24,12 +24,14 @@
 #include "historymanager.h"
 #include "groupsmanager.h"
 #include "providerkeystore.h"
+#include "screenshotmanager.h"
 #include "models/providerprofile.h"
 #include "ui/trayicon.h"
 #include "ui/settingsdialog.h"
 #include "ui/historydialog.h"
 #include "ui/resultdialog.h"
 #include "ui/promptmenu.h"
+#include "ui/screenshotselector.h"
 #include "qhotkey.h"
 #include <QStandardPaths>
 #include <QDir>
@@ -41,6 +43,8 @@
 #include <QRandomGenerator>
 #include <QLibraryInfo>
 #include <QCursor>
+#include <QClipboard>
+#include <QPixmap>
 
 #include "debuglogger.h"
 
@@ -75,6 +79,7 @@ Core::KeychainStore* App::keychainStore() const { return m_keychainStore.get(); 
 Core::HistoryManager* App::historyManager() const { return m_historyManager.get(); }
 Core::GroupsManager* App::groupsManager() const { return m_groupsManager.get(); }
 Core::ProviderKeyStore* App::providerKeyStore() const { return m_providerKeyStore.get(); }
+Core::ScreenshotManager* App::screenshotManager() const { return m_screenshotManager.get(); }
 Core::DebugLogger* App::debugLogger() const { return m_debugLogger; }
 
 App::App(int &argc, char **argv)
@@ -168,6 +173,7 @@ bool App::initialize(bool startMinimized)
     m_groupsManager = std::make_unique<Core::GroupsManager>();
     m_clipboardManager = std::make_unique<ClipboardManager>();
     m_llmClient = std::make_unique<LLMClient>();
+    m_screenshotManager = std::make_unique<Core::ScreenshotManager>();
 
     // Initialize history manager
     if (!m_historyManager->initialize()) {
@@ -426,62 +432,120 @@ void App::registerPromptHotkeys()
     QKeySequence globalHotkeySeq = QKeySequence::fromString(m_configManager->hotkey());
     LOG_DEBUG(QStringLiteral("Global hotkey: %1").arg(m_configManager->hotkey()));
 
+    // Collect all used hotkeys for conflict detection
+    QSet<QKeySequence> usedSequences;
+
+    // First pass: collect all clipboard hotkeys
     for (const auto& prompt : prompts) {
         QString hotkeyStr = prompt.hotkey();
+        if (!hotkeyStr.isEmpty()) {
+            usedSequences.insert(QKeySequence::fromString(hotkeyStr));
+        }
+    }
+
+    for (const auto& prompt : prompts) {
+        // === Register clipboard hotkey (existing behavior) ===
+        QString hotkeyStr = prompt.hotkey();
         LOG_DEBUG(QStringLiteral("Prompt %1 hotkey: %2").arg(prompt.id()).arg(hotkeyStr));
-        if (hotkeyStr.isEmpty()) {
-            continue;
-        }
 
-        QKeySequence seq = QKeySequence::fromString(hotkeyStr);
-        LOG_DEBUG(QStringLiteral("  KeySequence: %1").arg(seq.toString()));
+        if (!hotkeyStr.isEmpty()) {
+            QKeySequence seq = QKeySequence::fromString(hotkeyStr);
+            LOG_DEBUG(QStringLiteral("  KeySequence: %1").arg(seq.toString()));
 
-        // Skip if conflicts with global hotkey
-        if (!globalHotkeySeq.isEmpty() && seq == globalHotkeySeq) {
-            LOG_WARNING(QStringLiteral("Prompt hotkey %1 conflicts with global hotkey, skipping").arg(hotkeyStr));
-            continue;
-        }
+            // Skip if conflicts with global hotkey
+            if (!globalHotkeySeq.isEmpty() && seq == globalHotkeySeq) {
+                LOG_WARNING(QStringLiteral("Prompt hotkey %1 conflicts with global hotkey, skipping").arg(hotkeyStr));
+            } else {
+                // Skip if conflicts with another prompt
+                bool conflict = false;
+                for (const auto& other : prompts) {
+                    if (other.id() != prompt.id() && QKeySequence::fromString(other.hotkey()) == seq) {
+                        LOG_WARNING(QStringLiteral("Prompt hotkey %1 conflicts with prompt %2, skipping").arg(hotkeyStr).arg(other.name()));
+                        conflict = true;
+                        break;
+                    }
+                }
 
-        // Skip if conflicts with another prompt
-        bool conflict = false;
-        for (const auto& other : prompts) {
-            if (other.id() != prompt.id() && QKeySequence::fromString(other.hotkey()) == seq) {
-                LOG_WARNING(QStringLiteral("Prompt hotkey %1 conflicts with prompt %2, skipping").arg(hotkeyStr).arg(other.name()));
-                conflict = true;
-                break;
+                if (!conflict) {
+                    // Create and register hotkey
+                    QHotkey* hotkey = new QHotkey(seq, true, this);
+                    LOG_DEBUG(QStringLiteral("  QHotkey created, registered: %1").arg(hotkey->isRegistered()));
+                    if (!hotkey->isRegistered()) {
+                        LOG_WARNING(QStringLiteral("Failed to register prompt hotkey: %1").arg(hotkeyStr));
+                        delete hotkey;
+                    } else {
+                        m_promptHotkeys[prompt.id()] = hotkey;
+
+                        // Connect with direct lambda for debugging
+                        connect(hotkey, &QHotkey::activated, this, [this, id = prompt.id(), name = prompt.name()]() {
+                            LOG_DEBUG(QStringLiteral("LAMBDA: Hotkey activated for prompt: %1 id: %2").arg(name).arg(id));
+                            onPromptHotkeyTriggered(id);
+                        });
+                        LOG_DEBUG(QStringLiteral("Registered prompt hotkey: %1 for prompt: %2").arg(hotkeyStr).arg(prompt.name()));
+                    }
+                }
             }
         }
-        if (conflict) {
-            continue;
+
+        // === Register screenshot hotkey (new) ===
+        QString screenshotHotkeyStr = prompt.screenshotHotkey();
+        if (!screenshotHotkeyStr.isEmpty()) {
+            LOG_DEBUG(QStringLiteral("Prompt %1 screenshot hotkey: %2").arg(prompt.id()).arg(screenshotHotkeyStr));
+            QKeySequence screenshotSeq = QKeySequence::fromString(screenshotHotkeyStr);
+
+            // Check conflict with clipboard hotkey of same prompt
+            if (!hotkeyStr.isEmpty() && screenshotSeq == QKeySequence::fromString(hotkeyStr)) {
+                LOG_WARNING(QStringLiteral("Screenshot hotkey conflicts with clipboard hotkey for prompt %1").arg(prompt.name()));
+                continue;
+            }
+
+            // Check conflict with global hotkey
+            if (!globalHotkeySeq.isEmpty() && screenshotSeq == globalHotkeySeq) {
+                LOG_WARNING(QStringLiteral("Screenshot hotkey conflicts with global hotkey for prompt %1").arg(prompt.name()));
+                continue;
+            }
+
+            // Check conflict with other hotkeys (clipboard or screenshot)
+            if (usedSequences.contains(screenshotSeq)) {
+                LOG_WARNING(QStringLiteral("Screenshot hotkey conflicts with another hotkey for prompt %1").arg(prompt.name()));
+                continue;
+            }
+
+            // Create and register screenshot hotkey
+            QHotkey* screenshotHotkey = new QHotkey(screenshotSeq, true, this);
+            if (!screenshotHotkey->isRegistered()) {
+                LOG_WARNING(QStringLiteral("Failed to register screenshot hotkey: %1").arg(screenshotHotkeyStr));
+                delete screenshotHotkey;
+                continue;
+            }
+
+            m_screenshotHotkeys[prompt.id()] = screenshotHotkey;
+            usedSequences.insert(screenshotSeq);
+
+            connect(screenshotHotkey, &QHotkey::activated, this, [this, id = prompt.id()]() {
+                LOG_DEBUG(QStringLiteral("Screenshot hotkey activated for prompt: %1").arg(id));
+                onScreenshotHotkeyTriggered(id);
+            });
+            LOG_DEBUG(QStringLiteral("Registered screenshot hotkey: %1 for prompt: %2").arg(screenshotHotkeyStr).arg(prompt.name()));
         }
-
-        // Create and register hotkey
-        QHotkey* hotkey = new QHotkey(seq, true, this);
-        LOG_DEBUG(QStringLiteral("  QHotkey created, registered: %1").arg(hotkey->isRegistered()));
-        if (!hotkey->isRegistered()) {
-            LOG_WARNING(QStringLiteral("Failed to register prompt hotkey: %1").arg(hotkeyStr));
-            delete hotkey;
-            continue;
-        }
-
-        m_promptHotkeys[prompt.id()] = hotkey;
-
-        // Connect with direct lambda for debugging
-        connect(hotkey, &QHotkey::activated, this, [this, id = prompt.id(), name = prompt.name()]() {
-            LOG_DEBUG(QStringLiteral("LAMBDA: Hotkey activated for prompt: %1 id: %2").arg(name).arg(id));
-            onPromptHotkeyTriggered(id);
-        });
-        LOG_DEBUG(QStringLiteral("Registered prompt hotkey: %1 for prompt: %2").arg(hotkeyStr).arg(prompt.name()));
     }
-    LOG_DEBUG(QStringLiteral("=== registerPromptHotkeys() done, registered %1 hotkeys ===").arg(m_promptHotkeys.size()));
+    LOG_DEBUG(QStringLiteral("=== registerPromptHotkeys() done, registered %1 clipboard hotkeys, %2 screenshot hotkeys ===")
+              .arg(m_promptHotkeys.size()).arg(m_screenshotHotkeys.size()));
 }
 
 void App::unregisterPromptHotkeys()
 {
+    // Delete clipboard hotkeys
     for (auto* hk : m_promptHotkeys) {
         delete hk;
     }
     m_promptHotkeys.clear();
+
+    // Delete screenshot hotkeys
+    for (auto* hk : m_screenshotHotkeys) {
+        delete hk;
+    }
+    m_screenshotHotkeys.clear();
 }
 
 void App::onPromptHotkeyTriggered(const QString& promptId)
@@ -489,6 +553,87 @@ void App::onPromptHotkeyTriggered(const QString& promptId)
     LOG_DEBUG(QStringLiteral("Prompt hotkey triggered for: %1").arg(promptId));
     // Directly execute - clipboard check is in onPromptSelected()
     onPromptSelected(promptId);
+}
+
+void App::onScreenshotHotkeyTriggered(const QString& promptId)
+{
+    LOG_DEBUG(QStringLiteral("Screenshot hotkey triggered for: %1").arg(promptId));
+
+    // Verify prompt exists
+    auto promptOpt = m_promptManager->getPrompt(promptId);
+    if (!promptOpt.has_value()) {
+        LOG_WARNING(QStringLiteral("Invalid prompt ID for screenshot: %1").arg(promptId));
+        return;
+    }
+
+    // Capture screen
+    QImage screenshot = m_screenshotManager->captureScreen();
+    if (screenshot.isNull()) {
+        showTrayMessage(tr("Screenshot Failed"), tr("Could not capture screen"));
+        return;
+    }
+
+    // Store prompt ID for later execution
+    m_pendingPromptId = promptId;
+
+    // Show screenshot selector
+    auto* selector = new UI::ScreenshotSelector(screenshot);
+    connect(selector, &UI::ScreenshotSelector::areaSelected,
+            this, &App::onScreenshotAreaSelected);
+    connect(selector, &UI::ScreenshotSelector::wholeScreenRequested,
+            this, &App::onScreenshotWholeScreenRequested);
+    connect(selector, &UI::ScreenshotSelector::cancelled,
+            this, &App::onScreenshotCancelled);
+    selector->show();
+}
+
+void App::onScreenshotAreaSelected(const QRect& rect)
+{
+    auto* selector = qobject_cast<UI::ScreenshotSelector*>(sender());
+    if (!selector) return;
+
+    QImage fullScreenshot = selector->screenshot();
+    m_pendingScreenshot = fullScreenshot.copy(rect);
+    selector->deleteLater();
+
+    // Put cropped image in clipboard and execute prompt
+    QApplication::clipboard()->setPixmap(QPixmap::fromImage(m_pendingScreenshot));
+
+    // Execute prompt
+    onPromptSelected(m_pendingPromptId);
+
+    // Clear state
+    m_pendingPromptId.clear();
+    m_pendingScreenshot = QImage();
+}
+
+void App::onScreenshotWholeScreenRequested()
+{
+    auto* selector = qobject_cast<UI::ScreenshotSelector*>(sender());
+    if (!selector) return;
+
+    m_pendingScreenshot = selector->screenshot();
+    selector->deleteLater();
+
+    // Put image in clipboard and execute prompt
+    QApplication::clipboard()->setPixmap(QPixmap::fromImage(m_pendingScreenshot));
+
+    // Execute prompt
+    onPromptSelected(m_pendingPromptId);
+
+    // Clear state
+    m_pendingPromptId.clear();
+    m_pendingScreenshot = QImage();
+}
+
+void App::onScreenshotCancelled()
+{
+    auto* selector = qobject_cast<UI::ScreenshotSelector*>(sender());
+    if (selector) selector->deleteLater();
+
+    m_pendingPromptId.clear();
+    m_pendingScreenshot = QImage();
+    LOG_DEBUG(QStringLiteral("Screenshot cancelled"));
 }
 
 void App::showSettings()

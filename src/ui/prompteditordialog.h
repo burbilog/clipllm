@@ -71,6 +71,8 @@ private slots:
     void onTemperatureUseDefaultChanged(int state);
     void onHotkeyChanged(const QKeySequence& sequence);
     void onHotkeyRecordingFinished();
+    void onScreenshotHotkeyChanged(const QKeySequence& sequence);
+    void onScreenshotHotkeyRecordingFinished();
     void validateInput();
     void onNextPromptChanged(int index);
 
@@ -87,6 +89,7 @@ private:
     void onModelsFetchFinished(QNetworkReply* reply);
     QString generateUniqueId() const;
     bool checkHotkeyConflict(const QKeySequence& seq) const;
+    bool checkScreenshotHotkeyConflict(const QKeySequence& seq) const;
     void loadNextPromptCombo(const QString& currentId = QString());
     bool detectChainCycle(const QString& startId, const QString& targetId) const;
     void updateChainWarning();
@@ -123,6 +126,7 @@ private:
     QCheckBox* m_enabledCheck = nullptr;
     QSpinBox* m_prioritySpin = nullptr;
     class HotkeyEdit* m_hotkeyEdit = nullptr;
+    class HotkeyEdit* m_screenshotHotkeyEdit = nullptr;
 
     // Chain fields
     QComboBox* m_nextPromptCombo = nullptr;
@@ -131,6 +135,7 @@ private:
 
     // Recording state
     bool m_isRecordingHotkey = false;
+    bool m_isRecordingScreenshotHotkey = false;
     bool m_wasRenamed = false;
 
     // Network

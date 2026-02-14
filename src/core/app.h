@@ -48,6 +48,7 @@ class HistoryManager;
 class GroupsManager;
 class ProviderKeyStore;
 class DebugLogger;
+class ScreenshotManager;
 }
 
 namespace UI {
@@ -56,6 +57,7 @@ class SettingsDialog;
 class HistoryDialog;
 class ResultDialog;
 class PromptMenu;
+class ScreenshotSelector;
 }
 
 // Chain execution context
@@ -89,6 +91,7 @@ public:
     Core::GroupsManager* groupsManager() const;
     Core::ProviderKeyStore* providerKeyStore() const;
     Core::DebugLogger* debugLogger() const;
+    Core::ScreenshotManager* screenshotManager() const;
 
     // Language management
     void setLanguage(const QString& languageCode);
@@ -116,6 +119,11 @@ private slots:
     void onPromptSelected(const QString& promptId,
                           const QString& overrideInput = QString(),
                           const ChainContext& chainContext = ChainContext());
+    // Screenshot hotkey handlers
+    void onScreenshotHotkeyTriggered(const QString& promptId);
+    void onScreenshotAreaSelected(const QRect& rect);
+    void onScreenshotWholeScreenRequested();
+    void onScreenshotCancelled();
     void onResultDialogRetryRequested(const QString& promptId, const QString& providerId,
                                       const QString& model, const QString& systemPrompt,
                                       const QString& userPrompt, const QByteArray& imageData,
@@ -144,6 +152,7 @@ private:
     std::unique_ptr<Core::HistoryManager> m_historyManager;
     std::unique_ptr<Core::GroupsManager> m_groupsManager;
     std::unique_ptr<Core::ProviderKeyStore> m_providerKeyStore;
+    std::unique_ptr<Core::ScreenshotManager> m_screenshotManager;
     // Raw pointer for singleton (DebugLogger manages its own lifetime)
     Core::DebugLogger* m_debugLogger = nullptr;
 
@@ -165,6 +174,11 @@ private:
 
     // Prompt hotkeys (prompt ID -> QHotkey)
     QMap<QString, QHotkey*> m_promptHotkeys;
+    QMap<QString, QHotkey*> m_screenshotHotkeys;
+
+    // Screenshot capture state
+    QString m_pendingPromptId;
+    QImage m_pendingScreenshot;
 
     // Chain execution context
     ChainContext m_currentChainContext;

@@ -301,7 +301,24 @@ void PromptEditorDialog::setupSettingsTab()
     });
     connect(m_hotkeyEdit, &HotkeyEdit::recordingFinished,
             this, &PromptEditorDialog::onHotkeyRecordingFinished);
-    basicLayout->addRow(tr("Hotkey:"), m_hotkeyEdit);
+    basicLayout->addRow(tr("Hotkey (Clipboard):"), m_hotkeyEdit);
+
+    // Screenshot hotkey
+    m_screenshotHotkeyEdit = new HotkeyEdit();
+    m_screenshotHotkeyEdit->setPlaceholderText(tr("None"));
+    m_screenshotHotkeyEdit->setToolTip(tr("Optional global hotkey to capture screenshot and execute this prompt"));
+    connect(m_screenshotHotkeyEdit, &HotkeyEdit::keySequenceChanged, this, &PromptEditorDialog::onScreenshotHotkeyChanged);
+    connect(m_screenshotHotkeyEdit, &HotkeyEdit::recordingStarted, this, [this]() {
+        // Unregister prompt hotkeys while recording to prevent accidental triggering
+        m_isRecordingScreenshotHotkey = true;
+        App* app = qobject_cast<App*>(QApplication::instance());
+        if (app) {
+            app->unregisterPromptHotkeys();
+        }
+    });
+    connect(m_screenshotHotkeyEdit, &HotkeyEdit::recordingFinished,
+            this, &PromptEditorDialog::onScreenshotHotkeyRecordingFinished);
+    basicLayout->addRow(tr("Hotkey (Screenshot):"), m_screenshotHotkeyEdit);
 
     layout->addWidget(basicGroup);
 
@@ -466,6 +483,7 @@ void PromptEditorDialog::loadPrompt(const Models::Prompt& prompt)
     m_enabledCheck->setChecked(prompt.enabled());
     m_prioritySpin->setValue(prompt.priority());
     m_hotkeyEdit->setHotkeyText(prompt.hotkey());
+    m_screenshotHotkeyEdit->setHotkeyText(prompt.screenshotHotkey());
 
     // Chain settings
     QString nextPromptId = prompt.nextPromptId();
@@ -528,6 +546,7 @@ Models::Prompt PromptEditorDialog::buildPrompt() const
     prompt.setEnabled(m_enabledCheck->isChecked());
     prompt.setPriority(m_prioritySpin->value());
     prompt.setHotkey(m_hotkeyEdit->hotkeyText());
+    prompt.setScreenshotHotkey(m_screenshotHotkeyEdit->hotkeyText());
 
     // Chain settings
     QString nextPromptId = m_nextPromptCombo->currentData().toString();
@@ -1157,7 +1176,16 @@ bool PromptEditorDialog::checkHotkeyConflict(const QKeySequence& seq) const
         return true;
     }
 
-    // Check conflict with other prompts
+    // Check conflict with screenshot hotkey of same prompt
+    QString screenshotHotkey = m_screenshotHotkeyEdit->hotkeyText();
+    if (!screenshotHotkey.isEmpty()) {
+        QKeySequence screenshotSeq = QKeySequence::fromString(screenshotHotkey);
+        if (seq == screenshotSeq) {
+            return true;
+        }
+    }
+
+    // Check conflict with other prompts (both clipboard and screenshot hotkeys)
     QVector<Models::Prompt> allPrompts = m_promptManager->getAllPrompts();
     for (const auto& prompt : allPrompts) {
         // Skip current prompt when editing
@@ -1165,9 +1193,120 @@ bool PromptEditorDialog::checkHotkeyConflict(const QKeySequence& seq) const
             continue;
         }
 
+        // Check clipboard hotkey
         QString promptHotkey = prompt.hotkey();
         if (!promptHotkey.isEmpty()) {
             QKeySequence promptSeq = QKeySequence::fromString(promptHotkey);
+            if (seq == promptSeq) {
+                return true;
+            }
+        }
+
+        // Check screenshot hotkey
+        QString promptScreenshotHotkey = prompt.screenshotHotkey();
+        if (!promptScreenshotHotkey.isEmpty()) {
+            QKeySequence promptSeq = QKeySequence::fromString(promptScreenshotHotkey);
+            if (seq == promptSeq) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+void PromptEditorDialog::onScreenshotHotkeyChanged(const QKeySequence& sequence)
+{
+    // Ignore changes during recording - we'll handle it in recordingFinished
+    if (m_isRecordingScreenshotHotkey) {
+        return;
+    }
+    Q_UNUSED(sequence)
+}
+
+void PromptEditorDialog::onScreenshotHotkeyRecordingFinished()
+{
+    m_isRecordingScreenshotHotkey = false;
+
+    // Re-register prompt hotkeys first
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (app) {
+        app->registerPromptHotkeys();
+    }
+
+    QKeySequence seq = m_screenshotHotkeyEdit->keySequence();
+
+    if (seq.isEmpty()) {
+        return;
+    }
+
+    // Check for conflict with clipboard hotkey of same prompt
+    QKeySequence clipboardSeq = m_hotkeyEdit->keySequence();
+    if (!clipboardSeq.isEmpty() && seq == clipboardSeq) {
+        m_screenshotHotkeyEdit->blockSignals(true);
+        m_screenshotHotkeyEdit->setHotkeyText(QString());
+        m_screenshotHotkeyEdit->blockSignals(false);
+
+        QMessageBox::warning(this,
+            tr("Hotkey Conflict"),
+            tr("Screenshot hotkey cannot be the same as clipboard hotkey.\n\nPlease choose a different hotkey."));
+        return;
+    }
+
+    // Check for conflicts with other hotkeys
+    if (checkScreenshotHotkeyConflict(seq)) {
+        m_screenshotHotkeyEdit->blockSignals(true);
+        m_screenshotHotkeyEdit->setHotkeyText(QString());
+        m_screenshotHotkeyEdit->blockSignals(false);
+
+        QMessageBox::warning(this,
+            tr("Hotkey Conflict"),
+            tr("This hotkey is already in use by another prompt or the global hotkey.\n\nPlease choose a different hotkey."));
+    }
+}
+
+bool PromptEditorDialog::checkScreenshotHotkeyConflict(const QKeySequence& seq) const
+{
+    if (!m_configManager || !m_promptManager) {
+        return false;
+    }
+
+    // Check conflict with global hotkey
+    QKeySequence globalHotkeySeq = QKeySequence::fromString(m_configManager->hotkey());
+    if (!globalHotkeySeq.isEmpty() && seq == globalHotkeySeq) {
+        return true;
+    }
+
+    // Check conflict with clipboard hotkey of same prompt
+    QString clipboardHotkey = m_hotkeyEdit->hotkeyText();
+    if (!clipboardHotkey.isEmpty()) {
+        QKeySequence clipboardSeq = QKeySequence::fromString(clipboardHotkey);
+        if (seq == clipboardSeq) {
+            return true;
+        }
+    }
+
+    // Check conflict with other prompts (both clipboard and screenshot hotkeys)
+    QVector<Models::Prompt> allPrompts = m_promptManager->getAllPrompts();
+    for (const auto& prompt : allPrompts) {
+        // Skip current prompt when editing
+        if (m_editMode && prompt.id() == m_originalPrompt.id()) {
+            continue;
+        }
+
+        // Check clipboard hotkey
+        QString promptHotkey = prompt.hotkey();
+        if (!promptHotkey.isEmpty()) {
+            QKeySequence promptSeq = QKeySequence::fromString(promptHotkey);
+            if (seq == promptSeq) {
+                return true;
+            }
+        }
+
+        // Check screenshot hotkey
+        QString promptScreenshotHotkey = prompt.screenshotHotkey();
+        if (!promptScreenshotHotkey.isEmpty()) {
+            QKeySequence promptSeq = QKeySequence::fromString(promptScreenshotHotkey);
             if (seq == promptSeq) {
                 return true;
             }

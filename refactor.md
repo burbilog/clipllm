@@ -1,17 +1,18 @@
 🔴 Критические проблемы (исправить немедленно)
 
- 2. [ ] Гонки данных (Race Conditions)
+ 2. [x] Гонки данных (Race Conditions) — НЕВАЛИДНО
 
- DebugLogger (debuglogger.cpp:44-55, 123-134):
- - m_logStream доступен без мьютекса в конструкторе/деструкторе
+   Замечание ошибочно. Приложение является однопоточным Qt GUI-приложением
+   (нет QThread, moveToThread, QtConcurrent во всём проекте).
 
- HistoryManager (historymanager.cpp:133-139):
- - m_dirty и m_entries без синхронизации при вызове из разных потоков
+   DebugLogger: конструктор/деструктор singleton защищены самой природой
+   lifecycle — никто не может вызвать writeLog() во время выполнения
+   конструктора, а деструктор выполняется после завершения всех потоков.
 
- LLMClient (llmclient.cpp:539-545):
- - m_state изменяется из network callbacks без синхронизации
+   HistoryManager и LLMClient: все операции происходят в GUI-потоке.
+   Qt signal/slot механизм гарантирует доставку в правильный поток.
 
- Рекомендация: Добавить QMutex для защиты всех разделяемых данных.
+   Рекомендация отклонена: не требуется.
 
  3. [ ] Отсутствие поддержки Wayland
 
@@ -27,30 +28,52 @@
  ---
  🟠 Высокий приоритет
 
- 4. [ ] Проблемы с памятью в UI
+ 4. [x] Проблемы с памятью в UI — НЕВАЛИДНО
 
- ScreenshotSelector (app.cpp:580-587):
- auto* selector = new UI::ScreenshotSelector(screenshot);
- selector->show();
- Raw new без явного пути удаления. Memory leak на error paths.
+   Замечание ошибочно. В конструкторе ScreenshotSelector (screenshotselector.cpp:41)
+   УЖЕ установлен атрибут:
 
- Рекомендация: Использовать std::unique_ptr или setAttribute(Qt::WA_DeleteOnClose).
+     setAttribute(Qt::WA_DeleteOnClose);
 
- 5. [ ] Неверный диапазон top_p
+   Все пути закрытия обрабатываются корректно:
+   - Escape/Enter: emit signal + close() → WA_DeleteOnClose
+   - Right-click cancel: emit cancelled() + close() → WA_DeleteOnClose
+   - Mouse release: emit areaSelected() + close() → WA_DeleteOnClose
+   - Alt+F4/window manager: close() → WA_DeleteOnClose
 
- Файл: llmconfig.h:104
+   Дополнительно слоты App вызывают deleteLater() для гарантии.
 
- int m_topP = 100; // Stored as 0-100
+   Рекомендация отклонена: уже реализовано.
 
- OpenAI API ожидает top_p в диапазоне 0.0-1.0. Значение 100 — невалидное.
+ 5. [x] Неверный диапазон top_p — ИСПРАВЛЕНО
 
- Рекомендация: Изменить на double и диапазон 0.0-1.0.
+   Поле m_topP существовало в LLMConfig, но:
+   - НЕ отправлялось в API (LLMRequest::toJson() не включал top_p)
+   - НЕ использовалось в UI (нет элементов для настройки)
+   - Было мёртвым кодом
 
- 6. [ ] Отсутствие валидации JSON
+   Исправление: поле полностью удалено из llmconfig.h и llmconfig.cpp.
 
- Файл: llmclient.cpp:407-438
+ 6. [x] Отсутствие валидации JSON — НЕВАЛИДНО
 
- Нет проверки структуры JSON-ответа от API. Предполагается, что choices существует и не пуст. Может привести к крашу при malformed response.
+   Утверждение "может привести к крашу" неверно. Код безопасен:
+
+   Non-streaming (onFinished):
+   - Проверяется QJsonParseError::NoError
+   - Проверяется doc.isObject()
+   - Проверяется наличие "error" поля
+   - Проверяется !choices.isEmpty()
+
+   Streaming (processOpenRouterChunk):
+   - Проверяется parse error с LOG_WARNING и return
+   - Проверяется doc.isObject()
+   - Проверяется choices.isEmpty()
+
+   Qt JSON API (toObject, toArray, toString, toInt) возвращает
+   безопасные default значения, а не вызывает краш при обращении
+   к несуществующим полям.
+
+   Рекомендация отклонена: валидация достаточна.
 
  8. [ ] Бог-объект App
 

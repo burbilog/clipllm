@@ -75,38 +75,42 @@
 
    Рекомендация отклонена: валидация достаточна.
 
- 8. [ ] Бог-объект App
+ 8. [x] Бог-объект App — НЕВАЛИДНО
 
- Файл: app.cpp — 1095 строк
+   App выполняет валидную роль Composition Root + Application Controller:
+   - Наследует QApplication — стандартный паттерн для Qt
+   - Владеет уже выделенными компонентами (9 core, 4 UI)
+   - 1095 строк — умеренно для главного класса приложения
 
- Класс App управляет: lifecycle, hotkeys, settings, dialogs, chains, screenshots, translations. 20+ приватных методов.
+   Выделение HotkeyManager/ChainExecutor/ScreenshotController:
+   - Усложнит код (потребует expose приватных членов)
+   - Не улучшит архитектуру
+   - Риск регрессий
 
- Рекомендация: Выделить:
- - HotkeyManager
- - ChainExecutor
- - ScreenshotController
+   Рекомендация отклонена: текущая архитектура валидна.
 
  ---
  🟡 Средний приоритет
 
- 9. [ ] Масштабное дублирование кода в UI
+ 9. [x] Масштабное дублирование кода в UI — ЧАСТИЧНО ИСПРАВЛЕНО
 
- Паттерн сохранения геометрии окна — дублируется 8+ раз:
- - resultdialog.cpp:561-569
- - historydialog.cpp:646-659
- - prompteditordialog.cpp:961-967
- - и т.д.
+   ✅ Геометрия окна — ИСПРАВЛЕНО
+   Добавлены утилиты в uiutils.h:
+   - saveWindowGeometry(QWidget*, const QString& key)
+   - restoreWindowGeometry(QWidget*, const QString& key)
+   - saveSplitterState(QSplitter*, const QString& key)
+   - restoreSplitterState(QSplitter*, const QString& key)
 
- Рекомендация: Вынести в UiUtils::saveWindowGeometry() / restoreWindowGeometry().
+   Обновлены диалоги: resultdialog, historydialog, prompteditordialog,
+   settingsdialog, promptpreviewdialog, groupsdialog, imageviewdialog.
 
- Fetch models from API — дублируется в:
- - settingsdialog.cpp:1493-1565
- - prompteditordialog.cpp:997-1048
+   ⏳ Fetch models from API — ОСТАВЛЕНО
+   Дублирование в settingsdialog.cpp и prompteditordialog.cpp.
+   Низкий приоритет — работает корректно.
 
- Hotkey conflict checking — 3 похожие функции:
- - prompteditordialog.cpp:1167-1216
- - prompteditordialog.cpp:1268-1317
- - settingsdialog.cpp:2157-2177
+   ⏳ Hotkey conflict checking — ОСТАВЛЕНО
+   3 похожие функции в prompteditordialog.cpp и settingsdialog.cpp.
+   Низкий приоритет — логика слегка отличается.
 
  10. [ ] Несогласованность дефолтных значений
 

@@ -15,6 +15,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "groupsdialog.h"
+#include "uiutils.h"
 #include "core/groupsmanager.h"
 #include "core/promptmanager.h"
 #include <QVBoxLayout>
@@ -41,10 +42,7 @@ GroupsDialog::GroupsDialog(Core::GroupsManager* groupsManager,
     expandAll();
 
     // Restore window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("groupsDialog").toByteArray());
-    settings.endGroup();
+    restoreWindowGeometry(this, QStringLiteral("groupsDialog"));
 }
 
 void GroupsDialog::setupUi()

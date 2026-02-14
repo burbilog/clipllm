@@ -15,6 +15,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "resultdialog.h"
+#include "uiutils.h"
 #include "core/llmclient.h"
 #include "core/historymanager.h"
 #include "core/configmanager.h"
@@ -50,10 +51,7 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
     resize(800, 600);
 
     // Restore window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("resultDialog").toByteArray());
-    settings.endGroup();
+    restoreWindowGeometry(this, QStringLiteral("resultDialog"));
 
     // Restore font size
     loadFontSize();
@@ -559,14 +557,10 @@ void ResultDialog::updateState()
 void ResultDialog::closeEvent(QCloseEvent* event)
 {
     // Save window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    settings.setValue("resultDialog", saveGeometry());
-    settings.endGroup();
+    saveWindowGeometry(this, QStringLiteral("resultDialog"));
 
     // Save font size
     saveFontSize();
-    settings.sync();
 
     // Prevent re-entry
     if (m_closing) {

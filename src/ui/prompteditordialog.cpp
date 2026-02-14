@@ -17,6 +17,7 @@
 #include "prompteditordialog.h"
 #include "promptpreviewdialog.h"
 #include "hotkeyedit.h"
+#include "uiutils.h"
 #include "core/promptmanager.h"
 #include "core/debuglogger.h"
 #include "core/groupsmanager.h"
@@ -87,10 +88,7 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
     validateInput();
 
     // Restore window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("promptEditorDialog").toByteArray());
-    settings.endGroup();
+    restoreWindowGeometry(this, QStringLiteral("promptEditorDialog"));
 }
 
 PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
@@ -128,10 +126,7 @@ PromptEditorDialog::PromptEditorDialog(Core::PromptManager* promptManager,
     validateInput();
 
     // Restore window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("promptEditorDialog").toByteArray());
-    settings.endGroup();
+    restoreWindowGeometry(this, QStringLiteral("promptEditorDialog"));
 }
 
 PromptEditorDialog::~PromptEditorDialog() = default;
@@ -958,11 +953,7 @@ void PromptEditorDialog::closeEvent(QCloseEvent* event)
     }
 
     // Save window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    settings.setValue("promptEditorDialog", saveGeometry());
-    settings.endGroup();
-    settings.sync();
+    saveWindowGeometry(this, QStringLiteral("promptEditorDialog"));
 
     QDialog::closeEvent(event);
 }

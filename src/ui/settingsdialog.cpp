@@ -18,6 +18,7 @@
 #include "prompteditordialog.h"
 #include "groupsdialog.h"
 #include "hotkeyedit.h"
+#include "uiutils.h"
 #include "core/app.h"
 #include "core/configmanager.h"
 #include "core/debuglogger.h"
@@ -114,11 +115,7 @@ void SettingsDialog::setupUi()
     m_cancelButton = new QPushButton(tr("Cancel"));
     connect(m_cancelButton, &QPushButton::clicked, this, [this]() {
         // Save window geometry before closing
-        QSettings settings;
-        settings.beginGroup("WindowGeometry");
-        settings.setValue("settingsDialog", saveGeometry());
-        settings.endGroup();
-        settings.sync();
+        saveWindowGeometry(this, QStringLiteral("settingsDialog"));
         reject();
     });
 
@@ -796,11 +793,7 @@ void SettingsDialog::onOkClicked()
 {
     saveSettings();
     // Save window geometry before closing
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    settings.setValue("settingsDialog", saveGeometry());
-    settings.endGroup();
-    settings.sync();
+    saveWindowGeometry(this, QStringLiteral("settingsDialog"));
     accept();
 }
 
@@ -2098,10 +2091,7 @@ void SettingsDialog::showEvent(QShowEvent* event)
 {
     // Restore window geometry when dialog is shown
     // This works more reliably than restoring in constructor
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("settingsDialog").toByteArray());
-    settings.endGroup();
+    restoreWindowGeometry(this, QStringLiteral("settingsDialog"));
 
     QDialog::showEvent(event);
 }
@@ -2109,11 +2099,7 @@ void SettingsDialog::showEvent(QShowEvent* event)
 void SettingsDialog::closeEvent(QCloseEvent* event)
 {
     // Save window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    settings.setValue("settingsDialog", saveGeometry());
-    settings.endGroup();
-    settings.sync();
+    saveWindowGeometry(this, QStringLiteral("settingsDialog"));
 
     QDialog::closeEvent(event);
 }

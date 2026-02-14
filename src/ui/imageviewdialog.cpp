@@ -15,6 +15,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "imageviewdialog.h"
+#include "uiutils.h"
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include <QPushButton>
@@ -31,10 +32,7 @@ ImageViewDialog::ImageViewDialog(const QImage& image, QWidget* parent)
     setupUi();
 
     // Restore window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("imageViewDialog").toByteArray());
-    settings.endGroup();
+    restoreWindowGeometry(this, QStringLiteral("imageViewDialog"));
 }
 
 ImageViewDialog::~ImageViewDialog() = default;

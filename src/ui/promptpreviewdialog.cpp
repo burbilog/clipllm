@@ -16,6 +16,7 @@
 
 #include "promptpreviewdialog.h"
 #include "imageviewdialog.h"
+#include "uiutils.h"
 #include "core/llmclient.h"
 #include "core/app.h"
 #include "core/configmanager.h"
@@ -44,10 +45,7 @@ PromptPreviewDialog::PromptPreviewDialog(const Models::Prompt& prompt, QWidget* 
     setupUi();
 
     // Restore window geometry
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("promptPreviewDialog").toByteArray());
-    settings.endGroup();
+    restoreWindowGeometry(this, QStringLiteral("promptPreviewDialog"));
 
     refreshPreview();
 }

@@ -20,6 +20,9 @@
 #include <QIcon>
 #include <QStyle>
 #include <QApplication>
+#include <QSettings>
+#include <QWidget>
+#include <QSplitter>
 
 namespace ClipLLM {
 namespace UI {
@@ -68,6 +71,64 @@ inline QIcon iconQuit() {
 inline QIcon iconDocumentNew() {
     static QIcon icon = iconFromTheme(QStringLiteral("document-new"), QStyle::SP_FileIcon);
     return icon;
+}
+
+/**
+ * Save widget geometry to QSettings.
+ * @param widget Widget to save geometry for
+ * @param key Settings key (e.g., "resultDialog")
+ */
+inline void saveWindowGeometry(QWidget* widget, const QString& key)
+{
+    if (!widget) return;
+    QSettings settings;
+    settings.beginGroup(QStringLiteral("WindowGeometry"));
+    settings.setValue(key, widget->saveGeometry());
+    settings.endGroup();
+    settings.sync();
+}
+
+/**
+ * Restore widget geometry from QSettings.
+ * @param widget Widget to restore geometry for
+ * @param key Settings key (e.g., "resultDialog")
+ */
+inline void restoreWindowGeometry(QWidget* widget, const QString& key)
+{
+    if (!widget) return;
+    QSettings settings;
+    settings.beginGroup(QStringLiteral("WindowGeometry"));
+    widget->restoreGeometry(settings.value(key).toByteArray());
+    settings.endGroup();
+}
+
+/**
+ * Save splitter state to QSettings.
+ * @param splitter Splitter to save state for
+ * @param key Settings key (e.g., "historyDialogSplitter")
+ */
+inline void saveSplitterState(QSplitter* splitter, const QString& key)
+{
+    if (!splitter) return;
+    QSettings settings;
+    settings.beginGroup(QStringLiteral("WindowGeometry"));
+    settings.setValue(key, splitter->saveState());
+    settings.endGroup();
+    settings.sync();
+}
+
+/**
+ * Restore splitter state from QSettings.
+ * @param splitter Splitter to restore state for
+ * @param key Settings key (e.g., "historyDialogSplitter")
+ */
+inline void restoreSplitterState(QSplitter* splitter, const QString& key)
+{
+    if (!splitter) return;
+    QSettings settings;
+    settings.beginGroup(QStringLiteral("WindowGeometry"));
+    splitter->restoreState(settings.value(key).toByteArray());
+    settings.endGroup();
 }
 
 } // namespace UI

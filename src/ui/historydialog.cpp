@@ -15,6 +15,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "historydialog.h"
+#include "uiutils.h"
 #include "core/historymanager.h"
 #include <QApplication>
 #include <QClipboard>
@@ -625,18 +626,12 @@ void HistoryDialog::onZoomInClicked()
 void HistoryDialog::showEvent(QShowEvent* event)
 {
     // Restore window geometry and splitter state when dialog is shown
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    restoreGeometry(settings.value("historyDialog").toByteArray());
+    restoreWindowGeometry(this, QStringLiteral("historyDialog"));
 
     // Restore splitter state
     if (m_splitter) {
-        QByteArray splitterState = settings.value("historyDialogSplitter").toByteArray();
-        if (!splitterState.isEmpty()) {
-            m_splitter->restoreState(splitterState);
-        }
+        restoreSplitterState(m_splitter, QStringLiteral("historyDialogSplitter"));
     }
-    settings.endGroup();
 
     QDialog::showEvent(event);
 }
@@ -644,19 +639,15 @@ void HistoryDialog::showEvent(QShowEvent* event)
 void HistoryDialog::closeEvent(QCloseEvent* event)
 {
     // Save window geometry and splitter state
-    QSettings settings;
-    settings.beginGroup("WindowGeometry");
-    settings.setValue("historyDialog", saveGeometry());
+    saveWindowGeometry(this, QStringLiteral("historyDialog"));
 
     // Save splitter state
     if (m_splitter) {
-        settings.setValue("historyDialogSplitter", m_splitter->saveState());
+        saveSplitterState(m_splitter, QStringLiteral("historyDialogSplitter"));
     }
-    settings.endGroup();
 
     // Save font size
     saveFontSize();
-    settings.sync();
 
     QDialog::closeEvent(event);
 }

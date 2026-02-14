@@ -9,7 +9,7 @@ MXE_BUILD_TYPE ?= static
 
 # Current release version (for website - update this after release)
 # Override with: make web WEBSITE_VERSION=1.0.1
-WEBSITE_VERSION := 1.0.0
+WEBSITE_VERSION := 1.0.1
 
 build: translations
 	@echo "Building ClipLLM..."

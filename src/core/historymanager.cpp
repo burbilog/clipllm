@@ -408,8 +408,6 @@ int HistoryManager::cleanupByCount(int maxEntries)
     }
 
     int removed = 0;
-    // Sort by timestamp (oldest first) to remove oldest entries
-    // Since we want to keep the most recent ones, we need to find entries to remove
     if (m_entries.size() > maxEntries) {
         // Sort entries by timestamp ascending (oldest first)
         std::sort(m_entries.begin(), m_entries.end(),
@@ -419,10 +417,8 @@ int HistoryManager::cleanupByCount(int maxEntries)
 
         // Remove oldest entries (at the beginning after sorting)
         int toRemove = m_entries.size() - maxEntries;
-        for (int i = 0; i < toRemove; ++i) {
-            m_entries.removeFirst();
-            ++removed;
-        }
+        m_entries.erase(m_entries.begin(), m_entries.begin() + toRemove);
+        removed = toRemove;
 
         if (removed > 0) {
             m_dirty = true;

@@ -140,11 +140,21 @@
 
    Отложено: не критично для v1.0.x, схема стабилизирована.
 
- 12. [ ] Проблема cleanupByCount
+ 12. [x] Проблема cleanupByCount — ИСПРАВЛЕНО
 
- Файл: historymanager.cpp:412-418
+   Заменён цикл removeFirst() (O(n²)) на erase() (O(n)):
 
- Сортировка ascending + removeFirst() даёт O(n²). После сортировки порядок нарушается.
+   Было:
+   ```cpp
+   for (int i = 0; i < toRemove; ++i) {
+       m_entries.removeFirst();
+   }
+   ```
+
+   Стало:
+   ```cpp
+   m_entries.erase(m_entries.begin(), m_entries.begin() + toRemove);
+   ```
 
  ---
  🟢 Низкий приоритет (код-стайл, рефакторинг)

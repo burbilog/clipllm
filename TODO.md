@@ -29,9 +29,8 @@
   - [ ] Fetch models from API — дублирование в settingsdialog/prompteditordialog
   - [ ] Hotkey conflict checking — 3 похожие функции
 
-- [ ] **N12: Проблема cleanupByCount**
-  - historymanager.cpp:412-418
-  - Сортировка + removeFirst() даёт O(n²), нарушает порядок
+- [x] **N12: Проблема cleanupByCount**
+  - Заменён removeFirst() в цикле (O(n²)) на erase() (O(n))
 
 - [~] **N11: Версионирование моделей** (отложено)
   - Добавить поле version в Prompt, HistoryEntry, LLMConfig

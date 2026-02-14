@@ -167,15 +167,35 @@
    - screenshotselector.cpp: `MIN_SELECTION_SIZE = 5`
    - resultdialog.cpp: `CHARS_PER_TOKEN_ESTIMATE = 4`
 
- 14. [ ] Несогласованное именование
+ 14. [x] Несогласованное именование — НЕВАЛИДНО
 
- - promptId vs prompt_id (JSON vs C++)
- - hotkey vs screenshotHotkey
- - llmClient vs clipboardManager
+   Различия обоснованы:
 
- 15. [ ] HistoryEntry — struct, не class
+   - promptId vs prompt_id: C++ использует camelCase, JSON — snake_case.
+     Это стандартная практика для Qt/JSON проектов.
 
- HistoryEntry — struct с методами, в то время как Prompt/LLMConfig — classes.
+   - hotkey vs screenshotHotkey: Это разные поля с разным смыслом.
+     hotkey — для промптов из буфера, screenshotHotkey — для скриншотов.
+
+   - llmClient vs clipboardManager: Оба следуют lowerCamelCase.
+     Это согласованное именование переменных-членов.
+
+   Рекомендация отклонена: именование корректно.
+
+ 15. [x] HistoryEntry — struct, не class — НЕВАЛИДНО
+
+   HistoryEntry — это data class без инвариантов:
+   - Все поля публичные (id, timestamp, promptId, ...)
+   - Методы toJson/fromJson/getPreview — helpers для сериализации
+   - Нет private данных, нет validation, нет инвариантов
+
+   Prompt/LLMConfig имеют:
+   - Private поля с getters/setters
+   - Validation (isValid())
+   - Инварианты
+
+   В Modern C++ struct для data classes — валидный паттерн.
+   Разница оправдана разной природой типов.
 
  16. [ ] Длинные функции
 

@@ -14,16 +14,27 @@
 
    Рекомендация отклонена: не требуется.
 
- 3. [ ] Отсутствие поддержки Wayland
+ 3. [x] Отсутствие поддержки Wayland — ДОКУМЕНТИРОВАНО
 
  Файл: CMakeLists.txt:50-61
 
  find_package(X11 REQUIRED)
  list(APPEND QHOTKEY_SOURCES 3rdparty/qhotkey/qhotkey_x11.cpp)
 
- Сборка требует X11 unconditionally. На современных дистрибутивах с Wayland приложение не соберётся или не будет работать.
+ Проблема: X11 REQUIRED — на чистом Wayland без XWayland сборка невозможна.
 
- Рекомендация: Добавить поддержку Wayland или сделать X11 опциональным.
+ Решение:
+ - Добавлены CLI опции --popup, --run, --list (commit 13cf9c0)
+ - Документированы workarounds в README.md:
+   * Требования для сборки (X11 libs)
+   * Таблица совместимости функций
+   * Примеры конфигурации для Sway/wlroots
+   * Примеры конфигурации для GNOME/KDE
+   * Скриншоты через grim/slurp
+
+ Для полной нативной поддержки Wayland (низкий приоритет):
+ - Сделать X11 опциональным (find_package(X11 QUIET))
+ - Добавить проверку QHotkey::isPlatformSupported() при запуске
 
  ---
  🟠 Высокий приоритет

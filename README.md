@@ -205,9 +205,83 @@ Built-in prompts (17 total):
 Full functionality including global hotkeys.
 
 ### Linux (Wayland)
-- System tray works in most compositors
-- Global hotkeys have limitations - consider using desktop-specific shortcuts
-- Use the tray icon menu for prompt selection
+
+**Build Requirements:**
+- X11 development libraries are required for compilation (XWayland counts)
+- On pure Wayland systems without XWayland, the build will fail
+
+```bash
+# Ubuntu/Debian - install X11 deps
+sudo apt-get install libx11-dev libxcb1-dev
+```
+
+**Feature Status:**
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Clipboard | ✅ Works | Via Qt native Wayland support |
+| System tray | ✅ Works | In most compositors |
+| Global hotkeys | ❌ No | QHotkey uses X11 API |
+| Screenshot hotkeys | ⚠️ Limited | May need portal permissions |
+| CLI commands | ✅ Works | `--popup`, `--run`, `--list` |
+
+**Recommended Setup for Wayland:**
+
+Use CLI commands with desktop-environment shortcuts instead of global hotkeys:
+
+```bash
+# List available prompts
+ClipLLM --list
+
+# Show prompt menu
+ClipLLM --popup
+
+# Run specific prompt with clipboard content
+ClipLLM --run translate-ru
+```
+
+**Sway / wlroots configuration** (`~/.config/sway/config`):
+
+```
+# Show prompt popup
+bindsym $mod+Shift+p exec ClipLLM --popup
+
+# Quick translate to Russian
+bindsym $mod+Shift+r exec ClipLLM --run translate-ru
+
+# Quick translate to English
+bindsym $mod+Shift+e exec ClipLLM --run translate-en
+
+# Describe image (use with grim for screenshots)
+bindsym $mod+Shift+i exec grim -g "$(slurp)" - | wl-copy && ClipLLM --run describe-image
+```
+
+**GNOME / KDE:**
+1. Open Settings → Keyboard → Keyboard Shortcuts
+2. Add custom shortcut
+3. Set command to `ClipLLM --popup` or `ClipLLM --run <prompt-id>`
+4. Assign your preferred key combination
+
+**Screenshot Workflow with grim/slurp:**
+
+```bash
+# Capture region and describe
+grim -g "$(slurp)" - | wl-copy && ClipLLM --run describe-image
+
+# Capture region and extract text (OCR)
+grim -g "$(slurp)" - | wl-copy && ClipLLM --run ocr
+
+# Or create a script for convenience:
+cat > ~/bin/clipllm-screenshot << 'EOF'
+#!/bin/bash
+grim -g "$(slurp)" - | wl-copy
+ClipLLM --run "${1:-describe-image}"
+EOF
+chmod +x ~/bin/clipllm-screenshot
+
+# Usage: clipllm-screenshot describe-image
+#        clipllm-screenshot ocr
+```
 
 ### Windows
 Full functionality supported.

@@ -48,6 +48,10 @@ public:
     void setLevel(DebugLevel level);
     bool isEnabled() const;
 
+    // Install/uninstall Qt message handler for capturing library warnings
+    void installMessageHandler();
+    void removeMessageHandler();
+
     // Convenience methods
     void debug(const QString& message);
     void info(const QString& message);
@@ -58,6 +62,7 @@ private:
     DebugLogger();
     ~DebugLogger();
     void writeLog(const QString& message);
+    static void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg);
 
     QFile m_logFile;
     QTextStream m_logStream;

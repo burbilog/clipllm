@@ -168,6 +168,7 @@ bool App::initialize(bool startMinimized)
     // Get the DebugLogger singleton instance
     m_debugLogger = Core::DebugLogger::instance();
     m_debugLogger->setLevel(static_cast<Core::DebugLevel>(m_configManager->debugLevel()));
+    m_debugLogger->installMessageHandler();  // Capture Qt/library messages to log
     m_historyManager = std::make_unique<HistoryManager>();
     m_promptManager = std::make_unique<PromptManager>();
     m_groupsManager = std::make_unique<Core::GroupsManager>();

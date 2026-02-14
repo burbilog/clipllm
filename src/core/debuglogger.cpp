@@ -19,6 +19,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <QApplication>
+#include <QtGlobal>
 
 namespace ClipLLM {
 namespace Core {
@@ -131,6 +132,52 @@ void DebugLogger::writeLog(const QString& message)
     QString timestamp = QDateTime::currentDateTime().toString(QStringLiteral("[yyyy-MM-dd HH:mm:ss.zzz]"));
     m_logStream << timestamp << " " << message << Qt::endl;
     m_logStream.flush();
+}
+
+// Static pointer to store previous message handler
+static QtMessageHandler s_previousHandler = nullptr;
+
+void DebugLogger::messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+{
+    auto* logger = DebugLogger::instance();
+
+    // If debug logging is enabled, write to log and suppress console output
+    if (logger && logger->isEnabled()) {
+        switch (type) {
+        case QtDebugMsg:
+            logger->debug(QStringLiteral("[Qt] %1").arg(msg));
+            return;  // Suppress console output
+        case QtInfoMsg:
+            logger->info(QStringLiteral("[Qt] %1").arg(msg));
+            return;
+        case QtWarningMsg:
+            logger->warning(QStringLiteral("[Qt] %1").arg(msg));
+            return;
+        case QtCriticalMsg:
+            logger->error(QStringLiteral("[Qt] %1").arg(msg));
+            return;
+        case QtFatalMsg:
+            logger->error(QStringLiteral("[Qt FATAL] %1").arg(msg));
+            // For fatal messages, still call previous handler before abort
+            break;
+        }
+    }
+
+    // If logging disabled or fatal message, call previous handler
+    if (s_previousHandler) {
+        s_previousHandler(type, context, msg);
+    }
+}
+
+void DebugLogger::installMessageHandler()
+{
+    s_previousHandler = qInstallMessageHandler(messageHandler);
+}
+
+void DebugLogger::removeMessageHandler()
+{
+    qInstallMessageHandler(s_previousHandler);
+    s_previousHandler = nullptr;
 }
 
 } // namespace Core

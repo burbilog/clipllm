@@ -33,7 +33,7 @@ namespace UI {
 ScreenshotSelector::ScreenshotSelector(const QImage& screenshot, QWidget* parent)
     : QWidget(parent)
     , m_screenshot(screenshot)
-    , m_hintText(tr("Select an area to capture\nEnter = whole screen\nEscape = cancel\nRight-click = reset/cancel"))
+    , m_hintText(tr("Select an area to capture\nRight-click = cancel"))
 {
     // Window setup for fullscreen overlay
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);

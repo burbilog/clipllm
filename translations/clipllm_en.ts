@@ -67,17 +67,17 @@ Copy some text or an image first.</translation>
 <context>
     <name>ClipLLM::App</name>
     <message>
-        <location filename="../src/core/app.cpp" line="272"/>
+        <location filename="../src/core/app.cpp" line="274"/>
         <source>System Tray</source>
         <translation>System Tray</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="273"/>
+        <location filename="../src/core/app.cpp" line="275"/>
         <source>Couldn&apos;t detect any system tray on this system.</source>
         <translation>Couldn&apos;t detect any system tray on this system.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="283"/>
+        <location filename="../src/core/app.cpp" line="285"/>
         <source>Welcome to ClipLLM</source>
         <translation>Welcome to ClipLLM</translation>
     </message>
@@ -86,58 +86,58 @@ Copy some text or an image first.</translation>
         <translation type="vanished">ClipLLM is running in the system tray. Press the global hotkey to start.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="284"/>
+        <location filename="../src/core/app.cpp" line="286"/>
         <source>ClipLLM is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
         <translation>ClipLLM is running in the system tray. Click the tray icon or configure a hotkey in settings.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="376"/>
+        <location filename="../src/core/app.cpp" line="378"/>
         <source>Hotkey Not Supported</source>
         <translation>Hotkey Not Supported</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="377"/>
+        <location filename="../src/core/app.cpp" line="379"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
         <translation>Global hotkeys are not supported on this platform (Wayland?).</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="402"/>
+        <location filename="../src/core/app.cpp" line="404"/>
         <source>Hotkey Registration Failed</source>
         <translation>Hotkey Registration Failed</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="403"/>
+        <location filename="../src/core/app.cpp" line="405"/>
         <source>Could not register global hotkey: %1</source>
         <translation>Could not register global hotkey: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="570"/>
+        <location filename="../src/core/app.cpp" line="572"/>
         <source>Screenshot Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="570"/>
+        <location filename="../src/core/app.cpp" line="572"/>
         <source>Could not capture screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="746"/>
-        <location filename="../src/core/app.cpp" line="798"/>
+        <location filename="../src/core/app.cpp" line="748"/>
+        <location filename="../src/core/app.cpp" line="800"/>
         <source>Clipboard Empty</source>
         <translation>Clipboard Empty</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="747"/>
+        <location filename="../src/core/app.cpp" line="749"/>
         <source>No content found in clipboard.</source>
         <translation>No content found in clipboard.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="770"/>
+        <location filename="../src/core/app.cpp" line="772"/>
         <source>Chain Cycle Detected</source>
         <translation>Chain Cycle Detected</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="771"/>
+        <location filename="../src/core/app.cpp" line="773"/>
         <source>The prompt chain would create a cycle. Execution stopped.
 
 Prompt &apos;%1&apos; was already executed in this chain.</source>
@@ -146,12 +146,12 @@ Prompt &apos;%1&apos; was already executed in this chain.</source>
 Prompt &apos;%1&apos; was already executed in this chain.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="779"/>
+        <location filename="../src/core/app.cpp" line="781"/>
         <source>Chain Depth Limit</source>
         <translation>Chain Depth Limit</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="780"/>
+        <location filename="../src/core/app.cpp" line="782"/>
         <source>Maximum chain depth (%1) reached. Execution stopped.
 
 You can increase this limit in Settings → General → Prompt Chains.</source>
@@ -160,7 +160,7 @@ You can increase this limit in Settings → General → Prompt Chains.</source>
 You can increase this limit in Settings → General → Prompt Chains.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="799"/>
+        <location filename="../src/core/app.cpp" line="801"/>
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
@@ -169,51 +169,51 @@ Copy some text or an image first.</source>
 Copy some text or an image first.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="814"/>
+        <location filename="../src/core/app.cpp" line="816"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="815"/>
+        <location filename="../src/core/app.cpp" line="817"/>
         <source>Prompt not found: %1</source>
         <translation>Prompt not found: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="837"/>
-        <location filename="../src/core/app.cpp" line="842"/>
-        <location filename="../src/core/app.cpp" line="853"/>
-        <location filename="../src/core/app.cpp" line="858"/>
+        <location filename="../src/core/app.cpp" line="839"/>
+        <location filename="../src/core/app.cpp" line="844"/>
+        <location filename="../src/core/app.cpp" line="855"/>
+        <location filename="../src/core/app.cpp" line="860"/>
         <source>Provider Error</source>
         <translation>Provider Error</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="838"/>
+        <location filename="../src/core/app.cpp" line="840"/>
         <source>No valid LLM provider configured.</source>
         <translation>No valid LLM provider configured.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="843"/>
-        <location filename="../src/core/app.cpp" line="859"/>
+        <location filename="../src/core/app.cpp" line="845"/>
+        <location filename="../src/core/app.cpp" line="861"/>
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation>No LLM provider configured. Please configure one in Settings.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="854"/>
+        <location filename="../src/core/app.cpp" line="856"/>
         <source>Default LLM provider not found. Please configure one in Settings.</source>
         <translation>Default LLM provider not found. Please configure one in Settings.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="896"/>
+        <location filename="../src/core/app.cpp" line="898"/>
         <source>This prompt requires text content.</source>
         <translation>This prompt requires text content.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="211"/>
+        <location filename="../src/core/app.cpp" line="213"/>
         <source>No LLM Provider Configured</source>
         <translation>No LLM Provider Configured</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="212"/>
+        <location filename="../src/core/app.cpp" line="214"/>
         <source>No LLM provider profile has been configured.
 
 Please add at least one provider profile in Settings to use ClipLLM.</source>
@@ -222,17 +222,17 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
 Please add at least one provider profile in Settings to use ClipLLM.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="876"/>
+        <location filename="../src/core/app.cpp" line="878"/>
         <source>Model Error</source>
         <translation>Model Error</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="877"/>
+        <location filename="../src/core/app.cpp" line="879"/>
         <source>No model selected. Please select a model in Settings → LLM → Provider Profiles.</source>
         <translation>No model selected. Please select a model in Settings → LLM → Provider Profiles.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="895"/>
+        <location filename="../src/core/app.cpp" line="897"/>
         <source>Incompatible Content</source>
         <translation>Incompatible Content</translation>
     </message>
@@ -241,7 +241,7 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
         <translation type="vanished">This prompt requires %1 content.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="921"/>
+        <location filename="../src/core/app.cpp" line="923"/>
         <source>[Image content]</source>
         <translation>[Image content]</translation>
     </message>
@@ -2039,11 +2039,9 @@ Please choose a different hotkey.</source>
 <context>
     <name>ClipLLM::UI::ScreenshotSelector</name>
     <message>
-        <location filename="../src/ui/screenshotselector.cpp" line="31"/>
+        <location filename="../src/ui/screenshotselector.cpp" line="36"/>
         <source>Select an area to capture
-Enter = whole screen
-Escape = cancel
-Right-click = reset/cancel</source>
+Right-click = cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

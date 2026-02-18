@@ -73,6 +73,7 @@ set(SOURCES
     src/core/historymanager.cpp
     src/core/groupsmanager.cpp
     src/core/debuglogger.cpp
+    src/core/crashhandler.cpp
     src/core/screenshotmanager.cpp
     src/core/ipcserver.cpp
     src/ui/trayicon.cpp
@@ -105,6 +106,7 @@ set(HEADERS
     src/core/historymanager.h
     src/core/groupsmanager.h
     src/core/debuglogger.h
+    src/core/crashhandler.h
     src/core/screenshotmanager.h
     src/core/ipcserver.h
     src/ui/trayicon.h

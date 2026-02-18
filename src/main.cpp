@@ -15,6 +15,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "core/app.h"
+#include "core/crashhandler.h"
 #include "core/ipcserver.h"
 #include <QCoreApplication>
 #include <QCommandLineParser>
@@ -141,6 +142,9 @@ static int sendIpcCommand(const QString& cmd, const QString& promptId = QString(
 
 int main(int argc, char *argv[])
 {
+    // Install crash handler FIRST, before any other initialization
+    ClipLLM::Core::CrashHandler::install();
+
     // High DPI scaling is enabled by default in Qt6
 
     ClipLLM::App app(argc, argv);

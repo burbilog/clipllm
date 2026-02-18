@@ -3029,82 +3029,82 @@ Click &apos;+ Add&apos; to create one.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="48"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>Cannot open prompts file: %1</source>
         <translation>Не удалось открыть файл промптов: %1</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="59"/>
+        <location filename="../src/main.cpp" line="66"/>
         <source>Invalid JSON in prompts file: %1</source>
         <translation>Некорректный JSON в файле промптов: %1</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="65"/>
+        <location filename="../src/main.cpp" line="79"/>
         <source>No prompts found</source>
         <translation>Промпты не найдены</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="99"/>
+        <location filename="../src/main.cpp" line="113"/>
         <source>Cannot connect to ClipLLM. Is it running?</source>
         <translation>Не удалось подключиться к ClipLLM. Приложение запущено?</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="110"/>
+        <location filename="../src/main.cpp" line="124"/>
         <source>No response from ClipLLM</source>
         <translation>Нет ответа от ClipLLM</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="123"/>
+        <location filename="../src/main.cpp" line="137"/>
         <source>Error: %1</source>
         <translation>Ошибка: %1</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="137"/>
+        <location filename="../src/main.cpp" line="154"/>
         <source>ClipLLM - Cross-platform LLM clipboard utility</source>
         <translation>ClipLLM — Кроссплатформенная утилита для работы с буфером обмена через LLM</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="143"/>
+        <location filename="../src/main.cpp" line="160"/>
         <source>Start minimized to system tray</source>
         <translation>Запустить свернутым в системный трей</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="148"/>
+        <location filename="../src/main.cpp" line="165"/>
         <source>Show prompt popup menu (requires running instance)</source>
         <translation>Показать меню промптов (требуется запущенный экземпляр)</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="152"/>
+        <location filename="../src/main.cpp" line="169"/>
         <source>Execute prompt by ID with clipboard content (requires running instance)</source>
         <translation>Выполнить промпт по ID с содержимым буфера обмена (требуется запущенный экземпляр)</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="153"/>
+        <location filename="../src/main.cpp" line="170"/>
         <source>prompt-id</source>
         <translation>id-промпта</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="157"/>
+        <location filename="../src/main.cpp" line="174"/>
         <source>List available prompts with their IDs</source>
         <translation>Показать список доступных промптов с их ID</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="177"/>
+        <location filename="../src/main.cpp" line="194"/>
         <source>--run requires a prompt ID</source>
         <translation>--run требует указания ID промпта</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="184"/>
+        <location filename="../src/main.cpp" line="201"/>
         <source>Another instance of ClipLLM is already running</source>
         <translation>Уже запущен другой экземпляр ClipLLM</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="190"/>
+        <location filename="../src/main.cpp" line="207"/>
         <source>Failed to initialize application</source>
         <translation>Не удалось инициализировать приложение</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="196"/>
+        <location filename="../src/main.cpp" line="213"/>
         <source>Failed to start IPC server - CLI commands will not work</source>
         <translation>Не удалось запустить IPC-сервер — команды CLI не будут работать</translation>
     </message>

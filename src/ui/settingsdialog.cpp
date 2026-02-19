@@ -179,8 +179,6 @@ void SettingsDialog::setupGeneralTab()
 
     layout->addWidget(hotkeyGroup);
 
-    layout->addStretch();
-
     // Chain settings group
     QGroupBox* chainGroup = new QGroupBox(tr("Prompt Chains"));
     QFormLayout* chainLayout = new QFormLayout(chainGroup);
@@ -192,6 +190,19 @@ void SettingsDialog::setupGeneralTab()
     chainLayout->addRow(tr("Maximum Chain Depth:"), m_chainMaxDepthSpin);
 
     layout->addWidget(chainGroup);
+
+    // Furigana settings group
+    QGroupBox* furiganaGroup = new QGroupBox(tr("Furigana"));
+    QFormLayout* furiganaLayout = new QFormLayout(furiganaGroup);
+
+    m_furiganaSizeSpin = new QSpinBox();
+    m_furiganaSizeSpin->setRange(20, 80);
+    m_furiganaSizeSpin->setValue(45);
+    m_furiganaSizeSpin->setSuffix(tr("%"));
+    m_furiganaSizeSpin->setToolTip(tr("Size of furigana text relative to base text (20-80%)"));
+    furiganaLayout->addRow(tr("Furigana Size:"), m_furiganaSizeSpin);
+
+    layout->addWidget(furiganaGroup);
 
     // Debug group
     QGroupBox* debugGroup = new QGroupBox(tr("Debug"));
@@ -610,6 +621,9 @@ void SettingsDialog::loadSettings()
     // Chain settings
     m_chainMaxDepthSpin->setValue(m_configManager->chainMaxDepth());
 
+    // Furigana settings
+    m_furiganaSizeSpin->setValue(m_configManager->furiganaSize());
+
     // Debug
     m_debugEnabledCheck->setChecked(m_configManager->debugEnabled());
     int level = m_configManager->debugLevel();
@@ -664,6 +678,9 @@ void SettingsDialog::saveSettings()
 
     // Chain settings
     m_configManager->setChainMaxDepth(m_chainMaxDepthSpin->value());
+
+    // Furigana settings
+    m_configManager->setFuriganaSize(m_furiganaSizeSpin->value());
 
     // Debug
     m_configManager->setDebugEnabled(m_debugEnabledCheck->isChecked());

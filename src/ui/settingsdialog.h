@@ -160,6 +160,7 @@ private:
     QRadioButton* m_debugLevelTraceRadio = nullptr;
     QButtonGroup* m_debugLevelGroup = nullptr;
     QSpinBox* m_chainMaxDepthSpin = nullptr;
+    QSpinBox* m_furiganaSizeSpin = nullptr;
 
     // LLM tab - Provider Profiles
     QListWidget* m_profilesList = nullptr;

@@ -15,11 +15,14 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "rubytextobject.h"
+#include "core/app.h"
+#include "core/configmanager.h"
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QAbstractTextDocumentLayout>
 #include <QRegularExpression>
 #include <QFontMetrics>
+#include <QApplication>
 
 namespace ClipLLM {
 namespace UI {
@@ -55,9 +58,16 @@ QSizeF RubyTextObject::intrinsicSize(QTextDocument* doc, int posInDocument,
     QString baseText = format.property(BaseText).toString();
     QString rubyText = format.property(RubyText).toString();
 
+    // Get furigana size from config (default 45%)
+    int furiganaSizePercent = 45;
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (app && app->configManager()) {
+        furiganaSizePercent = app->configManager()->furiganaSize();
+    }
+
     QFont baseFont = doc->defaultFont();
     QFont rubyFont = baseFont;
-    rubyFont.setPointSizeF(baseFont.pointSizeF() * 0.45);  // 45% size for furigana
+    rubyFont.setPointSizeF(baseFont.pointSizeF() * (furiganaSizePercent / 100.0));
 
     QFontMetricsF baseFm(baseFont);
     QFontMetricsF rubyFm(rubyFont);
@@ -85,9 +95,16 @@ void RubyTextObject::drawObject(QPainter* painter, const QRectF& rect,
     QString baseText = format.property(BaseText).toString();
     QString rubyText = format.property(RubyText).toString();
 
+    // Get furigana size from config (default 45%)
+    int furiganaSizePercent = 45;
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (app && app->configManager()) {
+        furiganaSizePercent = app->configManager()->furiganaSize();
+    }
+
     QFont baseFont = painter->font();
     QFont rubyFont = baseFont;
-    rubyFont.setPointSizeF(baseFont.pointSizeF() * 0.45);
+    rubyFont.setPointSizeF(baseFont.pointSizeF() * (furiganaSizePercent / 100.0));
 
     QFontMetricsF baseFm(baseFont);
     QFontMetricsF rubyFm(rubyFont);

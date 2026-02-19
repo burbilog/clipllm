@@ -15,9 +15,12 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "rubyutils.h"
+#include "core/app.h"
+#include "core/configmanager.h"
 #include <QRegularExpression>
 #include <QStringBuilder>
 #include <QTextDocument>
+#include <QApplication>
 
 namespace ClipLLM {
 namespace UI {
@@ -167,6 +170,13 @@ QString restoreRubyTags(const QString& html, const QString& placeholderData)
         return html;
     }
 
+    // Get furigana size from config (default 45%)
+    int furiganaSizePercent = 45;
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (app && app->configManager()) {
+        furiganaSizePercent = app->configManager()->furiganaSize();
+    }
+
     QStringList rubyDataList = placeholderData.split(QStringLiteral(";"));
     QString result = html;
 
@@ -182,11 +192,13 @@ QString restoreRubyTags(const QString& html, const QString& placeholderData)
             QString baseText = fromHex(parts[0]);
             QString rubyText = fromHex(parts[1]);
 
+            // Use em for relative font size (percent / 100 = em)
+            double fontSizeEm = furiganaSizePercent / 100.0;
             // Use br to create line break between furigana and kanji within inline-block
             QString replacement = QStringLiteral(
                 "<span style=\"display: inline-block; text-align: center; vertical-align: bottom; line-height: 1;\">"
-                "<span style=\"font-size: 8pt;\">%1</span><br>%2</span>"
-            ).arg(rubyText, baseText);
+                "<span style=\"font-size: %1em;\">%2</span><br>%3</span>"
+            ).arg(QString::number(fontSizeEm, 'f', 2), rubyText, baseText);
 
             result.replace(placeholder, replacement);
         }

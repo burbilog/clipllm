@@ -80,6 +80,7 @@ public:
     static const QString DEBUG_ENABLED_KEY;
     static const QString DEBUG_LEVEL_KEY;
     static const QString LAST_SAVE_DIRECTORY_KEY;
+    static const QString FURIGANA_SIZE_KEY;
 
     // Convenience methods for common settings
     QString language() const;
@@ -163,6 +164,10 @@ public:
     // Chain settings
     int chainMaxDepth() const;
     void setChainMaxDepth(int depth);
+
+    // Furigana settings
+    int furiganaSize() const;
+    void setFuriganaSize(int size);
 
     // Provider profiles (new multi-provider system)
     QStringList providerProfileIds() const;

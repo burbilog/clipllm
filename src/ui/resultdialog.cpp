@@ -15,6 +15,8 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "resultdialog.h"
+#include "rubyutils.h"
+#include "rubytextobject.h"
 #include "uiutils.h"
 #include "core/llmclient.h"
 #include "core/historymanager.h"
@@ -60,6 +62,15 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
     loadFontSize();
     applyFontSize();
 
+    // Restore furigana state
+    QSettings settings;
+    settings.beginGroup("ResultDialog");
+    m_furiganaEnabled = settings.value("furiganaEnabled", true).toBool();
+    settings.endGroup();
+    if (m_furiganaToggle) {
+        m_furiganaToggle->setChecked(m_furiganaEnabled);
+    }
+
     // Hide save button if auto-save is enabled
     if (m_configManager && m_configManager->historyAutoSave()) {
         m_saveButton->hide();
@@ -78,6 +89,9 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
         connect(m_llmClient, &Core::LLMClient::bytesReceivedChanged,
                 this, &ResultDialog::onBytesReceivedChanged);
     }
+
+    // Register RubyTextObject with output document
+    RubyTextObject::registerWithDocument(m_outputText->document());
 }
 
 ResultDialog::~ResultDialog() = default;
@@ -126,6 +140,13 @@ void ResultDialog::setupUi()
     connect(m_markdownToggle, &QPushButton::clicked, this, &ResultDialog::onMarkdownToggleClicked);
     m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
 
+    // Furigana toggle button
+    m_furiganaToggle = new QPushButton(tr("Furigana"));
+    m_furiganaToggle->setCheckable(true);
+    m_furiganaToggle->setChecked(m_furiganaEnabled);
+    m_furiganaToggle->setToolTip(tr("Show furigana (reading annotations) for Japanese text"));
+    connect(m_furiganaToggle, &QPushButton::clicked, this, &ResultDialog::onFuriganaToggleClicked);
+
     // Input toggle button
     m_inputToggleBtn = new QPushButton(tr("Show Input"));
     m_inputToggleBtn->setCheckable(true);
@@ -135,6 +156,7 @@ void ResultDialog::setupUi()
     // Toggle buttons layout
     QHBoxLayout* toggleLayout = new QHBoxLayout();
     toggleLayout->addWidget(m_markdownToggle);
+    toggleLayout->addWidget(m_furiganaToggle);
     toggleLayout->addWidget(m_inputToggleBtn);
     mainLayout->addLayout(toggleLayout);
 
@@ -315,8 +337,52 @@ void ResultDialog::appendResponse(const QString& text)
     m_output.append(text);
 
     if (m_markdownMode) {
-        // Set markdown content - QTextDocument will render it
-        m_outputText->setMarkdown(m_output);
+        QString content = m_output;
+
+        // Check for ruby tags and convert them if furigana is enabled
+        if (m_furiganaEnabled && RubyUtils::containsRubyTags(content)) {
+            // New approach: use RubyTextObject for proper rendering
+            // First, protect ruby tags with placeholders
+            QString placeholderData = RubyUtils::protectRubyTags(content);
+            m_outputText->setMarkdown(content);
+
+            // Now find placeholders in the document and replace with ruby objects
+            QTextDocument* doc = m_outputText->document();
+            QTextCursor cursor(doc);
+
+            // Parse placeholder data
+            QStringList rubyDataList = placeholderData.split(QStringLiteral(";"));
+
+            for (int i = 0; i < rubyDataList.size(); ++i) {
+                if (rubyDataList[i].isEmpty()) continue;
+
+                QString placeholder = QStringLiteral("R%1X").arg(i);
+
+                // Find and replace placeholder
+                while (!cursor.isNull() && !cursor.atEnd()) {
+                    cursor = doc->find(placeholder, cursor);
+                    if (!cursor.isNull()) {
+                        // Parse stored data
+                        QStringList parts = rubyDataList[i].split(QStringLiteral("|"));
+                        if (parts.size() == 2) {
+                            // Decode hex data
+                            QByteArray baseBytes = QByteArray::fromHex(parts[0].toLatin1());
+                            QByteArray rubyBytes = QByteArray::fromHex(parts[1].toLatin1());
+                            QString baseText = QString::fromUtf8(baseBytes);
+                            QString rubyText = QString::fromUtf8(rubyBytes);
+
+                            // Replace with ruby object
+                            QTextCharFormat rubyFormat = RubyTextObject::createFormat(baseText, rubyText);
+                            cursor.insertText(QString(QChar::ObjectReplacementCharacter), rubyFormat);
+                        }
+                        break;
+                    }
+                }
+                cursor = QTextCursor(doc);  // Reset cursor for next placeholder
+            }
+        } else {
+            m_outputText->setMarkdown(content);
+        }
     } else {
         // Show as plain text
         m_outputText->setPlainText(m_output);
@@ -668,9 +734,45 @@ void ResultDialog::onMarkdownToggleClicked()
     // Re-render the output
     if (!m_output.isEmpty()) {
         if (m_markdownMode) {
-            m_outputText->setMarkdown(m_output);
+            QString content = m_output;
+            if (m_furiganaEnabled && RubyUtils::containsRubyTags(content)) {
+                QString placeholderData = RubyUtils::protectRubyTags(content);
+                m_outputText->setMarkdown(content);
+                QString html = m_outputText->toHtml();
+                html = RubyUtils::restoreRubyTags(html, placeholderData);
+                m_outputText->setHtml(html);
+            } else {
+                m_outputText->setMarkdown(content);
+            }
         } else {
             m_outputText->setPlainText(m_output);
+        }
+        m_outputText->moveCursor(QTextCursor::End);
+    }
+}
+
+void ResultDialog::onFuriganaToggleClicked()
+{
+    m_furiganaEnabled = m_furiganaToggle->isChecked();
+
+    // Save furigana state
+    QSettings settings;
+    settings.beginGroup("ResultDialog");
+    settings.setValue("furiganaEnabled", m_furiganaEnabled);
+    settings.endGroup();
+    settings.sync();
+
+    // Re-render the output if in markdown mode
+    if (m_markdownMode && !m_output.isEmpty()) {
+        QString content = m_output;
+        if (m_furiganaEnabled && RubyUtils::containsRubyTags(content)) {
+            QString placeholderData = RubyUtils::protectRubyTags(content);
+            m_outputText->setMarkdown(content);
+            QString html = m_outputText->toHtml();
+            html = RubyUtils::restoreRubyTags(html, placeholderData);
+            m_outputText->setHtml(html);
+        } else {
+            m_outputText->setMarkdown(content);
         }
         m_outputText->moveCursor(QTextCursor::End);
     }

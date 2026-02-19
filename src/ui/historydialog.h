@@ -68,6 +68,7 @@ private slots:
     void onClearClicked();
     void onViewDetailsClicked();
     void onMarkdownToggleClicked();
+    void onFuriganaToggleClicked();
     void onZoomOutClicked();
     void onZoomInClicked();
 
@@ -99,9 +100,13 @@ private:
     QTextEdit* m_previewText = nullptr;
     QLabel* m_statusLabel = nullptr;
     QPushButton* m_markdownToggle = nullptr;
+    QPushButton* m_furiganaToggle = nullptr;
 
     // Markdown state
     bool m_markdownMode = true;
+
+    // Furigana state
+    bool m_furiganaEnabled = true;
 
     // Font size state
     int m_fontSize = 10;

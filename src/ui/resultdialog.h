@@ -89,6 +89,7 @@ private slots:
     void performClose();
     void onMarkdownToggleClicked();
     void onInputToggleClicked();
+    void onFuriganaToggleClicked();
     void onZoomOutClicked();
     void onZoomInClicked();
     void onSaveAsClicked();
@@ -127,6 +128,7 @@ private:
     QPushButton* m_closeButton = nullptr;
     QPushButton* m_markdownToggle = nullptr;
     QPushButton* m_inputToggleBtn = nullptr;
+    QPushButton* m_furiganaToggle = nullptr;
     QPushButton* m_zoomOutButton = nullptr;
     QPushButton* m_zoomInButton = nullptr;
     QPushButton* m_saveAsButton = nullptr;
@@ -135,6 +137,9 @@ private:
 
     // Markdown state
     bool m_markdownMode = true;
+
+    // Furigana state
+    bool m_furiganaEnabled = true;
 
     // Input section state
     bool m_inputExpanded = false;

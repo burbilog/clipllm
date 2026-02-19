@@ -15,6 +15,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "historydialog.h"
+#include "rubyutils.h"
 #include "uiutils.h"
 #include "core/historymanager.h"
 #include <QApplication>
@@ -46,6 +47,15 @@ HistoryDialog::HistoryDialog(Core::HistoryManager* historyManager, QWidget* pare
     // Restore font size
     loadFontSize();
     applyFontSize();
+
+    // Restore furigana state
+    QSettings settings;
+    settings.beginGroup("HistoryDialog");
+    m_furiganaEnabled = settings.value("furiganaEnabled", true).toBool();
+    settings.endGroup();
+    if (m_furiganaToggle) {
+        m_furiganaToggle->setChecked(m_furiganaEnabled);
+    }
 }
 
 HistoryDialog::~HistoryDialog() = default;
@@ -137,6 +147,14 @@ void HistoryDialog::setupUi()
     connect(m_markdownToggle, &QPushButton::clicked, this, &HistoryDialog::onMarkdownToggleClicked);
     m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
     previewLayout->addWidget(m_markdownToggle);
+
+    // Furigana toggle button
+    m_furiganaToggle = new QPushButton(tr("Furigana"));
+    m_furiganaToggle->setCheckable(true);
+    m_furiganaToggle->setChecked(m_furiganaEnabled);
+    m_furiganaToggle->setToolTip(tr("Show furigana (reading annotations) for Japanese text"));
+    connect(m_furiganaToggle, &QPushButton::clicked, this, &HistoryDialog::onFuriganaToggleClicked);
+    previewLayout->addWidget(m_furiganaToggle);
 
     m_previewText = new QTextEdit();
     m_previewText->setReadOnly(true);
@@ -574,7 +592,16 @@ void HistoryDialog::updatePreviewDisplay(const Core::HistoryEntry& entry)
         fullMarkdown += "## Input\n\n" + m_currentInputText + "\n\n";
         fullMarkdown += "## Output\n\n" + m_currentOutputText;
 
-        m_previewText->setMarkdown(fullMarkdown);
+        // Check for ruby tags and convert them if furigana is enabled
+        if (m_furiganaEnabled && RubyUtils::containsRubyTags(fullMarkdown)) {
+            QString placeholderData = RubyUtils::protectRubyTags(fullMarkdown);
+            m_previewText->setMarkdown(fullMarkdown);
+            QString html = m_previewText->toHtml();
+            html = RubyUtils::restoreRubyTags(html, placeholderData);
+            m_previewText->setHtml(html);
+        } else {
+            m_previewText->setMarkdown(fullMarkdown);
+        }
     } else {
         // Plain text mode
         QString fullText;
@@ -599,6 +626,26 @@ void HistoryDialog::onMarkdownToggleClicked()
 {
     m_markdownMode = m_markdownToggle->isChecked();
     m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
+
+    // Re-render the current entry if one is selected
+    if (!m_currentEntryId.isEmpty() && m_historyManager) {
+        auto entry = m_historyManager->getEntry(m_currentEntryId);
+        if (entry) {
+            updatePreviewDisplay(*entry);
+        }
+    }
+}
+
+void HistoryDialog::onFuriganaToggleClicked()
+{
+    m_furiganaEnabled = m_furiganaToggle->isChecked();
+
+    // Save furigana state
+    QSettings settings;
+    settings.beginGroup("HistoryDialog");
+    settings.setValue("furiganaEnabled", m_furiganaEnabled);
+    settings.endGroup();
+    settings.sync();
 
     // Re-render the current entry if one is selected
     if (!m_currentEntryId.isEmpty() && m_historyManager) {

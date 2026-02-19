@@ -88,6 +88,8 @@ set(SOURCES
     src/ui/imageviewdialog.cpp
     src/ui/groupsdialog.cpp
     src/ui/screenshotselector.cpp
+    src/ui/rubyutils.cpp
+    src/ui/rubytextobject.cpp
     src/models/prompt.cpp
     src/models/llmconfig.cpp
     src/models/providerprofile.cpp
@@ -121,6 +123,8 @@ set(HEADERS
     src/ui/imageviewdialog.h
     src/ui/groupsdialog.h
     src/ui/screenshotselector.h
+    src/ui/rubyutils.h
+    src/ui/rubytextobject.h
     src/models/prompt.h
     src/models/llmconfig.h
     src/models/providerprofile.h

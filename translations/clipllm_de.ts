@@ -186,12 +186,12 @@ Kopieren Sie zuerst Text oder ein Bild.</translation>
     <message>
         <location filename="../src/core/app.cpp" line="1112"/>
         <source>Prompt Not Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt nicht gefunden</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="1113"/>
         <source>Prompt with ID &apos;%1&apos; not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt mit ID &apos;%1&apos; nicht gefunden.</translation>
     </message>
     <message>
         <source>No valid LLM provider configured.</source>
@@ -821,12 +821,12 @@ Bitte fügen Sie mindestens ein Anbieterprofil in den Einstellungen hinzu, um Cl
     <message>
         <location filename="../src/ui/historydialog.cpp" line="162"/>
         <source>Furigana</source>
-        <translation type="unfinished"></translation>
+        <translation>Furigana</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="165"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
-        <translation type="unfinished"></translation>
+        <translation>Furigana (Lesehilfen) für japanischen Text anzeigen</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="296"/>
@@ -1795,12 +1795,12 @@ Bitte wählen Sie einen anderen Hotkey.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="145"/>
         <source>Furigana</source>
-        <translation type="unfinished"></translation>
+        <translation>Furigana</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="148"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
-        <translation type="unfinished"></translation>
+        <translation>Furigana (Lesehilfen) für japanischen Text anzeigen</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="152"/>
@@ -3020,32 +3020,32 @@ Bitte wählen Sie einen anderen Hotkey.</translation>
     <message>
         <location filename="../src/main.cpp" line="55"/>
         <source>Cannot open prompts file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt-Datei kann nicht geöffnet werden: %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="66"/>
         <source>Invalid JSON in prompts file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiges JSON in Prompt-Datei: %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="79"/>
         <source>No prompts found</source>
-        <translation type="unfinished">Keine Prompts gefunden</translation>
+        <translation>Keine Prompts gefunden</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="113"/>
         <source>Cannot connect to ClipLLM. Is it running?</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Verbindung zu ClipLLM möglich. Läuft es?</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="124"/>
         <source>No response from ClipLLM</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Antwort von ClipLLM</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="137"/>
         <source>Error: %1</source>
-        <translation type="unfinished">Fehler: %1</translation>
+        <translation>Fehler: %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="154"/>
@@ -3060,42 +3060,42 @@ Bitte wählen Sie einen anderen Hotkey.</translation>
     <message>
         <location filename="../src/main.cpp" line="165"/>
         <source>Show prompt popup menu (requires running instance)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt-Popup-Menü anzeigen (erfordert laufende Instanz)</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="169"/>
         <source>Execute prompt by ID with clipboard content (requires running instance)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt nach ID mit Zwischenablage-Inhalt ausführen (erfordert laufende Instanz)</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="170"/>
         <source>prompt-id</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt-ID</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="174"/>
         <source>List available prompts with their IDs</source>
-        <translation type="unfinished"></translation>
+        <translation>Verfügbare Prompts mit ihren IDs auflisten</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="194"/>
         <source>--run requires a prompt ID</source>
-        <translation type="unfinished"></translation>
+        <translation>--run erfordert eine Prompt-ID</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="201"/>
         <source>Another instance of ClipLLM is already running</source>
-        <translation type="unfinished">Eine weitere Instanz von ClipLLM läuft bereits</translation>
+        <translation>Eine weitere Instanz von ClipLLM läuft bereits</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="207"/>
         <source>Failed to initialize application</source>
-        <translation type="unfinished">Anwendung konnte nicht initialisiert werden</translation>
+        <translation>Anwendung konnte nicht initialisiert werden</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="213"/>
         <source>Failed to start IPC server - CLI commands will not work</source>
-        <translation type="unfinished"></translation>
+        <translation>IPC-Server konnte nicht gestartet werden - CLI-Befehle funktionieren nicht</translation>
     </message>
 </context>
 </TS>

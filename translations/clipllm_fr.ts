@@ -186,12 +186,12 @@ Copiez du texte ou une image d&apos;abord.</translation>
     <message>
         <location filename="../src/core/app.cpp" line="1112"/>
         <source>Prompt Not Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt introuvable</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="1113"/>
         <source>Prompt with ID &apos;%1&apos; not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt avec l&apos;ID &apos;%1&apos; introuvable.</translation>
     </message>
     <message>
         <source>No valid LLM provider configured.</source>
@@ -821,12 +821,12 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
     <message>
         <location filename="../src/ui/historydialog.cpp" line="162"/>
         <source>Furigana</source>
-        <translation type="unfinished"></translation>
+        <translation>Furigana</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="165"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les furigana (annotations de lecture) pour le texte japonais</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="296"/>
@@ -1795,12 +1795,12 @@ Veuillez choisir un autre raccourci.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="145"/>
         <source>Furigana</source>
-        <translation type="unfinished"></translation>
+        <translation>Furigana</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="148"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les furigana (annotations de lecture) pour le texte japonais</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="152"/>
@@ -3020,32 +3020,32 @@ Veuillez choisir un autre raccourci.</translation>
     <message>
         <location filename="../src/main.cpp" line="55"/>
         <source>Cannot open prompts file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le fichier de prompts : %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="66"/>
         <source>Invalid JSON in prompts file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON invalide dans le fichier de prompts : %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="79"/>
         <source>No prompts found</source>
-        <translation type="unfinished">Aucun prompt trouvé</translation>
+        <translation>Aucun prompt trouvé</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="113"/>
         <source>Cannot connect to ClipLLM. Is it running?</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de se connecter à ClipLLM. Est-il en cours d&apos;exécution ?</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="124"/>
         <source>No response from ClipLLM</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de réponse de ClipLLM</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="137"/>
         <source>Error: %1</source>
-        <translation type="unfinished">Erreur : %1</translation>
+        <translation>Erreur : %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="154"/>
@@ -3060,42 +3060,42 @@ Veuillez choisir un autre raccourci.</translation>
     <message>
         <location filename="../src/main.cpp" line="165"/>
         <source>Show prompt popup menu (requires running instance)</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher le menu popup des prompts (nécessite une instance en cours d&apos;exécution)</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="169"/>
         <source>Execute prompt by ID with clipboard content (requires running instance)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exécuter le prompt par ID avec le contenu du presse-papiers (nécessite une instance en cours d&apos;exécution)</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="170"/>
         <source>prompt-id</source>
-        <translation type="unfinished"></translation>
+        <translation>id-prompt</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="174"/>
         <source>List available prompts with their IDs</source>
-        <translation type="unfinished"></translation>
+        <translation>Lister les prompts disponibles avec leurs IDs</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="194"/>
         <source>--run requires a prompt ID</source>
-        <translation type="unfinished"></translation>
+        <translation>--run nécessite un ID de prompt</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="201"/>
         <source>Another instance of ClipLLM is already running</source>
-        <translation type="unfinished">Une autre instance de ClipLLM est déjà en cours d&apos;exécution</translation>
+        <translation>Une autre instance de ClipLLM est déjà en cours d&apos;exécution</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="207"/>
         <source>Failed to initialize application</source>
-        <translation type="unfinished">Échec de l&apos;initialisation de l&apos;application</translation>
+        <translation>Échec de l&apos;initialisation de l&apos;application</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="213"/>
         <source>Failed to start IPC server - CLI commands will not work</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du démarrage du serveur IPC - les commandes CLI ne fonctionneront pas</translation>
     </message>
 </context>
 </TS>

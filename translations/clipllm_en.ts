@@ -186,12 +186,12 @@ Copy some text or an image first.</translation>
     <message>
         <location filename="../src/core/app.cpp" line="1112"/>
         <source>Prompt Not Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt Not Found</translation>
     </message>
     <message>
         <location filename="../src/core/app.cpp" line="1113"/>
         <source>Prompt with ID &apos;%1&apos; not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prompt with ID &apos;%1&apos; not found.</translation>
     </message>
     <message>
         <source>No valid LLM provider configured.</source>
@@ -781,12 +781,12 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
     <message>
         <location filename="../src/ui/historydialog.cpp" line="162"/>
         <source>Furigana</source>
-        <translation type="unfinished"></translation>
+        <translation>Furigana</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="165"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
-        <translation type="unfinished"></translation>
+        <translation>Show furigana (reading annotations) for Japanese text</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="229"/>
@@ -1842,12 +1842,12 @@ Please choose a different hotkey.</translation>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="145"/>
         <source>Furigana</source>
-        <translation type="unfinished"></translation>
+        <translation>Furigana</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="148"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
-        <translation type="unfinished"></translation>
+        <translation>Show furigana (reading annotations) for Japanese text</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="152"/>
@@ -3048,32 +3048,32 @@ Click &apos;+ Add&apos; to create one.</translation>
     <message>
         <location filename="../src/main.cpp" line="55"/>
         <source>Cannot open prompts file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cannot open prompts file: %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="66"/>
         <source>Invalid JSON in prompts file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalid JSON in prompts file: %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="79"/>
         <source>No prompts found</source>
-        <translation type="unfinished">No prompts found</translation>
+        <translation>No prompts found</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="113"/>
         <source>Cannot connect to ClipLLM. Is it running?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cannot connect to ClipLLM. Is it running?</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="124"/>
         <source>No response from ClipLLM</source>
-        <translation type="unfinished"></translation>
+        <translation>No response from ClipLLM</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="137"/>
         <source>Error: %1</source>
-        <translation type="unfinished">Error: %1</translation>
+        <translation>Error: %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="154"/>
@@ -3088,37 +3088,37 @@ Click &apos;+ Add&apos; to create one.</translation>
     <message>
         <location filename="../src/main.cpp" line="165"/>
         <source>Show prompt popup menu (requires running instance)</source>
-        <translation type="unfinished"></translation>
+        <translation>Show prompt popup menu (requires running instance)</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="169"/>
         <source>Execute prompt by ID with clipboard content (requires running instance)</source>
-        <translation type="unfinished"></translation>
+        <translation>Execute prompt by ID with clipboard content (requires running instance)</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="170"/>
         <source>prompt-id</source>
-        <translation type="unfinished"></translation>
+        <translation>prompt-id</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="174"/>
         <source>List available prompts with their IDs</source>
-        <translation type="unfinished"></translation>
+        <translation>List available prompts with their IDs</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="194"/>
         <source>--run requires a prompt ID</source>
-        <translation type="unfinished"></translation>
+        <translation>--run requires a prompt ID</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="201"/>
         <source>Another instance of ClipLLM is already running</source>
-        <translation type="unfinished">Another instance of ClipLLM is already running</translation>
+        <translation>Another instance of ClipLLM is already running</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="207"/>
         <source>Failed to initialize application</source>
-        <translation type="unfinished">Failed to initialize application</translation>
+        <translation>Failed to initialize application</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="213"/>

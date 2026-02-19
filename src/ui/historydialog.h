@@ -70,7 +70,7 @@ private slots:
     void onFavoriteClicked();
     void onExportClicked();
     void onClearClicked();
-    void onViewDetailsClicked();
+    void onSaveAsClicked();
     void onMarkdownToggleClicked();
     void onFuriganaToggleClicked();
     void onZoomOutClicked();
@@ -125,7 +125,7 @@ private:
     QPushButton* m_favoriteButton = nullptr;
     QPushButton* m_exportButton = nullptr;
     QPushButton* m_clearButton = nullptr;
-    QPushButton* m_viewDetailsButton = nullptr;
+    QPushButton* m_saveAsButton = nullptr;
     QPushButton* m_closeButton = nullptr;
     QPushButton* m_zoomOutButton = nullptr;
     QPushButton* m_zoomInButton = nullptr;

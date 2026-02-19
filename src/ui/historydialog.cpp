@@ -187,10 +187,11 @@ void HistoryDialog::setupUi()
     // Button row
     QHBoxLayout* buttonLayout = new QHBoxLayout();
 
-    m_viewDetailsButton = new QPushButton(tr("View Details"));
-    m_viewDetailsButton->setIcon(style()->standardIcon(QStyle::SP_FileDialogDetailedView));
-    m_viewDetailsButton->setEnabled(false);
-    connect(m_viewDetailsButton, &QPushButton::clicked, this, &HistoryDialog::onViewDetailsClicked);
+    m_saveAsButton = new QPushButton(tr("Save as..."));
+    m_saveAsButton->setIcon(style()->standardIcon(QStyle::SP_DialogSaveButton));
+    m_saveAsButton->setEnabled(false);
+    m_saveAsButton->setToolTip(tr("Save output to a file"));
+    connect(m_saveAsButton, &QPushButton::clicked, this, &HistoryDialog::onSaveAsClicked);
 
     m_favoriteButton = new QPushButton(tr("Favorite"));
     m_favoriteButton->setIcon(style()->standardIcon(QStyle::SP_DialogSaveButton));
@@ -236,7 +237,7 @@ void HistoryDialog::setupUi()
     m_zoomInButton->setMaximumWidth(40);
     connect(m_zoomInButton, &QPushButton::clicked, this, &HistoryDialog::onZoomInClicked);
 
-    buttonLayout->addWidget(m_viewDetailsButton);
+    buttonLayout->addWidget(m_saveAsButton);
     buttonLayout->addWidget(m_favoriteButton);
     buttonLayout->addWidget(m_deleteButton);
     buttonLayout->addStretch();
@@ -422,7 +423,7 @@ void HistoryDialog::onItemSelectionChanged()
         m_previewText->clear();
         m_deleteButton->setEnabled(false);
         m_favoriteButton->setEnabled(false);
-        m_viewDetailsButton->setEnabled(false);
+        m_saveAsButton->setEnabled(false);
         return;
     }
 
@@ -431,7 +432,7 @@ void HistoryDialog::onItemSelectionChanged()
 
     m_deleteButton->setEnabled(true);
     m_favoriteButton->setEnabled(true);
-    m_viewDetailsButton->setEnabled(true);
+    m_saveAsButton->setEnabled(true);
 }
 
 void HistoryDialog::loadEntry(int row)
@@ -553,10 +554,16 @@ void HistoryDialog::clearHistory()
     }
 }
 
-void HistoryDialog::onViewDetailsClicked()
+void HistoryDialog::onSaveAsClicked()
 {
-    // Could open a separate detailed view dialog
-    // For now, the preview shows most details
+    if (m_currentOutputText.isEmpty()) {
+        return;
+    }
+
+    QString savedPath = saveTextToFile(this, m_currentOutputText);
+    if (!savedPath.isEmpty()) {
+        m_statusLabel->setText(tr("Saved to %1").arg(savedPath));
+    }
 }
 
 QString HistoryDialog::formatDate(const QDateTime& date) const

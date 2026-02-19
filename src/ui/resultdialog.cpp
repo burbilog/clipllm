@@ -32,11 +32,6 @@
 #include <QSettings>
 #include <QWheelEvent>
 #include <QKeyEvent>
-#include <QFileDialog>
-#include <QFileInfo>
-#include <QDir>
-#include <QFile>
-#include <QTextStream>
 #include <QScrollBar>
 
 namespace ClipLLM {
@@ -542,60 +537,10 @@ void ResultDialog::onSaveClicked()
 
 void ResultDialog::onSaveAsClicked()
 {
-    // Get the last used directory from config, or use home directory
-    QString startDir;
-    if (m_configManager) {
-        startDir = m_configManager->lastSaveDirectory();
-    }
-    if (startDir.isEmpty()) {
-        startDir = QDir::homePath();
-    }
-
-    // Generate default filename with timestamp
-    QString defaultFileName = QStringLiteral("clipllm-result-%1.txt")
-        .arg(QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd-HHmmss")));
-
-    // Show file save dialog
-    QString fileName = QFileDialog::getSaveFileName(
-        this,
-        tr("Save Output As"),
-        startDir + QLatin1Char('/') + defaultFileName,
-        tr("Text Files (*.txt);;All Files (*)")
-    );
-
-    // User cancelled
-    if (fileName.isEmpty()) {
-        return;
-    }
-
-    // Save the directory for next time
-    if (m_configManager) {
-        QFileInfo fileInfo(fileName);
-        m_configManager->setLastSaveDirectory(fileInfo.absolutePath());
-    }
-
-    // Write the file
-    QFile file(fileName);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&file);
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-        out.setEncoding(QStringConverter::Utf8);
-#else
-        out.setCodec("UTF-8");
-#endif
-        out << m_output;
-        file.close();
-
-        // Show success message in status label
-        m_statusLabel->setText(tr("Saved to %1").arg(fileName));
+    QString savedPath = saveTextToFile(this, m_output);
+    if (!savedPath.isEmpty()) {
+        m_statusLabel->setText(tr("Saved to %1").arg(savedPath));
         m_statusLabel->setStyleSheet("color: green;");
-    } else {
-        // Show error dialog
-        QMessageBox::warning(
-            this,
-            tr("Save Failed"),
-            tr("Could not write to file:\n%1").arg(fileName)
-        );
     }
 }
 

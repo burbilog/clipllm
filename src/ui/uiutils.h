@@ -23,6 +23,16 @@
 #include <QSettings>
 #include <QWidget>
 #include <QSplitter>
+#include <QFileDialog>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
+#include <QTextStream>
+#include <QDateTime>
+#include <QMessageBox>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QStringConverter>
+#endif
 
 namespace ClipLLM {
 namespace UI {
@@ -129,6 +139,77 @@ inline void restoreSplitterState(QSplitter* splitter, const QString& key)
     settings.beginGroup(QStringLiteral("WindowGeometry"));
     splitter->restoreState(settings.value(key).toByteArray());
     settings.endGroup();
+}
+
+/**
+ * Save text content to a file with a file dialog.
+ * Uses QSettings to persist the last used directory.
+ *
+ * @param parent Parent widget for the dialog
+ * @param content Text content to save
+ * @param defaultFileName Default filename suggestion (optional, will generate timestamp-based name if empty)
+ * @return Saved file path, or empty string if cancelled/failed
+ */
+inline QString saveTextToFile(QWidget* parent, const QString& content, const QString& defaultFileName = QString())
+{
+    // Get the last used directory from settings
+    QSettings settings;
+    settings.beginGroup(QStringLiteral("FileDialogs"));
+    QString startDir = settings.value(QStringLiteral("lastSaveDirectory")).toString();
+    settings.endGroup();
+
+    if (startDir.isEmpty()) {
+        startDir = QDir::homePath();
+    }
+
+    // Generate default filename if not provided
+    QString fileName = defaultFileName;
+    if (fileName.isEmpty()) {
+        fileName = QStringLiteral("clipllm-result-%1.txt")
+            .arg(QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd-HHmmss")));
+    }
+
+    // Show file save dialog
+    QString selectedPath = QFileDialog::getSaveFileName(
+        parent,
+        QObject::tr("Save As"),
+        startDir + QLatin1Char('/') + fileName,
+        QObject::tr("Text Files (*.txt);;All Files (*)")
+    );
+
+    // User cancelled
+    if (selectedPath.isEmpty()) {
+        return QString();
+    }
+
+    // Save the directory for next time
+    QFileInfo fileInfo(selectedPath);
+    settings.beginGroup(QStringLiteral("FileDialogs"));
+    settings.setValue(QStringLiteral("lastSaveDirectory"), fileInfo.absolutePath());
+    settings.endGroup();
+    settings.sync();
+
+    // Write the file
+    QFile file(selectedPath);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        out.setEncoding(QStringConverter::Utf8);
+#else
+        out.setCodec("UTF-8");
+#endif
+        out << content;
+        out.flush();
+        file.close();
+        return selectedPath;
+    } else {
+        QMessageBox::warning(
+            parent,
+            QObject::tr("Save Failed"),
+            QObject::tr("Could not write to file:\n%1").arg(selectedPath)
+        );
+        return QString();
+    }
 }
 
 } // namespace UI

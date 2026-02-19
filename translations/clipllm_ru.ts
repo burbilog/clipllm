@@ -2019,7 +2019,7 @@ Please choose a different hotkey.</source>
         <translation>Скрыть ввод</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="887"/>
+        <location filename="../src/ui/resultdialog.cpp" line="930"/>
         <source>Chain: %1</source>
         <translation>Цепочка: %1</translation>
     </message>

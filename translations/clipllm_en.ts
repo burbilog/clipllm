@@ -1973,7 +1973,7 @@ Please choose a different hotkey.</translation>
         <translation>Hide Input</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="887"/>
+        <location filename="../src/ui/resultdialog.cpp" line="930"/>
         <source>Chain: %1</source>
         <translation></translation>
     </message>

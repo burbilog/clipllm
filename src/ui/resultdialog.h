@@ -108,6 +108,7 @@ private:
     void saveFontSize();
     void loadFontSize();
     void renderOutput();  // Common method for rendering output with optional furigana
+    QString getTextWithExpandedRuby(QTextCursor& cursor) const;  // Get text with ruby objects expanded to base text
 
     Core::LLMClient* m_llmClient = nullptr;
     Core::HistoryManager* m_historyManager = nullptr;

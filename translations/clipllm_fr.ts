@@ -1999,7 +1999,7 @@ Veuillez choisir un autre raccourci.</translation>
         <translation>Masquer l&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="887"/>
+        <location filename="../src/ui/resultdialog.cpp" line="930"/>
         <source>Chain: %1</source>
         <translation>Chaîne : %1</translation>
     </message>

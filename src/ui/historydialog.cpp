@@ -804,9 +804,52 @@ bool HistoryDialog::eventFilter(QObject* watched, QEvent* event)
             keyEvent->accept();
             return true;
         }
+        // Ctrl+C (Copy) - expand ruby objects to base text
+        if (keyEvent->key() == Qt::Key_C && (keyEvent->modifiers() & Qt::ControlModifier)) {
+            if (watched == m_previewText && m_previewText->textCursor().hasSelection()) {
+                QTextCursor cursor = m_previewText->textCursor();
+                QString text = getTextWithExpandedRuby(cursor);
+                QApplication::clipboard()->setText(text);
+                keyEvent->accept();
+                return true;
+            }
+        }
     }
 
     return QDialog::eventFilter(watched, event);
+}
+
+QString HistoryDialog::getTextWithExpandedRuby(QTextCursor& cursor) const
+{
+    QString result;
+    int start = cursor.selectionStart();
+    int end = cursor.selectionEnd();
+
+    QTextDocument* doc = m_previewText->document();
+    QTextCursor tempCursor(doc);
+
+    for (int pos = start; pos < end; ) {
+        tempCursor.setPosition(pos);
+        tempCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+
+        QChar ch = tempCursor.selectedText().at(0);
+
+        if (ch == QChar::ObjectReplacementCharacter) {
+            // Check if it's a ruby object
+            QTextCharFormat format = tempCursor.charFormat();
+            if (format.objectType() == RubyTextObject::RubyObjectType) {
+                // Get the base text (kanji)
+                QString baseText = format.property(RubyTextObject::BaseText).toString();
+                result += baseText;
+            }
+            pos++;
+        } else {
+            result += ch;
+            pos++;
+        }
+    }
+
+    return result;
 }
 
 void HistoryDialog::applyFontSize()

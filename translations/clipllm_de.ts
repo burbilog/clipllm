@@ -1999,7 +1999,7 @@ Bitte wählen Sie einen anderen Hotkey.</translation>
         <translation>Eingabe ausblenden</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="887"/>
+        <location filename="../src/ui/resultdialog.cpp" line="930"/>
         <source>Chain: %1</source>
         <translation>Kette: %1</translation>
     </message>

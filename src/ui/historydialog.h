@@ -83,6 +83,7 @@ private:
     void loadEntry(int row);
     void updatePreviewDisplay(const Core::HistoryEntry& entry);
     void renderPreview(const QString& content);  // Common method for rendering with optional furigana
+    QString getTextWithExpandedRuby(QTextCursor& cursor) const;  // Get text with ruby objects expanded to base text
     QString formatDate(const QDateTime& date) const;
     QString formatDuration(double ms) const;
     void applyFontSize();

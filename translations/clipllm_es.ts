@@ -1999,7 +1999,7 @@ Por favor elija un atajo diferente.</translation>
         <translation>Ocultar entrada</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="887"/>
+        <location filename="../src/ui/resultdialog.cpp" line="930"/>
         <source>Chain: %1</source>
         <translation>Cadena: %1</translation>
     </message>

@@ -147,12 +147,15 @@ void HistoryDialog::setupUi()
     QGroupBox* previewGroup = new QGroupBox(tr("Preview"));
     QVBoxLayout* previewLayout = new QVBoxLayout(previewGroup);
 
+    // Toggle buttons layout (horizontal)
+    QHBoxLayout* toggleLayout = new QHBoxLayout();
+
     m_markdownToggle = new QPushButton(tr("Markdown"));
     m_markdownToggle->setCheckable(true);
     m_markdownToggle->setChecked(m_markdownMode);
     connect(m_markdownToggle, &QPushButton::clicked, this, &HistoryDialog::onMarkdownToggleClicked);
     m_markdownToggle->setText(m_markdownMode ? tr("Markdown") : tr("Raw"));
-    previewLayout->addWidget(m_markdownToggle);
+    toggleLayout->addWidget(m_markdownToggle);
 
     // Furigana toggle button
     m_furiganaToggle = new QPushButton(tr("Furigana"));
@@ -160,7 +163,10 @@ void HistoryDialog::setupUi()
     m_furiganaToggle->setChecked(m_furiganaEnabled);
     m_furiganaToggle->setToolTip(tr("Show furigana (reading annotations) for Japanese text"));
     connect(m_furiganaToggle, &QPushButton::clicked, this, &HistoryDialog::onFuriganaToggleClicked);
-    previewLayout->addWidget(m_furiganaToggle);
+    toggleLayout->addWidget(m_furiganaToggle);
+
+    toggleLayout->addStretch();
+    previewLayout->addLayout(toggleLayout);
 
     m_previewText = new QTextEdit();
     m_previewText->setReadOnly(true);

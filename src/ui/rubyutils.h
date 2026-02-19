@@ -31,6 +31,18 @@ namespace RubyUtils {
 bool containsRubyTags(const QString& text);
 
 /**
+ * Remove ruby tags from text, keeping only the base text (kanji).
+ * Used when furigana display is disabled.
+ *
+ * Input: <ruby>漢字<rt>かんじ</rt></ruby>
+ * Output: 漢字
+ *
+ * @param text The text containing ruby tags
+ * @return Text with ruby tags removed, keeping only base text
+ */
+QString stripRubyTags(const QString& text);
+
+/**
  * Convert HTML5 ruby tags to Qt-supported HTML with inline styles.
  *
  * Input format: <ruby>漢字<rt>かんじ</rt></ruby>

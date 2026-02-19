@@ -35,6 +35,7 @@
 #include <QKeyEvent>
 #include <QTextDocument>
 #include <QTextCursor>
+#include <QScrollBar>
 
 namespace ClipLLM {
 namespace UI {
@@ -627,48 +628,53 @@ void HistoryDialog::updatePreviewDisplay(const Core::HistoryEntry& entry)
 
 void HistoryDialog::renderPreview(const QString& content)
 {
-    // Check for ruby tags and convert them if furigana is enabled
-    if (m_furiganaEnabled && RubyUtils::containsRubyTags(content)) {
-        // Use RubyTextObject for proper rendering
-        // First, protect ruby tags with placeholders
-        QString placeholderData = RubyUtils::protectRubyTags(const_cast<QString&>(content));
-        QString mutableContent = content;
-        RubyUtils::protectRubyTags(mutableContent);
-        m_previewText->setMarkdown(mutableContent);
+    // Check for ruby tags
+    if (RubyUtils::containsRubyTags(content)) {
+        if (m_furiganaEnabled) {
+            // Use RubyTextObject for proper rendering
+            // First, protect ruby tags with placeholders
+            QString mutableContent = content;
+            QString placeholderData = RubyUtils::protectRubyTags(mutableContent);
+            m_previewText->setMarkdown(mutableContent);
 
-        // Now find placeholders in the document and replace with ruby objects
-        QTextDocument* doc = m_previewText->document();
-        QTextCursor cursor(doc);
+            // Now find placeholders in the document and replace with ruby objects
+            QTextDocument* doc = m_previewText->document();
+            QTextCursor cursor(doc);
 
-        // Parse placeholder data
-        QStringList rubyDataList = placeholderData.split(QStringLiteral(";"));
+            // Parse placeholder data
+            QStringList rubyDataList = placeholderData.split(QStringLiteral(";"));
 
-        for (int i = 0; i < rubyDataList.size(); ++i) {
-            if (rubyDataList[i].isEmpty()) continue;
+            for (int i = 0; i < rubyDataList.size(); ++i) {
+                if (rubyDataList[i].isEmpty()) continue;
 
-            QString placeholder = QStringLiteral("R%1X").arg(i);
+                QString placeholder = QStringLiteral("R%1X").arg(i);
 
-            // Find and replace placeholder
-            while (!cursor.isNull() && !cursor.atEnd()) {
-                cursor = doc->find(placeholder, cursor);
-                if (!cursor.isNull()) {
-                    // Parse stored data
-                    QStringList parts = rubyDataList[i].split(QStringLiteral("|"));
-                    if (parts.size() == 2) {
-                        // Decode hex data
-                        QByteArray baseBytes = QByteArray::fromHex(parts[0].toLatin1());
-                        QByteArray rubyBytes = QByteArray::fromHex(parts[1].toLatin1());
-                        QString baseText = QString::fromUtf8(baseBytes);
-                        QString rubyText = QString::fromUtf8(rubyBytes);
+                // Find and replace placeholder
+                while (!cursor.isNull() && !cursor.atEnd()) {
+                    cursor = doc->find(placeholder, cursor);
+                    if (!cursor.isNull()) {
+                        // Parse stored data
+                        QStringList parts = rubyDataList[i].split(QStringLiteral("|"));
+                        if (parts.size() == 2) {
+                            // Decode hex data
+                            QByteArray baseBytes = QByteArray::fromHex(parts[0].toLatin1());
+                            QByteArray rubyBytes = QByteArray::fromHex(parts[1].toLatin1());
+                            QString baseText = QString::fromUtf8(baseBytes);
+                            QString rubyText = QString::fromUtf8(rubyBytes);
 
-                        // Replace with ruby object
-                        QTextCharFormat rubyFormat = RubyTextObject::createFormat(baseText, rubyText);
-                        cursor.insertText(QString(QChar::ObjectReplacementCharacter), rubyFormat);
+                            // Replace with ruby object
+                            QTextCharFormat rubyFormat = RubyTextObject::createFormat(baseText, rubyText);
+                            cursor.insertText(QString(QChar::ObjectReplacementCharacter), rubyFormat);
+                        }
+                        break;
                     }
-                    break;
                 }
+                cursor = QTextCursor(doc);  // Reset cursor for next placeholder
             }
-            cursor = QTextCursor(doc);  // Reset cursor for next placeholder
+        } else {
+            // Furigana disabled - strip ruby tags, keep only base text
+            QString stripped = RubyUtils::stripRubyTags(content);
+            m_previewText->setMarkdown(stripped);
         }
     } else {
         m_previewText->setMarkdown(content);
@@ -704,7 +710,13 @@ void HistoryDialog::onFuriganaToggleClicked()
     if (!m_currentEntryId.isEmpty() && m_historyManager) {
         auto entry = m_historyManager->getEntry(m_currentEntryId);
         if (entry) {
+            // Save scroll position
+            int scrollPos = m_previewText->verticalScrollBar()->value();
+
             updatePreviewDisplay(*entry);
+
+            // Restore scroll position
+            m_previewText->verticalScrollBar()->setValue(scrollPos);
         }
     }
 }

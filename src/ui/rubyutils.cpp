@@ -29,6 +29,26 @@ bool containsRubyTags(const QString& text)
            text.contains(QLatin1String("<rt>"), Qt::CaseInsensitive);
 }
 
+QString stripRubyTags(const QString& text)
+{
+    QString result = text;
+
+    // Pattern to match <ruby>base<rt>annotation</rt></ruby>
+    QRegularExpression rubyPattern(
+        QStringLiteral("<ruby>([^<]*)<rt>([^<]*)</rt></ruby>"),
+        QRegularExpression::CaseInsensitiveOption
+    );
+
+    // Manual replacement to extract just the base text
+    QRegularExpressionMatch match;
+    while ((match = rubyPattern.match(result)).hasMatch()) {
+        QString baseText = match.captured(1);  // Get the kanji
+        result.replace(match.capturedStart(), match.capturedLength(), baseText);
+    }
+
+    return result;
+}
+
 QString convertRubyToHtml(const QString& text)
 {
     QString result = text;

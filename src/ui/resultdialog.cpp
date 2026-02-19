@@ -335,13 +335,17 @@ void ResultDialog::startRequest()
 void ResultDialog::appendResponse(const QString& text)
 {
     m_output.append(text);
+    renderOutput();
+}
 
+void ResultDialog::renderOutput()
+{
     if (m_markdownMode) {
         QString content = m_output;
 
         // Check for ruby tags and convert them if furigana is enabled
         if (m_furiganaEnabled && RubyUtils::containsRubyTags(content)) {
-            // New approach: use RubyTextObject for proper rendering
+            // Use RubyTextObject for proper rendering
             // First, protect ruby tags with placeholders
             QString placeholderData = RubyUtils::protectRubyTags(content);
             m_outputText->setMarkdown(content);
@@ -733,21 +737,7 @@ void ResultDialog::onMarkdownToggleClicked()
 
     // Re-render the output
     if (!m_output.isEmpty()) {
-        if (m_markdownMode) {
-            QString content = m_output;
-            if (m_furiganaEnabled && RubyUtils::containsRubyTags(content)) {
-                QString placeholderData = RubyUtils::protectRubyTags(content);
-                m_outputText->setMarkdown(content);
-                QString html = m_outputText->toHtml();
-                html = RubyUtils::restoreRubyTags(html, placeholderData);
-                m_outputText->setHtml(html);
-            } else {
-                m_outputText->setMarkdown(content);
-            }
-        } else {
-            m_outputText->setPlainText(m_output);
-        }
-        m_outputText->moveCursor(QTextCursor::End);
+        renderOutput();
     }
 }
 
@@ -764,17 +754,7 @@ void ResultDialog::onFuriganaToggleClicked()
 
     // Re-render the output if in markdown mode
     if (m_markdownMode && !m_output.isEmpty()) {
-        QString content = m_output;
-        if (m_furiganaEnabled && RubyUtils::containsRubyTags(content)) {
-            QString placeholderData = RubyUtils::protectRubyTags(content);
-            m_outputText->setMarkdown(content);
-            QString html = m_outputText->toHtml();
-            html = RubyUtils::restoreRubyTags(html, placeholderData);
-            m_outputText->setHtml(html);
-        } else {
-            m_outputText->setMarkdown(content);
-        }
-        m_outputText->moveCursor(QTextCursor::End);
+        renderOutput();
     }
 }
 

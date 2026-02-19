@@ -31,6 +31,10 @@
 #include <QSplitter>
 #include "core/historymanager.h"
 
+QT_BEGIN_NAMESPACE
+class QTextDocument;
+QT_END_NAMESPACE
+
 namespace ClipLLM {
 namespace Core {
 class HistoryManager;
@@ -78,6 +82,7 @@ private:
     void applyFilter();
     void loadEntry(int row);
     void updatePreviewDisplay(const Core::HistoryEntry& entry);
+    void renderPreview(const QString& content);  // Common method for rendering with optional furigana
     QString formatDate(const QDateTime& date) const;
     QString formatDuration(double ms) const;
     void applyFontSize();

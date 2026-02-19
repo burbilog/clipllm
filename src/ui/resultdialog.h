@@ -107,6 +107,7 @@ private:
     void applyFontSize();
     void saveFontSize();
     void loadFontSize();
+    void renderOutput();  // Common method for rendering output with optional furigana
 
     Core::LLMClient* m_llmClient = nullptr;
     Core::HistoryManager* m_historyManager = nullptr;

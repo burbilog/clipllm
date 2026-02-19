@@ -633,17 +633,17 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
 <context>
     <name>ClipLLM::UI::HistoryDialog</name>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="65"/>
+        <location filename="../src/ui/historydialog.cpp" line="71"/>
         <source>ClipLLM - History</source>
         <translation>ClipLLM - Historial</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="74"/>
+        <location filename="../src/ui/historydialog.cpp" line="80"/>
         <source>Search in history...</source>
         <translation>Buscar en el historial...</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="80"/>
+        <location filename="../src/ui/historydialog.cpp" line="86"/>
         <source>Filters</source>
         <translation>Filtros</translation>
     </message>
@@ -652,19 +652,19 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <translation type="vanished">Buscar...</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="84"/>
-        <location filename="../src/ui/historydialog.cpp" line="313"/>
+        <location filename="../src/ui/historydialog.cpp" line="90"/>
+        <location filename="../src/ui/historydialog.cpp" line="319"/>
         <source>All Models</source>
         <translation>Todos los modelos</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="89"/>
-        <location filename="../src/ui/historydialog.cpp" line="320"/>
+        <location filename="../src/ui/historydialog.cpp" line="95"/>
+        <location filename="../src/ui/historydialog.cpp" line="326"/>
         <source>All Prompts</source>
         <translation>Todos los prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="93"/>
+        <location filename="../src/ui/historydialog.cpp" line="99"/>
         <source>Favorites only</source>
         <translation>Solo favoritos</translation>
     </message>
@@ -673,45 +673,45 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <translation type="vanished">Buscar:</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="111"/>
+        <location filename="../src/ui/historydialog.cpp" line="117"/>
         <source>Model:</source>
         <translation>Modelo:</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="113"/>
+        <location filename="../src/ui/historydialog.cpp" line="119"/>
         <source>Prompt:</source>
         <translation>Prompt:</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="116"/>
+        <location filename="../src/ui/historydialog.cpp" line="122"/>
         <source>From:</source>
         <translation>De:</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="118"/>
+        <location filename="../src/ui/historydialog.cpp" line="124"/>
         <source>To:</source>
         <translation>Hasta:</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="141"/>
+        <location filename="../src/ui/historydialog.cpp" line="147"/>
         <source>Preview</source>
         <translation>Vista previa</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="144"/>
-        <location filename="../src/ui/historydialog.cpp" line="148"/>
-        <location filename="../src/ui/historydialog.cpp" line="628"/>
+        <location filename="../src/ui/historydialog.cpp" line="150"/>
+        <location filename="../src/ui/historydialog.cpp" line="154"/>
+        <location filename="../src/ui/historydialog.cpp" line="675"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="148"/>
-        <location filename="../src/ui/historydialog.cpp" line="628"/>
+        <location filename="../src/ui/historydialog.cpp" line="154"/>
+        <location filename="../src/ui/historydialog.cpp" line="675"/>
         <source>Raw</source>
         <translation>Sin formato</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="177"/>
+        <location filename="../src/ui/historydialog.cpp" line="183"/>
         <source>View Details</source>
         <translation>Ver detalles</translation>
     </message>
@@ -720,63 +720,63 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <translation type="vanished">Copiar salida</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="182"/>
-        <location filename="../src/ui/historydialog.cpp" line="446"/>
+        <location filename="../src/ui/historydialog.cpp" line="188"/>
+        <location filename="../src/ui/historydialog.cpp" line="452"/>
         <source>Favorite</source>
         <translation>Favorito</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="187"/>
+        <location filename="../src/ui/historydialog.cpp" line="193"/>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="192"/>
+        <location filename="../src/ui/historydialog.cpp" line="198"/>
         <source>Export</source>
         <translation>Exportar</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="196"/>
+        <location filename="../src/ui/historydialog.cpp" line="202"/>
         <source>Clear All</source>
         <translation>Limpiar todo</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="200"/>
+        <location filename="../src/ui/historydialog.cpp" line="206"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="216"/>
+        <location filename="../src/ui/historydialog.cpp" line="222"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="217"/>
+        <location filename="../src/ui/historydialog.cpp" line="223"/>
         <source>Zoom out</source>
         <translation>Reducir</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="221"/>
+        <location filename="../src/ui/historydialog.cpp" line="227"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="222"/>
+        <location filename="../src/ui/historydialog.cpp" line="228"/>
         <source>Zoom in</source>
         <translation>Ampliar</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="247"/>
+        <location filename="../src/ui/historydialog.cpp" line="253"/>
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="248"/>
+        <location filename="../src/ui/historydialog.cpp" line="254"/>
         <source>Prompt</source>
         <translation>Prompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="249"/>
+        <location filename="../src/ui/historydialog.cpp" line="255"/>
         <source>Model</source>
         <translation>Modelo</translation>
     </message>
@@ -785,7 +785,7 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <translation type="vanished">Vista previa de entrada</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="250"/>
+        <location filename="../src/ui/historydialog.cpp" line="256"/>
         <source>Output Preview</source>
         <translation>Vista previa de salida</translation>
     </message>
@@ -794,12 +794,12 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <translation type="vanished">Duración</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="251"/>
+        <location filename="../src/ui/historydialog.cpp" line="257"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="338"/>
+        <location filename="../src/ui/historydialog.cpp" line="344"/>
         <source>Total entries: %1</source>
         <translation>Total de entradas: %1</translation>
     </message>
@@ -808,28 +808,28 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <translation type="vanished">No hay entradas de historial.\nActive &apos;Guardar automáticamente en el historial&apos; en Configuración\no guarde prompts manualmente para llenar esta lista.</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="570"/>
-        <location filename="../src/ui/historydialog.cpp" line="579"/>
+        <location filename="../src/ui/historydialog.cpp" line="576"/>
+        <location filename="../src/ui/historydialog.cpp" line="585"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="388"/>
+        <location filename="../src/ui/historydialog.cpp" line="394"/>
         <source>Showing %1 entries</source>
         <translation>Mostrando %1 entradas</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="152"/>
+        <location filename="../src/ui/historydialog.cpp" line="158"/>
         <source>Furigana</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="155"/>
+        <location filename="../src/ui/historydialog.cpp" line="161"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="283"/>
+        <location filename="../src/ui/historydialog.cpp" line="289"/>
         <source>No history entries.
 Enable &apos;Automatically save to history&apos; in Settings
 or save prompts manually to populate this list.</source>
@@ -838,54 +838,54 @@ Active &apos;Guardar automáticamente en historial&apos; en Configuración
 o guarde prompts manualmente para llenar esta lista.</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="289"/>
+        <location filename="../src/ui/historydialog.cpp" line="295"/>
         <source>Total entries: 0</source>
         <translation>Total de entradas: 0</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="608"/>
+        <location filename="../src/ui/historydialog.cpp" line="605"/>
         <source>Prompt: %1
 </source>
         <translation>Prompt: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="609"/>
+        <location filename="../src/ui/historydialog.cpp" line="606"/>
         <source>Model: %1
 </source>
         <translation>Modelo: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="610"/>
+        <location filename="../src/ui/historydialog.cpp" line="607"/>
         <source>Date: %1
 </source>
         <translation>Fecha: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="611"/>
+        <location filename="../src/ui/historydialog.cpp" line="608"/>
         <source>Duration: %1
 </source>
         <translation>Duración: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="612"/>
+        <location filename="../src/ui/historydialog.cpp" line="609"/>
         <source>Tokens: %1 input / %2 output
 </source>
         <translation>Tokens: %1 entrada / %2 salida
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="616"/>
+        <location filename="../src/ui/historydialog.cpp" line="613"/>
         <source>Input:
 </source>
         <translation>Entrada:
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="618"/>
+        <location filename="../src/ui/historydialog.cpp" line="615"/>
         <source>Output:
 </source>
         <translation>Salida:
@@ -920,7 +920,7 @@ o guarde prompts manualmente para llenar esta lista.</translation>
         <translation type="vanished">&lt;b&gt;Salida:&lt;/b&gt;&lt;br&gt;%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="446"/>
+        <location filename="../src/ui/historydialog.cpp" line="452"/>
         <source>Unfavorite</source>
         <translation>Eliminar de favoritos</translation>
     </message>
@@ -929,62 +929,62 @@ o guarde prompts manualmente para llenar esta lista.</translation>
         <translation type="vanished">Copiado al portapapeles</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="462"/>
+        <location filename="../src/ui/historydialog.cpp" line="468"/>
         <source>Delete Entry</source>
         <translation>Eliminar entrada</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="463"/>
+        <location filename="../src/ui/historydialog.cpp" line="469"/>
         <source>Are you sure you want to delete this entry?</source>
         <translation>¿Estás seguro de que deseas eliminar esta entrada?</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="491"/>
+        <location filename="../src/ui/historydialog.cpp" line="497"/>
         <source>Export History</source>
         <translation>Exportar historial</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="493"/>
+        <location filename="../src/ui/historydialog.cpp" line="499"/>
         <source>JSON Files (*.json)</source>
         <translation>Archivos JSON (*.json)</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="514"/>
+        <location filename="../src/ui/historydialog.cpp" line="520"/>
         <source>Exported to %1</source>
         <translation>Exportado a %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="516"/>
+        <location filename="../src/ui/historydialog.cpp" line="522"/>
         <source>Export Failed</source>
         <translation>Error al exportar</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="517"/>
+        <location filename="../src/ui/historydialog.cpp" line="523"/>
         <source>Failed to write to file: %1</source>
         <translation>Error al escribir en el archivo: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="525"/>
+        <location filename="../src/ui/historydialog.cpp" line="531"/>
         <source>Clear All History</source>
         <translation>Limpiar todo el historial</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="526"/>
+        <location filename="../src/ui/historydialog.cpp" line="532"/>
         <source>Are you sure you want to delete all history entries? This cannot be undone.</source>
         <translation>¿Estás seguro de que deseas eliminar todas las entradas del historial? Esto no se puede deshacer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="557"/>
+        <location filename="../src/ui/historydialog.cpp" line="563"/>
         <source>%1 ms</source>
         <translation>%1 ms</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="559"/>
+        <location filename="../src/ui/historydialog.cpp" line="565"/>
         <source>%1 s</source>
         <translation>%1 s</translation>
     </message>
     <message>
-        <location filename="../src/ui/historydialog.cpp" line="563"/>
+        <location filename="../src/ui/historydialog.cpp" line="569"/>
         <source>%1m %2s</source>
         <translation>%1m %2s</translation>
     </message>
@@ -1781,14 +1781,14 @@ Por favor elija un atajo diferente.</translation>
         <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <location filename="../src/ui/resultdialog.cpp" line="141"/>
         <location filename="../src/ui/resultdialog.cpp" line="318"/>
-        <location filename="../src/ui/resultdialog.cpp" line="732"/>
+        <location filename="../src/ui/resultdialog.cpp" line="736"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="141"/>
         <location filename="../src/ui/resultdialog.cpp" line="318"/>
-        <location filename="../src/ui/resultdialog.cpp" line="732"/>
+        <location filename="../src/ui/resultdialog.cpp" line="736"/>
         <source>Raw</source>
         <translation>Sin formato</translation>
     </message>
@@ -1804,7 +1804,7 @@ Por favor elija un atajo diferente.</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="151"/>
-        <location filename="../src/ui/resultdialog.cpp" line="791"/>
+        <location filename="../src/ui/resultdialog.cpp" line="771"/>
         <source>Show Input</source>
         <translation>Mostrar entrada</translation>
     </message>
@@ -1895,29 +1895,29 @@ Por favor elija un atajo diferente.</translation>
         <translation>Conectando...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="400"/>
+        <location filename="../src/ui/resultdialog.cpp" line="404"/>
         <source>Tokens: ~%1</source>
         <translation>Tokens: ~%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="413"/>
+        <location filename="../src/ui/resultdialog.cpp" line="417"/>
         <source>Completed in %1 seconds</source>
         <translation>Completado en %1 segundos</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="418"/>
+        <location filename="../src/ui/resultdialog.cpp" line="422"/>
         <source>Tokens: %1 input / %2 output</source>
         <translation>Tokens: %1 entrada / %2 salida</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="456"/>
-        <location filename="../src/ui/resultdialog.cpp" line="484"/>
+        <location filename="../src/ui/resultdialog.cpp" line="460"/>
+        <location filename="../src/ui/resultdialog.cpp" line="488"/>
         <source>API Error</source>
         <translation>Error de API</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="457"/>
-        <location filename="../src/ui/resultdialog.cpp" line="485"/>
+        <location filename="../src/ui/resultdialog.cpp" line="461"/>
+        <location filename="../src/ui/resultdialog.cpp" line="489"/>
         <source>An error occurred while communicating with the API:
 
 %1</source>
@@ -1926,80 +1926,80 @@ Por favor elija un atajo diferente.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="460"/>
-        <location filename="../src/ui/resultdialog.cpp" line="493"/>
+        <location filename="../src/ui/resultdialog.cpp" line="464"/>
+        <location filename="../src/ui/resultdialog.cpp" line="497"/>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="526"/>
+        <location filename="../src/ui/resultdialog.cpp" line="530"/>
         <source>Saved</source>
         <translation>Guardado</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="550"/>
+        <location filename="../src/ui/resultdialog.cpp" line="554"/>
         <source>Save Output As</source>
         <translation>Guardar salida como</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="552"/>
+        <location filename="../src/ui/resultdialog.cpp" line="556"/>
         <source>Text Files (*.txt);;All Files (*)</source>
         <translation>Archivos de texto (*.txt);;Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="579"/>
+        <location filename="../src/ui/resultdialog.cpp" line="583"/>
         <source>Saved to %1</source>
         <translation>Guardado en %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="585"/>
+        <location filename="../src/ui/resultdialog.cpp" line="589"/>
         <source>Save Failed</source>
         <translation>Error al guardar</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="586"/>
+        <location filename="../src/ui/resultdialog.cpp" line="590"/>
         <source>Could not write to file:
 %1</source>
         <translation>No se pudo escribir en el archivo:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="645"/>
+        <location filename="../src/ui/resultdialog.cpp" line="649"/>
         <source>Close During Generation</source>
         <translation>Cerrar durante generación</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="646"/>
+        <location filename="../src/ui/resultdialog.cpp" line="650"/>
         <source>A response is still being generated. Close and cancel the request?</source>
         <translation>Aún se está generando una respuesta. ¿Cerrar y cancelar la solicitud?</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="654"/>
+        <location filename="../src/ui/resultdialog.cpp" line="658"/>
         <source>Cancelling...</source>
         <translation>Cancelando...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="695"/>
+        <location filename="../src/ui/resultdialog.cpp" line="699"/>
         <source>Model is thinking...</source>
         <translation>El modelo está pensando...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="698"/>
+        <location filename="../src/ui/resultdialog.cpp" line="702"/>
         <source>Generating response...</source>
         <translation>Generando respuesta...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="707"/>
+        <location filename="../src/ui/resultdialog.cpp" line="711"/>
         <source>Traffic: %1</source>
         <translation>Tráfico: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="787"/>
+        <location filename="../src/ui/resultdialog.cpp" line="767"/>
         <source>Hide Input</source>
         <translation>Ocultar entrada</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="894"/>
+        <location filename="../src/ui/resultdialog.cpp" line="874"/>
         <source>Chain: %1</source>
         <translation>Cadena: %1</translation>
     </message>

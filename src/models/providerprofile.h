@@ -75,7 +75,8 @@ public:
     bool fromJson(const QJsonObject& json);
 
     // Validation
-    bool isValid() const;
+    bool isValid() const;      // Has id and name (valid for loading/saving)
+    bool isUsable() const;     // Has valid URL (ready to use for API calls)
 
     // Provider templates (presets for convenience)
     static QList<ProviderTemplate> availableTemplates();

@@ -268,34 +268,34 @@ Bitte fügen Sie mindestens ein Anbieterprofil in den Einstellungen hinzu, um Cl
 <context>
     <name>ClipLLM::Core::LLMClient</name>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="283"/>
+        <location filename="../src/core/llmclient.cpp" line="290"/>
         <source>API key is not set</source>
         <translation>API-Schlüssel nicht festgelegt</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="355"/>
-        <location filename="../src/core/llmclient.cpp" line="451"/>
+        <location filename="../src/core/llmclient.cpp" line="362"/>
+        <location filename="../src/core/llmclient.cpp" line="458"/>
         <source>Connection successful</source>
         <translation>Verbindung erfolgreich</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="388"/>
+        <location filename="../src/core/llmclient.cpp" line="395"/>
         <source>HTTP %1: Authentication required. Please check your API key.</source>
         <translation>HTTP %1: Authentifizierung erforderlich. Bitte überprüfen Sie Ihren API-Schlüssel.</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="404"/>
-        <location filename="../src/core/llmclient.cpp" line="454"/>
+        <location filename="../src/core/llmclient.cpp" line="411"/>
+        <location filename="../src/core/llmclient.cpp" line="461"/>
         <source>HTTP %1: %2</source>
         <translation>HTTP %1: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="499"/>
+        <location filename="../src/core/llmclient.cpp" line="506"/>
         <source>HTTP %1: </source>
         <translation>HTTP %1: </translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="534"/>
+        <location filename="../src/core/llmclient.cpp" line="541"/>
         <source>SSL error: %1</source>
         <translation>SSL-Fehler: %1</translation>
     </message>

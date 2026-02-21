@@ -279,7 +279,14 @@ void LLMClient::cancel()
 
 void LLMClient::testConnection()
 {
-    if (m_apiKey.isEmpty()) {
+    // Check if local provider (no API key needed)
+    QString urlStr = m_config.apiUrl().toString();
+    bool isLocalProvider = urlStr.contains(QStringLiteral("localhost")) ||
+                          urlStr.contains(QStringLiteral("127.0.0.1")) ||
+                          urlStr.contains(QStringLiteral("0.0.0.0")) ||
+                          urlStr.contains(QStringLiteral("::1"));
+
+    if (m_apiKey.isEmpty() && !isLocalProvider) {
         emit connectionTestResult(false, tr("API key is not set"));
         return;
     }

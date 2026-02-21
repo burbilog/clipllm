@@ -88,7 +88,15 @@ bool ProviderProfile::fromJson(const QJsonObject& json)
 
 bool ProviderProfile::isValid() const
 {
-    return !m_id.isEmpty() && !m_name.isEmpty() && m_apiUrl.isValid();
+    // Profile is valid for loading/saving if it has id and name.
+    // URL validation happens separately when trying to use the profile.
+    return !m_id.isEmpty() && !m_name.isEmpty();
+}
+
+bool ProviderProfile::isUsable() const
+{
+    // Profile is usable for API calls if it has valid URL.
+    return isValid() && m_apiUrl.isValid() && !m_apiUrl.isEmpty();
 }
 
 QList<ProviderProfile::ProviderTemplate> ProviderProfile::availableTemplates()

@@ -268,34 +268,34 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
 <context>
     <name>ClipLLM::Core::LLMClient</name>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="283"/>
+        <location filename="../src/core/llmclient.cpp" line="290"/>
         <source>API key is not set</source>
         <translation>Clé API non définie</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="355"/>
-        <location filename="../src/core/llmclient.cpp" line="451"/>
+        <location filename="../src/core/llmclient.cpp" line="362"/>
+        <location filename="../src/core/llmclient.cpp" line="458"/>
         <source>Connection successful</source>
         <translation>Connexion réussie</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="388"/>
+        <location filename="../src/core/llmclient.cpp" line="395"/>
         <source>HTTP %1: Authentication required. Please check your API key.</source>
         <translation>HTTP %1 : Authentification requise. Veuillez vérifier votre clé API.</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="404"/>
-        <location filename="../src/core/llmclient.cpp" line="454"/>
+        <location filename="../src/core/llmclient.cpp" line="411"/>
+        <location filename="../src/core/llmclient.cpp" line="461"/>
         <source>HTTP %1: %2</source>
         <translation>HTTP %1: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="499"/>
+        <location filename="../src/core/llmclient.cpp" line="506"/>
         <source>HTTP %1: </source>
         <translation>HTTP %1 : </translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="534"/>
+        <location filename="../src/core/llmclient.cpp" line="541"/>
         <source>SSL error: %1</source>
         <translation>Erreur SSL: %1</translation>
     </message>

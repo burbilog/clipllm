@@ -70,11 +70,15 @@ QJsonObject LLMMessage::toJson() const
 QJsonObject LLMRequest::toJson() const
 {
     QJsonObject obj;
-    obj[QStringLiteral("model")] = model;
-    if (temperature >= 0) {
-        obj[QStringLiteral("temperature")] = temperature;
+    // Only include model if non-empty (some local providers like llama.cpp may not need it)
+    if (!model.isEmpty()) {
+        obj[QStringLiteral("model")] = model;
     }
-    if (maxTokens >= 0) {
+    if (temperature >= 0) {
+        // Explicitly use double to avoid integer serialization for values like 0.0
+        obj[QStringLiteral("temperature")] = QJsonValue(static_cast<double>(temperature));
+    }
+    if (maxTokens > 0) {
         obj[QStringLiteral("max_tokens")] = maxTokens;
     }
     obj[QStringLiteral("stream")] = stream;
@@ -305,9 +309,9 @@ void LLMClient::testConnection()
     // Create minimal test request
     LLMRequest request;
     request.model = m_config.model();
-    request.temperature = 0.0;
-    request.maxTokens = CONNECTION_TEST_MAX_TOKENS;
-    request.stream = false;  // Non-streaming for simpler handling
+    request.temperature = -1.0;  // Don't include temperature in request
+    request.maxTokens = -1;      // Don't include max_tokens either
+    request.stream = true;       // Use streaming - some providers like llama.cpp don't support non-streaming
 
     // Simple "hi" message
     LLMMessage userMsg;
@@ -317,6 +321,15 @@ void LLMClient::testConnection()
 
     QNetworkRequest netRequest = createRequest(request);
     QByteArray body = createRequestBody(request);
+
+    // Log the test request at trace level
+    if (auto* app = qobject_cast<App*>(QApplication::instance())) {
+        if (auto* logger = app->debugLogger(); logger && logger->currentLevel() >= DebugLevel::Trace) {
+            logger->trace(QStringLiteral("=== Connection Test Request ==="));
+            logger->trace(QStringLiteral("URL: %1").arg(m_config.apiUrl().toString()));
+            logger->trace(QStringLiteral("Body: %1").arg(QString::fromUtf8(body)));
+        }
+    }
 
     m_currentReply = m_networkManager->post(netRequest, body);
 
@@ -347,21 +360,10 @@ void LLMClient::onReadyRead()
         }
     }
 
-    // For connection test, any data received means success
+    // For connection test, wait for full response instead of aborting early
+    // (some servers like llama.cpp may have issues with aborted connections)
     if (m_isTestingConnection) {
-        int httpStatus = m_currentReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        if (httpStatus >= 200 && httpStatus < 300) {
-            // Got successful response - abort and report success
-            disconnect(m_currentReply, nullptr, this, nullptr);
-            m_currentReply->abort();
-            m_currentReply->deleteLater();
-            m_currentReply = nullptr;
-
-            m_isTestingConnection = false;
-            setState(LLMClientState::Idle);
-            emit connectionTestResult(true, tr("Connection successful"));
-            return;
-        }
+        // Just accumulate the data, onFinished will handle the result
     }
 
     processStreamingChunk(data);

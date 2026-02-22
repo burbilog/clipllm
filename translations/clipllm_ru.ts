@@ -292,34 +292,33 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
 <context>
     <name>ClipLLM::Core::LLMClient</name>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="290"/>
+        <location filename="../src/core/llmclient.cpp" line="294"/>
         <source>API key is not set</source>
         <translation>API ключ не установлен</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="362"/>
-        <location filename="../src/core/llmclient.cpp" line="458"/>
+        <location filename="../src/core/llmclient.cpp" line="460"/>
         <source>Connection successful</source>
         <translation>Соединение успешно</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="395"/>
+        <location filename="../src/core/llmclient.cpp" line="397"/>
         <source>HTTP %1: Authentication required. Please check your API key.</source>
         <translation>HTTP %1: Требуется аутентификация. Проверьте ваш API ключ.</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="411"/>
-        <location filename="../src/core/llmclient.cpp" line="461"/>
+        <location filename="../src/core/llmclient.cpp" line="413"/>
+        <location filename="../src/core/llmclient.cpp" line="463"/>
         <source>HTTP %1: %2</source>
         <translation>HTTP %1: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="506"/>
+        <location filename="../src/core/llmclient.cpp" line="508"/>
         <source>HTTP %1: </source>
         <translation>HTTP %1: </translation>
     </message>
     <message>
-        <location filename="../src/core/llmclient.cpp" line="541"/>
+        <location filename="../src/core/llmclient.cpp" line="543"/>
         <source>SSL error: %1</source>
         <translation>Ошибка SSL: %1</translation>
     </message>

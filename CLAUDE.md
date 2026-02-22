@@ -8,6 +8,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 After making code changes, build the project to verify everything compiles, but wait for explicit user approval before committing.
 
+**Qt 6.2 API Compatibility Requirement:**
+
+For AppImage compatibility with Debian 12+ (which uses Qt 6.2 via Ubuntu 22.04), always use Qt 6.2 APIs:
+
+- **QCheckBox:** Use `stateChanged` instead of `checkStateChanged` (Qt 6.7+)
+- **QComboBox:** Use `currentIndexChanged` with `QOverload<int>::of()` wrapper
+- Test builds with Qt 6.2 before making releases
+- The Docker AppImage build uses Ubuntu 22.04 with Qt 6.2
+
+**Common mistakes to avoid:**
+```cpp
+// ❌ WRONG - checkStateChanged was added in Qt 6.7
+connect(checkBox, &QCheckBox::checkStateChanged, this, &MyClass::onChanged);
+
+// ✅ CORRECT - stateChanged works in Qt 6.2+
+connect(checkBox, &QCheckBox::stateChanged, this, &MyClass::onChanged);
+```
+
 ## Project Overview
 
 ClipLLM is a cross-platform LLM clipboard utility written in C++ using Qt6. It runs as a system tray service and allows users to process clipboard content (text and images) with AI prompts using global hotkeys.
@@ -389,11 +407,22 @@ make windows-zip           # Creates dist/clipllm-X.Y.Z-windows-x86_64.zip
 make windows-installer     # Creates dist/ClipLLM-X.Y.Z-windows-x86_64-setup.exe
 ```
 
-**Important - AppImage GLIBC Compatibility:**
+**Important - AppImage Compatibility:**
+
+**GLIBC Compatibility:**
 - `make linux-appimage` uses the host system's GLIBC version
 - If building on Debian 13+/Ubuntu 24.04+ (GLIBC 2.38+), the AppImage will not work on Debian 12 (GLIBC 2.36)
 - For maximum compatibility, use `make linux-appimage-docker` which builds in Ubuntu 22.04 (GLIBC 2.35)
-- Docker method requires Docker installed and creates a compatible AppImage for Debian 12+
+
+**Qt API Compatibility:**
+- Always use Qt 6.2 APIs for maximum compatibility
+- Ubuntu 22.04 (used for Docker build) has Qt 6.2
+- Avoid using newer Qt APIs that were added in later versions:
+  - Use `QCheckBox::stateChanged` instead of `checkStateChanged` (added in Qt 6.7)
+  - Use `QComboBox::currentIndexChanged` instead of `currentIndexChanged` (with int)
+- Test builds with Qt 6.2 before releasing
+
+**Summary:** Use `make linux-appimage-docker` for release builds. This ensures compatibility with Debian 12+ (GLIBC 2.36) and uses Qt 6.2 APIs.
 
 **Binary release artifacts (4 files from `dist/`):**
 - `clipllm-X.Y.Z-linux-x86_64.AppImage` - Linux AppImage

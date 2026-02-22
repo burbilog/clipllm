@@ -98,7 +98,7 @@ void HistoryDialog::setupUi()
             this, &HistoryDialog::onFilterChanged);
 
     m_favoritesOnlyCheck = new QCheckBox(tr("Favorites only"));
-    connect(m_favoritesOnlyCheck, &QCheckBox::checkStateChanged,
+    connect(m_favoritesOnlyCheck, &QCheckBox::stateChanged,
             this, &HistoryDialog::onFilterChanged);
 
     m_fromDateEdit = new QDateTimeEdit();

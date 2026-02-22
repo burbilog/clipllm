@@ -324,7 +324,7 @@ void PromptEditorDialog::setupSettingsTab()
     // Unified provider and model override
     m_overrideProviderAndModelCheck = new QCheckBox(tr("Override provider and model"));
     m_overrideProviderAndModelCheck->setToolTip(tr("When checked, use specific provider and model instead of defaults"));
-    connect(m_overrideProviderAndModelCheck, &QCheckBox::checkStateChanged,
+    connect(m_overrideProviderAndModelCheck, &QCheckBox::stateChanged,
             this, &PromptEditorDialog::onOverrideProviderAndModelChanged);
     llmLayout->addRow(m_overrideProviderAndModelCheck);
 
@@ -356,7 +356,7 @@ void PromptEditorDialog::setupSettingsTab()
 
     // Temperature field with checkbox
     m_temperatureUseDefaultCheck = new QCheckBox(tr("Use default temperature from settings"));
-    connect(m_temperatureUseDefaultCheck, &QCheckBox::checkStateChanged,
+    connect(m_temperatureUseDefaultCheck, &QCheckBox::stateChanged,
             this, &PromptEditorDialog::onTemperatureUseDefaultChanged);
     llmLayout->addRow(m_temperatureUseDefaultCheck);
 

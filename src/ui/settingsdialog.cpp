@@ -253,7 +253,7 @@ void SettingsDialog::setupGeneralTab()
     pathLayout->addWidget(copyButton);
     debugLayout->addWidget(pathWidget);
 
-    connect(m_debugEnabledCheck, &QCheckBox::checkStateChanged,
+    connect(m_debugEnabledCheck, &QCheckBox::stateChanged,
         this, [this](Qt::CheckState state) {
             bool enabled = (state == Qt::Checked);
             m_debugLevelNormalRadio->setEnabled(enabled);
@@ -395,7 +395,7 @@ void SettingsDialog::setupLLMTab()
 
     QHBoxLayout* enabledLayout = new QHBoxLayout();
     m_profileEnabledCheck = new QCheckBox(tr("Enabled"));
-    connect(m_profileEnabledCheck, &QCheckBox::checkStateChanged,
+    connect(m_profileEnabledCheck, &QCheckBox::stateChanged,
             this, &SettingsDialog::onProfileEnabledChanged);
     enabledLayout->addWidget(m_profileEnabledCheck);
     enabledLayout->addStretch();
@@ -549,7 +549,7 @@ void SettingsDialog::setupHistoryTab()
 
     m_cleanupByCountCheck = new QCheckBox(tr("Auto-cleanup by max entries"));
     m_cleanupByCountCheck->setToolTip(tr("Automatically remove oldest entries when limit is exceeded"));
-    connect(m_cleanupByCountCheck, &QCheckBox::checkStateChanged,
+    connect(m_cleanupByCountCheck, &QCheckBox::stateChanged,
             this, &SettingsDialog::onCleanupByCountChanged);
     settingsLayout->addRow(m_cleanupByCountCheck);
 
@@ -564,7 +564,7 @@ void SettingsDialog::setupHistoryTab()
 
     m_cleanupByDateCheck = new QCheckBox(tr("Auto-cleanup by date"));
     m_cleanupByDateCheck->setToolTip(tr("Automatically remove entries older than the specified number of days"));
-    connect(m_cleanupByDateCheck, &QCheckBox::checkStateChanged,
+    connect(m_cleanupByDateCheck, &QCheckBox::stateChanged,
             this, &SettingsDialog::onCleanupByDateChanged);
     settingsLayout->addRow(m_cleanupByDateCheck);
 

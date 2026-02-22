@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-02-22
+
+### Added
+
+- **Furigana Support** - Display furigana (ruby annotations) for Japanese text with configurable size
+- **CLI Options** - `--popup`, `--run`, `--list` commands for Wayland support and automation
+- **Crash Handler** - Automatic backtrace logging on crashes (Linux)
+- **/validate Slash Command** - Code review feedback analysis for AI-assisted development
+- **Save As in History** - Save history entries directly from the HistoryDialog
+
+### Changed
+
+- Refactored codebase with unique_ptr for exception safety
+- Optimized cleanupByCount from O(n²) to O(n)
+- Extracted UiUtils for window geometry management
+- Replaced magic numbers with named constants
+
+### Fixed
+
+- Fixed furigana toggle scroll position preservation
+- Fixed ruby object clipboard copy (copies kanji only)
+- Fixed Custom provider profiles without API key requirement
+- Fixed llama.cpp compatibility with connection test streaming
+- Fixed various memory management issues with proper RAII patterns
+- Completed all unfinished translations for all languages
+
+### Documentation
+
+- Added Wayland setup guide with CLI workaround
+- Updated website with screenshot capture feature info
+
 ## [1.0.1] - 2026-02-14
 
 ### Added

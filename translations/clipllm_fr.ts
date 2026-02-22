@@ -291,7 +291,7 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
     <message>
         <location filename="../src/core/llmclient.cpp" line="499"/>
         <source>401 Unauthorized: </source>
-        <translation type="unfinished"></translation>
+        <translation>401 non autorisé : </translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="508"/>
@@ -834,12 +834,12 @@ Veuillez ajouter au moins un profil de fournisseur dans les paramètres pour uti
     <message>
         <location filename="../src/ui/historydialog.cpp" line="190"/>
         <source>Save as...</source>
-        <translation type="unfinished">Enregistrer sous...</translation>
+        <translation>Enregistrer sous...</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="193"/>
         <source>Save output to a file</source>
-        <translation type="unfinished">Enregistrer la sortie dans un fichier</translation>
+        <translation>Enregistrer la sortie dans un fichier</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="297"/>
@@ -858,7 +858,7 @@ ou enregistrez les prompts manuellement pour remplir cette liste.</translation>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="565"/>
         <source>Saved to %1</source>
-        <translation type="unfinished">Enregistré sous %1</translation>
+        <translation>Enregistré sous %1</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="619"/>
@@ -1799,14 +1799,14 @@ Veuillez choisir un autre raccourci.</translation>
         <location filename="../src/ui/resultdialog.cpp" line="133"/>
         <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <location filename="../src/ui/resultdialog.cpp" line="314"/>
-        <location filename="../src/ui/resultdialog.cpp" line="688"/>
+        <location filename="../src/ui/resultdialog.cpp" line="690"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <location filename="../src/ui/resultdialog.cpp" line="314"/>
-        <location filename="../src/ui/resultdialog.cpp" line="688"/>
+        <location filename="../src/ui/resultdialog.cpp" line="690"/>
         <source>Raw</source>
         <translation>Brut</translation>
     </message>
@@ -1822,7 +1822,7 @@ Veuillez choisir un autre raccourci.</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="147"/>
-        <location filename="../src/ui/resultdialog.cpp" line="729"/>
+        <location filename="../src/ui/resultdialog.cpp" line="731"/>
         <source>Show Input</source>
         <translation>Afficher l&apos;entrée</translation>
     </message>
@@ -1993,27 +1993,27 @@ Veuillez choisir un autre raccourci.</translation>
         <translation>Annulation...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="651"/>
+        <location filename="../src/ui/resultdialog.cpp" line="653"/>
         <source>Model is thinking...</source>
         <translation>Le modèle réfléchit...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="654"/>
+        <location filename="../src/ui/resultdialog.cpp" line="656"/>
         <source>Generating response...</source>
         <translation>Génération de la réponse...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="663"/>
+        <location filename="../src/ui/resultdialog.cpp" line="665"/>
         <source>Traffic: %1</source>
         <translation>Trafic : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="725"/>
+        <location filename="../src/ui/resultdialog.cpp" line="727"/>
         <source>Hide Input</source>
         <translation>Masquer l&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="875"/>
+        <location filename="../src/ui/resultdialog.cpp" line="877"/>
         <source>Chain: %1</source>
         <translation>Chaîne : %1</translation>
     </message>
@@ -3134,23 +3134,23 @@ Veuillez choisir un autre raccourci.</translation>
     <message>
         <location filename="../src/ui/uiutils.h" line="175"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer sous</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="177"/>
         <source>Text Files (*.txt);;All Files (*)</source>
-        <translation type="unfinished">Fichiers texte (*.txt);;Tous les fichiers (*)</translation>
+        <translation>Fichiers texte (*.txt);;Tous les fichiers (*)</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="208"/>
         <source>Save Failed</source>
-        <translation type="unfinished">Échec de l&apos;enregistrement</translation>
+        <translation>Échec de l&apos;enregistrement</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="209"/>
         <source>Could not write to file:
 %1</source>
-        <translation type="unfinished">Impossible d&apos;écrire dans le fichier :
+        <translation>Impossible d&apos;écrire dans le fichier :
 %1</translation>
     </message>
 </context>

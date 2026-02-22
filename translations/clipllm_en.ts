@@ -326,7 +326,7 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
     <message>
         <location filename="../src/core/llmclient.cpp" line="499"/>
         <source>401 Unauthorized: </source>
-        <translation type="unfinished"></translation>
+        <translation>401 Unauthorized: </translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="508"/>
@@ -795,12 +795,12 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
     <message>
         <location filename="../src/ui/historydialog.cpp" line="190"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Save as...</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="193"/>
         <source>Save output to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Save output to a file</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="230"/>
@@ -867,7 +867,7 @@ or save prompts manually to populate this list.</translation>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="565"/>
         <source>Saved to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Saved to %1</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="619"/>
@@ -1846,14 +1846,14 @@ Please choose a different hotkey.</translation>
         <location filename="../src/ui/resultdialog.cpp" line="133"/>
         <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <location filename="../src/ui/resultdialog.cpp" line="314"/>
-        <location filename="../src/ui/resultdialog.cpp" line="688"/>
+        <location filename="../src/ui/resultdialog.cpp" line="690"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <location filename="../src/ui/resultdialog.cpp" line="314"/>
-        <location filename="../src/ui/resultdialog.cpp" line="688"/>
+        <location filename="../src/ui/resultdialog.cpp" line="690"/>
         <source>Raw</source>
         <translation>Raw</translation>
     </message>
@@ -1869,7 +1869,7 @@ Please choose a different hotkey.</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="147"/>
-        <location filename="../src/ui/resultdialog.cpp" line="729"/>
+        <location filename="../src/ui/resultdialog.cpp" line="731"/>
         <source>Show Input</source>
         <translation>Show Input</translation>
     </message>
@@ -1950,27 +1950,27 @@ Please choose a different hotkey.</translation>
         <translation>Cancelling...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="651"/>
+        <location filename="../src/ui/resultdialog.cpp" line="653"/>
         <source>Model is thinking...</source>
         <translation>Model is thinking...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="654"/>
+        <location filename="../src/ui/resultdialog.cpp" line="656"/>
         <source>Generating response...</source>
         <translation>Generating response...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="663"/>
+        <location filename="../src/ui/resultdialog.cpp" line="665"/>
         <source>Traffic: %1</source>
         <translation>Traffic: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="725"/>
+        <location filename="../src/ui/resultdialog.cpp" line="727"/>
         <source>Hide Input</source>
         <translation>Hide Input</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="875"/>
+        <location filename="../src/ui/resultdialog.cpp" line="877"/>
         <source>Chain: %1</source>
         <translation></translation>
     </message>
@@ -3140,28 +3140,29 @@ Click &apos;+ Add&apos; to create one.</translation>
     <message>
         <location filename="../src/main.cpp" line="213"/>
         <source>Failed to start IPC server - CLI commands will not work</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to start IPC server - CLI commands will not work</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="175"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Save As</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="177"/>
         <source>Text Files (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Text Files (*.txt);;All Files (*)</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="208"/>
         <source>Save Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Save Failed</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="209"/>
         <source>Could not write to file:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Could not write to file:
+%1</translation>
     </message>
 </context>
 </TS>

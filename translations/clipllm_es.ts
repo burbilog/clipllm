@@ -291,7 +291,7 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
     <message>
         <location filename="../src/core/llmclient.cpp" line="499"/>
         <source>401 Unauthorized: </source>
-        <translation type="unfinished"></translation>
+        <translation>401 no autorizado: </translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="508"/>
@@ -834,12 +834,12 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
     <message>
         <location filename="../src/ui/historydialog.cpp" line="190"/>
         <source>Save as...</source>
-        <translation type="unfinished">Guardar como...</translation>
+        <translation>Guardar como...</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="193"/>
         <source>Save output to a file</source>
-        <translation type="unfinished">Guardar salida en archivo</translation>
+        <translation>Guardar salida en archivo</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="297"/>
@@ -858,7 +858,7 @@ o guarde prompts manualmente para llenar esta lista.</translation>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="565"/>
         <source>Saved to %1</source>
-        <translation type="unfinished">Guardado en %1</translation>
+        <translation>Guardado en %1</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="619"/>
@@ -1799,14 +1799,14 @@ Por favor elija un atajo diferente.</translation>
         <location filename="../src/ui/resultdialog.cpp" line="133"/>
         <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <location filename="../src/ui/resultdialog.cpp" line="314"/>
-        <location filename="../src/ui/resultdialog.cpp" line="688"/>
+        <location filename="../src/ui/resultdialog.cpp" line="690"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <location filename="../src/ui/resultdialog.cpp" line="314"/>
-        <location filename="../src/ui/resultdialog.cpp" line="688"/>
+        <location filename="../src/ui/resultdialog.cpp" line="690"/>
         <source>Raw</source>
         <translation>Sin formato</translation>
     </message>
@@ -1822,7 +1822,7 @@ Por favor elija un atajo diferente.</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="147"/>
-        <location filename="../src/ui/resultdialog.cpp" line="729"/>
+        <location filename="../src/ui/resultdialog.cpp" line="731"/>
         <source>Show Input</source>
         <translation>Mostrar entrada</translation>
     </message>
@@ -1993,27 +1993,27 @@ Por favor elija un atajo diferente.</translation>
         <translation>Cancelando...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="651"/>
+        <location filename="../src/ui/resultdialog.cpp" line="653"/>
         <source>Model is thinking...</source>
         <translation>El modelo está pensando...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="654"/>
+        <location filename="../src/ui/resultdialog.cpp" line="656"/>
         <source>Generating response...</source>
         <translation>Generando respuesta...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="663"/>
+        <location filename="../src/ui/resultdialog.cpp" line="665"/>
         <source>Traffic: %1</source>
         <translation>Tráfico: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="725"/>
+        <location filename="../src/ui/resultdialog.cpp" line="727"/>
         <source>Hide Input</source>
         <translation>Ocultar entrada</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="875"/>
+        <location filename="../src/ui/resultdialog.cpp" line="877"/>
         <source>Chain: %1</source>
         <translation>Cadena: %1</translation>
     </message>
@@ -3134,23 +3134,23 @@ Por favor elija un atajo diferente.</translation>
     <message>
         <location filename="../src/ui/uiutils.h" line="175"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar como</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="177"/>
         <source>Text Files (*.txt);;All Files (*)</source>
-        <translation type="unfinished">Archivos de texto (*.txt);;Todos los archivos (*)</translation>
+        <translation>Archivos de texto (*.txt);;Todos los archivos (*)</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="208"/>
         <source>Save Failed</source>
-        <translation type="unfinished">Error al guardar</translation>
+        <translation>Error al guardar</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="209"/>
         <source>Could not write to file:
 %1</source>
-        <translation type="unfinished">No se pudo escribir en el archivo:
+        <translation>No se pudo escribir en el archivo:
 %1</translation>
     </message>
 </context>

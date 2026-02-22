@@ -315,7 +315,7 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
     <message>
         <location filename="../src/core/llmclient.cpp" line="499"/>
         <source>401 Unauthorized: </source>
-        <translation type="unfinished"></translation>
+        <translation>401 не авторизован: </translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="508"/>
@@ -848,22 +848,22 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="162"/>
         <source>Furigana</source>
-        <translation type="unfinished">Фуригана</translation>
+        <translation>Фуригана</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="165"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать фуригану (читаемые annotations) для японского текста</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="190"/>
         <source>Save as...</source>
-        <translation type="unfinished">Сохранить как...</translation>
+        <translation>Сохранить как...</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="193"/>
         <source>Save output to a file</source>
-        <translation type="unfinished">Сохранить вывод в файл</translation>
+        <translation>Сохранить вывод в файл</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="297"/>
@@ -882,7 +882,7 @@ or save prompts manually to populate this list.</source>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="565"/>
         <source>Saved to %1</source>
-        <translation type="unfinished">Сохранено в %1</translation>
+        <translation>Сохранено в %1</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="619"/>
@@ -1819,30 +1819,30 @@ Please choose a different hotkey.</source>
         <location filename="../src/ui/resultdialog.cpp" line="133"/>
         <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <location filename="../src/ui/resultdialog.cpp" line="314"/>
-        <location filename="../src/ui/resultdialog.cpp" line="688"/>
+        <location filename="../src/ui/resultdialog.cpp" line="690"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="137"/>
         <location filename="../src/ui/resultdialog.cpp" line="314"/>
-        <location filename="../src/ui/resultdialog.cpp" line="688"/>
+        <location filename="../src/ui/resultdialog.cpp" line="690"/>
         <source>Raw</source>
         <translation>Исходный</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="140"/>
         <source>Furigana</source>
-        <translation type="unfinished">Фуригана</translation>
+        <translation>Фуригана</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="143"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать фуригану (читаемые annotations) для японского текста</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="147"/>
-        <location filename="../src/ui/resultdialog.cpp" line="729"/>
+        <location filename="../src/ui/resultdialog.cpp" line="731"/>
         <source>Show Input</source>
         <translation>Показать ввод</translation>
     </message>
@@ -2013,27 +2013,27 @@ Please choose a different hotkey.</source>
         <translation>Отмена...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="651"/>
+        <location filename="../src/ui/resultdialog.cpp" line="653"/>
         <source>Model is thinking...</source>
         <translation>Модель думает...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="654"/>
+        <location filename="../src/ui/resultdialog.cpp" line="656"/>
         <source>Generating response...</source>
         <translation>Генерация ответа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="663"/>
+        <location filename="../src/ui/resultdialog.cpp" line="665"/>
         <source>Traffic: %1</source>
         <translation>Трафик: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="725"/>
+        <location filename="../src/ui/resultdialog.cpp" line="727"/>
         <source>Hide Input</source>
         <translation>Скрыть ввод</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="875"/>
+        <location filename="../src/ui/resultdialog.cpp" line="877"/>
         <source>Chain: %1</source>
         <translation>Цепочка: %1</translation>
     </message>
@@ -3165,23 +3165,23 @@ Click &apos;+ Add&apos; to create one.</source>
     <message>
         <location filename="../src/ui/uiutils.h" line="175"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить как</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="177"/>
         <source>Text Files (*.txt);;All Files (*)</source>
-        <translation type="unfinished">Текстовые файлы (*.txt);;Все файлы (*)</translation>
+        <translation>Текстовые файлы (*.txt);;Все файлы (*)</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="208"/>
         <source>Save Failed</source>
-        <translation type="unfinished">Ошибка сохранения</translation>
+        <translation>Ошибка сохранения</translation>
     </message>
     <message>
         <location filename="../src/ui/uiutils.h" line="209"/>
         <source>Could not write to file:
 %1</source>
-        <translation type="unfinished">Не удалось записать в файл:
+        <translation>Не удалось записать в файл:
 %1</translation>
     </message>
 </context>

@@ -67,17 +67,17 @@ Copie texto o una imagen primero.</translation>
 <context>
     <name>ClipLLM::App</name>
     <message>
-        <location filename="../src/core/app.cpp" line="266"/>
+        <location filename="../src/core/app.cpp" line="259"/>
         <source>System Tray</source>
         <translation>Bandeja del sistema</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="267"/>
+        <location filename="../src/core/app.cpp" line="260"/>
         <source>Couldn&apos;t detect any system tray on this system.</source>
         <translation>No se pudo detectar ninguna bandeja del sistema en este sistema.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="277"/>
+        <location filename="../src/core/app.cpp" line="270"/>
         <source>Welcome to ClipLLM</source>
         <translation>Bienvenido a ClipLLM</translation>
     </message>
@@ -86,58 +86,58 @@ Copie texto o una imagen primero.</translation>
         <translation type="vanished">ClipLLM se está ejecutando en la bandeja del sistema. Presione el atajo global para comenzar.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="278"/>
+        <location filename="../src/core/app.cpp" line="271"/>
         <source>ClipLLM is running in the system tray. Click the tray icon or configure a hotkey in settings.</source>
         <translation>ClipLLM se ejecuta en la bandeja del sistema. Haga clic en el icono o configure un atajo en la configuración.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="370"/>
+        <location filename="../src/core/app.cpp" line="363"/>
         <source>Hotkey Not Supported</source>
         <translation>Atajo de teclado no compatible</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="371"/>
+        <location filename="../src/core/app.cpp" line="364"/>
         <source>Global hotkeys are not supported on this platform (Wayland?).</source>
         <translation>Los atajos de teclado globales no son compatibles con esta plataforma (¿Wayland?).</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="396"/>
+        <location filename="../src/core/app.cpp" line="389"/>
         <source>Hotkey Registration Failed</source>
         <translation>Error en el registro del atajo de teclado</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="397"/>
+        <location filename="../src/core/app.cpp" line="390"/>
         <source>Could not register global hotkey: %1</source>
         <translation>No se pudo registrar el atajo de teclado global: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="564"/>
+        <location filename="../src/core/app.cpp" line="557"/>
         <source>Screenshot Failed</source>
         <translation>Captura de pantalla fallida</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="564"/>
+        <location filename="../src/core/app.cpp" line="557"/>
         <source>Could not capture screen</source>
         <translation>No se pudo capturar la pantalla</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="740"/>
-        <location filename="../src/core/app.cpp" line="792"/>
+        <location filename="../src/core/app.cpp" line="733"/>
+        <location filename="../src/core/app.cpp" line="785"/>
         <source>Clipboard Empty</source>
         <translation>Portapapeles vacío</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="741"/>
+        <location filename="../src/core/app.cpp" line="734"/>
         <source>No content found in clipboard.</source>
         <translation>No se encontró contenido en el portapapeles.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="764"/>
+        <location filename="../src/core/app.cpp" line="757"/>
         <source>Chain Cycle Detected</source>
         <translation>Ciclo de cadena detectado</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="765"/>
+        <location filename="../src/core/app.cpp" line="758"/>
         <source>The prompt chain would create a cycle. Execution stopped.
 
 Prompt &apos;%1&apos; was already executed in this chain.</source>
@@ -146,12 +146,12 @@ Prompt &apos;%1&apos; was already executed in this chain.</source>
 El prompt &apos;%1&apos; ya fue ejecutado en esta cadena.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="773"/>
+        <location filename="../src/core/app.cpp" line="766"/>
         <source>Chain Depth Limit</source>
         <translation>Límite de profundidad de cadena</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="774"/>
+        <location filename="../src/core/app.cpp" line="767"/>
         <source>Maximum chain depth (%1) reached. Execution stopped.
 
 You can increase this limit in Settings → General → Prompt Chains.</source>
@@ -160,7 +160,7 @@ You can increase this limit in Settings → General → Prompt Chains.</source>
 Puede aumentar este límite en Configuración → General → Cadenas de prompts.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="793"/>
+        <location filename="../src/core/app.cpp" line="786"/>
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
@@ -169,27 +169,27 @@ Copy some text or an image first.</source>
 Copie texto o una imagen primero.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="808"/>
+        <location filename="../src/core/app.cpp" line="801"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="809"/>
+        <location filename="../src/core/app.cpp" line="802"/>
         <source>Prompt not found: %1</source>
         <translation>Prompt no encontrado: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="818"/>
+        <location filename="../src/core/app.cpp" line="811"/>
         <source>Provider Error</source>
         <translation>Error de proveedor</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="1112"/>
+        <location filename="../src/core/app.cpp" line="1105"/>
         <source>Prompt Not Found</source>
         <translation>Prompt no encontrado</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="1113"/>
+        <location filename="../src/core/app.cpp" line="1106"/>
         <source>Prompt with ID &apos;%1&apos; not found.</source>
         <translation>Prompt con ID &apos;%1&apos; no encontrado.</translation>
     </message>
@@ -198,7 +198,7 @@ Copie texto o una imagen primero.</translation>
         <translation type="vanished">No hay ningún proveedor LLM válido configurado.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="819"/>
+        <location filename="../src/core/app.cpp" line="812"/>
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation>No hay ningún proveedor LLM configurado. Configure uno en Configuración.</translation>
     </message>
@@ -207,17 +207,17 @@ Copie texto o una imagen primero.</translation>
         <translation type="vanished">No se encontró el proveedor LLM predeterminado. Configure uno en Configuración.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="856"/>
+        <location filename="../src/core/app.cpp" line="849"/>
         <source>This prompt requires text content.</source>
         <translation>Este prompt requiere contenido de texto.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="207"/>
+        <location filename="../src/core/app.cpp" line="200"/>
         <source>No LLM Provider Configured</source>
         <translation>No hay proveedor LLM configurado</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="208"/>
+        <location filename="../src/core/app.cpp" line="201"/>
         <source>No LLM provider profile has been configured.
 
 Please add at least one provider profile in Settings to use ClipLLM.</source>
@@ -226,17 +226,17 @@ Please add at least one provider profile in Settings to use ClipLLM.</source>
 Por favor, agregue al menos un perfil de proveedor en Configuración para usar ClipLLM.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="836"/>
+        <location filename="../src/core/app.cpp" line="829"/>
         <source>Model Error</source>
         <translation>Error de modelo</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="837"/>
+        <location filename="../src/core/app.cpp" line="830"/>
         <source>No model selected. Please select a model in Settings → LLM → Provider Profiles.</source>
         <translation>No hay modelo seleccionado. Seleccione un modelo en Configuración → LLM → Perfiles de proveedores.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="855"/>
+        <location filename="../src/core/app.cpp" line="848"/>
         <source>Incompatible Content</source>
         <translation>Contenido incompatible</translation>
     </message>
@@ -245,7 +245,7 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <translation type="vanished">Este prompt requiere contenido %1.</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="881"/>
+        <location filename="../src/core/app.cpp" line="874"/>
         <source>[Image content]</source>
         <translation>[Contenido de imagen]</translation>
     </message>
@@ -287,6 +287,11 @@ Por favor, agregue al menos un perfil de proveedor en Configuración para usar C
         <location filename="../src/core/llmclient.cpp" line="463"/>
         <source>HTTP %1: %2</source>
         <translation>HTTP %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../src/core/llmclient.cpp" line="499"/>
+        <source>401 Unauthorized: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/core/llmclient.cpp" line="508"/>
@@ -2964,55 +2969,55 @@ Por favor elija un atajo diferente.</translation>
 <context>
     <name>ClipLLM::UI::TrayIcon</name>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="59"/>
-        <location filename="../src/ui/trayicon.cpp" line="257"/>
-        <location filename="../src/ui/trayicon.cpp" line="368"/>
+        <location filename="../src/ui/trayicon.cpp" line="60"/>
+        <location filename="../src/ui/trayicon.cpp" line="258"/>
+        <location filename="../src/ui/trayicon.cpp" line="373"/>
         <source>ClipLLM - LLM Clipboard Utility</source>
         <translation>ClipLLM - Utilidad de portapapeles LLM</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="92"/>
-        <location filename="../src/ui/trayicon.cpp" line="372"/>
+        <location filename="../src/ui/trayicon.cpp" line="93"/>
+        <location filename="../src/ui/trayicon.cpp" line="377"/>
         <source>&amp;Settings</source>
         <translation>&amp;Configuración</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="96"/>
-        <location filename="../src/ui/trayicon.cpp" line="375"/>
+        <location filename="../src/ui/trayicon.cpp" line="97"/>
+        <location filename="../src/ui/trayicon.cpp" line="380"/>
         <source>&amp;History</source>
         <translation>&amp;Historial</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="100"/>
-        <location filename="../src/ui/trayicon.cpp" line="378"/>
+        <location filename="../src/ui/trayicon.cpp" line="101"/>
+        <location filename="../src/ui/trayicon.cpp" line="383"/>
         <source>&amp;About</source>
         <translation>&amp;Acerca de</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="110"/>
-        <location filename="../src/ui/trayicon.cpp" line="381"/>
+        <location filename="../src/ui/trayicon.cpp" line="111"/>
+        <location filename="../src/ui/trayicon.cpp" line="386"/>
         <source>&amp;Quit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="118"/>
-        <location filename="../src/ui/trayicon.cpp" line="386"/>
+        <location filename="../src/ui/trayicon.cpp" line="119"/>
+        <location filename="../src/ui/trayicon.cpp" line="391"/>
         <source>&amp;Prompts</source>
         <translation>&amp;Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="140"/>
-        <location filename="../src/ui/trayicon.cpp" line="148"/>
+        <location filename="../src/ui/trayicon.cpp" line="141"/>
+        <location filename="../src/ui/trayicon.cpp" line="149"/>
         <source>No prompts available</source>
         <translation>No hay prompts disponibles</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="259"/>
+        <location filename="../src/ui/trayicon.cpp" line="260"/>
         <source>Hotkey: </source>
         <translation>Atajo de teclado: </translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="321"/>
+        <location filename="../src/ui/trayicon.cpp" line="322"/>
         <source>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Version %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; is a cross-platform clipboard utility that integrates Large Language Models (LLMs) directly into your workflow. Running as a system tray service, it allows you to process clipboard content (both text and images) with customizable AI prompts using global hotkeys.&lt;/p&gt;&lt;p&gt;Whether you need to summarize text, translate content, rewrite code, extract information from images, or perform any other AI-powered transformation, ClipLLM makes it instantly accessible with a single keypress. Copy content, press your hotkey, and get AI-generated results back in your clipboard.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Project website:&lt;/b&gt; &lt;a href=&apos;https://burbilog.github.io/clipllm/&apos;&gt;https://burbilog.github.io/clipllm/&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</source>
         <translation>&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Versión %1&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; es una utilidad de portapapeles multiplataforma que integra modelos de lenguaje grandes (LLM) directamente en tu flujo de trabajo. Funcionando como un servicio en la bandeja del sistema, te permite procesar contenido del portapapeles (tanto texto como imágenes) con prompts de IA personalizados usando atajos de teclado globales.&lt;/p&gt;&lt;p&gt;Ya sea que necesites resumir texto, traducir contenido, reescribir código, extraer información de imágenes o realizar cualquier otra transformación potenciada por IA, ClipLLM lo hace instantáneamente accesible con una sola pulsación de tecla. Copia contenido, presiona tu atajo y obtén resultados generados por IA de vuelta en tu portapapeles.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Sitio web del proyecto:&lt;/b&gt; &lt;a href=&apos;https://burbilog.github.io/clipllm/&apos;&gt;https://burbilog.github.io/clipllm/&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
@@ -3025,7 +3030,7 @@ Por favor elija un atajo diferente.</translation>
         <translation type="vanished">&lt;table border=&apos;0&apos; cellpadding=&apos;8&apos; cellspacing=&apos;0&apos;&gt;&lt;tr&gt;&lt;td align=&apos;center&apos; width=&apos;150&apos;&gt;&lt;img src=&apos;:/icons/tray-icon-128.png&apos; width=&apos;128&apos; height=&apos;128&apos;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h2 style=&apos;margin-top:0;&apos;&gt;ClipLLM&lt;/h2&gt;&lt;p&gt;&lt;b&gt;Versión 1.0.0&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;ClipLLM&lt;/b&gt; es una utilidad de portapapeles multiplataforma que integra modelos de lenguaje grandes (LLM) directamente en tu flujo de trabajo. Funcionando como un servicio en la bandeja del sistema, te permite procesar contenido del portapapeles (tanto texto como imágenes) con prompts de IA personalizados usando atajos de teclado globales.&lt;/p&gt;&lt;p&gt;Ya sea que necesites resumir texto, traducir contenido, reescribir código, extraer información de imágenes o realizar cualquier otra transformación potenciada por IA, ClipLLM lo hace instantáneamente accesible con una sola pulsación de tecla. Copia contenido, presiona tu atajo y obtén resultados generados por IA de vuelta en tu portapapeles.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © 2026 Roman V. Isaev &amp;lt;&lt;a href=&apos;mailto:rm@isaeff.net&apos;&gt;rm@isaeff.net&lt;/a&gt;&amp;gt;&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/trayicon.cpp" line="343"/>
+        <location filename="../src/ui/trayicon.cpp" line="344"/>
         <source>About ClipLLM</source>
         <translation>Acerca de ClipLLM</translation>
     </message>

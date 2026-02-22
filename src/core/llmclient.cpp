@@ -496,7 +496,7 @@ void LLMClient::onErrorOccurred(QNetworkReply::NetworkError code)
 
     // For authentication errors, add a standard marker for dialog detection
     if (code == QNetworkReply::AuthenticationRequiredError) {
-        errorMsg = QStringLiteral("401 Unauthorized: ") + errorMsg;
+        errorMsg = tr("401 Unauthorized: ") + errorMsg;
     }
 
     // Also check HTTP status attribute for other auth errors

@@ -83,7 +83,6 @@ Core::DebugLogger* App::debugLogger() const { return m_debugLogger; }
 
 App::App(int &argc, char **argv)
     : QApplication(argc, argv)
-    , m_instanceId(QByteArray::number(QRandomGenerator::global()->generate()))
 {
     setApplicationName(APPLICATION_NAME);
     setOrganizationName(APPLICATION_NAME);

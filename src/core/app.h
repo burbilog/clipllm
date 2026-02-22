@@ -192,9 +192,6 @@ private:
 
     // Chain execution context
     ChainContext m_currentChainContext;
-
-    // Single instance
-    QByteArray m_instanceId;
 };
 
 } // namespace ClipLLM

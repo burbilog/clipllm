@@ -19,10 +19,14 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-# Build docker image if not exists
-if ! docker image inspect "$IMAGE_NAME" &> /dev/null; then
-    echo "Building Docker image with Ubuntu 22.04..."
-    cat > Dockerfile.appimage << 'EOF'
+# Always rebuild image to ensure latest dependencies
+echo "Building/rebuilding Docker image with Ubuntu 22.04..."
+if docker image inspect "$IMAGE_NAME" &> /dev/null; then
+    echo "Removing old image to rebuild with updated dependencies..."
+    docker rmi "$IMAGE_NAME" || true
+fi
+
+cat > Dockerfile.appimage << 'EOF'
 FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -33,9 +37,11 @@ RUN apt-get update && apt-get install -y \
     cmake \
     qt6-base-dev \
     qt6-tools-dev \
+    qt6-tools-dev-tools \
     qt6-base-dev-tools \
     libqt6svg6-dev \
     qt6-l10n-tools \
+    libgl1-mesa-dev \
     libx11-dev \
     libxcb1-dev \
     wget \
@@ -51,9 +57,8 @@ RUN wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continu
 WORKDIR /build
 EOF
 
-    docker build -f Dockerfile.appimage -t "$IMAGE_NAME" .
-    rm -f Dockerfile.appimage
-fi
+docker build -f Dockerfile.appimage -t "$IMAGE_NAME" .
+rm -f Dockerfile.appimage
 
 # Get version
 VERSION=$(grep "^project(ClipLLM VERSION" CMakeLists.txt | sed 's/project(ClipLLM VERSION \([0-9.]*\).*/\1/')

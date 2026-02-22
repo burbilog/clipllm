@@ -1,4 +1,4 @@
-.PHONY: build translations clean test web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-tar dist dist-linux dist-windows cloc
+.PHONY: build translations clean test web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-appimage-docker linux-tar dist dist-linux dist-windows cloc
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -229,34 +229,11 @@ linux-tar: build
 		tar -czf dist/clipllm-$${VERSION}-linux-x86_64.tar.gz -C deploy-linux clipllm && \
 		ls -lh dist/clipllm-$${VERSION}-linux-x86_64.tar.gz
 
-# Create AppImage (requires linuxdeploy)
-linux-appimage: build
-	@echo "Creating AppImage..."
-	@which linuxdeploy >/dev/null 2>&1 || { echo "linuxdeploy not found. Download from https://github.com/linuxdeploy/linuxdeploy/releases"; exit 1; }
-	@mkdir -p dist
-	@rm -rf AppDir
-	@mkdir -p AppDir/usr/bin
-	@mkdir -p AppDir/usr/share/applications
-	@mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
-	@mkdir -p AppDir/usr/share/metainfo
-	# Copy binary
-	@cp build/ClipLLM AppDir/usr/bin/clipllm
-	# Copy desktop file
-	@sed 's/Exec=clipllm/Exec=clipllm/' resources/clipllm.desktop.in > AppDir/usr/share/applications/clipllm.desktop
-	# Copy icon
-	@cp resources/icons/app-icon.svg AppDir/usr/share/icons/hicolor/scalable/apps/clipllm.svg
-	# Copy translations
-	@mkdir -p AppDir/usr/share/clipllm/translations
-	@cp build/translations/*.qm AppDir/usr/share/clipllm/translations/ 2>/dev/null || true
-	# Run linuxdeploy
-	@linuxdeploy --appdir AppDir --output appimage
-	@VERSION=$$(grep "^project(ClipLLM VERSION" CMakeLists.txt | sed 's/project(ClipLLM VERSION \([0-9.]*\).*/\1/'); \
-		mv ClipLLM-x86_64.AppImage dist/clipllm-$${VERSION}-linux-x86_64.AppImage && \
-		ls -lh dist/clipllm-$${VERSION}-linux-x86_64.AppImage
-
 # Create AppImage using Docker for maximum compatibility (Ubuntu 22.04, GLIBC 2.35)
 # This produces AppImages compatible with Debian 12+ and most modern distros
-linux-appimage-docker:
+# Note: Regular AppImage build is not provided because it would use the host system's
+# GLIBC version, making it incompatible with older distributions (e.g., Debian 12).
+linux-appimage: linux-appimage-docker
 	@echo "Building AppImage in Docker container for maximum compatibility..."
 	@./scripts/build-appimage.sh
 

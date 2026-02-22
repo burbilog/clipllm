@@ -8,8 +8,8 @@ NPROCS := $(shell nproc)
 MXE_BUILD_TYPE ?= static
 
 # Current release version (for website - update this after release)
-# Override with: make web WEBSITE_VERSION=1.0.2
-WEBSITE_VERSION := 1.0.2
+# Override with: make web WEBSITE_VERSION=1.0.3
+WEBSITE_VERSION := 1.0.3
 
 build: translations
 	@echo "Building ClipLLM..."

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2026-02-22
+
+### Fixed
+
+- **AppImage GLIBC Compatibility** - AppImage now builds with GLIBC 2.35 (Ubuntu 22.04) for Debian 12+ compatibility
+- **Qt 6.2 API Compatibility** - Replaced `checkStateChanged` with `stateChanged` for Qt 6.2 compatibility
+- Fixed file ownership in Docker AppImage builds (files no longer owned by root)
+
+### Added
+
+- **Docker AppImage Build** - New `make linux-appimage-docker` target for building compatible AppImages
+- Updated documentation with Qt 6.2 compatibility requirements
+
 ## [1.0.2] - 2026-02-22
 
 ### Added

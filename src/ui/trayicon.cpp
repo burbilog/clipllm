@@ -28,6 +28,7 @@
 #include <QSize>
 #include <QStyle>
 #include <QDebug>
+#include <memory>
 
 namespace ClipLLM {
 namespace UI {
@@ -352,9 +353,13 @@ void TrayIcon::onPromptsUpdated()
 {
     // Recreate entire menu to ensure proper initialization
     // (same state as at startup, which works correctly)
-    QMenu* oldMenu = m_menu;
+    // Use unique_ptr for exception-safe cleanup
+    std::unique_ptr<QMenu> oldMenu(m_menu);
+    std::unique_ptr<QMenu> oldPromptsMenu(m_promptsMenu);
+
     createMenu();
-    delete oldMenu;
+
+    // oldMenu and oldPromptsMenu automatically deleted when going out of scope
 }
 
 void TrayIcon::onLanguageChanged(const QString& languageCode)

@@ -254,7 +254,7 @@ void SettingsDialog::setupGeneralTab()
     debugLayout->addWidget(pathWidget);
 
     connect(m_debugEnabledCheck, &QCheckBox::stateChanged,
-        this, [this](Qt::CheckState state) {
+        this, [this](int state) {
             bool enabled = (state == Qt::Checked);
             m_debugLevelNormalRadio->setEnabled(enabled);
             m_debugLevelTraceRadio->setEnabled(enabled);

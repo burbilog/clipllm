@@ -637,6 +637,8 @@ void ResultDialog::closeEvent(QCloseEvent* event)
 
 void ResultDialog::performClose()
 {
+    // Reset closing state before final close
+    m_closing = false;
     // Direct accept without going through closeEvent again
     // Auto-save was already done in closeEvent if needed
     accept();

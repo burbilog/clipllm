@@ -254,6 +254,12 @@ linux-appimage: build
 		mv ClipLLM-x86_64.AppImage dist/clipllm-$${VERSION}-linux-x86_64.AppImage && \
 		ls -lh dist/clipllm-$${VERSION}-linux-x86_64.AppImage
 
+# Create AppImage using Docker for maximum compatibility (Ubuntu 22.04, GLIBC 2.35)
+# This produces AppImages compatible with Debian 12+ and most modern distros
+linux-appimage-docker:
+	@echo "Building AppImage in Docker container for maximum compatibility..."
+	@./scripts/build-appimage.sh
+
 # =============================================================================
 # Distribution targets (build all supported packages)
 # =============================================================================

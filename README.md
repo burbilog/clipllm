@@ -34,6 +34,41 @@ Cross-platform LLM clipboard utility - Process your clipboard content with AI pr
 - **Advanced Options** - Proxy support, timeout, top-p, stream toggle
 - **Cross-platform** - Works on Linux (X11/Wayland), Windows, and macOS
 
+## Downloads
+
+Pre-built binaries are available on the [Releases](https://github.com/burbilog/clipllm/releases) page:
+
+### Linux
+
+| Package | Description | Requirements |
+|---------|-------------|--------------|
+| **AppImage** | Portable single-file bundle | GLIBC 2.35+ (Ubuntu 22.04+, Debian 12+) |
+| **Tarball** | Portable archive (requires Qt6) | `qt6-base`, `qt6-svg` |
+
+**Note:** If you encounter GLIBC version errors with AppImage on Debian 12 or older systems, please use the tarball distribution instead.
+
+**Quick start with tarball:**
+```bash
+# Install dependencies
+sudo apt install qt6-base-dev qt6-svg-tools
+
+# Extract and run
+tar -xzf clipllm-*-linux-x86_64.tar.gz
+cd clipllm
+./install.sh  # or run ./ClipLLM directly
+```
+
+### Windows
+
+| Package | Description |
+|---------|-------------|
+| **ZIP Archive** | Portable, no installation required |
+| **NSIS Installer** | Native installer with shortcuts |
+
+### macOS
+
+Build from source using Homebrew (see Building section below).
+
 ## Building
 
 ### Prerequisites

@@ -382,11 +382,18 @@ WEBSITE_VERSION := X.Y.Z
 
 ### 3. Build all distribution packages
 ```bash
-make linux-appimage    # Creates dist/clipllm-X.Y.Z-linux-x86_64.AppImage
-make linux-tar         # Creates dist/clipllm-X.Y.Z-linux-x86_64.tar.gz
-make windows-zip       # Creates dist/clipllm-X.Y.Z-windows-x86_64.zip
-make windows-installer # Creates dist/ClipLLM-X.Y.Z-windows-x86_64-setup.exe
+make linux-appimage        # Creates dist/clipllm-X.Y.Z-linux-x86_64.AppImage (uses system GLIBC)
+make linux-appimage-docker # Creates AppImage with GLIBC 2.35 for Debian 12+ compatibility (requires Docker)
+make linux-tar             # Creates dist/clipllm-X.Y.Z-linux-x86_64.tar.gz
+make windows-zip           # Creates dist/clipllm-X.Y.Z-windows-x86_64.zip
+make windows-installer     # Creates dist/ClipLLM-X.Y.Z-windows-x86_64-setup.exe
 ```
+
+**Important - AppImage GLIBC Compatibility:**
+- `make linux-appimage` uses the host system's GLIBC version
+- If building on Debian 13+/Ubuntu 24.04+ (GLIBC 2.38+), the AppImage will not work on Debian 12 (GLIBC 2.36)
+- For maximum compatibility, use `make linux-appimage-docker` which builds in Ubuntu 22.04 (GLIBC 2.35)
+- Docker method requires Docker installed and creates a compatible AppImage for Debian 12+
 
 **Binary release artifacts (4 files from `dist/`):**
 - `clipllm-X.Y.Z-linux-x86_64.AppImage` - Linux AppImage

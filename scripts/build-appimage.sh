@@ -68,6 +68,7 @@ docker run --rm -v "$(pwd)":/build -w /build "$IMAGE_NAME" bash -c "
     apt-get update -qq && apt-get install -y -qq imagemagick > /dev/null 2>&1 || true
 
     echo 'Building ClipLLM...'
+    rm -rf build
     mkdir -p build
     cd build
     cmake .. -DCMAKE_BUILD_TYPE=Release
@@ -75,7 +76,7 @@ docker run --rm -v "$(pwd)":/build -w /build "$IMAGE_NAME" bash -c "
     cd ..
 
     echo 'Creating AppImage...'
-    rm -rf AppDir
+    rm -rf AppDir ClipLLM-x86_64.AppImage
     mkdir -p AppDir/usr/bin
     mkdir -p AppDir/usr/share/applications
     mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
@@ -88,6 +89,7 @@ docker run --rm -v "$(pwd)":/build -w /build "$IMAGE_NAME" bash -c "
 
     # Run linuxdeploy with Qt plugin
     export QMAKE=/usr/lib/qt6/bin/qmake
+    mkdir -p dist
     linuxdeploy --appdir AppDir --plugin qt --output appimage
 
     mv ClipLLM-x86_64.AppImage dist/clipllm-${VERSION}-linux-x86_64.AppImage

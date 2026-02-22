@@ -79,15 +79,18 @@ void CrashHandler::writeCrashLog(int sig, void* faultAddress)
 
     // Write crash header
     const char* header = "\n========== CRASH DETECTED ==========\n";
-    (void)write(fd, header, strlen(header));
+    ssize_t ret = write(fd, header, strlen(header));
+    (void)ret;
 
     // Write signal info
     len = snprintf(buf, sizeof(buf), "Signal: %s (%d)\n", signalName(sig), sig);
-    (void)write(fd, buf, len);
+    ret = write(fd, buf, len);
+    (void)ret;
 
     // Write fault address
     len = snprintf(buf, sizeof(buf), "Fault address: %p\n", faultAddress);
-    (void)write(fd, buf, len);
+    ret = write(fd, buf, len);
+    (void)ret;
 
     // Get backtrace
     void* buffer[64];
@@ -95,14 +98,16 @@ void CrashHandler::writeCrashLog(int sig, void* faultAddress)
 
     // Write backtrace header
     const char* btHeader = "Backtrace:\n";
-    (void)write(fd, btHeader, strlen(btHeader));
+    ret = write(fd, btHeader, strlen(btHeader));
+    (void)ret;
 
     // Get human-readable symbols
     char** symbols = backtrace_symbols(buffer, size);
     if (symbols) {
         for (int i = 0; i < size; i++) {
             len = snprintf(buf, sizeof(buf), "#%d %s\n", i, symbols[i]);
-            (void)write(fd, buf, len);
+            ret = write(fd, buf, len);
+            (void)ret;
         }
         // Note: we can't safely free() in signal handler context
         // The symbols array will be cleaned up when process terminates
@@ -110,13 +115,15 @@ void CrashHandler::writeCrashLog(int sig, void* faultAddress)
         // Fallback: write raw addresses
         for (int i = 0; i < size; i++) {
             len = snprintf(buf, sizeof(buf), "#%d [%p]\n", i, buffer[i]);
-            (void)write(fd, buf, len);
+            ret = write(fd, buf, len);
+            (void)ret;
         }
     }
 
     // Write footer
     const char* footer = "=====================================\n\n";
-    (void)write(fd, footer, strlen(footer));
+    ret = write(fd, footer, strlen(footer));
+    (void)ret;
 
     // Sync to disk
     fsync(fd);

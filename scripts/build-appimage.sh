@@ -48,11 +48,21 @@ RUN apt-get update && apt-get install -y \
     file \
     && rm -rf /var/lib/apt/lists/*
 
-# Download linuxdeploy and linuxdeploy-plugin-qt
-RUN wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage -O /usr/local/bin/linuxdeploy && \
-    chmod +x /usr/local/bin/linuxdeploy && \
-    wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage -O /usr/local/bin/linuxdeploy-plugin-qt && \
-    chmod +x /usr/local/bin/linuxdeploy-plugin-qt
+# Download and extract linuxdeploy and linuxdeploy-plugin-qt
+# Extract AppImages to work without FUSE in Docker
+RUN cd /tmp && \
+    wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage && \
+    chmod +x linuxdeploy-x86_64.AppImage && \
+    ./linuxdeploy-x86_64.AppImage --appimage-extract && \
+    mv squashfs-root /opt/linuxdeploy && \
+    ln -s /opt/linuxdeploy/AppRun /usr/local/bin/linuxdeploy && \
+    wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage && \
+    chmod +x linuxdeploy-plugin-qt-x86_64.AppImage && \
+    ./linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract && \
+    mv squashfs-root /opt/linuxdeploy-plugin-qt && \
+    ln -s /opt/linuxdeploy-plugin-qt/AppRun /usr/local/bin/linuxdeploy-plugin-qt && \
+    rm -f linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage && \
+    rm -rf /tmp/squashfs-root*
 
 WORKDIR /build
 EOF
@@ -68,6 +78,9 @@ echo ""
 # Run build in container
 echo "Building ClipLLM in Docker container..."
 docker run --rm -v "$(pwd)":/build -w /build "$IMAGE_NAME" bash -c "
+    # Get host user info for correct file ownership
+    HOST_UID=\$(stat -c '%u' /build/.)
+    HOST_GID=\$(stat -c '%g' /build/.)
     set -e
     echo 'Installing ImageMagick for icon generation...'
     apt-get update -qq && apt-get install -y -qq imagemagick > /dev/null 2>&1 || true
@@ -94,11 +107,15 @@ docker run --rm -v "$(pwd)":/build -w /build "$IMAGE_NAME" bash -c "
 
     # Run linuxdeploy with Qt plugin
     export QMAKE=/usr/lib/qt6/bin/qmake
+    export LINUXDEPLOY_PLUGIN_QT=/usr/local/bin/linuxdeploy-plugin-qt
     mkdir -p dist
     linuxdeploy --appdir AppDir --plugin qt --output appimage
 
     mv ClipLLM-x86_64.AppImage dist/clipllm-${VERSION}-linux-x86_64.AppImage
     ls -lh dist/clipllm-${VERSION}-linux-x86_64.AppImage
+
+    # Fix ownership - change from root to host user
+    chown -R \${HOST_UID}:\${HOST_GID} dist/ build/ AppDir/ 2>/dev/null || true
 "
 
 echo ""

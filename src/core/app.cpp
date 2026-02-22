@@ -98,12 +98,6 @@ App::App(int &argc, char **argv)
 
 App::~App()
 {
-    // Cleanup prompt menu
-    if (m_promptMenu) {
-        delete m_promptMenu;
-        m_promptMenu = nullptr;
-    }
-
     // Cleanup global hotkey
     if (m_globalHotkey) {
         delete m_globalHotkey;
@@ -250,13 +244,13 @@ bool App::initialize(bool startMinimized)
     registerPromptHotkeys();
 
     // Create prompt menu
-    m_promptMenu = new UI::PromptMenu(m_promptManager.get(), m_clipboardManager.get(), m_configManager.get());
-    connect(m_promptMenu, &UI::PromptMenu::promptSelected, this, [this](const QString& promptId) {
+    m_promptMenu = std::make_unique<UI::PromptMenu>(m_promptManager.get(), m_clipboardManager.get(), m_configManager.get());
+    connect(m_promptMenu.get(), &UI::PromptMenu::promptSelected, this, [this](const QString& promptId) {
         onPromptSelected(promptId);
     });
-    connect(m_promptMenu, &UI::PromptMenu::settingsRequested, this, &App::showSettings);
-    connect(m_promptMenu, &UI::PromptMenu::historyRequested, this, &App::showHistory);
-    connect(m_promptMenu, &UI::PromptMenu::cancelled, []() {
+    connect(m_promptMenu.get(), &UI::PromptMenu::settingsRequested, this, &App::showSettings);
+    connect(m_promptMenu.get(), &UI::PromptMenu::historyRequested, this, &App::showHistory);
+    connect(m_promptMenu.get(), &UI::PromptMenu::cancelled, []() {
         LOG_DEBUG(QStringLiteral("Prompt menu cancelled"));
     });
 

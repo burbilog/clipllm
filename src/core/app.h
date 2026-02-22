@@ -173,7 +173,7 @@ private:
     UI::SettingsDialog* m_settingsDialog = nullptr;
     UI::HistoryDialog* m_historyDialog = nullptr;
     UI::ResultDialog* m_resultDialog = nullptr;
-    UI::PromptMenu* m_promptMenu = nullptr;
+    std::unique_ptr<UI::PromptMenu> m_promptMenu;
 
     // Translators
     std::vector<QTranslator*> m_translators;

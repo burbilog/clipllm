@@ -98,8 +98,12 @@ void HistoryDialog::setupUi()
             this, &HistoryDialog::onFilterChanged);
 
     m_favoritesOnlyCheck = new QCheckBox(tr("Favorites only"));
+    // Use stateChanged for Qt 6.2 compatibility (checkStateChanged was added in Qt 6.7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     connect(m_favoritesOnlyCheck, &QCheckBox::stateChanged,
             this, &HistoryDialog::onFilterChanged);
+#pragma GCC diagnostic pop
 
     m_fromDateEdit = new QDateTimeEdit();
     m_fromDateEdit->setCalendarPopup(true);

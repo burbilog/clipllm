@@ -253,12 +253,16 @@ void SettingsDialog::setupGeneralTab()
     pathLayout->addWidget(copyButton);
     debugLayout->addWidget(pathWidget);
 
+    // Use stateChanged for Qt 6.2 compatibility (checkStateChanged was added in Qt 6.7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     connect(m_debugEnabledCheck, &QCheckBox::stateChanged,
         this, [this](int state) {
             bool enabled = (state == Qt::Checked);
             m_debugLevelNormalRadio->setEnabled(enabled);
             m_debugLevelTraceRadio->setEnabled(enabled);
         });
+#pragma GCC diagnostic pop
 
     layout->addWidget(debugGroup);
     layout->addStretch();
@@ -395,8 +399,12 @@ void SettingsDialog::setupLLMTab()
 
     QHBoxLayout* enabledLayout = new QHBoxLayout();
     m_profileEnabledCheck = new QCheckBox(tr("Enabled"));
+    // Use stateChanged for Qt 6.2 compatibility (checkStateChanged was added in Qt 6.7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     connect(m_profileEnabledCheck, &QCheckBox::stateChanged,
             this, &SettingsDialog::onProfileEnabledChanged);
+#pragma GCC diagnostic pop
     enabledLayout->addWidget(m_profileEnabledCheck);
     enabledLayout->addStretch();
     configLayout->addRow(enabledLayout);
@@ -549,8 +557,12 @@ void SettingsDialog::setupHistoryTab()
 
     m_cleanupByCountCheck = new QCheckBox(tr("Auto-cleanup by max entries"));
     m_cleanupByCountCheck->setToolTip(tr("Automatically remove oldest entries when limit is exceeded"));
+    // Use stateChanged for Qt 6.2 compatibility (checkStateChanged was added in Qt 6.7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     connect(m_cleanupByCountCheck, &QCheckBox::stateChanged,
             this, &SettingsDialog::onCleanupByCountChanged);
+#pragma GCC diagnostic pop
     settingsLayout->addRow(m_cleanupByCountCheck);
 
     m_historyLimitSpin = new QSpinBox();
@@ -564,8 +576,12 @@ void SettingsDialog::setupHistoryTab()
 
     m_cleanupByDateCheck = new QCheckBox(tr("Auto-cleanup by date"));
     m_cleanupByDateCheck->setToolTip(tr("Automatically remove entries older than the specified number of days"));
+    // Use stateChanged for Qt 6.2 compatibility (checkStateChanged was added in Qt 6.7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     connect(m_cleanupByDateCheck, &QCheckBox::stateChanged,
             this, &SettingsDialog::onCleanupByDateChanged);
+#pragma GCC diagnostic pop
     settingsLayout->addRow(m_cleanupByDateCheck);
 
     m_daysToKeepSpin = new QSpinBox();

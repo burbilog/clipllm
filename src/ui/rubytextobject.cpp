@@ -46,7 +46,7 @@ QTextCharFormat RubyTextObject::createFormat(const QString& baseText, const QStr
     format.setObjectType(RubyObjectType);
     format.setProperty(BaseText, baseText);
     format.setProperty(RubyText, rubyText);
-    format.setVerticalAlignment(QTextCharFormat::AlignBaseline);
+    // Don't set vertical alignment - let Qt use default positioning
     return format;
 }
 
@@ -78,11 +78,12 @@ QSizeF RubyTextObject::intrinsicSize(QTextDocument* doc, int posInDocument,
     // Use the wider of the two
     qreal width = qMax(baseWidth, rubyWidth);
 
-    // Height should be just the base text height to keep it on baseline
-    // Ruby will be drawn above
+    // Height must include both ruby (furigana) above and base text below
+    // This prevents ruby from overlapping with the previous line during word wrap
+    qreal rubyHeight = rubyFm.height();
     qreal baseHeight = baseFm.height();
 
-    return QSizeF(width, baseHeight);
+    return QSizeF(width, rubyHeight + baseHeight);
 }
 
 void RubyTextObject::drawObject(QPainter* painter, const QRectF& rect,
@@ -113,17 +114,21 @@ void RubyTextObject::drawObject(QPainter* painter, const QRectF& rect,
     qreal rubyWidth = rubyFm.horizontalAdvance(rubyText);
     qreal maxWidth = qMax(baseWidth, rubyWidth);
 
+    // Debug: Qt positions object, rect is the allocated space
+    // For default alignment, we need to position base text on the text baseline
+    // The baseline should be at rect.bottom() for standard positioning
+
+    // Draw base text (kanji) - baseline at rect.bottom()
+    painter->setFont(baseFont);
+    qreal baseX = rect.x() + (maxWidth - baseWidth) / 2.0;
+    qreal baseY = rect.bottom();  // Try bottom directly as baseline
+    painter->drawText(QPointF(baseX, baseY), baseText);
+
     // Draw ruby text (furigana) above the base text
     painter->setFont(rubyFont);
     qreal rubyX = rect.x() + (maxWidth - rubyWidth) / 2.0;
-    qreal rubyY = rect.y() - rubyFm.descent();  // Just above the rect
+    qreal rubyY = baseY - baseFm.ascent() - rubyFm.descent();
     painter->drawText(QPointF(rubyX, rubyY), rubyText);
-
-    // Draw base text (kanji) at normal baseline position
-    painter->setFont(baseFont);
-    qreal baseX = rect.x() + (maxWidth - baseWidth) / 2.0;
-    qreal baseY = rect.y() + baseFm.ascent();
-    painter->drawText(QPointF(baseX, baseY), baseText);
 }
 
 void RubyTextObject::insertRubyText(QTextCursor& cursor, const QString& text)

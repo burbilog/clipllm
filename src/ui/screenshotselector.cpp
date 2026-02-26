@@ -138,14 +138,18 @@ void ScreenshotSelector::paintEvent(QPaintEvent* event)
         QFontMetrics fm(font);
 
         // Position size text at top-left corner of selection
+        // textPos is the baseline position for drawText()
         QPoint textPos = m_selectedRect.topLeft() + QPoint(5, fm.height());
         if (textPos.y() < fm.height() + 5) {
             textPos.setY(m_selectedRect.top() + fm.height() + 5);
         }
 
-        // Draw text background
+        // Draw text background - properly align with baseline
+        // boundingRect() returns rect relative to text origin, need to adjust for baseline
         QRect textRect = fm.boundingRect(sizeText);
-        textRect.moveTopLeft(textPos);
+        // Move rect so its baseline aligns with textPos.y()
+        textRect.moveBottom(textPos.y() + fm.descent());
+        textRect.moveLeft(textPos.x());
         textRect.adjust(-4, -2, 4, 2);
         painter.fillRect(textRect, QColor(0, 0, 0, 180));
 

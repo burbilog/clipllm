@@ -225,6 +225,7 @@ Function fnc_Language_Show
   SendMessage $cmb_Language ${CB_ADDSTRING} 0 "STR:Deutsch"
   SendMessage $cmb_Language ${CB_ADDSTRING} 0 "STR:Français"
   SendMessage $cmb_Language ${CB_ADDSTRING} 0 "STR:Español"
+  SendMessage $cmb_Language ${CB_ADDSTRING} 0 "STR:日本語"
 
   ; Auto-select based on system locale
   System::Call "kernel32::GetUserDefaultLangID() i .r0"
@@ -237,6 +238,8 @@ Function fnc_Language_Show
       SendMessage $cmb_Language ${CB_SETCURSEL} 3 0
     ${Case} 0x0c0a  ; Spanish (0c0a)
       SendMessage $cmb_Language ${CB_SETCURSEL} 4 0
+    ${Case} 0x0411  ; Japanese (0411)
+      SendMessage $cmb_Language ${CB_SETCURSEL} 5 0
     ${Default}
       SendMessage $cmb_Language ${CB_SETCURSEL} 0 0  ; English default
   ${EndSwitch}
@@ -260,6 +263,8 @@ Function fnc_Language_Leave
       StrCpy $hCtl_Language "fr"
     ${Case} 4
       StrCpy $hCtl_Language "es"
+    ${Case} 5
+      StrCpy $hCtl_Language "ja"
   ${EndSwitch}
 FunctionEnd
 

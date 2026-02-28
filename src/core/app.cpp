@@ -345,7 +345,7 @@ QString App::getDefaultLanguage() const
     // Check if we support this language
     QStringList supportedLanguages = {QStringLiteral("en"), QStringLiteral("ru"),
                                        QStringLiteral("de"), QStringLiteral("fr"),
-                                       QStringLiteral("es")};
+                                       QStringLiteral("es"), QStringLiteral("ja")};
 
     if (supportedLanguages.contains(language)) {
         return language;

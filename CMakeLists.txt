@@ -316,6 +316,7 @@ set(TS_FILES
     translations/clipllm_de.ts
     translations/clipllm_fr.ts
     translations/clipllm_es.ts
+    translations/clipllm_ja.ts
 )
 
 set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/translations)

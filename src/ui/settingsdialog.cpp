@@ -752,6 +752,7 @@ void SettingsDialog::loadLanguages()
     m_languageCombo->addItem(tr("German"), QStringLiteral("de"));
     m_languageCombo->addItem(tr("French"), QStringLiteral("fr"));
     m_languageCombo->addItem(tr("Spanish"), QStringLiteral("es"));
+    m_languageCombo->addItem(tr("Japanese"), QStringLiteral("ja"));
     m_languageCombo->blockSignals(false);
 }
 

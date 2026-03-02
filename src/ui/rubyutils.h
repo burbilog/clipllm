@@ -19,6 +19,8 @@
 
 #include <QString>
 
+class QTextDocument;
+
 namespace ClipLLM {
 namespace UI {
 namespace RubyUtils {
@@ -82,6 +84,16 @@ QString protectRubyTags(QString& text);
  * @return HTML with ruby tags converted to styled spans
  */
 QString restoreRubyTags(const QString& html, const QString& placeholderData);
+
+/**
+ * Replace ruby placeholders in a QTextDocument with ruby objects.
+ * Call after setMarkdown() with protected content.
+ *
+ * @param doc The QTextDocument to process
+ * @param placeholderData Data from protectRubyTags() call
+ * @return Number of placeholders replaced
+ */
+int replaceRubyPlaceholders(QTextDocument* doc, const QString& placeholderData);
 
 } // namespace RubyUtils
 } // namespace UI

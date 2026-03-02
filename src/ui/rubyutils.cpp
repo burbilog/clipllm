@@ -15,12 +15,17 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #include "rubyutils.h"
+#include "rubytextobject.h"
 #include "core/app.h"
 #include "core/configmanager.h"
 #include <QRegularExpression>
 #include <QStringBuilder>
 #include <QTextDocument>
+#include <QTextBlock>
+#include <QTextFragment>
+#include <QTextCursor>
 #include <QApplication>
+#include <algorithm>
 
 namespace ClipLLM {
 namespace UI {
@@ -205,6 +210,106 @@ QString restoreRubyTags(const QString& html, const QString& placeholderData)
     }
 
     return result;
+}
+
+int replaceRubyPlaceholders(QTextDocument* doc, const QString& placeholderData)
+{
+    if (placeholderData.isEmpty()) {
+        return 0;
+    }
+
+    // Parse placeholder data
+    QStringList rubyDataList = placeholderData.split(QStringLiteral(";"));
+    QVector<QPair<QString, QString>> rubyList; // (base, ruby)
+
+    for (int i = 0; i < rubyDataList.size(); ++i) {
+        if (rubyDataList[i].isEmpty()) continue;
+        QStringList parts = rubyDataList[i].split(QStringLiteral("|"));
+        if (parts.size() == 2) {
+            QByteArray baseBytes = QByteArray::fromHex(parts[0].toLatin1());
+            QByteArray rubyBytes = QByteArray::fromHex(parts[1].toLatin1());
+            rubyList.append(qMakePair(QString::fromUtf8(baseBytes),
+                                      QString::fromUtf8(rubyBytes)));
+        }
+    }
+
+    // Collect all placeholder positions first, then replace from end to start
+    // Placeholder format: RB<5 digits>END (e.g., RB00000END, RB00001END)
+    struct PlaceholderInfo {
+        int position;
+        int rubyIndex;
+    };
+    QVector<PlaceholderInfo> placeholders;
+
+    QTextBlock block = doc->begin();
+    while (block.isValid()) {
+        QTextBlock::iterator it;
+        for (it = block.begin(); !(it.atEnd()); ++it) {
+            QTextFragment fragment = it.fragment();
+            if (!fragment.isValid())
+                continue;
+
+            QString text = fragment.text();
+            int fragmentStart = fragment.position();
+
+            // Search for placeholder pattern in this fragment
+            int searchPos = 0;
+            while (searchPos < text.length()) {
+                int rbPos = text.indexOf(QStringLiteral("RB"), searchPos);
+                if (rbPos == -1) break;
+
+                int endPos = text.indexOf(QStringLiteral("END"), rbPos);
+                if (endPos == -1) {
+                    searchPos = rbPos + 2;
+                    continue;
+                }
+
+                // Verify the placeholder has correct length (RB + 5 digits + END = 10 chars)
+                if (endPos - rbPos != 7) { // "RB" + 5 digits = 7, then "END"
+                    searchPos = rbPos + 2;
+                    continue;
+                }
+
+                // Extract index from placeholder
+                QString indexStr = text.mid(rbPos + 2, 5);
+                bool ok;
+                int idx = indexStr.toInt(&ok);
+
+                if (ok && idx >= 0 && idx < rubyList.size()) {
+                    placeholders.append({fragmentStart + rbPos, idx});
+                }
+
+                searchPos = endPos + 3; // Move past "END"
+            }
+        }
+        block = block.next();
+    }
+
+    // Sort placeholders by position in descending order (replace from end)
+    std::sort(placeholders.begin(), placeholders.end(),
+        [](const PlaceholderInfo& a, const PlaceholderInfo& b) {
+            return a.position > b.position;
+        });
+
+    // Now replace all placeholders
+    QTextCursor cursor(doc);
+    cursor.beginEditBlock();
+
+    int replacedCount = 0;
+    for (const auto& ph : placeholders) {
+        cursor.setPosition(ph.position);
+        cursor.setPosition(ph.position + 10, QTextCursor::KeepAnchor);
+
+        const auto& rubyData = rubyList[ph.rubyIndex];
+        QTextCharFormat rubyFormat = RubyTextObject::createFormat(
+            rubyData.first, rubyData.second);
+        cursor.insertText(QString(QChar::ObjectReplacementCharacter), rubyFormat);
+        replacedCount++;
+    }
+
+    cursor.endEditBlock();
+
+    return replacedCount;
 }
 
 } // namespace RubyUtils

@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-03-02
+
+### Added
+
+- **Japanese Language Support** - Full Japanese UI translation
+
+### Fixed
+
+- **Furigana Rendering** - Fixed ruby (furigana) rendering for documents with many ruby tags
+- **Furigana Line Height** - Preserve line height when toggling furigana visibility
+- **Ruby Word Wrap** - Prevent ruby overlap on previous line during word wrap
+- **Screenshot Selector** - Align screenshot size label background with text baseline
+
+### Changed
+
+- Extracted ruby placeholder replacement into shared function for better maintainability
+- Removed native AppImage build (keep only Docker build for GLIBC compatibility)
+
 ## [1.0.3] - 2026-02-22
 
 ### Fixed

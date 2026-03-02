@@ -145,9 +145,9 @@ QString protectRubyTags(QString& text)
         // Store data as hex-encoded strings separated by |
         rubyData.append(toHex(baseText) % QStringLiteral("|") % toHex(rubyText));
 
-        // Create placeholder that looks like a word - markdown won't touch it
-        // Format: RxHEX where x is index
-        QString placeholder = QStringLiteral("R%1X").arg(index);
+        // Use unique placeholder format with zero-padded index
+        // Format: RB<zero-padded 5 digits>END
+        QString placeholder = QStringLiteral("RB%1END").arg(index, 5, 10, QLatin1Char('0'));
 
         replacements.append({static_cast<int>(match.capturedStart()),
                             static_cast<int>(match.capturedLength()),

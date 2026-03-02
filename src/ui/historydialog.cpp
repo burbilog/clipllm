@@ -643,24 +643,20 @@ void HistoryDialog::renderPreview(const QString& content)
 {
     // Check for ruby tags
     if (RubyUtils::containsRubyTags(content)) {
-        if (m_furiganaEnabled) {
-            // First, protect ruby tags with unique placeholders
-            QString mutableContent = content;
-            QString placeholderData = RubyUtils::protectRubyTags(mutableContent);
+        // Always use ruby objects to preserve line height
+        // First, protect ruby tags with unique placeholders
+        QString mutableContent = content;
+        QString placeholderData = RubyUtils::protectRubyTags(mutableContent);
 
-            // Parse markdown - this preserves all formatting
-            m_previewText->setMarkdown(mutableContent);
+        // Parse markdown - this preserves all formatting
+        m_previewText->setMarkdown(mutableContent);
 
-            // Replace placeholders with ruby objects
-            int replacedCount = RubyUtils::replaceRubyPlaceholders(
-                m_previewText->document(), placeholderData);
+        // Replace placeholders with ruby objects
+        // Pass furigana visibility flag - height is reserved regardless
+        int replacedCount = RubyUtils::replaceRubyPlaceholders(
+            m_previewText->document(), placeholderData, m_furiganaEnabled);
 
-            qDebug("History ruby rendering: %d placeholders replaced", replacedCount);
-        } else {
-            // Furigana disabled - strip ruby tags, keep only base text
-            QString stripped = RubyUtils::stripRubyTags(content);
-            m_previewText->setMarkdown(stripped);
-        }
+        qDebug("History ruby rendering: %d placeholders replaced", replacedCount);
     } else {
         m_previewText->setMarkdown(content);
     }

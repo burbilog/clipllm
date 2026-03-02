@@ -43,7 +43,8 @@ public:
     // Property IDs for QTextCharFormat
     enum {
         BaseText = 1,   // The kanji text
-        RubyText = 2    // The furigana annotation
+        RubyText = 2,   // The furigana annotation
+        RubyVisible = 3 // Whether furigana is visible (height is reserved regardless)
     };
 
     explicit RubyTextObject(QObject* parent = nullptr);
@@ -65,9 +66,11 @@ public:
      * Create a QTextCharFormat for a ruby annotation.
      * @param baseText The kanji/base text
      * @param rubyText The furigana annotation
+     * @param rubyVisible Whether furigana text is visible (height is always reserved)
      * @return A format that can be inserted into a QTextDocument
      */
-    static QTextCharFormat createFormat(const QString& baseText, const QString& rubyText);
+    static QTextCharFormat createFormat(const QString& baseText, const QString& rubyText,
+                                        bool rubyVisible = true);
 
     /**
      * Process text containing <ruby> tags and convert to formatted text.

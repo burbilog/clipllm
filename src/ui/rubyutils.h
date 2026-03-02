@@ -91,9 +91,11 @@ QString restoreRubyTags(const QString& html, const QString& placeholderData);
  *
  * @param doc The QTextDocument to process
  * @param placeholderData Data from protectRubyTags() call
+ * @param rubyVisible Whether furigana text should be visible (height is always reserved)
  * @return Number of placeholders replaced
  */
-int replaceRubyPlaceholders(QTextDocument* doc, const QString& placeholderData);
+int replaceRubyPlaceholders(QTextDocument* doc, const QString& placeholderData,
+                            bool rubyVisible = true);
 
 } // namespace RubyUtils
 } // namespace UI

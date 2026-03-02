@@ -40,12 +40,14 @@ void RubyTextObject::registerWithDocument(QTextDocument* doc)
     }
 }
 
-QTextCharFormat RubyTextObject::createFormat(const QString& baseText, const QString& rubyText)
+QTextCharFormat RubyTextObject::createFormat(const QString& baseText, const QString& rubyText,
+                                             bool rubyVisible)
 {
     QTextCharFormat format;
     format.setObjectType(RubyObjectType);
     format.setProperty(BaseText, baseText);
     format.setProperty(RubyText, rubyText);
+    format.setProperty(RubyVisible, rubyVisible);
     // Don't set vertical alignment - let Qt use default positioning
     return format;
 }
@@ -95,6 +97,7 @@ void RubyTextObject::drawObject(QPainter* painter, const QRectF& rect,
 
     QString baseText = format.property(BaseText).toString();
     QString rubyText = format.property(RubyText).toString();
+    bool rubyVisible = format.property(RubyVisible).toBool();
 
     // Get furigana size from config (default 45%)
     int furiganaSizePercent = 45;
@@ -124,11 +127,13 @@ void RubyTextObject::drawObject(QPainter* painter, const QRectF& rect,
     qreal baseY = rect.bottom();  // Try bottom directly as baseline
     painter->drawText(QPointF(baseX, baseY), baseText);
 
-    // Draw ruby text (furigana) above the base text
-    painter->setFont(rubyFont);
-    qreal rubyX = rect.x() + (maxWidth - rubyWidth) / 2.0;
-    qreal rubyY = baseY - baseFm.ascent() - rubyFm.descent();
-    painter->drawText(QPointF(rubyX, rubyY), rubyText);
+    // Draw ruby text (furigana) above the base text only if visible
+    if (rubyVisible) {
+        painter->setFont(rubyFont);
+        qreal rubyX = rect.x() + (maxWidth - rubyWidth) / 2.0;
+        qreal rubyY = baseY - baseFm.ascent() - rubyFm.descent();
+        painter->drawText(QPointF(rubyX, rubyY), rubyText);
+    }
 }
 
 void RubyTextObject::insertRubyText(QTextCursor& cursor, const QString& text)

@@ -343,23 +343,19 @@ void ResultDialog::renderOutput()
 
         // Check for ruby tags
         if (RubyUtils::containsRubyTags(content)) {
-            if (m_furiganaEnabled) {
-                // First, protect ruby tags with unique placeholders
-                QString placeholderData = RubyUtils::protectRubyTags(content);
+            // Always use ruby objects to preserve line height
+            // First, protect ruby tags with unique placeholders
+            QString placeholderData = RubyUtils::protectRubyTags(content);
 
-                // Parse markdown - this preserves all formatting
-                m_outputText->setMarkdown(content);
+            // Parse markdown - this preserves all formatting
+            m_outputText->setMarkdown(content);
 
-                // Replace placeholders with ruby objects
-                int replacedCount = RubyUtils::replaceRubyPlaceholders(
-                    m_outputText->document(), placeholderData);
+            // Replace placeholders with ruby objects
+            // Pass furigana visibility flag - height is reserved regardless
+            int replacedCount = RubyUtils::replaceRubyPlaceholders(
+                m_outputText->document(), placeholderData, m_furiganaEnabled);
 
-                qDebug("Ruby rendering: %d placeholders replaced", replacedCount);
-            } else {
-                // Furigana disabled - strip ruby tags, keep only base text
-                QString stripped = RubyUtils::stripRubyTags(content);
-                m_outputText->setMarkdown(stripped);
-            }
+            qDebug("Ruby rendering: %d placeholders replaced", replacedCount);
         } else {
             m_outputText->setMarkdown(content);
         }

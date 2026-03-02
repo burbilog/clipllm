@@ -212,7 +212,8 @@ QString restoreRubyTags(const QString& html, const QString& placeholderData)
     return result;
 }
 
-int replaceRubyPlaceholders(QTextDocument* doc, const QString& placeholderData)
+int replaceRubyPlaceholders(QTextDocument* doc, const QString& placeholderData,
+                            bool rubyVisible)
 {
     if (placeholderData.isEmpty()) {
         return 0;
@@ -302,7 +303,7 @@ int replaceRubyPlaceholders(QTextDocument* doc, const QString& placeholderData)
 
         const auto& rubyData = rubyList[ph.rubyIndex];
         QTextCharFormat rubyFormat = RubyTextObject::createFormat(
-            rubyData.first, rubyData.second);
+            rubyData.first, rubyData.second, rubyVisible);
         cursor.insertText(QString(QChar::ObjectReplacementCharacter), rubyFormat);
         replacedCount++;
     }

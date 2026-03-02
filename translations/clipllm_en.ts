@@ -772,13 +772,13 @@ Please add at least one provider profile in Settings to use ClipLLM.</translatio
     <message>
         <location filename="../src/ui/historydialog.cpp" line="160"/>
         <location filename="../src/ui/historydialog.cpp" line="164"/>
-        <location filename="../src/ui/historydialog.cpp" line="672"/>
+        <location filename="../src/ui/historydialog.cpp" line="668"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="164"/>
-        <location filename="../src/ui/historydialog.cpp" line="672"/>
+        <location filename="../src/ui/historydialog.cpp" line="668"/>
         <source>Raw</source>
         <translation>Raw</translation>
     </message>
@@ -862,7 +862,7 @@ or save prompts manually to populate this list.</translation>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="309"/>
         <source>Total entries: 0</source>
-        <translation></translation>
+        <translation>Total entries: 0</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="571"/>
@@ -1605,7 +1605,7 @@ Please choose a different hotkey.</translation>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="1439"/>
         <source>Warning: Target prompt is part of an existing cycle!</source>
-        <translation></translation>
+        <translation>Warning: Target prompt is part of an existing cycle!</translation>
     </message>
     <message>
         <location filename="../src/ui/prompteditordialog.cpp" line="339"/>
@@ -1846,14 +1846,14 @@ Please choose a different hotkey.</translation>
         <location filename="../src/ui/resultdialog.cpp" line="135"/>
         <location filename="../src/ui/resultdialog.cpp" line="139"/>
         <location filename="../src/ui/resultdialog.cpp" line="316"/>
-        <location filename="../src/ui/resultdialog.cpp" line="664"/>
+        <location filename="../src/ui/resultdialog.cpp" line="660"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="139"/>
         <location filename="../src/ui/resultdialog.cpp" line="316"/>
-        <location filename="../src/ui/resultdialog.cpp" line="664"/>
+        <location filename="../src/ui/resultdialog.cpp" line="660"/>
         <source>Raw</source>
         <translation>Raw</translation>
     </message>
@@ -1869,24 +1869,24 @@ Please choose a different hotkey.</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="149"/>
-        <location filename="../src/ui/resultdialog.cpp" line="705"/>
+        <location filename="../src/ui/resultdialog.cpp" line="701"/>
         <source>Show Input</source>
         <translation>Show Input</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="202"/>
         <source>Save as...</source>
-        <translation></translation>
+        <translation>Save as...</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="205"/>
         <source>Save output to a file</source>
-        <translation></translation>
+        <translation>Save output to a file</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="213"/>
         <source>Continue</source>
-        <translation></translation>
+        <translation>Continue</translation>
     </message>
     <message>
         <location filename="../src/ui/resultdialog.cpp" line="224"/>
@@ -1914,14 +1914,14 @@ Please choose a different hotkey.</translation>
         <translation>Model: %1 / %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="436"/>
-        <location filename="../src/ui/resultdialog.cpp" line="464"/>
+        <location filename="../src/ui/resultdialog.cpp" line="432"/>
+        <location filename="../src/ui/resultdialog.cpp" line="460"/>
         <source>API Error</source>
         <translation>API Error</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="437"/>
-        <location filename="../src/ui/resultdialog.cpp" line="465"/>
+        <location filename="../src/ui/resultdialog.cpp" line="433"/>
+        <location filename="../src/ui/resultdialog.cpp" line="461"/>
         <source>An error occurred while communicating with the API:
 
 %1</source>
@@ -1930,49 +1930,49 @@ Please choose a different hotkey.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="516"/>
+        <location filename="../src/ui/resultdialog.cpp" line="512"/>
         <source>Saved to %1</source>
-        <translation></translation>
+        <translation>Saved to %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="575"/>
+        <location filename="../src/ui/resultdialog.cpp" line="571"/>
         <source>Close During Generation</source>
         <translation>Close During Generation</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="576"/>
+        <location filename="../src/ui/resultdialog.cpp" line="572"/>
         <source>A response is still being generated. Close and cancel the request?</source>
         <translation>A response is still being generated. Close and cancel the request?</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="584"/>
+        <location filename="../src/ui/resultdialog.cpp" line="580"/>
         <source>Cancelling...</source>
         <translation>Cancelling...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="627"/>
+        <location filename="../src/ui/resultdialog.cpp" line="623"/>
         <source>Model is thinking...</source>
         <translation>Model is thinking...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="630"/>
+        <location filename="../src/ui/resultdialog.cpp" line="626"/>
         <source>Generating response...</source>
         <translation>Generating response...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="639"/>
+        <location filename="../src/ui/resultdialog.cpp" line="635"/>
         <source>Traffic: %1</source>
         <translation>Traffic: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="701"/>
+        <location filename="../src/ui/resultdialog.cpp" line="697"/>
         <source>Hide Input</source>
         <translation>Hide Input</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="851"/>
+        <location filename="../src/ui/resultdialog.cpp" line="847"/>
         <source>Chain: %1</source>
-        <translation></translation>
+        <translation>Chain: %1</translation>
     </message>
     <message>
         <source>Processing...</source>
@@ -2013,7 +2013,7 @@ Please choose a different hotkey.</translation>
         <translation>Connecting...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="393"/>
+        <location filename="../src/ui/resultdialog.cpp" line="389"/>
         <source>Completed in %1 seconds</source>
         <translation>Completed in %1 seconds</translation>
     </message>
@@ -2029,13 +2029,13 @@ Please choose a different hotkey.</translation>
         <translation>Copy &amp;&amp; close</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="398"/>
+        <location filename="../src/ui/resultdialog.cpp" line="394"/>
         <source>Tokens: %1 input / %2 output</source>
         <translation>Tokens: %1 input / %2 output</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="440"/>
-        <location filename="../src/ui/resultdialog.cpp" line="473"/>
+        <location filename="../src/ui/resultdialog.cpp" line="436"/>
+        <location filename="../src/ui/resultdialog.cpp" line="469"/>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
@@ -2048,7 +2048,7 @@ Please choose a different hotkey.</translation>
         <translation type="vanished">Completed</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="506"/>
+        <location filename="../src/ui/resultdialog.cpp" line="502"/>
         <source>Saved</source>
         <translation>Saved</translation>
     </message>
@@ -2058,7 +2058,7 @@ Please choose a different hotkey.</translation>
         <translation>ClipLLM - %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="380"/>
+        <location filename="../src/ui/resultdialog.cpp" line="376"/>
         <source>Tokens: ~%1</source>
         <translation>Tokens: ~%1</translation>
     </message>
@@ -2147,17 +2147,17 @@ Right-click = cancel</translation>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="183"/>
         <source>Prompt Chains</source>
-        <translation></translation>
+        <translation>Prompt Chains</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="189"/>
         <source>Maximum number of prompts in a chain to prevent infinite loops</source>
-        <translation></translation>
+        <translation>Maximum number of prompts in a chain to prevent infinite loops</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="190"/>
         <source>Maximum Chain Depth:</source>
-        <translation></translation>
+        <translation>Maximum Chain Depth:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="195"/>
@@ -2172,57 +2172,57 @@ Right-click = cancel</translation>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="202"/>
         <source>Size of furigana text relative to base text (20-80%)</source>
-        <translation></translation>
+        <translation>Size of furigana text relative to base text (20-80%)</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="203"/>
         <source>Furigana Size:</source>
-        <translation></translation>
+        <translation>Furigana Size:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="208"/>
         <source>Debug</source>
-        <translation></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="211"/>
         <source>Record debug messages</source>
-        <translation></translation>
+        <translation>Record debug messages</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="212"/>
         <source>Write debug information to debug.log file in the configuration directory</source>
-        <translation></translation>
+        <translation>Write debug information to debug.log file in the configuration directory</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="220"/>
         <source>Normal</source>
-        <translation></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="221"/>
         <source>Basic debug information</source>
-        <translation></translation>
+        <translation>Basic debug information</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="222"/>
         <source>Trace</source>
-        <translation></translation>
+        <translation>Trace</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="223"/>
         <source>Full request/response logging for LLM</source>
-        <translation></translation>
+        <translation>Full request/response logging for LLM</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="232"/>
         <source>Debug Level:</source>
-        <translation></translation>
+        <translation>Debug Level:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="243"/>
         <source>Log file:</source>
-        <translation></translation>
+        <translation>Log file:</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="246"/>

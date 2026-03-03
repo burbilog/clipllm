@@ -476,6 +476,24 @@
         </section>
 
         <section class="section">
+            <h2 class="section-title">Requirements</h2>
+            <div class="description" style="border-left: 4px solid var(--accent);">
+                <p style="margin-bottom: 12px;">
+                    <strong>Important:</strong> ClipLLM is a client application that requires API access to an LLM provider.
+                    You'll need an API key from one of these services:
+                </p>
+                <p style="color: var(--text-primary); margin-bottom: 0;">
+                    <a href="https://openrouter.ai" style="color: var(--accent);">OpenRouter</a> •
+                    <a href="https://platform.openai.com" style="color: var(--accent);">OpenAI</a> •
+                    <a href="https://deepseek.com" style="color: var(--accent);">DeepSeek</a> •
+                    <a href="https://nano-gpt.com" style="color: var(--accent);">Nano-GPT</a> •
+                    <a href="https://chutes.ai" style="color: var(--accent);">Chutes</a> •
+                    or any <a href="https://github.com/openai/openai-openapi/blob/master/openapi.yaml" style="color: var(--accent);">OpenAI-compatible</a> API endpoint (including local models via Ollama or llama.cpp)
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
             <h2 class="section-title">Use Cases</h2>
             <div class="features">
                 <div class="feature-card">

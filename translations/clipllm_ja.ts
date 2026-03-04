@@ -570,13 +570,13 @@ Copy some text or an image first.</source>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="160"/>
         <location filename="../src/ui/historydialog.cpp" line="164"/>
-        <location filename="../src/ui/historydialog.cpp" line="668"/>
+        <location filename="../src/ui/historydialog.cpp" line="650"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
         <location filename="../src/ui/historydialog.cpp" line="164"/>
-        <location filename="../src/ui/historydialog.cpp" line="668"/>
+        <location filename="../src/ui/historydialog.cpp" line="650"/>
         <source>Raw</source>
         <translation>Raw</translation>
     </message>
@@ -1524,168 +1524,168 @@ Please choose a different hotkey.</source>
         <translation>ClipLLM - 結果</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="103"/>
-        <location filename="../src/ui/resultdialog.cpp" line="295"/>
+        <location filename="../src/ui/resultdialog.cpp" line="104"/>
+        <location filename="../src/ui/resultdialog.cpp" line="296"/>
         <source>Model: -</source>
         <translation>モデル: -</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="105"/>
+        <location filename="../src/ui/resultdialog.cpp" line="106"/>
         <source>Tokens: 0 / 0</source>
         <translation>トークン: 0 / 0</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="106"/>
-        <location filename="../src/ui/resultdialog.cpp" line="322"/>
+        <location filename="../src/ui/resultdialog.cpp" line="107"/>
+        <location filename="../src/ui/resultdialog.cpp" line="323"/>
         <source>Traffic: 0 B</source>
         <translation>トラフィック: 0 B</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="123"/>
+        <location filename="../src/ui/resultdialog.cpp" line="124"/>
         <source>Ready</source>
         <translation>準備完了</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="135"/>
-        <location filename="../src/ui/resultdialog.cpp" line="139"/>
-        <location filename="../src/ui/resultdialog.cpp" line="316"/>
-        <location filename="../src/ui/resultdialog.cpp" line="660"/>
+        <location filename="../src/ui/resultdialog.cpp" line="136"/>
+        <location filename="../src/ui/resultdialog.cpp" line="140"/>
+        <location filename="../src/ui/resultdialog.cpp" line="317"/>
+        <location filename="../src/ui/resultdialog.cpp" line="635"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="139"/>
-        <location filename="../src/ui/resultdialog.cpp" line="316"/>
-        <location filename="../src/ui/resultdialog.cpp" line="660"/>
+        <location filename="../src/ui/resultdialog.cpp" line="140"/>
+        <location filename="../src/ui/resultdialog.cpp" line="317"/>
+        <location filename="../src/ui/resultdialog.cpp" line="635"/>
         <source>Raw</source>
         <translation>Raw</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="142"/>
+        <location filename="../src/ui/resultdialog.cpp" line="143"/>
         <source>Furigana</source>
         <translation>ふりがな</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="145"/>
+        <location filename="../src/ui/resultdialog.cpp" line="146"/>
         <source>Show furigana (reading annotations) for Japanese text</source>
         <translation>日本語テキストにふりがな（読み仮名）を表示</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="149"/>
-        <location filename="../src/ui/resultdialog.cpp" line="701"/>
+        <location filename="../src/ui/resultdialog.cpp" line="150"/>
+        <location filename="../src/ui/resultdialog.cpp" line="676"/>
         <source>Show Input</source>
         <translation>入力を表示</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="165"/>
+        <location filename="../src/ui/resultdialog.cpp" line="166"/>
         <source>Input</source>
         <translation>入力</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="175"/>
+        <location filename="../src/ui/resultdialog.cpp" line="176"/>
         <source>Output</source>
         <translation>出力</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="192"/>
+        <location filename="../src/ui/resultdialog.cpp" line="193"/>
         <source>Copy &amp;&amp; close</source>
         <translation>コピーして閉じる</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="197"/>
+        <location filename="../src/ui/resultdialog.cpp" line="198"/>
         <source>Save to History</source>
         <translation>履歴に保存</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="202"/>
+        <location filename="../src/ui/resultdialog.cpp" line="203"/>
         <source>Save as...</source>
         <translation>名前を付けて保存...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="205"/>
+        <location filename="../src/ui/resultdialog.cpp" line="206"/>
         <source>Save output to a file</source>
         <translation>出力をファイルに保存</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="208"/>
+        <location filename="../src/ui/resultdialog.cpp" line="209"/>
         <source>Retry</source>
         <translation>再試行</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="213"/>
+        <location filename="../src/ui/resultdialog.cpp" line="214"/>
         <source>Continue</source>
         <translation>続行</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="219"/>
+        <location filename="../src/ui/resultdialog.cpp" line="220"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="224"/>
+        <location filename="../src/ui/resultdialog.cpp" line="225"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="225"/>
+        <location filename="../src/ui/resultdialog.cpp" line="226"/>
         <source>Zoom out</source>
         <translation>縮小</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="229"/>
+        <location filename="../src/ui/resultdialog.cpp" line="230"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="230"/>
+        <location filename="../src/ui/resultdialog.cpp" line="231"/>
         <source>Zoom in</source>
         <translation>拡大</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="258"/>
+        <location filename="../src/ui/resultdialog.cpp" line="259"/>
         <source>ClipLLM - %1</source>
         <translation>ClipLLM - %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="297"/>
-        <location filename="../src/ui/resultdialog.cpp" line="299"/>
+        <location filename="../src/ui/resultdialog.cpp" line="298"/>
+        <location filename="../src/ui/resultdialog.cpp" line="300"/>
         <source>Model: %1</source>
         <translation>モデル: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="301"/>
+        <location filename="../src/ui/resultdialog.cpp" line="302"/>
         <source>Model: %1 / %2</source>
         <translation>モデル: %1 / %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="323"/>
+        <location filename="../src/ui/resultdialog.cpp" line="324"/>
         <source>Connecting...</source>
         <translation>接続中...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="376"/>
+        <location filename="../src/ui/resultdialog.cpp" line="352"/>
         <source>Tokens: ~%1</source>
         <translation>トークン: ~%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="389"/>
+        <location filename="../src/ui/resultdialog.cpp" line="365"/>
         <source>Completed in %1 seconds</source>
         <translation>%1 秒で完了</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="394"/>
+        <location filename="../src/ui/resultdialog.cpp" line="370"/>
         <source>Tokens: %1 input / %2 output</source>
         <translation>トークン: %1 入力 / %2 出力</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="432"/>
-        <location filename="../src/ui/resultdialog.cpp" line="460"/>
+        <location filename="../src/ui/resultdialog.cpp" line="408"/>
+        <location filename="../src/ui/resultdialog.cpp" line="436"/>
         <source>API Error</source>
         <translation>APIエラー</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="433"/>
-        <location filename="../src/ui/resultdialog.cpp" line="461"/>
+        <location filename="../src/ui/resultdialog.cpp" line="409"/>
+        <location filename="../src/ui/resultdialog.cpp" line="437"/>
         <source>An error occurred while communicating with the API:
 
 %1</source>
@@ -1694,58 +1694,58 @@ Please choose a different hotkey.</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="436"/>
-        <location filename="../src/ui/resultdialog.cpp" line="469"/>
+        <location filename="../src/ui/resultdialog.cpp" line="412"/>
+        <location filename="../src/ui/resultdialog.cpp" line="445"/>
         <source>Error: %1</source>
         <translation>エラー: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="502"/>
+        <location filename="../src/ui/resultdialog.cpp" line="478"/>
         <source>Saved</source>
         <translation>保存しました</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="512"/>
+        <location filename="../src/ui/resultdialog.cpp" line="488"/>
         <source>Saved to %1</source>
         <translation>%1 に保存しました</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="571"/>
+        <location filename="../src/ui/resultdialog.cpp" line="546"/>
         <source>Close During Generation</source>
         <translation>生成中に閉じる</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="572"/>
+        <location filename="../src/ui/resultdialog.cpp" line="547"/>
         <source>A response is still being generated. Close and cancel the request?</source>
         <translation>応答はまだ生成中です。閉じてリクエストをキャンセルしますか？</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="580"/>
+        <location filename="../src/ui/resultdialog.cpp" line="555"/>
         <source>Cancelling...</source>
         <translation>キャンセル中...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="623"/>
+        <location filename="../src/ui/resultdialog.cpp" line="598"/>
         <source>Model is thinking...</source>
         <translation>モデルが思考中...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="626"/>
+        <location filename="../src/ui/resultdialog.cpp" line="601"/>
         <source>Generating response...</source>
         <translation>応答を生成中...</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="635"/>
+        <location filename="../src/ui/resultdialog.cpp" line="610"/>
         <source>Traffic: %1</source>
         <translation>トラフィック: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="697"/>
+        <location filename="../src/ui/resultdialog.cpp" line="672"/>
         <source>Hide Input</source>
         <translation>入力を非表示</translation>
     </message>
     <message>
-        <location filename="../src/ui/resultdialog.cpp" line="847"/>
+        <location filename="../src/ui/resultdialog.cpp" line="738"/>
         <source>Chain: %1</source>
         <translation>チェーン: %1</translation>
     </message>

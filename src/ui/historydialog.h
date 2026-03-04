@@ -30,6 +30,7 @@
 #include <QLabel>
 #include <QSplitter>
 #include "core/historymanager.h"
+#include "textdisplayhelper.h"
 
 QT_BEGIN_NAMESPACE
 class QTextDocument;
@@ -82,15 +83,12 @@ private:
     void applyFilter();
     void loadEntry(int row);
     void updatePreviewDisplay(const Core::HistoryEntry& entry);
-    void renderPreview(const QString& content);  // Common method for rendering with optional furigana
-    QString getTextWithExpandedRuby(QTextCursor& cursor) const;  // Get text with ruby objects expanded to base text
+    void renderPreview(const QString& content);  // Render markdown with optional furigana
     QString formatDate(const QDateTime& date) const;
     QString formatDuration(double ms) const;
-    void applyFontSize();
-    void saveFontSize();
-    void loadFontSize();
 
     Core::HistoryManager* m_historyManager = nullptr;
+    TextDisplayHelper* m_textHelper = nullptr;
 
     // UI components
     QTableView* m_tableView = nullptr;
@@ -113,9 +111,6 @@ private:
 
     // Furigana state
     bool m_furiganaEnabled = true;
-
-    // Font size state
-    int m_fontSize = 10;
 
     // Current display data
     QString m_currentInputText;

@@ -26,6 +26,7 @@
 #include <QHBoxLayout>
 #include <QElapsedTimer>
 #include <QShortcut>
+#include "textdisplayhelper.h"
 
 QT_BEGIN_NAMESPACE
 class QGroupBox;
@@ -104,15 +105,12 @@ private:
     void setupUi();
     void updateState();
     void updateModelLabel();
-    void applyFontSize();
-    void saveFontSize();
-    void loadFontSize();
     void renderOutput();  // Common method for rendering output with optional furigana
-    QString getTextWithExpandedRuby(QTextCursor& cursor) const;  // Get text with ruby objects expanded to base text
 
     Core::LLMClient* m_llmClient = nullptr;
     Core::HistoryManager* m_historyManager = nullptr;
     Core::ConfigManager* m_configManager = nullptr;
+    TextDisplayHelper* m_textHelper = nullptr;
 
     // UI components
     QTextEdit* m_outputText = nullptr;
@@ -145,9 +143,6 @@ private:
 
     // Input section state
     bool m_inputExpanded = false;
-
-    // Font size state
-    int m_fontSize = 10;
 
     // Request data
     QString m_promptId;

@@ -90,6 +90,7 @@ set(SOURCES
     src/ui/screenshotselector.cpp
     src/ui/rubyutils.cpp
     src/ui/rubytextobject.cpp
+    src/ui/textdisplayhelper.cpp
     src/models/prompt.cpp
     src/models/llmconfig.cpp
     src/models/providerprofile.cpp
@@ -125,6 +126,7 @@ set(HEADERS
     src/ui/screenshotselector.h
     src/ui/rubyutils.h
     src/ui/rubytextobject.h
+    src/ui/textdisplayhelper.h
     src/models/prompt.h
     src/models/llmconfig.h
     src/models/providerprofile.h

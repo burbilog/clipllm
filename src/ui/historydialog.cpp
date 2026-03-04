@@ -50,9 +50,9 @@ HistoryDialog::HistoryDialog(Core::HistoryManager* historyManager, QWidget* pare
     setupModel();
     refreshHistory();
 
-    // Restore font size
-    loadFontSize();
-    applyFontSize();
+    // Initialize text display helper for zoom and font management
+    m_textHelper = new TextDisplayHelper(m_previewText, QStringLiteral("HistoryDialog"), this);
+    m_textHelper->applyFontSize();
 
     // Restore furigana state
     QSettings settings;
@@ -641,25 +641,7 @@ void HistoryDialog::updatePreviewDisplay(const Core::HistoryEntry& entry)
 
 void HistoryDialog::renderPreview(const QString& content)
 {
-    // Check for ruby tags
-    if (RubyUtils::containsRubyTags(content)) {
-        // Always use ruby objects to preserve line height
-        // First, protect ruby tags with unique placeholders
-        QString mutableContent = content;
-        QString placeholderData = RubyUtils::protectRubyTags(mutableContent);
-
-        // Parse markdown - this preserves all formatting
-        m_previewText->setMarkdown(mutableContent);
-
-        // Replace placeholders with ruby objects
-        // Pass furigana visibility flag - height is reserved regardless
-        int replacedCount = RubyUtils::replaceRubyPlaceholders(
-            m_previewText->document(), placeholderData, m_furiganaEnabled);
-
-        qDebug("History ruby rendering: %d placeholders replaced", replacedCount);
-    } else {
-        m_previewText->setMarkdown(content);
-    }
+    RubyUtils::renderTextWithRuby(m_previewText, content, true, m_furiganaEnabled);
 }
 
 void HistoryDialog::onMarkdownToggleClicked()
@@ -704,16 +686,16 @@ void HistoryDialog::onFuriganaToggleClicked()
 
 void HistoryDialog::onZoomOutClicked()
 {
-    m_fontSize = std::max(m_fontSize - 1, 6);
-    applyFontSize();
-    saveFontSize();
+    if (m_textHelper) {
+        m_textHelper->zoomOut();
+    }
 }
 
 void HistoryDialog::onZoomInClicked()
 {
-    m_fontSize = std::min(m_fontSize + 1, 30);
-    applyFontSize();
-    saveFontSize();
+    if (m_textHelper) {
+        m_textHelper->zoomIn();
+    }
 }
 
 void HistoryDialog::showEvent(QShowEvent* event)
@@ -739,29 +721,18 @@ void HistoryDialog::closeEvent(QCloseEvent* event)
         saveSplitterState(m_splitter, QStringLiteral("historyDialogSplitter"));
     }
 
-    // Save font size
-    saveFontSize();
+    // Font size is saved automatically by TextDisplayHelper
 
     QDialog::closeEvent(event);
 }
 
 void HistoryDialog::wheelEvent(QWheelEvent* event)
 {
-    // Check if Ctrl key is pressed
-    if (event->modifiers() & Qt::ControlModifier) {
-        // Calculate delta
-        int delta = event->angleDelta().y();
-        if (delta > 0) {
-            m_fontSize = std::min(m_fontSize + 1, 30);
-        } else {
-            m_fontSize = std::max(m_fontSize - 1, 6);
-        }
-        applyFontSize();
-        saveFontSize();  // Save immediately
-        event->accept();
-    } else {
-        QDialog::wheelEvent(event);
+    // Try to handle zoom via helper
+    if (m_textHelper && m_textHelper->handleWheelEvent(event)) {
+        return;
     }
+    QDialog::wheelEvent(event);
 }
 
 bool HistoryDialog::eventFilter(QObject* watched, QEvent* event)
@@ -769,27 +740,17 @@ bool HistoryDialog::eventFilter(QObject* watched, QEvent* event)
     // Handle key events for + and - shortcuts
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
-        // Plus/Equal key (for zoom in)
-        if (keyEvent->key() == Qt::Key_Plus || keyEvent->key() == Qt::Key_Equal) {
-            m_fontSize = std::min(m_fontSize + 1, 30);
-            applyFontSize();
-            saveFontSize();
-            keyEvent->accept();
+
+        // Try zoom handling via helper
+        if (m_textHelper && m_textHelper->handleKeyEvent(keyEvent)) {
             return true;
         }
-        // Minus key (for zoom out)
-        if (keyEvent->key() == Qt::Key_Minus) {
-            m_fontSize = std::max(m_fontSize - 1, 6);
-            applyFontSize();
-            saveFontSize();
-            keyEvent->accept();
-            return true;
-        }
+
         // Ctrl+C (Copy) - expand ruby objects to base text
         if (keyEvent->key() == Qt::Key_C && (keyEvent->modifiers() & Qt::ControlModifier)) {
             if (watched == m_previewText && m_previewText->textCursor().hasSelection()) {
                 QTextCursor cursor = m_previewText->textCursor();
-                QString text = getTextWithExpandedRuby(cursor);
+                QString text = m_textHelper ? m_textHelper->getTextWithExpandedRuby(cursor) : cursor.selectedText();
                 QApplication::clipboard()->setText(text);
                 keyEvent->accept();
                 return true;
@@ -798,65 +759,6 @@ bool HistoryDialog::eventFilter(QObject* watched, QEvent* event)
     }
 
     return QDialog::eventFilter(watched, event);
-}
-
-QString HistoryDialog::getTextWithExpandedRuby(QTextCursor& cursor) const
-{
-    QString result;
-    int start = cursor.selectionStart();
-    int end = cursor.selectionEnd();
-
-    QTextDocument* doc = m_previewText->document();
-    QTextCursor tempCursor(doc);
-
-    for (int pos = start; pos < end; ) {
-        tempCursor.setPosition(pos);
-        tempCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
-
-        QChar ch = tempCursor.selectedText().at(0);
-
-        if (ch == QChar::ObjectReplacementCharacter) {
-            // Check if it's a ruby object
-            QTextCharFormat format = tempCursor.charFormat();
-            if (format.objectType() == RubyTextObject::RubyObjectType) {
-                // Get the base text (kanji)
-                QString baseText = format.property(RubyTextObject::BaseText).toString();
-                result += baseText;
-            }
-            pos++;
-        } else {
-            result += ch;
-            pos++;
-        }
-    }
-
-    return result;
-}
-
-void HistoryDialog::applyFontSize()
-{
-    if (m_previewText) {
-        QFont font = m_previewText->font();
-        font.setPointSize(m_fontSize);
-        m_previewText->setFont(font);
-    }
-}
-
-void HistoryDialog::saveFontSize()
-{
-    QSettings settings;
-    settings.beginGroup("HistoryDialog");
-    settings.setValue("fontSize", m_fontSize);
-    settings.endGroup();
-    settings.sync();
-}
-
-void HistoryDialog::loadFontSize()
-{
-    QSettings settings;
-    settings.beginGroup("HistoryDialog");
-    m_fontSize = settings.value("fontSize", 10).toInt();
-    settings.endGroup();
 }
 
 } // namespace UI

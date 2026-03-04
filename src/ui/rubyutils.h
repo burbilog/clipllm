@@ -20,6 +20,7 @@
 #include <QString>
 
 class QTextDocument;
+class QTextEdit;
 
 namespace ClipLLM {
 namespace UI {
@@ -96,6 +97,18 @@ QString restoreRubyTags(const QString& html, const QString& placeholderData);
  */
 int replaceRubyPlaceholders(QTextDocument* doc, const QString& placeholderData,
                             bool rubyVisible = true);
+
+/**
+ * Render text with optional ruby support in a QTextEdit.
+ * This is a high-level function that handles all ruby rendering logic.
+ *
+ * @param textEdit The QTextEdit to render into
+ * @param content The content to render (may contain ruby tags)
+ * @param markdownMode If true, render as markdown; otherwise as plain text
+ * @param furiganaEnabled Whether furigana should be visible
+ */
+void renderTextWithRuby(QTextEdit* textEdit, const QString& content,
+                        bool markdownMode, bool furiganaEnabled);
 
 } // namespace RubyUtils
 } // namespace UI

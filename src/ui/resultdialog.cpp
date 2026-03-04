@@ -56,9 +56,10 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
     // Restore window geometry
     restoreWindowGeometry(this, QStringLiteral("resultDialog"));
 
-    // Restore font size
-    loadFontSize();
-    applyFontSize();
+    // Initialize text display helper for zoom and font management
+    m_textHelper = new TextDisplayHelper(m_outputText, QStringLiteral("ResultDialog"), this);
+    m_textHelper->addSecondaryTextEdit(m_inputText);
+    m_textHelper->applyFontSize();
 
     // Restore furigana state
     QSettings settings;
@@ -338,32 +339,7 @@ void ResultDialog::appendResponse(const QString& text)
 
 void ResultDialog::renderOutput()
 {
-    if (m_markdownMode) {
-        QString content = m_output;
-
-        // Check for ruby tags
-        if (RubyUtils::containsRubyTags(content)) {
-            // Always use ruby objects to preserve line height
-            // First, protect ruby tags with unique placeholders
-            QString placeholderData = RubyUtils::protectRubyTags(content);
-
-            // Parse markdown - this preserves all formatting
-            m_outputText->setMarkdown(content);
-
-            // Replace placeholders with ruby objects
-            // Pass furigana visibility flag - height is reserved regardless
-            int replacedCount = RubyUtils::replaceRubyPlaceholders(
-                m_outputText->document(), placeholderData, m_furiganaEnabled);
-
-            qDebug("Ruby rendering: %d placeholders replaced", replacedCount);
-        } else {
-            m_outputText->setMarkdown(content);
-        }
-    } else {
-        // Show as plain text
-        m_outputText->setPlainText(m_output);
-    }
-
+    RubyUtils::renderTextWithRuby(m_outputText, m_output, m_markdownMode, m_furiganaEnabled);
     m_outputText->moveCursor(QTextCursor::End);
 }
 
@@ -554,8 +530,7 @@ void ResultDialog::closeEvent(QCloseEvent* event)
     // Save window geometry
     saveWindowGeometry(this, QStringLiteral("resultDialog"));
 
-    // Save font size
-    saveFontSize();
+    // Font size is saved automatically by TextDisplayHelper
 
     // Prevent re-entry
     if (m_closing) {
@@ -705,35 +680,25 @@ void ResultDialog::onInputToggleClicked()
 
 void ResultDialog::onZoomOutClicked()
 {
-    m_fontSize = std::max(m_fontSize - 1, 6);
-    applyFontSize();
-    saveFontSize();
+    if (m_textHelper) {
+        m_textHelper->zoomOut();
+    }
 }
 
 void ResultDialog::onZoomInClicked()
 {
-    m_fontSize = std::min(m_fontSize + 1, 30);
-    applyFontSize();
-    saveFontSize();
+    if (m_textHelper) {
+        m_textHelper->zoomIn();
+    }
 }
 
 void ResultDialog::wheelEvent(QWheelEvent* event)
 {
-    // Check if Ctrl (or Cmd on macOS) key is pressed
-    if (event->modifiers() & (Qt::ControlModifier | Qt::MetaModifier)) {
-        // Calculate delta
-        int delta = event->angleDelta().y();
-        if (delta > 0) {
-            m_fontSize = std::min(m_fontSize + 1, 30);
-        } else {
-            m_fontSize = std::max(m_fontSize - 1, 6);
-        }
-        applyFontSize();
-        saveFontSize();
-        event->accept();
-    } else {
-        QDialog::wheelEvent(event);
+    // Try to handle zoom via helper
+    if (m_textHelper && m_textHelper->handleWheelEvent(event)) {
+        return;
     }
+    QDialog::wheelEvent(event);
 }
 
 bool ResultDialog::eventFilter(QObject* watched, QEvent* event)
@@ -741,27 +706,17 @@ bool ResultDialog::eventFilter(QObject* watched, QEvent* event)
     // Handle key events for + and - shortcuts
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
-        // Plus/Equal key (for zoom in)
-        if (keyEvent->key() == Qt::Key_Plus || keyEvent->key() == Qt::Key_Equal) {
-            m_fontSize = std::min(m_fontSize + 1, 30);
-            applyFontSize();
-            saveFontSize();
-            keyEvent->accept();
+
+        // Try zoom handling via helper
+        if (m_textHelper && m_textHelper->handleKeyEvent(keyEvent)) {
             return true;
         }
-        // Minus key (for zoom out)
-        if (keyEvent->key() == Qt::Key_Minus) {
-            m_fontSize = std::max(m_fontSize - 1, 6);
-            applyFontSize();
-            saveFontSize();
-            keyEvent->accept();
-            return true;
-        }
+
         // Ctrl+C (Copy) - expand ruby objects to base text
         if (keyEvent->key() == Qt::Key_C && (keyEvent->modifiers() & Qt::ControlModifier)) {
             if (watched == m_outputText && m_outputText->textCursor().hasSelection()) {
                 QTextCursor cursor = m_outputText->textCursor();
-                QString text = getTextWithExpandedRuby(cursor);
+                QString text = m_textHelper ? m_textHelper->getTextWithExpandedRuby(cursor) : cursor.selectedText();
                 QApplication::clipboard()->setText(text);
                 keyEvent->accept();
                 return true;
@@ -770,70 +725,6 @@ bool ResultDialog::eventFilter(QObject* watched, QEvent* event)
     }
 
     return QDialog::eventFilter(watched, event);
-}
-
-QString ResultDialog::getTextWithExpandedRuby(QTextCursor& cursor) const
-{
-    QString result;
-    int start = cursor.selectionStart();
-    int end = cursor.selectionEnd();
-
-    QTextDocument* doc = m_outputText->document();
-    QTextCursor tempCursor(doc);
-
-    for (int pos = start; pos < end; ) {
-        tempCursor.setPosition(pos);
-        tempCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
-
-        QChar ch = tempCursor.selectedText().at(0);
-
-        if (ch == QChar::ObjectReplacementCharacter) {
-            // Check if it's a ruby object
-            QTextCharFormat format = tempCursor.charFormat();
-            if (format.objectType() == RubyTextObject::RubyObjectType) {
-                // Get the base text (kanji)
-                QString baseText = format.property(RubyTextObject::BaseText).toString();
-                result += baseText;
-            }
-            pos++;
-        } else {
-            result += ch;
-            pos++;
-        }
-    }
-
-    return result;
-}
-
-void ResultDialog::applyFontSize()
-{
-    if (m_inputText) {
-        QFont font = m_inputText->font();
-        font.setPointSize(m_fontSize);
-        m_inputText->setFont(font);
-    }
-    if (m_outputText) {
-        QFont font = m_outputText->font();
-        font.setPointSize(m_fontSize);
-        m_outputText->setFont(font);
-    }
-}
-
-void ResultDialog::saveFontSize()
-{
-    QSettings settings;
-    settings.beginGroup("ResultDialog");
-    settings.setValue("fontSize", m_fontSize);
-    settings.endGroup();
-    settings.sync();
-}
-
-void ResultDialog::loadFontSize()
-{
-    QSettings settings;
-    settings.beginGroup("ResultDialog");
-    m_fontSize = settings.value("fontSize", 10).toInt();
-    settings.endGroup();
 }
 
 void ResultDialog::setChainInfo(const QStringList& chainNames, const QString& nextPromptId, bool autoContinue)

@@ -24,6 +24,7 @@
 #include <QTextBlock>
 #include <QTextFragment>
 #include <QTextCursor>
+#include <QTextEdit>
 #include <QApplication>
 #include <algorithm>
 
@@ -311,6 +312,36 @@ int replaceRubyPlaceholders(QTextDocument* doc, const QString& placeholderData,
     cursor.endEditBlock();
 
     return replacedCount;
+}
+
+void renderTextWithRuby(QTextEdit* textEdit, const QString& content,
+                        bool markdownMode, bool furiganaEnabled)
+{
+    if (!textEdit) {
+        return;
+    }
+
+    if (markdownMode) {
+        // Check for ruby tags
+        if (containsRubyTags(content)) {
+            // Always use ruby objects to preserve line height
+            // First, protect ruby tags with unique placeholders
+            QString mutableContent = content;
+            QString placeholderData = protectRubyTags(mutableContent);
+
+            // Parse markdown - this preserves all formatting
+            textEdit->setMarkdown(mutableContent);
+
+            // Replace placeholders with ruby objects
+            // Pass furigana visibility flag - height is reserved regardless
+            replaceRubyPlaceholders(textEdit->document(), placeholderData, furiganaEnabled);
+        } else {
+            textEdit->setMarkdown(content);
+        }
+    } else {
+        // Show as plain text
+        textEdit->setPlainText(content);
+    }
 }
 
 } // namespace RubyUtils

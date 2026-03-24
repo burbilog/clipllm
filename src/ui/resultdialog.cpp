@@ -35,6 +35,7 @@
 #include <QScrollBar>
 #include <QTextBlock>
 #include <QTextFragment>
+#include <QPointer>
 
 namespace ClipLLM {
 namespace UI {
@@ -345,6 +346,8 @@ void ResultDialog::renderOutput()
 
 void ResultDialog::onStreaming(const QString& content)
 {
+    if (m_closing) return;
+
     appendResponse(content);
 
     // Update token estimate (rough approximation)
@@ -354,6 +357,8 @@ void ResultDialog::onStreaming(const QString& content)
 
 void ResultDialog::onCompleted(const Core::LLMResponse& response)
 {
+    if (m_closing) return;
+
     m_isStreaming = false;
     m_isThinking = false;
     m_progressBar->setVisible(false);
@@ -387,9 +392,14 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
 
         // Auto-continue if enabled and there's a next prompt
         if (m_autoContinue && !m_nextPromptId.isEmpty()) {
-            // Use QTimer to allow the UI to update before continuing
-            QTimer::singleShot(100, this, [this]() {
-                emit chainContinueRequested(m_nextPromptId, m_output);
+            // Use QPointer to safely handle dialog deletion during timer
+            QPointer<ResultDialog> self = this;
+            QString nextPromptId = m_nextPromptId;
+            QString output = m_output;
+            QTimer::singleShot(100, this, [self, nextPromptId, output]() {
+                if (self) {
+                    emit self->chainContinueRequested(nextPromptId, output);
+                }
             });
         }
 
@@ -419,6 +429,8 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
 
 void ResultDialog::onError(const QString& error)
 {
+    if (m_closing) return;
+
     m_isStreaming = false;
     m_isThinking = false;
     m_progressBar->setVisible(false);
@@ -591,6 +603,8 @@ void ResultDialog::performClose()
 
 void ResultDialog::onThinkingStateChanged(bool isThinking)
 {
+    if (m_closing) return;
+
     m_isThinking = isThinking;
 
     if (m_isStreaming) {
@@ -606,6 +620,8 @@ void ResultDialog::onThinkingStateChanged(bool isThinking)
 
 void ResultDialog::onBytesReceivedChanged(qint64 bytesReceived)
 {
+    if (m_closing) return;
+
     m_bytesReceived = bytesReceived;
     m_trafficLabel->setText(tr("Traffic: %1").arg(formatBytes(bytesReceived)));
 }

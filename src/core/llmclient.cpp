@@ -26,6 +26,7 @@
 #include <QSslConfiguration>
 #include <QRegularExpression>
 #include <QDebug>
+#include <QPointer>
 
 namespace ClipLLM {
 namespace Core {
@@ -269,11 +270,14 @@ void LLMClient::sendPrompt(const QString& systemPrompt, const QString& userPromp
 void LLMClient::cancel()
 {
     if (m_currentReply) {
-        // Disconnect all signals from the reply to prevent crashes during abort
-        disconnect(m_currentReply, nullptr, this, nullptr);
-        m_currentReply->abort();
-        m_currentReply->deleteLater();  // Explicitly delete since we disconnected signals
+        // Use QPointer for safety and clear m_currentReply FIRST to prevent re-entry
+        QPointer<QNetworkReply> reply = m_currentReply;
         m_currentReply = nullptr;
+
+        // Disconnect all signals from the reply to prevent crashes during abort
+        disconnect(reply, nullptr, this, nullptr);
+        reply->abort();
+        reply->deleteLater();
     }
 
     setState(LLMClientState::Idle);

@@ -62,6 +62,7 @@ const QString ConfigManager::DEBUG_ENABLED_KEY = QStringLiteral("debug/enabled")
 const QString ConfigManager::DEBUG_LEVEL_KEY = QStringLiteral("debug/level");
 const QString ConfigManager::LAST_SAVE_DIRECTORY_KEY = QStringLiteral("file_dialog/last_save_directory");
 const QString ConfigManager::FURIGANA_SIZE_KEY = QStringLiteral("furigana/size");
+const QString ConfigManager::FOLLOW_OUTPUT_KEY = QStringLiteral("behavior/followOutput");
 static const QString CHAIN_MAX_DEPTH_KEY = QStringLiteral("chain/max_depth");
 
 ConfigManager::ConfigManager()
@@ -565,6 +566,16 @@ int ConfigManager::furiganaSize() const
 void ConfigManager::setFuriganaSize(int size)
 {
     setValue(FURIGANA_SIZE_KEY, size);
+}
+
+bool ConfigManager::followOutput() const
+{
+    return value(FOLLOW_OUTPUT_KEY, true).toBool();
+}
+
+void ConfigManager::setFollowOutput(bool enabled)
+{
+    setValue(FOLLOW_OUTPUT_KEY, enabled);
 }
 
 } // namespace Core

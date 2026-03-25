@@ -161,6 +161,7 @@ private:
     QButtonGroup* m_debugLevelGroup = nullptr;
     QSpinBox* m_chainMaxDepthSpin = nullptr;
     QSpinBox* m_furiganaSizeSpin = nullptr;
+    QCheckBox* m_followOutputCheck = nullptr;
 
     // LLM tab - Provider Profiles
     QListWidget* m_profilesList = nullptr;

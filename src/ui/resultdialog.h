@@ -141,6 +141,9 @@ private:
     // Furigana state
     bool m_furiganaEnabled = true;
 
+    // Follow output state
+    bool m_followOutput = true;
+
     // Input section state
     bool m_inputExpanded = false;
 

@@ -71,6 +71,11 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
         m_furiganaToggle->setChecked(m_furiganaEnabled);
     }
 
+    // Load follow output setting
+    if (m_configManager) {
+        m_followOutput = m_configManager->followOutput();
+    }
+
     // Hide save button if auto-save is enabled
     if (m_configManager && m_configManager->historyAutoSave()) {
         m_saveButton->hide();
@@ -340,8 +345,20 @@ void ResultDialog::appendResponse(const QString& text)
 
 void ResultDialog::renderOutput()
 {
+    // Save scroll position if not following output
+    int scrollPos = 0;
+    if (!m_followOutput) {
+        scrollPos = m_outputText->verticalScrollBar()->value();
+    }
+
     RubyUtils::renderTextWithRuby(m_outputText, m_output, m_markdownMode, m_furiganaEnabled);
-    m_outputText->moveCursor(QTextCursor::End);
+
+    if (m_followOutput) {
+        m_outputText->moveCursor(QTextCursor::End);
+    } else {
+        // Restore scroll position
+        m_outputText->verticalScrollBar()->setValue(scrollPos);
+    }
 }
 
 void ResultDialog::onStreaming(const QString& content)

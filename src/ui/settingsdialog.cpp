@@ -265,6 +265,16 @@ void SettingsDialog::setupGeneralTab()
 #pragma GCC diagnostic pop
 
     layout->addWidget(debugGroup);
+
+    // Behavior group
+    QGroupBox* behaviorGroup = new QGroupBox(tr("Behavior"));
+    QVBoxLayout* behaviorLayout = new QVBoxLayout(behaviorGroup);
+
+    m_followOutputCheck = new QCheckBox(tr("Follow LLM output"));
+    m_followOutputCheck->setToolTip(tr("Automatically scroll to the bottom when new content is received"));
+    behaviorLayout->addWidget(m_followOutputCheck);
+
+    layout->addWidget(behaviorGroup);
     layout->addStretch();
 
     m_tabWidget->addTab(widget, tr("General"));
@@ -651,6 +661,9 @@ void SettingsDialog::loadSettings()
     m_debugLevelNormalRadio->setEnabled(enabled);
     m_debugLevelTraceRadio->setEnabled(enabled);
 
+    // Behavior
+    m_followOutputCheck->setChecked(m_configManager->followOutput());
+
     // LLM - Global defaults
     if (m_configManager->defaultTemperature().has_value()) {
         m_globalTemperatureSpin->setValue(*m_configManager->defaultTemperature());
@@ -701,6 +714,9 @@ void SettingsDialog::saveSettings()
     // Debug
     m_configManager->setDebugEnabled(m_debugEnabledCheck->isChecked());
     m_configManager->setDebugLevel(m_debugLevelGroup->checkedId());
+
+    // Behavior
+    m_configManager->setFollowOutput(m_followOutputCheck->isChecked());
 
     // LLM - Save all profiles
     QList<Models::ProviderProfile> profiles;

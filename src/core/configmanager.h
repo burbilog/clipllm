@@ -81,6 +81,7 @@ public:
     static const QString DEBUG_LEVEL_KEY;
     static const QString LAST_SAVE_DIRECTORY_KEY;
     static const QString FURIGANA_SIZE_KEY;
+    static const QString FOLLOW_OUTPUT_KEY;
 
     // Convenience methods for common settings
     QString language() const;
@@ -168,6 +169,10 @@ public:
     // Furigana settings
     int furiganaSize() const;
     void setFuriganaSize(int size);
+
+    // Follow output setting
+    bool followOutput() const;
+    void setFollowOutput(bool enabled);
 
     // Provider profiles (new multi-provider system)
     QStringList providerProfileIds() const;

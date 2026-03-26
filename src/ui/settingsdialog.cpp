@@ -498,6 +498,11 @@ void SettingsDialog::setupPromptsTab()
     m_editPromptButton->setEnabled(false);
     connect(m_editPromptButton, &QPushButton::clicked, this, &SettingsDialog::onEditPromptClicked);
 
+    m_clonePromptButton = new QPushButton(tr("Clone"));
+    m_clonePromptButton->setIcon(style()->standardIcon(QStyle::SP_DialogSaveButton));
+    m_clonePromptButton->setEnabled(false);
+    connect(m_clonePromptButton, &QPushButton::clicked, this, &SettingsDialog::onClonePromptClicked);
+
     m_deletePromptButton = new QPushButton(tr("Delete"));
     m_deletePromptButton->setIcon(style()->standardIcon(QStyle::SP_TrashIcon));
     m_deletePromptButton->setEnabled(false);
@@ -516,6 +521,7 @@ void SettingsDialog::setupPromptsTab()
 
     buttonLayout->addWidget(m_addPromptButton);
     buttonLayout->addWidget(m_editPromptButton);
+    buttonLayout->addWidget(m_clonePromptButton);
     buttonLayout->addWidget(m_deletePromptButton);
     buttonLayout->addWidget(m_changeGroupButton);
     buttonLayout->addWidget(m_changePriorityButton);
@@ -1046,6 +1052,59 @@ void SettingsDialog::onEditPromptClicked()
     }
 }
 
+void SettingsDialog::onClonePromptClicked()
+{
+    App* app = qobject_cast<App*>(QApplication::instance());
+    if (!app || !app->promptManager()) {
+        return;
+    }
+
+    int row = m_promptsTable->currentRow();
+    if (row < 0) {
+        return;
+    }
+
+    QTableWidgetItem* nameItem = m_promptsTable->item(row, 0);
+    if (!nameItem) {
+        return;
+    }
+
+    QString promptId = nameItem->data(Qt::UserRole).toString();
+    auto promptOpt = app->promptManager()->getPrompt(promptId);
+    if (!promptOpt) {
+        return;
+    }
+
+    Models::Prompt clone = promptOpt.value();
+
+    // Собрать существующие ID для проверки уникальности
+    QSet<QString> existingIds;
+    for (const auto& p : app->promptManager()->getAllPrompts()) {
+        existingIds.insert(p.id());
+    }
+
+    // Сгенерировать уникальный ID
+    QString newId = promptId + QStringLiteral("-copy");
+    int counter = 2;
+    while (existingIds.contains(newId)) {
+        newId = promptId + QStringLiteral("-copy-") + QString::number(counter);
+        counter++;
+    }
+
+    clone.setId(newId);
+    clone.setHotkey(QString());
+    clone.setScreenshotHotkey(QString());
+
+    if (app->promptManager()->addPrompt(clone)) {
+        loadPrompts();
+        emit settingsChanged();
+        emit promptsChanged();
+    } else {
+        QMessageBox::warning(this, tr("Error"),
+                           tr("Failed to clone prompt."));
+    }
+}
+
 void SettingsDialog::onDeletePromptClicked()
 {
     App* app = qobject_cast<App*>(QApplication::instance());
@@ -1454,8 +1513,9 @@ void SettingsDialog::onPromptSelectionChanged()
     int selectedCount = selectedRows.size();
     bool hasSelection = selectedCount > 0;
 
-    // Edit работает только с одним выделенным промптом
+    // Edit и Clone работают только с одним выделенным промптом
     m_editPromptButton->setEnabled(hasSelection && selectedCount == 1);
+    m_clonePromptButton->setEnabled(hasSelection && selectedCount == 1);
     // Delete, Export, Change Group, Change Priority работают с любым выделением
     m_deletePromptButton->setEnabled(hasSelection);
     m_exportPromptsButton->setEnabled(hasSelection);

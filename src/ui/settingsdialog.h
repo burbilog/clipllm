@@ -109,6 +109,7 @@ private slots:
     void onManageGroupsClicked();
     void onChangeGroupClicked();
     void onChangePriorityClicked();
+    void onClonePromptClicked();
 
     // History tab
     void onClearHistoryClicked();
@@ -207,6 +208,7 @@ private:
     QPushButton* m_exportPromptsButton = nullptr;
     QPushButton* m_changeGroupButton = nullptr;
     QPushButton* m_changePriorityButton = nullptr;
+    QPushButton* m_clonePromptButton = nullptr;
     QPushButton* m_resetPromptsButton = nullptr;
     QLabel* m_promptsSelectedLabel = nullptr;
 

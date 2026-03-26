@@ -2096,7 +2096,7 @@ Right-click = cancel</translation>
     </message>
     <message>
         <location filename="../src/ui/settingsdialog.cpp" line="122"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="543"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="549"/>
         <source>Reset to Defaults</source>
         <translation>Reset to Defaults</translation>
     </message>
@@ -2115,12 +2115,12 @@ Right-click = cancel</translation>
         <translation type="vanished">Hotkeys</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="553"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="559"/>
         <source>Prompts</source>
         <translation>Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="622"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="628"/>
         <source>History</source>
         <translation>History</translation>
     </message>
@@ -2135,7 +2135,7 @@ Right-click = cancel</translation>
         <translation>Interface Language:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="562"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="568"/>
         <source>Automatically save to history after generation</source>
         <translation>Automatically save to history after generation</translation>
     </message>
@@ -2378,103 +2378,113 @@ Right-click = cancel</translation>
         <translation>Hotkey</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="506"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="501"/>
+        <source>Clone</source>
+        <translation>Clone</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingsdialog.cpp" line="511"/>
         <source>Change Group</source>
         <translation>Change Group</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="510"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1259"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="515"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1318"/>
         <source>Change Priority</source>
         <translation>Change Priority</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="568"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="574"/>
         <source>Auto-cleanup by max entries</source>
         <translation>Auto-cleanup by max entries</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="569"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="575"/>
         <source>Automatically remove oldest entries when limit is exceeded</source>
         <translation>Automatically remove oldest entries when limit is exceeded</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="587"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="593"/>
         <source>Auto-cleanup by date</source>
         <translation>Auto-cleanup by date</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="588"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="594"/>
         <source>Automatically remove entries older than the specified number of days</source>
         <translation>Automatically remove entries older than the specified number of days</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="766"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="772"/>
         <source>English</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="767"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="773"/>
         <source>Russian</source>
         <translation>Russian</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="768"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="774"/>
         <source>German</source>
         <translation>German</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="769"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="775"/>
         <source>French</source>
         <translation>French</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="770"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="776"/>
         <source>Spanish</source>
         <translation>Spanish</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="771"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="777"/>
         <source>Japanese</source>
         <translation>Japanese</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="814"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="820"/>
         <source>(custom)</source>
         <translation>(custom)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="816"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="822"/>
         <source>(default)</source>
         <translation>(default)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="826"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="832"/>
         <source>(none)</source>
         <translation>(none)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="930"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="936"/>
         <source>Error: No model selected</source>
         <translation>Error: No model selected</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1088"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1104"/>
+        <source>Failed to clone prompt.</source>
+        <translation>Failed to clone prompt.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingsdialog.cpp" line="1147"/>
         <source>• %1 (references %2)</source>
         <translation>• %1 (references %2)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1097"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1156"/>
         <source>Delete prompt &quot;%1&quot;?</source>
         <translation>Delete prompt &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1099"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1158"/>
         <source>Delete %1 prompts?</source>
         <translation>Delete %1 prompts?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1103"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1162"/>
         <source>
 
 Warning: The following prompts reference the deleted prompts in their chains:
@@ -2486,58 +2496,58 @@ Warning: The following prompts reference the deleted prompts in their chains:
 These references will be cleared.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1109"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1168"/>
         <source>Delete Prompts</source>
         <translation>Delete Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1179"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1238"/>
         <source>Move to Group</source>
         <translation>Move to Group</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1196"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1255"/>
         <source>Select new group for %1 prompts:</source>
         <translation>Select new group for %1 prompts:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1260"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1319"/>
         <source>New priority for %1 prompts (0-1000):</source>
         <translation>New priority for %1 prompts (0-1000):</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1371"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1430"/>
         <source>Export Selected Prompts</source>
         <translation>Export Selected Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1376"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1435"/>
         <source>Export All Prompts</source>
         <translation>Export All Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1410"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1469"/>
         <source>Failed to open file for writing: %1</source>
         <translation>Failed to open file for writing: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1417"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1423"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1476"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1482"/>
         <source>Exported %1 prompts to %2</source>
         <translation>Exported %1 prompts to %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1467"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1527"/>
         <source>Selected: %1</source>
         <translation>Selected: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="2184"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="2244"/>
         <source>Hotkey Conflict</source>
         <translation>Hotkey Conflict</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="2185"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="2245"/>
         <source>This hotkey is already in use by a prompt.
 
 Please choose a different hotkey.</source>
@@ -2636,45 +2646,45 @@ Please choose a different hotkey.</translation>
         <translation>Group</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="501"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="506"/>
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="514"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="519"/>
         <source>Manage Groups...</source>
         <translation>Manage Groups...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="820"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1184"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="826"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1243"/>
         <source>(root)</source>
         <translation>(root)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="880"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="886"/>
         <source>Language Changed</source>
         <translation>Language Changed</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="881"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="887"/>
         <source>The language will be changed after you restart the application.</source>
         <translation>The language will be changed after you restart the application.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="893"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1515"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="899"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1575"/>
         <source>No profile selected</source>
         <translation>No profile selected</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="902"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1521"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="908"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1581"/>
         <source>Profile not found</source>
         <translation>Profile not found</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="910"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="916"/>
         <source>Invalid API URL</source>
         <translation>Invalid API URL</translation>
     </message>
@@ -2683,17 +2693,17 @@ Please choose a different hotkey.</translation>
         <translation type="vanished">Configuration valid</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1308"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1367"/>
         <source>Failed to open file: %1</source>
         <translation>Failed to open file: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1318"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1377"/>
         <source>Failed to parse JSON file: %1</source>
         <translation>Failed to parse JSON file: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1332"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1391"/>
         <source>Prompts imported successfully.</source>
         <translation>Prompts imported successfully.</translation>
     </message>
@@ -2702,65 +2712,65 @@ Please choose a different hotkey.</translation>
         <translation type="vanished">Model fetching not supported for this provider</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1721"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1781"/>
         <source>No provider profiles configured.
 Click &apos;+ Add&apos; to create one.</source>
         <translation>No provider profiles configured.
 Click &apos;+ Add&apos; to create one.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1736"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1841"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1915"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1796"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1901"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1975"/>
         <source> [Default]</source>
         <translation> [Default]</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1742"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1841"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1918"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1802"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1901"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1978"/>
         <source> (disabled)</source>
         <translation> (disabled)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1779"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1839"/>
         <source>Add Provider Profile</source>
         <translation>Add Provider Profile</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1780"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1840"/>
         <source>Select a template or create custom:</source>
         <translation>Select a template or create custom:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1845"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1905"/>
         <source>Remove Profile</source>
         <translation>Remove Profile</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1846"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1906"/>
         <source>Are you sure you want to remove the profile &quot;%1&quot;?</source>
         <translation>Are you sure you want to remove the profile &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1989"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="2066"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="2049"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="2126"/>
         <source>API key set</source>
         <translation>API key set</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1989"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="2066"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="2049"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="2126"/>
         <source>No API key</source>
         <translation>No API key</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="887"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="893"/>
         <source>Testing...</source>
         <translation>Testing...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="923"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="929"/>
         <source>Error: No API key</source>
         <translation>Error: No API key</translation>
     </message>
@@ -2769,34 +2779,35 @@ Click &apos;+ Add&apos; to create one.</translation>
         <translation type="vanished">Connected</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1005"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1043"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1011"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1049"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1103"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1006"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1012"/>
         <source>Failed to add prompt. ID may already exist.</source>
         <translation>Failed to add prompt. ID may already exist.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1044"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1050"/>
         <source>Failed to update prompt.</source>
         <translation>Failed to update prompt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1529"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1589"/>
         <source>No API URL set</source>
         <translation>No API URL set</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1604"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1664"/>
         <source>Fetching models...</source>
         <translation>Fetching models...</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="970"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1615"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="976"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1675"/>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
@@ -2805,22 +2816,22 @@ Click &apos;+ Add&apos; to create one.</translation>
         <translation type="vanished">Error: LLM client not available</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="967"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="973"/>
         <source>Connection successful</source>
         <translation>Connection successful</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1625"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1685"/>
         <source>Error: Invalid response</source>
         <translation>Error: Invalid response</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1666"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1726"/>
         <source>No models found</source>
         <translation>No models found</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1698"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1758"/>
         <source>Loaded %1 models</source>
         <translation>Loaded %1 models</translation>
     </message>
@@ -2863,27 +2874,27 @@ Click &apos;+ Add&apos; to create one.</translation>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="535"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="541"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="539"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="545"/>
         <source>Export</source>
         <translation>Export</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="565"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="571"/>
         <source>History Settings</source>
         <translation>History Settings</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="585"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="591"/>
         <source>Maximum entries:</source>
         <translation>Maximum entries:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="581"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="587"/>
         <source>Unlimited</source>
         <translation>Unlimited</translation>
     </message>
@@ -2892,27 +2903,27 @@ Click &apos;+ Add&apos; to create one.</translation>
         <translation type="vanished">Automatically clean up old entries</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="603"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="609"/>
         <source>Days to keep:</source>
         <translation>Days to keep:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="607"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="613"/>
         <source>Actions</source>
         <translation>Actions</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="610"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="616"/>
         <source>Clear All History</source>
         <translation>Clear All History</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="854"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="860"/>
         <source>Reset Settings</source>
         <translation>Reset Settings</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="855"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="861"/>
         <source>Are you sure you want to reset all settings to defaults?</source>
         <translation>Are you sure you want to reset all settings to defaults?</translation>
     </message>
@@ -2929,7 +2940,7 @@ Click &apos;+ Add&apos; to create one.</translation>
         <translation type="vanished">Prompt editor will be implemented in a future version.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1109"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1168"/>
         <source>Delete Prompt</source>
         <translation>Delete Prompt</translation>
     </message>
@@ -2938,16 +2949,16 @@ Click &apos;+ Add&apos; to create one.</translation>
         <translation type="vanished">Are you sure you want to delete this prompt?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1290"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1307"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1317"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1331"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1349"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1366"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1376"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1390"/>
         <source>Import Prompts</source>
         <translation>Import Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1292"/>
-        <location filename="../src/ui/settingsdialog.cpp" line="1383"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1351"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1442"/>
         <source>JSON Files (*.json)</source>
         <translation>JSON Files (*.json)</translation>
     </message>
@@ -2956,7 +2967,7 @@ Click &apos;+ Add&apos; to create one.</translation>
         <translation type="vanished">Import will be implemented in a future version.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1409"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1468"/>
         <source>Export Prompts</source>
         <translation>Export Prompts</translation>
     </message>
@@ -2965,22 +2976,22 @@ Click &apos;+ Add&apos; to create one.</translation>
         <translation type="vanished">Prompts exported to %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1431"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1490"/>
         <source>Reset Prompts</source>
         <translation>Reset Prompts</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1432"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1491"/>
         <source>Are you sure you want to reset prompts to defaults? All custom prompts will be lost.</source>
         <translation>Are you sure you want to reset prompts to defaults? All custom prompts will be lost.</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1478"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1538"/>
         <source>Clear History</source>
         <translation>Clear History</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingsdialog.cpp" line="1479"/>
+        <location filename="../src/ui/settingsdialog.cpp" line="1539"/>
         <source>Are you sure you want to delete all history entries? This cannot be undone.</source>
         <translation>Are you sure you want to delete all history entries? This cannot be undone.</translation>
     </message>

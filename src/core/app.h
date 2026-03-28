@@ -127,11 +127,8 @@ private slots:
     void onPromptSelected(const QString& promptId,
                           const QString& overrideInput = QString(),
                           const ChainContext& chainContext = ChainContext());
-    // Screenshot hotkey handlers
+    // Screenshot hotkey handler
     void onScreenshotHotkeyTriggered(const QString& promptId);
-    void onScreenshotAreaSelected(const QRect& rect);
-    void onScreenshotWholeScreenRequested();
-    void onScreenshotCancelled();
     void onResultDialogRetryRequested(const QString& promptId, const QString& providerId,
                                       const QString& model, const QString& systemPrompt,
                                       const QString& userPrompt, const QByteArray& imageData,
@@ -187,8 +184,7 @@ private:
     QMap<QString, QHotkey*> m_screenshotHotkeys;
 
     // Screenshot capture state
-    QString m_pendingPromptId;
-    QImage m_pendingScreenshot;
+    UI::ScreenshotSelector* m_activeScreenshotSelector = nullptr;
 
     // Chain execution context
     ChainContext m_currentChainContext;

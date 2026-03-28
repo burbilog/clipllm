@@ -98,6 +98,13 @@ App::App(int &argc, char **argv)
 
 App::~App()
 {
+    // Cleanup active screenshot selector
+    if (m_activeScreenshotSelector) {
+        m_activeScreenshotSelector->disconnect();
+        m_activeScreenshotSelector->close();
+        m_activeScreenshotSelector = nullptr;
+    }
+
     // Cleanup global hotkey
     if (m_globalHotkey) {
         delete m_globalHotkey;
@@ -551,6 +558,13 @@ void App::onScreenshotHotkeyTriggered(const QString& promptId)
         return;
     }
 
+    // Close existing selector if any
+    if (m_activeScreenshotSelector) {
+        m_activeScreenshotSelector->disconnect();
+        m_activeScreenshotSelector->close();
+        m_activeScreenshotSelector = nullptr;
+    }
+
     // Capture screen
     QImage screenshot = m_screenshotManager->captureScreen();
     if (screenshot.isNull()) {
@@ -558,67 +572,47 @@ void App::onScreenshotHotkeyTriggered(const QString& promptId)
         return;
     }
 
-    // Store prompt ID for later execution
-    m_pendingPromptId = promptId;
-
-    // Show screenshot selector
+    // Create selector - promptId is captured by value in each lambda
     auto* selector = new UI::ScreenshotSelector(screenshot);
+    m_activeScreenshotSelector = selector;
+
     connect(selector, &UI::ScreenshotSelector::areaSelected,
-            this, &App::onScreenshotAreaSelected);
+            this, [this, promptId](const QRect& rect) {
+        auto* sel = m_activeScreenshotSelector;
+        if (!sel) return;
+
+        QImage cropped = sel->screenshot().copy(rect);
+        QApplication::clipboard()->setPixmap(QPixmap::fromImage(cropped));
+        m_activeScreenshotSelector = nullptr;
+        onPromptSelected(promptId);
+    });
+
     connect(selector, &UI::ScreenshotSelector::wholeScreenRequested,
-            this, &App::onScreenshotWholeScreenRequested);
+            this, [this, promptId]() {
+        auto* sel = m_activeScreenshotSelector;
+        if (!sel) return;
+
+        QImage full = sel->screenshot();
+        QApplication::clipboard()->setPixmap(QPixmap::fromImage(full));
+        m_activeScreenshotSelector = nullptr;
+        onPromptSelected(promptId);
+    });
+
     connect(selector, &UI::ScreenshotSelector::cancelled,
-            this, &App::onScreenshotCancelled);
+            this, [this]() {
+        m_activeScreenshotSelector = nullptr;
+        LOG_DEBUG(QStringLiteral("Screenshot cancelled"));
+    });
+
+    // Clear pointer when selector is destroyed (safety net)
+    connect(selector, &QObject::destroyed, this, [this](QObject* obj) {
+        if (m_activeScreenshotSelector == obj)
+            m_activeScreenshotSelector = nullptr;
+    });
+
     selector->show();
-}
-
-void App::onScreenshotAreaSelected(const QRect& rect)
-{
-    auto* selector = qobject_cast<UI::ScreenshotSelector*>(sender());
-    if (!selector) return;
-
-    QImage fullScreenshot = selector->screenshot();
-    m_pendingScreenshot = fullScreenshot.copy(rect);
-    selector->deleteLater();
-
-    // Put cropped image in clipboard and execute prompt
-    QApplication::clipboard()->setPixmap(QPixmap::fromImage(m_pendingScreenshot));
-
-    // Execute prompt
-    onPromptSelected(m_pendingPromptId);
-
-    // Clear state
-    m_pendingPromptId.clear();
-    m_pendingScreenshot = QImage();
-}
-
-void App::onScreenshotWholeScreenRequested()
-{
-    auto* selector = qobject_cast<UI::ScreenshotSelector*>(sender());
-    if (!selector) return;
-
-    m_pendingScreenshot = selector->screenshot();
-    selector->deleteLater();
-
-    // Put image in clipboard and execute prompt
-    QApplication::clipboard()->setPixmap(QPixmap::fromImage(m_pendingScreenshot));
-
-    // Execute prompt
-    onPromptSelected(m_pendingPromptId);
-
-    // Clear state
-    m_pendingPromptId.clear();
-    m_pendingScreenshot = QImage();
-}
-
-void App::onScreenshotCancelled()
-{
-    auto* selector = qobject_cast<UI::ScreenshotSelector*>(sender());
-    if (selector) selector->deleteLater();
-
-    m_pendingPromptId.clear();
-    m_pendingScreenshot = QImage();
-    LOG_DEBUG(QStringLiteral("Screenshot cancelled"));
+    selector->raise();
+    selector->activateWindow();
 }
 
 void App::showSettings()

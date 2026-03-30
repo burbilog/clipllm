@@ -34,6 +34,16 @@ namespace RubyUtils {
 bool containsRubyTags(const QString& text);
 
 /**
+ * Sanitize nested/duplicate ruby open tags from LLM output.
+ * Fixes malformed markup like <ruby>主<ruby><rt>ぬし</rt></ruby>
+ * into correct <ruby>主<rt>ぬし</rt></ruby>.
+ *
+ * @param text The text to sanitize
+ * @return Text with duplicate ruby open tags removed
+ */
+QString sanitizeRubyTags(const QString& text);
+
+/**
  * Remove ruby tags from text, keeping only the base text (kanji).
  * Used when furigana display is disabled.
  *

@@ -38,9 +38,25 @@ bool containsRubyTags(const QString& text)
            text.contains(QLatin1String("<rt>"), Qt::CaseInsensitive);
 }
 
-QString stripRubyTags(const QString& text)
+QString sanitizeRubyTags(const QString& text)
 {
     QString result = text;
+    QRegularExpression doubleOpen(
+        QStringLiteral("<ruby>([^<]*)<ruby>"),
+        QRegularExpression::CaseInsensitiveOption
+    );
+    QRegularExpressionMatch match;
+    // Loop to handle triple+ nesting
+    while ((match = doubleOpen.match(result)).hasMatch()) {
+        result.replace(match.capturedStart(), match.capturedLength(),
+                       QStringLiteral("<ruby>%1").arg(match.captured(1)));
+    }
+    return result;
+}
+
+QString stripRubyTags(const QString& text)
+{
+    QString result = sanitizeRubyTags(text);
 
     // Pattern to match <ruby>base<rt>annotation</rt></ruby>
     QRegularExpression rubyPattern(
@@ -321,12 +337,14 @@ void renderTextWithRuby(QTextEdit* textEdit, const QString& content,
         return;
     }
 
+    QString sanitizedContent = sanitizeRubyTags(content);
+
     if (markdownMode) {
         // Check for ruby tags
-        if (containsRubyTags(content)) {
+        if (containsRubyTags(sanitizedContent)) {
             // Always use ruby objects to preserve line height
             // First, protect ruby tags with unique placeholders
-            QString mutableContent = content;
+            QString mutableContent = sanitizedContent;
             QString placeholderData = protectRubyTags(mutableContent);
 
             // Parse markdown - this preserves all formatting
@@ -336,11 +354,11 @@ void renderTextWithRuby(QTextEdit* textEdit, const QString& content,
             // Pass furigana visibility flag - height is reserved regardless
             replaceRubyPlaceholders(textEdit->document(), placeholderData, furiganaEnabled);
         } else {
-            textEdit->setMarkdown(content);
+            textEdit->setMarkdown(sanitizedContent);
         }
     } else {
         // Show as plain text
-        textEdit->setPlainText(content);
+        textEdit->setPlainText(sanitizedContent);
     }
 }
 

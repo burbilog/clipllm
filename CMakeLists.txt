@@ -89,6 +89,7 @@ set(SOURCES
     src/ui/groupsdialog.cpp
     src/ui/screenshotselector.cpp
     src/ui/rubyutils.cpp
+    src/ui/rubysanitizer.cpp
     src/ui/rubytextobject.cpp
     src/ui/textdisplayhelper.cpp
     src/models/prompt.cpp
@@ -125,6 +126,7 @@ set(HEADERS
     src/ui/groupsdialog.h
     src/ui/screenshotselector.h
     src/ui/rubyutils.h
+    src/ui/rubysanitizer.h
     src/ui/rubytextobject.h
     src/ui/textdisplayhelper.h
     src/models/prompt.h

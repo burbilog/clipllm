@@ -58,3 +58,22 @@ target_include_directories(TestConfigManager
 )
 
 add_test(NAME TestConfigManager COMMAND TestConfigManager)
+
+# RubySanitizer tests
+qt_add_executable(TestRubySanitizer
+    tst_rubysanitizer.cpp
+    ../src/ui/rubysanitizer.cpp
+)
+
+target_link_libraries(TestRubySanitizer
+    PRIVATE
+    Qt6::Core
+    Qt6::Test
+)
+
+target_include_directories(TestRubySanitizer
+    PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+)
+
+add_test(NAME TestRubySanitizer COMMAND TestRubySanitizer)

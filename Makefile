@@ -1,4 +1,4 @@
-.PHONY: build translations clean test web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-appimage-docker linux-tar dist dist-linux dist-windows cloc
+.PHONY: build translations clean test tests web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-appimage-docker linux-tar dist dist-linux dist-windows cloc
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -42,9 +42,11 @@ regen-icons:
 	@rm -f resources/icons/tray-icon-*.png resources/icons/tray-icon.ico
 	@$(MAKE) build
 
-test:
+test: build
 	@echo "Running tests..."
-	@cd build && ctest --output-on-failure
+	@cd build && ctest -V
+
+tests: test
 
 # Count lines of code (excludes build directories and other temporary files)
 cloc:

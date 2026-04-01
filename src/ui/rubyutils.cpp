@@ -41,12 +41,21 @@ bool containsRubyTags(const QString& text)
 QString sanitizeRubyTags(const QString& text)
 {
     QString result = text;
+
+    // Fix tags missing closing > (e.g., </rubyが → </ruby>が)
+    // These cause Qt's HTML parser to swallow all subsequent content.
+    const QRegularExpression::PatternOptions ci = QRegularExpression::CaseInsensitiveOption;
+    result.replace(QRegularExpression(QStringLiteral("</ruby(?!>)"), ci), QStringLiteral("</ruby>"));
+    result.replace(QRegularExpression(QStringLiteral("</rt(?!>)"), ci), QStringLiteral("</rt>"));
+    result.replace(QRegularExpression(QStringLiteral("<ruby(?!>)"), ci), QStringLiteral("<ruby>"));
+    result.replace(QRegularExpression(QStringLiteral("<rt(?!>)"), ci), QStringLiteral("<rt>"));
+
+    // Fix nested/duplicate <ruby> open tags (e.g., <ruby>主<ruby><rt>ぬし</rt></ruby>)
     QRegularExpression doubleOpen(
         QStringLiteral("<ruby>([^<]*)<ruby>"),
         QRegularExpression::CaseInsensitiveOption
     );
     QRegularExpressionMatch match;
-    // Loop to handle triple+ nesting
     while ((match = doubleOpen.match(result)).hasMatch()) {
         result.replace(match.capturedStart(), match.capturedLength(),
                        QStringLiteral("<ruby>%1").arg(match.captured(1)));

@@ -48,7 +48,16 @@ QString sanitizeRubyTags(const QString& text)
     preprocessed.replace(QRegularExpression(QStringLiteral("<ruby(?!>)"), ci), QStringLiteral("<ruby>"));
     preprocessed.replace(QRegularExpression(QStringLiteral("<rt(?!>)"), ci), QStringLiteral("<rt>"));
 
-    // === Phase 2: State machine — single pass through all tags ===
+    // === Phase 2: Strip hallucinated non-ruby HTML tags ===
+    // LLM sometimes outputs stray tags like </svg>, </zu>, <svg> etc.
+    // These break Qt's HTML parser if left in the output.
+    static const QRegularExpression strayHtmlTag(
+        QStringLiteral("</?(?!ruby\\b)(?!rt\\b)[a-zA-Z][a-zA-Z0-9]*\\b[^>]*>"),
+        QRegularExpression::CaseInsensitiveOption
+    );
+    preprocessed.remove(strayHtmlTag);
+
+    // === Phase 3: State machine — single pass through all tags ===
     static const QRegularExpression tagRe(
         QStringLiteral("(</ruby>|<ruby>|</rt>|<rt>)"),
         QRegularExpression::CaseInsensitiveOption

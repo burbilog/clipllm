@@ -57,9 +57,15 @@ private slots:
     void testStrayCloseRuby();
     void testStrayCloseRt();
 
+    // Hallucinated non-ruby HTML tags
+    void testStraySvgCloseTag();
+    void testStrayZuCloseTag();
+    void testStrayHtmlTagInsideRuby();
+
     // Real LLM output integration tests
     void testRealLLMOutput1();
     void testRealLLMOutput2();
+    void testRealLLMOutput3();
 
     // Invariant: idempotency
     void testIdempotent();
@@ -184,6 +190,30 @@ void TestRubySanitizer::testStrayCloseRt()
     QCOMPARE(sanitizeRubyTags(input), input);
 }
 
+// --- Hallucinated non-ruby HTML tags ---
+
+void TestRubySanitizer::testStraySvgCloseTag()
+{
+    QString input = QStringLiteral("<ruby>厳正<rt>げんせい</rt></ruby></svg> — text");
+    QString expected = QStringLiteral("<ruby>厳正<rt>げんせい</rt></ruby> — text");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testStrayZuCloseTag()
+{
+    QString input = QStringLiteral("<ruby>対応<rt>たいおう</rt></ruby></zu>する");
+    QString expected = QStringLiteral("<ruby>対応<rt>たいおう</rt></ruby>する");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testStrayHtmlTagInsideRuby()
+{
+    // Hallucinated <svg>...</svg> between ruby base and rt
+    QString input = QStringLiteral("<ruby>text<svg>more</svg><rt>ann</rt></ruby>");
+    QString expected = QStringLiteral("<ruby>textmore<rt>ann</rt></ruby>");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
 // --- Real LLM output integration tests ---
 
 void TestRubySanitizer::testRealLLMOutput1()
@@ -212,6 +242,20 @@ void TestRubySanitizer::testRealLLMOutput2()
     );
     QString expected = QStringLiteral(
         "く形式（いわゆる"
+    );
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testRealLLMOutput3()
+{
+    // Real LLM output with hallucinated </svg> and </zu> tags
+    QString input = QStringLiteral(
+        "<ruby>厳正<rt>げんせい</rt></ruby></svg> — text\n"
+        "<ruby>対応<rt>たいおう</rt></ruby></zu>する"
+    );
+    QString expected = QStringLiteral(
+        "<ruby>厳正<rt>げんせい</rt></ruby> — text\n"
+        "<ruby>対応<rt>たいおう</rt></ruby>する"
     );
     QCOMPARE(sanitizeRubyTags(input), expected);
 }

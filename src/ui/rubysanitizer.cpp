@@ -40,25 +40,50 @@ enum class State {
 
 QString sanitizeRubyTags(const QString& text)
 {
-    // === Phase 1: Preprocessing — fix missing closing brackets ===
-    // E.g. </rubyが → </ruby>が, <rtが → <rt>が
-    QString preprocessed = text;
+    // === Step 1: Protect known tags with placeholders ===
+    // Replace <ruby>, <rt>, </rt>, </ruby> (including broken variants
+    // missing the closing >) with unique placeholder tokens using \x01/\x02
+    // delimiters. Control characters never appear in LLM output.
+    //
+    // Each regex matches both:
+    //   - Complete tags: </ruby>  (the > alternative)
+    //   - Broken tags:   </rubyが  (negative lookahead — next char is not a letter)
+    //   - Tags at EOF:   </ruby   (negative lookahead succeeds at end of string)
+    //
+    // Negative lookahead (?![a-zA-Z]) prevents false matches on unrelated
+    // tags like <rubyx>.
+
     const auto ci = QRegularExpression::CaseInsensitiveOption;
-    preprocessed.replace(QRegularExpression(QStringLiteral("</ruby(?!>)"), ci), QStringLiteral("</ruby>"));
-    preprocessed.replace(QRegularExpression(QStringLiteral("</rt(?!>)"), ci), QStringLiteral("</rt>"));
-    preprocessed.replace(QRegularExpression(QStringLiteral("<ruby(?!>)"), ci), QStringLiteral("<ruby>"));
-    preprocessed.replace(QRegularExpression(QStringLiteral("<rt(?!>)"), ci), QStringLiteral("<rt>"));
+    QString preprocessed = text;
 
-    // === Phase 2: Strip hallucinated non-ruby HTML tags ===
-    // LLM sometimes outputs stray tags like </svg>, </zu>, <svg> etc.
-    // These break Qt's HTML parser if left in the output.
-    static const QRegularExpression strayHtmlTag(
-        QStringLiteral("</?(?!ruby\\b)(?!rt\\b)[a-zA-Z][a-zA-Z0-9]*\\b[^>]*>"),
-        QRegularExpression::CaseInsensitiveOption
-    );
-    preprocessed.remove(strayHtmlTag);
+    preprocessed.replace(QRegularExpression(QStringLiteral("</ruby(?:>|(?![a-zA-Z]))"), ci),
+                         QStringLiteral("\x01/R\x02"));
+    preprocessed.replace(QRegularExpression(QStringLiteral("<ruby(?:>|(?![a-zA-Z]))"), ci),
+                         QStringLiteral("\x01R\x02"));
+    preprocessed.replace(QRegularExpression(QStringLiteral("</rt(?:>|(?![a-zA-Z]))"), ci),
+                         QStringLiteral("\x01/RT\x02"));
+    preprocessed.replace(QRegularExpression(QStringLiteral("<rt(?:>|(?![a-zA-Z]))"), ci),
+                         QStringLiteral("\x01RT\x02"));
 
-    // === Phase 3: State machine — single pass through all tags ===
+    // === Step 2: Remove all remaining HTML tags ===
+    // After step 1, every <...> is unwanted HTML hallucinated by the LLM.
+    static const QRegularExpression anyHtmlTag(QStringLiteral("<[^>]*>"));
+    preprocessed.remove(anyHtmlTag);
+
+    // === Step 3: Remove stray angle brackets ===
+    // Broken fragments like </しかった or <何か remain after step 2 because
+    // they lack a closing >. Remove </ first, then <, to avoid leaving
+    // a stray / behind.
+    preprocessed.remove(QStringLiteral("</"));
+    preprocessed.remove(QStringLiteral("<"));
+
+    // === Step 4: Restore placeholders to proper tags ===
+    preprocessed.replace(QStringLiteral("\x01/R\x02"), QStringLiteral("</ruby>"));
+    preprocessed.replace(QStringLiteral("\x01R\x02"), QStringLiteral("<ruby>"));
+    preprocessed.replace(QStringLiteral("\x01/RT\x02"), QStringLiteral("</rt>"));
+    preprocessed.replace(QStringLiteral("\x01RT\x02"), QStringLiteral("<rt>"));
+
+    // === Step 5: State machine — validate and fix ruby structure ===
     static const QRegularExpression tagRe(
         QStringLiteral("(</ruby>|<ruby>|</rt>|<rt>)"),
         QRegularExpression::CaseInsensitiveOption

@@ -67,10 +67,16 @@ private slots:
     void testStrayRtAtEof();
     void testStrayRtThenRubyBlock();
 
+    // Hallucinated broken angle brackets with CJK text
+    void testBrokenCloseTagWithCjk();
+    void testBrokenCloseTagAfterRuby();
+    void testBrokenCloseTagAfterRubyWithOkurigana();
+
     // Real LLM output integration tests
     void testRealLLMOutput1();
     void testRealLLMOutput2();
     void testRealLLMOutput3();
+    void testRealLLMOutput4();
 
     // Invariant: idempotency
     void testIdempotent();
@@ -252,6 +258,34 @@ void TestRubySanitizer::testStrayRtThenRubyBlock()
     QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
+// --- Hallucinated broken angle brackets with CJK text ---
+
+void TestRubySanitizer::testBrokenCloseTagWithCjk()
+{
+    // LLM hallucinates </ before okurigana: </しかった → しかった
+    QString input = QStringLiteral("</しかった");
+    QString expected = QStringLiteral("しかった");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testBrokenCloseTagAfterRuby()
+{
+    // LLM annotates kanji then hallucinates </ before okurigana
+    // <ruby>欲<rt>ほ</rt></ruby></しかった → <ruby>欲<rt>ほ</rt></ruby>しかった
+    QString input = QStringLiteral("<ruby>欲<rt>ほ</rt></ruby></しかった");
+    QString expected = QStringLiteral("<ruby>欲<rt>ほ</rt></ruby>しかった");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testBrokenCloseTagAfterRubyWithOkurigana()
+{
+    // LLM outputs </しい as broken tag after ruby annotation
+    // <ruby>厳<rt>きび</rt></ruby></しい → <ruby>厳<rt>きび</rt></ruby>しい
+    QString input = QStringLiteral("<ruby>厳<rt>きび</rt></ruby></しい");
+    QString expected = QStringLiteral("<ruby>厳<rt>きび</rt></ruby>しい");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
 // --- Real LLM output integration tests ---
 
 void TestRubySanitizer::testRealLLMOutput1()
@@ -294,6 +328,26 @@ void TestRubySanitizer::testRealLLMOutput3()
     QString expected = QStringLiteral(
         "<ruby>厳正<rt>げんせい</rt></ruby> — text\n"
         "<ruby>対応<rt>たいおう</rt></ruby>する"
+    );
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testRealLLMOutput4()
+{
+    // Real LLM output with broken </ before CJK okurigana and stray <rt>
+    QString input = QStringLiteral(
+        "<ruby>只<rt>ただ</rt></ruby><ruby>二階<rt>にかい</rt></ruby>"
+        "の<ruby>狭<rt>せま</rt></ruby>いほうにロフトが"
+        "<ruby>欲<rt>ほ</rt></ruby></しかった。\n"
+        "<ruby>並<rt>なら</rt></ruby>並<rt>ならberu (text).\n"
+        "<ruby>厳<rt>きび</rt></ruby></しい"
+    );
+    QString expected = QStringLiteral(
+        "<ruby>只<rt>ただ</rt></ruby><ruby>二階<rt>にかい</rt></ruby>"
+        "の<ruby>狭<rt>せま</rt></ruby>いほうにロフトが"
+        "<ruby>欲<rt>ほ</rt></ruby>しかった。\n"
+        "<ruby>並<rt>なら</rt></ruby>並ならberu (text).\n"
+        "<ruby>厳<rt>きび</rt></ruby>しい"
     );
     QCOMPARE(sanitizeRubyTags(input), expected);
 }

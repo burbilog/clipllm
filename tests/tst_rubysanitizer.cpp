@@ -62,6 +62,11 @@ private slots:
     void testStrayZuCloseTag();
     void testStrayHtmlTagInsideRuby();
 
+    // Stray ruby/rt tags outside proper context
+    void testStrayRtOutsideRuby();
+    void testStrayRtAtEof();
+    void testStrayRtThenRubyBlock();
+
     // Real LLM output integration tests
     void testRealLLMOutput1();
     void testRealLLMOutput2();
@@ -104,15 +109,17 @@ void TestRubySanitizer::testNestedRubyOpenTag()
 
 void TestRubySanitizer::testMissingCloseBracketOnRubyClose()
 {
+    // After Phase 1 fixes bracket: </ruby>が — stray close tag gets stripped
     QString input = QStringLiteral("</rubyがありません");
-    QString expected = QStringLiteral("</ruby>がありません");
+    QString expected = QStringLiteral("がありません");
     QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
 void TestRubySanitizer::testMissingCloseBracketOnRtClose()
 {
+    // After Phase 1 fixes bracket: </rt>が — stray close tag gets stripped
     QString input = QStringLiteral("</rtが");
-    QString expected = QStringLiteral("</rt>が");
+    QString expected = QStringLiteral("が");
     QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
@@ -126,8 +133,9 @@ void TestRubySanitizer::testMissingCloseBracketOnRubyOpen()
 
 void TestRubySanitizer::testMissingCloseBracketOnRtOpen()
 {
+    // After Phase 1 fixes bracket: <rt>が — stray <rt> outside <ruby>, annotation discarded
     QString input = QStringLiteral("<rtが");
-    QString expected = QStringLiteral("<rt>が");
+    QString expected = QStringLiteral("");
     QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
@@ -180,14 +188,18 @@ void TestRubySanitizer::testUnclosedRtAtEof()
 
 void TestRubySanitizer::testStrayCloseRuby()
 {
+    // Stray </ruby> outside context — should be stripped
     QString input = QStringLiteral("text</ruby>more");
-    QCOMPARE(sanitizeRubyTags(input), input);
+    QString expected = QStringLiteral("textmore");
+    QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
 void TestRubySanitizer::testStrayCloseRt()
 {
+    // Stray </rt> outside context — should be stripped
     QString input = QStringLiteral("text</rt>more");
-    QCOMPARE(sanitizeRubyTags(input), input);
+    QString expected = QStringLiteral("textmore");
+    QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
 // --- Hallucinated non-ruby HTML tags ---
@@ -211,6 +223,32 @@ void TestRubySanitizer::testStrayHtmlTagInsideRuby()
     // Hallucinated <svg>...</svg> between ruby base and rt
     QString input = QStringLiteral("<ruby>text<svg>more</svg><rt>ann</rt></ruby>");
     QString expected = QStringLiteral("<ruby>textmore<rt>ann</rt></ruby>");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+// --- Stray ruby/rt tags outside proper context ---
+
+void TestRubySanitizer::testStrayRtOutsideRuby()
+{
+    // LLM outputs <rt>...</rt></ruby> without opening <ruby>
+    QString input = QStringLiteral("映える<rt>は</rt></ruby>る");
+    QString expected = QStringLiteral("映えるる");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testStrayRtAtEof()
+{
+    // Unclosed stray <rt> at end of text
+    QString input = QStringLiteral("text<rt>annotation");
+    QString expected = QStringLiteral("text");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testStrayRtThenRubyBlock()
+{
+    // Stray <rt> followed by proper <ruby> block
+    QString input = QStringLiteral("text<rt>stray</rt><ruby>漢字<rt>かんじ</rt></ruby>more");
+    QString expected = QStringLiteral("text<ruby>漢字<rt>かんじ</rt></ruby>more");
     QCOMPARE(sanitizeRubyTags(input), expected);
 }
 

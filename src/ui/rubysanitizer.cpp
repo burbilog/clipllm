@@ -35,6 +35,7 @@ enum class State {
     InRuby,   // After <ruby>, collecting base text
     InRt,     // After <rt>, collecting annotation text
     AfterRt,  // After </rt>, waiting for </ruby>
+    StrayRt,  // After <rt> outside <ruby>, collecting to discard
 };
 
 QString sanitizeRubyTags(const QString& text)
@@ -97,9 +98,28 @@ QString sanitizeRubyTags(const QString& text)
                 baseText.clear();
                 annotationText.clear();
                 state = State::InRuby;
+            } else if (tagType == TagType::RtOpen) {
+                // Stray <rt> outside <ruby> — enter discard mode
+                output += textBetween;
+                state = State::StrayRt;
             } else {
-                // Stray close tag outside context — pass through
-                output += textBetween + match.captured(1);
+                // Stray </rt> or </ruby> — strip them
+                output += textBetween;
+            }
+            break;
+
+        case State::StrayRt:
+            if (tagType == TagType::RtClose || tagType == TagType::RubyClose) {
+                // End of stray annotation — discard it
+                state = State::Outside;
+            } else if (tagType == TagType::RubyOpen) {
+                // New <ruby> while in stray <rt> — start fresh ruby block
+                output += textBetween;
+                baseText.clear();
+                annotationText.clear();
+                state = State::InRuby;
+            } else {
+                // Nested stray <rt> — keep discarding
             }
             break;
 
@@ -218,6 +238,9 @@ QString sanitizeRubyTags(const QString& text)
             output += baseText;
         }
         output += trailing;
+        break;
+    case State::StrayRt:
+        // Unclosed stray <rt> at EOF — discard annotation
         break;
     }
 

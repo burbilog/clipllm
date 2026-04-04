@@ -97,6 +97,11 @@ ResultDialog::ResultDialog(Core::LLMClient* llmClient, Core::HistoryManager* his
 
     // Register RubyTextObject with output document
     RubyTextObject::registerWithDocument(m_outputText->document());
+
+    // Render throttling timer — batches streaming chunks to avoid UI freezes
+    m_renderTimer = new QTimer(this);
+    m_renderTimer->setSingleShot(true);
+    connect(m_renderTimer, &QTimer::timeout, this, &ResultDialog::onRenderTimeout);
 }
 
 ResultDialog::~ResultDialog() = default;
@@ -317,6 +322,8 @@ void ResultDialog::startRequest()
     m_isThinking = false;
     m_wasSaved = false;
     m_bytesReceived = 0;
+    m_pendingChunks.clear();
+    m_renderTimer->stop();
     m_timer.start();
 
     // Update markdown toggle button text
@@ -365,16 +372,39 @@ void ResultDialog::onStreaming(const QString& content)
 {
     if (m_closing) return;
 
-    appendResponse(content);
+    // Accumulate chunks and throttle rendering to avoid UI freezes
+    m_pendingChunks.append(content);
 
-    // Update token estimate (rough approximation)
-    int estimatedTokens = m_output.length() / CHARS_PER_TOKEN_ESTIMATE;
+    // Update token estimate from accumulated output + pending
+    int estimatedTokens = (m_output.length() + m_pendingChunks.length()) / CHARS_PER_TOKEN_ESTIMATE;
     m_tokensLabel->setText(tr("Tokens: ~%1").arg(estimatedTokens));
+
+    // Start or restart the render timer (100ms throttle)
+    if (!m_renderTimer->isActive()) {
+        m_renderTimer->start(100);
+    }
+}
+
+void ResultDialog::onRenderTimeout()
+{
+    if (m_pendingChunks.isEmpty()) return;
+
+    m_output.append(m_pendingChunks);
+    m_pendingChunks.clear();
+    renderOutput();
 }
 
 void ResultDialog::onCompleted(const Core::LLMResponse& response)
 {
     if (m_closing) return;
+
+    // Flush any pending chunks immediately
+    if (!m_pendingChunks.isEmpty()) {
+        m_renderTimer->stop();
+        m_output.append(m_pendingChunks);
+        m_pendingChunks.clear();
+        renderOutput();
+    }
 
     m_isStreaming = false;
     m_isThinking = false;
@@ -447,6 +477,14 @@ void ResultDialog::onCompleted(const Core::LLMResponse& response)
 void ResultDialog::onError(const QString& error)
 {
     if (m_closing) return;
+
+    // Flush any pending chunks before showing error
+    m_renderTimer->stop();
+    if (!m_pendingChunks.isEmpty()) {
+        m_output.append(m_pendingChunks);
+        m_pendingChunks.clear();
+        renderOutput();
+    }
 
     m_isStreaming = false;
     m_isThinking = false;

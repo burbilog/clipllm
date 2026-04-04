@@ -26,6 +26,7 @@
 #include <QHBoxLayout>
 #include <QElapsedTimer>
 #include <QShortcut>
+#include <QTimer>
 #include "textdisplayhelper.h"
 
 QT_BEGIN_NAMESPACE
@@ -95,6 +96,7 @@ private slots:
     void onZoomInClicked();
     void onSaveAsClicked();
     void onChainContinueClicked();
+    void onRenderTimeout();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -176,6 +178,10 @@ private:
 
     QElapsedTimer m_timer;
     qint64 m_bytesReceived = 0;
+
+    // Render throttling
+    QTimer* m_renderTimer = nullptr;
+    QString m_pendingChunks;
 
     // Helper for traffic formatting
     static QString formatBytes(qint64 bytes);

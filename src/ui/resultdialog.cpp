@@ -387,7 +387,7 @@ void ResultDialog::onStreaming(const QString& content)
 
 void ResultDialog::onRenderTimeout()
 {
-    if (m_pendingChunks.isEmpty()) return;
+    if (m_closing || m_pendingChunks.isEmpty()) return;
 
     m_output.append(m_pendingChunks);
     m_pendingChunks.clear();
@@ -617,6 +617,8 @@ void ResultDialog::closeEvent(QCloseEvent* event)
         );
 
         if (reply == QMessageBox::Yes) {
+            // Stop timer to prevent rendering during close
+            m_renderTimer->stop();
             // User confirmed - show cancel status
             if (m_statusLabel) {
                 m_statusLabel->setText(tr("Cancelling..."));

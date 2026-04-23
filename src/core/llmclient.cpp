@@ -111,8 +111,11 @@ LLMClient::LLMClient(QObject* parent)
 LLMClient::~LLMClient()
 {
     if (m_currentReply) {
-        m_currentReply->abort();
-        m_currentReply->deleteLater();
+        QPointer<QNetworkReply> reply = m_currentReply;
+        m_currentReply = nullptr;
+        disconnect(reply, nullptr, this, nullptr);
+        reply->abort();
+        reply->deleteLater();
     }
 }
 
@@ -181,10 +184,7 @@ void LLMClient::sendRequest(const LLMRequest& request)
     // Proceed without API key - let the API decide if it's required
 
     // Cancel any existing request
-    if (m_currentReply) {
-        m_currentReply->abort();
-        m_currentReply->deleteLater();
-    }
+    cancel();
 
     m_isTestingConnection = false;  // Ensure connection test flag is reset for normal requests
     setState(LLMClientState::Connecting);
@@ -300,10 +300,7 @@ void LLMClient::testConnection()
     }
 
     // Cancel any existing request
-    if (m_currentReply) {
-        m_currentReply->abort();
-        m_currentReply->deleteLater();
-    }
+    cancel();
 
     m_isTestingConnection = true;
     setState(LLMClientState::Connecting);

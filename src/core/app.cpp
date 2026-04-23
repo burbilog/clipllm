@@ -848,6 +848,15 @@ void App::onPromptSelected(const QString& promptId,
     QString userPrompt = prompt.formatUserPrompt(inputText, m_configManager->language());
 
     // Create or reuse result dialog
+    // If dialog exists but is no longer visible, it was closed and is pending
+    // deletion via WA_DeleteOnClose. Reusing it is unsafe because deleteLater()
+    // is already scheduled — destroy it and create a fresh one.
+    if (m_resultDialog && !m_resultDialog->isVisible()) {
+        m_resultDialog->disconnect();
+        m_resultDialog = nullptr;
+        // The old dialog's WA_DeleteOnClose will clean it up via deleteLater()
+    }
+
     if (!m_resultDialog) {
         m_resultDialog = new UI::ResultDialog(m_llmClient.get(), m_historyManager.get(),
                                               m_configManager.get());

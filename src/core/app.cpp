@@ -542,6 +542,10 @@ void App::unregisterPromptHotkeys()
 
 void App::onPromptHotkeyTriggered(const QString& promptId)
 {
+    if (QApplication::activeModalWidget()) {
+        LOG_DEBUG(QStringLiteral("Prompt hotkey ignored: modal dialog is active"));
+        return;
+    }
     LOG_DEBUG(QStringLiteral("Prompt hotkey triggered for: %1").arg(promptId));
     // Directly execute - clipboard check is in onPromptSelected()
     onPromptSelected(promptId);
@@ -549,6 +553,12 @@ void App::onPromptHotkeyTriggered(const QString& promptId)
 
 void App::onScreenshotHotkeyTriggered(const QString& promptId)
 {
+    if (QApplication::activeModalWidget()) {
+        LOG_DEBUG(QStringLiteral("Screenshot hotkey ignored: modal dialog is active"));
+        showTrayMessage(tr("Screenshot Unavailable"),
+                        tr("Cannot take screenshot while a dialog is open."));
+        return;
+    }
     LOG_DEBUG(QStringLiteral("Screenshot hotkey triggered for: %1").arg(promptId));
 
     // Verify prompt exists
@@ -718,6 +728,10 @@ void App::showPromptMenuAtTray()
 
 void App::onHotkeyTriggered()
 {
+    if (QApplication::activeModalWidget()) {
+        LOG_DEBUG(QStringLiteral("Hotkey ignored: modal dialog is active"));
+        return;
+    }
     LOG_DEBUG(QStringLiteral("Hotkey triggered"));
 
     // Get clipboard content

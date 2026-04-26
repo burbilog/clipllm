@@ -58,33 +58,43 @@ ClipLLMを使用するには、設定で少なくとも1つのプロバイダー
         <translation>グローバルホットキーを登録できませんでした: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="571"/>
+        <location filename="../src/core/app.cpp" line="558"/>
+        <source>Screenshot Unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="559"/>
+        <source>Cannot take screenshot while a dialog is open.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/app.cpp" line="581"/>
         <source>Screenshot Failed</source>
         <translation>スクリーンショットに失敗しました</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="571"/>
+        <location filename="../src/core/app.cpp" line="581"/>
         <source>Could not capture screen</source>
         <translation>画面をキャプチャできませんでした</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="727"/>
-        <location filename="../src/core/app.cpp" line="779"/>
+        <location filename="../src/core/app.cpp" line="741"/>
+        <location filename="../src/core/app.cpp" line="793"/>
         <source>Clipboard Empty</source>
         <translation>クリップボードが空です</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="728"/>
+        <location filename="../src/core/app.cpp" line="742"/>
         <source>No content found in clipboard.</source>
         <translation>クリップボードにコンテンツが見つかりません。</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="751"/>
+        <location filename="../src/core/app.cpp" line="765"/>
         <source>Chain Cycle Detected</source>
         <translation>チェーンサイクルが検出されました</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="752"/>
+        <location filename="../src/core/app.cpp" line="766"/>
         <source>The prompt chain would create a cycle. Execution stopped.
 
 Prompt &apos;%1&apos; was already executed in this chain.</source>
@@ -93,12 +103,12 @@ Prompt &apos;%1&apos; was already executed in this chain.</source>
 プロンプト&amp;apos;%1&amp;apos;はこのチェーンですでに実行されています。</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="760"/>
+        <location filename="../src/core/app.cpp" line="774"/>
         <source>Chain Depth Limit</source>
         <translation>チェーン深度制限</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="761"/>
+        <location filename="../src/core/app.cpp" line="775"/>
         <source>Maximum chain depth (%1) reached. Execution stopped.
 
 You can increase this limit in Settings → General → Prompt Chains.</source>
@@ -107,7 +117,7 @@ You can increase this limit in Settings → General → Prompt Chains.</source>
 この制限は設定 → 一般 → プロンプトチェーンで増やすことができます。</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="780"/>
+        <location filename="../src/core/app.cpp" line="794"/>
         <source>Cannot execute prompt: clipboard is empty.
 
 Copy some text or an image first.</source>
@@ -116,57 +126,57 @@ Copy some text or an image first.</source>
 最初にテキストまたは画像をコピーしてください。</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="795"/>
+        <location filename="../src/core/app.cpp" line="809"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="796"/>
+        <location filename="../src/core/app.cpp" line="810"/>
         <source>Prompt not found: %1</source>
         <translation>プロンプトが見つかりません: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="805"/>
+        <location filename="../src/core/app.cpp" line="819"/>
         <source>Provider Error</source>
         <translation>プロバイダーエラー</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="806"/>
+        <location filename="../src/core/app.cpp" line="820"/>
         <source>No LLM provider configured. Please configure one in Settings.</source>
         <translation>LLMプロバイダーが設定されていません。設定で構成してください。</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="823"/>
+        <location filename="../src/core/app.cpp" line="837"/>
         <source>Model Error</source>
         <translation>モデルエラー</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="824"/>
+        <location filename="../src/core/app.cpp" line="838"/>
         <source>No model selected. Please select a model in Settings → LLM → Provider Profiles.</source>
         <translation>モデルが選択されていません。設定 → LLM → プロバイダープロファイルでモデルを選択してください。</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="842"/>
+        <location filename="../src/core/app.cpp" line="856"/>
         <source>Incompatible Content</source>
         <translation>互換性のないコンテンツ</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="843"/>
+        <location filename="../src/core/app.cpp" line="857"/>
         <source>This prompt requires text content.</source>
         <translation>このプロンプトはテキストコンテンツを必要とします。</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="877"/>
+        <location filename="../src/core/app.cpp" line="891"/>
         <source>[Image content]</source>
         <translation>[画像コンテンツ]</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="1108"/>
+        <location filename="../src/core/app.cpp" line="1122"/>
         <source>Prompt Not Found</source>
         <translation>プロンプトが見つかりません</translation>
     </message>
     <message>
-        <location filename="../src/core/app.cpp" line="1109"/>
+        <location filename="../src/core/app.cpp" line="1123"/>
         <source>Prompt with ID &apos;%1&apos; not found.</source>
         <translation>ID &apos;%1&apos; のプロンプトが見つかりません。</translation>
     </message>

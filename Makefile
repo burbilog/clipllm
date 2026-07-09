@@ -1,4 +1,7 @@
-.PHONY: build translations clean test tests web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-appimage-docker linux-tar dist dist-linux dist-windows cloc
+.PHONY: help build translations clean test tests web windows windows-deploy windows-zip windows-installer regen-icons linux-appimage linux-appimage-docker linux-tar dist dist-linux dist-windows cloc
+
+# `make` with no arguments prints this help instead of silently building.
+.DEFAULT_GOAL := help
 
 # Number of CPU cores for parallel build
 NPROCS := $(shell nproc)
@@ -10,6 +13,47 @@ MXE_BUILD_TYPE ?= static
 # Current release version (for website - update this after release)
 # Override with: make web WEBSITE_VERSION=1.0.4
 WEBSITE_VERSION := 1.0.5
+
+help: ## Show available make targets
+	@echo "ClipLLM Makefile targets"
+	@echo ""
+	@echo "Build:"
+	@echo "  build                 Build the project (cmake + make)"
+	@echo "  translations          Update .ts and compile .qm (lupdate + lrelease)"
+	@echo "  clean                 Remove build/dist/deploy directories"
+	@echo "  regen-icons           Regenerate tray icons from art/clipllm_hires.png"
+	@echo ""
+	@echo "Tests:"
+	@echo "  test                  Build, then run ctest"
+	@echo "  tests                 Alias for 'test'"
+	@echo ""
+	@echo "Website:"
+	@echo "  web                   Regenerate docs/index.html from .in (WEBSITE_VERSION)"
+	@echo ""
+	@echo "Linux distribution:"
+	@echo "  linux-tar             Portable tar.gz"
+	@echo "  linux-appimage        AppImage in Docker (GLIBC 2.35, Debian 12+ compatible)"
+	@echo "  dist-linux            linux-tar + linux-appimage"
+	@echo ""
+	@echo "Windows distribution (require MXE):"
+	@echo "  windows               Cross-compile Windows binary"
+	@echo "  windows-deploy        windows + bundle DLLs/plugins"
+	@echo "  windows-zip           Portable Windows ZIP"
+	@echo "  windows-installer     NSIS installer (.exe)"
+	@echo "  test-windows-wine     Smoke-test Windows build under Wine"
+	@echo "  dist-windows          windows-zip + windows-installer"
+	@echo ""
+	@echo "All platforms:"
+	@echo "  dist                  All Linux packages (dist-linux)"
+	@echo ""
+	@echo "Misc:"
+	@echo "  cloc                  Count lines of code"
+	@echo "  check-mxe             Verify MXE toolchain presence"
+	@echo ""
+	@echo "Variables:"
+	@echo "  MXE_BUILD_TYPE=static|shared   (Windows linking)"
+	@echo "  WEBSITE_VERSION=X.Y.Z          (overrides site version for 'web')"
+	@echo ""
 
 build: translations
 	@echo "Building ClipLLM..."

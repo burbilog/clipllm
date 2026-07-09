@@ -950,6 +950,9 @@ void SettingsDialog::onTestConnectionClicked()
     Models::LLMConfig config;
     config.setApiUrl(profile.apiUrl());
     config.setModel(profile.model());
+    // Honor the profile's proxy so "Test connection" exercises the same path
+    // real requests use (setConfig() applies it to the network manager).
+    config.setProxyUrl(profile.proxyUrl());
 
     m_testClient->setConfig(config);
 
@@ -1663,6 +1666,10 @@ void SettingsDialog::fetchModelsFromAPI()
 
     m_connectionStatusLabel->setText(tr("Fetching models..."));
     m_refreshModelsButton->setEnabled(false);
+
+    // Apply the profile's proxy so the model-list fetch uses the same path
+    // as real requests (otherwise it bypasses the proxy entirely).
+    m_networkManager->setProxy(Core::LLMClient::proxyFromUrl(profile.proxyUrl()));
 
     m_networkManager->get(request);
 }

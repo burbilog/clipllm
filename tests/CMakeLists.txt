@@ -77,3 +77,56 @@ target_include_directories(TestRubySanitizer
 )
 
 add_test(NAME TestRubySanitizer COMMAND TestRubySanitizer)
+
+# Proxy tests (unit): verify a configured proxy URL is applied to the
+# QNetworkAccessManager after setProxy()/setConfig(). No network needed.
+qt_add_executable(TestProxy
+    tst_proxy.cpp
+    ../src/core/llmclient.cpp
+    ../src/core/debuglogger.cpp
+    ../src/models/llmconfig.cpp
+)
+
+target_link_libraries(TestProxy
+    PRIVATE
+    Qt6::Core
+    Qt6::Network
+    Qt6::Widgets
+    Qt6::Test
+)
+
+target_include_directories(TestProxy
+    PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_BINARY_DIR}/src
+)
+
+add_test(NAME TestProxy COMMAND TestProxy)
+
+# Proxy tests (integration): drive a real request through docker-hosted HTTP
+# and SOCKS5 proxies against a mock LLM. Orchestrated by run.sh, which skips
+# (exit 77) when docker is unavailable so CI without docker is not broken.
+qt_add_executable(TestProxyIntegration
+    tst_proxyintegration.cpp
+    ../src/core/llmclient.cpp
+    ../src/core/debuglogger.cpp
+    ../src/models/llmconfig.cpp
+)
+
+target_link_libraries(TestProxyIntegration
+    PRIVATE
+    Qt6::Core
+    Qt6::Network
+    Qt6::Widgets
+    Qt6::Test
+)
+
+target_include_directories(TestProxyIntegration
+    PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_BINARY_DIR}/src
+)
+
+add_test(NAME TestProxyIntegration
+    COMMAND bash ${CMAKE_SOURCE_DIR}/tests/proxy/run.sh $<TARGET_FILE:TestProxyIntegration>)
+set_tests_properties(TestProxyIntegration PROPERTIES SKIP_RETURN_CODE 77)

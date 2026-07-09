@@ -1,0 +1,34 @@
+# Proxy integration test fixtures.
+#
+# mock-llm: OpenAI-compatible mock. Its port is deliberately NOT published,
+#   so the host cannot reach it directly -- only the proxies (on the shared
+#   "proxytest" network) can. A successful request therefore proves the
+#   request traversed a proxy.
+# http-proxy: tinyproxy forward HTTP proxy on 8888 (published to host).
+# socks-proxy: microsocks SOCKS5 proxy on 1080 (published to host).
+
+services:
+  mock-llm:
+    build: ./mock
+    networks: [proxytest]
+    restart: "no"
+
+  http-proxy:
+    build: ./proxy-http
+    ports:
+      - "127.0.0.1:8888:8888"
+    networks: [proxytest]
+    depends_on: [mock-llm]
+    restart: "no"
+
+  socks-proxy:
+    build: ./proxy-socks
+    ports:
+      - "127.0.0.1:1080:1080"
+    networks: [proxytest]
+    depends_on: [mock-llm]
+    restart: "no"
+
+networks:
+  proxytest:
+    driver: bridge

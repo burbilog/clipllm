@@ -16,7 +16,6 @@
 
 #include "llmclient.h"
 #include "debuglogger.h"
-#include "core/app.h"
 #include <QNetworkRequest>
 #include <QHttpMultiPart>
 #include <QJsonDocument>
@@ -123,6 +122,15 @@ void LLMClient::setConfig(const Models::LLMConfig& config)
 {
     m_config = config;
     m_streamEnabled = config.stream();
+    // Apply the proxy carried by the config so every request through this
+    // client actually uses it. Previously the proxy URL was only stored on
+    // m_config and never reached m_networkManager, so requests bypassed it.
+    applyProxy(config.proxyUrl());
+}
+
+QNetworkProxy LLMClient::networkProxy() const
+{
+    return m_networkManager ? m_networkManager->proxy() : QNetworkProxy();
 }
 
 void LLMClient::setApiKey(const QString& apiKey)
@@ -143,35 +151,48 @@ void LLMClient::setApiUrl(const QUrl& url)
 void LLMClient::setProxy(const QString& proxyUrl)
 {
     m_config.setProxyUrl(proxyUrl);
+    applyProxy(proxyUrl);
+}
 
-    if (!proxyUrl.isEmpty()) {
-        QUrl proxy(proxyUrl);
-
-        // Determine proxy type from scheme
-        QString scheme = proxy.scheme().toLower();
-        QNetworkProxy::ProxyType proxyType = QNetworkProxy::HttpProxy;
-
-        if (scheme == QStringLiteral("socks5") || scheme == QStringLiteral("socks5h")) {
-            proxyType = QNetworkProxy::Socks5Proxy;
-        } else if (scheme == QStringLiteral("http") || scheme == QStringLiteral("https")) {
-            proxyType = QNetworkProxy::HttpProxy;
-        }
-
-        QNetworkProxy networkProxy(
-            proxyType,
-            proxy.host(),
-            proxy.port(8080)
-        );
-
-        if (!proxy.userName().isEmpty()) {
-            networkProxy.setUser(proxy.userName());
-            networkProxy.setPassword(proxy.password());
-        }
-
-        m_networkManager->setProxy(networkProxy);
-    } else {
-        m_networkManager->setProxy(QNetworkProxy::NoProxy);
+QNetworkProxy LLMClient::proxyFromUrl(const QString& proxyUrl)
+{
+    if (proxyUrl.isEmpty()) {
+        return QNetworkProxy::NoProxy;
     }
+
+    QUrl proxy(proxyUrl);
+
+    // Determine proxy type from scheme
+    QString scheme = proxy.scheme().toLower();
+    QNetworkProxy::ProxyType proxyType = QNetworkProxy::HttpProxy;
+
+    if (scheme == QStringLiteral("socks5") || scheme == QStringLiteral("socks5h")) {
+        proxyType = QNetworkProxy::Socks5Proxy;
+    } else if (scheme == QStringLiteral("http") || scheme == QStringLiteral("https")) {
+        proxyType = QNetworkProxy::HttpProxy;
+    }
+
+    QNetworkProxy networkProxy(
+        proxyType,
+        proxy.host(),
+        proxy.port(8080)
+    );
+
+    if (!proxy.userName().isEmpty()) {
+        networkProxy.setUser(proxy.userName());
+        networkProxy.setPassword(proxy.password());
+    }
+
+    return networkProxy;
+}
+
+void LLMClient::applyProxy(const QString& proxyUrl)
+{
+    if (!m_networkManager) {
+        return;
+    }
+
+    m_networkManager->setProxy(proxyFromUrl(proxyUrl));
 }
 
 void LLMClient::setStreamEnabled(bool enabled)
@@ -201,16 +222,14 @@ void LLMClient::sendRequest(const LLMRequest& request)
     QByteArray body = createRequestBody(request);
 
     // Log with DebugLogger if enabled
-    if (auto* app = qobject_cast<App*>(QApplication::instance())) {
-        if (auto* logger = app->debugLogger(); logger && logger->isEnabled()) {
-            logger->debug(QStringLiteral("=== LLM Request ==="));
-            logger->debug(QStringLiteral("URL: %1").arg(m_config.apiUrl().toString()));
-            logger->debug(QStringLiteral("Model: %1").arg(request.model));
-            logger->debug(QStringLiteral("Messages: %1").arg(request.messages.size()));
+    if (auto* logger = DebugLogger::instance(); logger && logger->isEnabled()) {
+        logger->debug(QStringLiteral("=== LLM Request ==="));
+        logger->debug(QStringLiteral("URL: %1").arg(m_config.apiUrl().toString()));
+        logger->debug(QStringLiteral("Model: %1").arg(request.model));
+        logger->debug(QStringLiteral("Messages: %1").arg(request.messages.size()));
 
-            if (logger->currentLevel() >= DebugLevel::Trace) {
-                logger->trace(QStringLiteral("Request body: %1").arg(QString::fromUtf8(body)));
-            }
+        if (logger->currentLevel() >= DebugLevel::Trace) {
+            logger->trace(QStringLiteral("Request body: %1").arg(QString::fromUtf8(body)));
         }
     }
 
@@ -324,12 +343,10 @@ void LLMClient::testConnection()
     QByteArray body = createRequestBody(request);
 
     // Log the test request at trace level
-    if (auto* app = qobject_cast<App*>(QApplication::instance())) {
-        if (auto* logger = app->debugLogger(); logger && logger->currentLevel() >= DebugLevel::Trace) {
-            logger->trace(QStringLiteral("=== Connection Test Request ==="));
-            logger->trace(QStringLiteral("URL: %1").arg(m_config.apiUrl().toString()));
-            logger->trace(QStringLiteral("Body: %1").arg(QString::fromUtf8(body)));
-        }
+    if (auto* logger = DebugLogger::instance(); logger && logger->currentLevel() >= DebugLevel::Trace) {
+        logger->trace(QStringLiteral("=== Connection Test Request ==="));
+        logger->trace(QStringLiteral("URL: %1").arg(m_config.apiUrl().toString()));
+        logger->trace(QStringLiteral("Body: %1").arg(QString::fromUtf8(body)));
     }
 
     m_currentReply = m_networkManager->post(netRequest, body);
@@ -355,10 +372,8 @@ void LLMClient::onReadyRead()
     emit bytesReceivedChanged(m_bytesReceived);
 
     // Log raw response chunks at trace level
-    if (auto* app = qobject_cast<App*>(QApplication::instance())) {
-        if (auto* logger = app->debugLogger(); logger && logger->currentLevel() >= DebugLevel::Trace) {
-            logger->trace(QStringLiteral("Response chunk: %1").arg(QString::fromUtf8(data)));
-        }
+    if (auto* logger = DebugLogger::instance(); logger && logger->currentLevel() >= DebugLevel::Trace) {
+        logger->trace(QStringLiteral("Response chunk: %1").arg(QString::fromUtf8(data)));
     }
 
     // For connection test, wait for full response instead of aborting early

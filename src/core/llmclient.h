@@ -20,6 +20,7 @@
 #include <QObject>
 #include <QString>
 #include <QNetworkAccessManager>
+#include <QNetworkProxy>
 #include <QNetworkReply>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -94,6 +95,17 @@ public:
     void setProxy(const QString& proxyUrl);
     QString proxy() const { return m_config.proxyUrl(); }
 
+    // The proxy actually applied to the network access manager.
+    // Distinct from proxy(): that returns the configured URL string, while
+    // this returns the live QNetworkProxy on the request pipeline. Useful for
+    // verifying that proxy configuration takes effect (e.g. in tests).
+    QNetworkProxy networkProxy() const;
+
+    // Build a QNetworkProxy from a proxy URL string. Empty -> NoProxy.
+    // Shared so any QNetworkAccessManager (e.g. the model-list fetch in the
+    // settings/prompt-editor dialogs) applies the same proxy as real requests.
+    static QNetworkProxy proxyFromUrl(const QString& proxyUrl);
+
     void setStreamEnabled(bool enabled);
     bool isStreamEnabled() const { return m_streamEnabled; }
 
@@ -141,6 +153,9 @@ private slots:
 
 private:
     void setState(LLMClientState state);
+    // Build a QNetworkProxy from a proxy URL string and apply it to
+    // m_networkManager. Empty string clears any proxy (NoProxy).
+    void applyProxy(const QString& proxyUrl);
     QNetworkRequest createRequest(const LLMRequest& llmRequest) const;
     QByteArray createRequestBody(const LLMRequest& llmRequest) const;
     void processStreamingChunk(const QByteArray& chunk);

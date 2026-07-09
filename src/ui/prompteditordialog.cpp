@@ -22,6 +22,7 @@
 #include "core/debuglogger.h"
 #include "core/groupsmanager.h"
 #include "core/configmanager.h"
+#include "core/llmclient.h"
 #include "core/app.h"
 #include <QApplication>
 #include <QGroupBox>
@@ -1043,6 +1044,10 @@ void PromptEditorDialog::fetchModelsFromAPI()
     m_modelsStatusLabel->setText(tr("Fetching models..."));
     m_modelsStatusLabel->setStyleSheet("color: blue; font-size: 10px;");
     m_refreshModelsButton->setEnabled(false);
+
+    // Apply the profile's proxy so the model-list fetch uses the same path
+    // as real requests (otherwise it bypasses the proxy entirely).
+    m_networkManager->setProxy(Core::LLMClient::proxyFromUrl(profile.proxyUrl()));
 
     m_networkManager->get(request);
 }

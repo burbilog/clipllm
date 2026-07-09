@@ -8,6 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 After making code changes, build the project to verify everything compiles, but wait for explicit user approval before committing.
 
+**The user pushes to the remote themselves.** Never run `git push` (or `gh release`/tag push), and do not prompt or ask to push — just commit locally and stop. Pushing and publishing is always the user's manual step.
+
 **Qt 6.2 API Compatibility Requirement:**
 
 For AppImage compatibility with Debian 12+ (which uses Qt 6.2 via Ubuntu 22.04), always use Qt 6.2 APIs:
@@ -37,6 +39,8 @@ ClipLLM is a cross-platform LLM clipboard utility written in C++ using Qt6. It r
 ### Linux Native Build
 
 ```bash
+make                # Print the list of available targets (default goal = help)
+make help           # Same as bare `make`
 make build          # Build the project (creates build/, runs cmake, compiles)
 make translations   # Update translation files using update-translations.sh
 make clean          # Remove build directory

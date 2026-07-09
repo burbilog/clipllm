@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2026-07-09
+
+### Fixed
+
+- **Proxy was not actually used** - The per-profile proxy URL was stored on the config but never reached the `QNetworkAccessManager`, so all LLM requests connected directly and bypassed the configured proxy entirely. The same defect affected the connection test and the model-list ("Refresh") fetch in both the Settings and Prompt Editor dialogs, which use their own network manager.
+  - `LLMClient::setConfig()` now applies the proxy from the config (the core fix); `setProxy()` shares the logic via a new `applyProxy()` helper
+  - Added a shared `LLMClient::proxyFromUrl()` (static) so the dialog model fetches apply the same proxy as real requests
+  - The Settings "Test connection" client now honors the profile's proxy
+
+### Added
+
+- **Proxy test suite**
+  - `TestProxy` (unit) - verifies the proxy is applied to the network manager after `setProxy()` / `setConfig()` for `http`, `https`, `socks5`, `socks5h`, authenticated, and empty URLs, including the regression where `setConfig()` stored but never applied the proxy
+  - `TestProxyIntegration` (Docker) - drives real requests through tinyproxy (HTTP) and microsocks (SOCKS5) against a mock LLM, proving traversal for LLM requests, SOCKS5 (via echoed peer IP), and the model-list fetch path, and asserting a direct request without a proxy fails; automatically skips when Docker is unavailable
+
+### Changed
+
+- `LLMClient` logging no longer reaches up to `App`; it uses the `DebugLogger` singleton directly, which makes the client unit-testable without pulling in the whole application
+
 ## [1.0.4] - 2026-03-02
 
 ### Added

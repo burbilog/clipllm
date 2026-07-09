@@ -134,6 +134,25 @@ make web WEBSITE_VERSION=1.0.1  # Override version for website
 
 This allows developing the next version while the website shows the current release. After release, update `WEBSITE_VERSION` in Makefile.
 
+#### Website deployment (GitHub Pages)
+
+The site is published automatically by **GitHub Pages**, sourced from the
+`/docs` folder on the `master` branch (legacy/classic Pages builder, not an
+Actions workflow). There is no manual deploy step.
+
+**How a version reaches the live site:**
+```
+Makefile WEBSITE_VERSION  →  make web  →  docs/index.html (regenerated from .in)
+                           →  commit  →  push master  →  Pages auto-rebuild
+```
+Pushing `master` (which includes the regenerated `docs/index.html`) triggers a
+Pages rebuild; the site updates within ~1–2 minutes. So bumping the website
+version is complete once `docs/index.html` is committed **and** `master` is
+pushed — no separate publish action is needed.
+
+The live site URL is shown under the repo's Settings → Pages (currently
+`https://burbilog.github.io/clipllm/`; no custom domain/CNAME is configured).
+
 ### Clean Build
 ```bash
 make clean          # Remove all build directories (including Windows)
@@ -502,7 +521,9 @@ only if I reference previous, python incarnation of this program.
 
 ## Known Limitations
 
-- **No CI/CD**: No GitHub Actions or other CI configuration
+- **No CI/CD**: No GitHub Actions or other CI configuration. Note: the website
+  is auto-deployed via GitHub Pages (see "Website deployment" above), but there
+  is no build/test/release CI — tests run locally via `make test`.
 
 ## Dependencies
 

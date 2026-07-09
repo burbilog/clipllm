@@ -135,7 +135,8 @@ QString sanitizeRubyTags(const QString& text)
 
         case State::StrayRt:
             if (tagType == TagType::RtClose || tagType == TagType::RubyClose) {
-                // End of stray annotation — discard it
+                // End of stray annotation — discard tags but preserve text
+                output += textBetween;
                 state = State::Outside;
             } else if (tagType == TagType::RubyOpen) {
                 // New <ruby> while in stray <rt> — start fresh ruby block
@@ -144,7 +145,8 @@ QString sanitizeRubyTags(const QString& text)
                 annotationText.clear();
                 state = State::InRuby;
             } else {
-                // Nested stray <rt> — keep discarding
+                // Nested stray <rt> — discard tags but preserve text
+                output += textBetween;
             }
             break;
 
@@ -265,7 +267,8 @@ QString sanitizeRubyTags(const QString& text)
         output += trailing;
         break;
     case State::StrayRt:
-        // Unclosed stray <rt> at EOF — discard annotation
+        // Unclosed stray <rt> at EOF — discard tag but preserve trailing text
+        output += trailing;
         break;
     }
 

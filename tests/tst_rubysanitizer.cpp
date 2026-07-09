@@ -66,6 +66,10 @@ private slots:
     void testStrayRtOutsideRuby();
     void testStrayRtAtEof();
     void testStrayRtThenRubyBlock();
+    void testStrayRtAtEofWithRealPattern();
+    void testStrayRtFollowedByCloseTag();
+    void testStrayRtWithTrailingRubyBlock();
+    void testMultipleStrayRtAtEof();
 
     // Hallucinated broken angle brackets with CJK text
     void testBrokenCloseTagWithCjk();
@@ -141,7 +145,7 @@ void TestRubySanitizer::testMissingCloseBracketOnRtOpen()
 {
     // After Phase 1 fixes bracket: <rt>が — stray <rt> outside <ruby>, annotation discarded
     QString input = QStringLiteral("<rtが");
-    QString expected = QStringLiteral("");
+    QString expected = QStringLiteral("が");
     QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
@@ -238,7 +242,7 @@ void TestRubySanitizer::testStrayRtOutsideRuby()
 {
     // LLM outputs <rt>...</rt></ruby> without opening <ruby>
     QString input = QStringLiteral("映える<rt>は</rt></ruby>る");
-    QString expected = QStringLiteral("映えるる");
+    QString expected = QStringLiteral("映えるはる");
     QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
@@ -246,7 +250,7 @@ void TestRubySanitizer::testStrayRtAtEof()
 {
     // Unclosed stray <rt> at end of text
     QString input = QStringLiteral("text<rt>annotation");
-    QString expected = QStringLiteral("text");
+    QString expected = QStringLiteral("textannotation");
     QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
@@ -254,7 +258,39 @@ void TestRubySanitizer::testStrayRtThenRubyBlock()
 {
     // Stray <rt> followed by proper <ruby> block
     QString input = QStringLiteral("text<rt>stray</rt><ruby>漢字<rt>かんじ</rt></ruby>more");
-    QString expected = QStringLiteral("text<ruby>漢字<rt>かんじ</rt></ruby>more");
+    QString expected = QStringLiteral("textstray<ruby>漢字<rt>かんじ</rt></ruby>more");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testStrayRtAtEofWithRealPattern()
+{
+    // Real LLM pattern: valid ruby followed by stray <rt> at EOF
+    QString input = QStringLiteral("<ruby>教<rt>きょう</rt></ruby>授<rt>じゅによると");
+    QString expected = QStringLiteral("<ruby>教<rt>きょう</rt></ruby>授じゅによると");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testStrayRtFollowedByCloseTag()
+{
+    // Stray <rt> with </rt> after it — text preserved, tags discarded
+    QString input = QStringLiteral("text<rt>annotation</rt>more");
+    QString expected = QStringLiteral("textannotationmore");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testStrayRtWithTrailingRubyBlock()
+{
+    // Stray <rt> followed directly by <ruby> (no </rt> between) — recovery path
+    QString input = QStringLiteral("text<rt>stray<ruby>漢字<rt>かんじ</rt></ruby>more");
+    QString expected = QStringLiteral("textstray<ruby>漢字<rt>かんじ</rt></ruby>more");
+    QCOMPARE(sanitizeRubyTags(input), expected);
+}
+
+void TestRubySanitizer::testMultipleStrayRtAtEof()
+{
+    // Multiple stray <rt> tags in a row, unclosed at EOF
+    QString input = QStringLiteral("text<rt>one<rt>two");
+    QString expected = QStringLiteral("textonetwo");
     QCOMPARE(sanitizeRubyTags(input), expected);
 }
 
